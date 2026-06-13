@@ -8,7 +8,12 @@
       "Bash(npm --prefix backend run typecheck)",
       "WebFetch(domain:developers.facebook.com)",
       "WebFetch(domain:business.facebook.com)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "PowerShell(Resolve-DnsName -Type SRV _mongodb._tcp.ebringgs-development.lggozd7.mongodb.net -ErrorAction SilentlyContinue)",
+      "PowerShell(Resolve-DnsName ac-msp2vuh-shard-00-00.lggozd7.mongodb.net -Type A -ErrorAction SilentlyContinue)",
+      "PowerShell(Test-NetConnection -ComputerName ac-msp2vuh-shard-00-00.lggozd7.mongodb.net -Port 27017 -InformationLevel Quiet -WarningAction SilentlyContinue)",
+      "PowerShell(Resolve-DnsName -Type TXT ebringgs-development.lggozd7.mongodb.net -ErrorAction SilentlyContinue)",
+      "PowerShell(Resolve-DnsName -Type TXT ebringgs-development.lggozd7.mongodb.net -Server 8.8.8.8 -ErrorAction SilentlyContinue)"
     ]
   }
 }

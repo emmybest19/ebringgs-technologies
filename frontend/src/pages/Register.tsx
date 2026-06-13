@@ -248,7 +248,7 @@ export default function Register() {
   const [animating, setAnimating] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const { register, isLoading } = useAuthStore();
+  const { register, logout, isLoading } = useAuthStore();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [referralCode, setReferralCode] = useState(searchParams.get('ref') || '');
@@ -303,11 +303,9 @@ export default function Register() {
     if (!canProceed || isLoading) return;
     try {
       await register(name.trim(), email.trim(), password, role, referralCode.trim() || undefined);
-      toast.success('Account created successfully!');
-      const userRole = useAuthStore.getState().user?.role;
-      if (userRole === 'admin') navigate('/admin');
-      else if (userRole === 'client') navigate('/client');
-      else navigate('/dashboard');
+      logout();
+      toast.success('Account created! Please sign in to continue.');
+      navigate('/login', { state: { email: email.trim() } });
     } catch (err: unknown) {
       const res = (err as { response?: { data?: { message?: string; errors?: { field: string; message: string }[] } } })?.response?.data;
       const msg = res?.errors?.map(e => e.message).join('. ') || res?.message || 'Registration failed. Please try again.';

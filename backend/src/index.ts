@@ -1,6 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import dns from 'dns';
+// Force public DNS servers — Node's bundled c-ares resolver on Windows
+// occasionally fails TXT lookups against ISP DNS, which breaks mongodb+srv://
+// URI resolution. Cloudflare + Google both serve Atlas TXT records reliably.
+dns.setServers(['1.1.1.1', '8.8.8.8']);
+
 import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 import app from './app';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Eye, EyeOff, Loader2, Mail, Lock, ArrowRight, CheckCircle2,
   Code2, Smartphone, BarChart3, Globe, Zap,
@@ -98,7 +98,9 @@ function LeftPanel() {
 
 // ─── Main Login Page ────────────────────────────────────────────────────────
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const location = useLocation();
+  const prefilledEmail = (location.state as { email?: string } | null)?.email ?? '';
+  const [email, setEmail] = useState(prefilledEmail);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading } = useAuthStore();
