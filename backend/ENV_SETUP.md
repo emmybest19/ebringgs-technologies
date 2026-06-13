@@ -2,19 +2,15 @@
 
 A step-by-step walkthrough for getting every value the backend needs. Each section names the package that consumes the variable and the exact version pinned in [backend/package.json](backend/package.json), so the URLs and UI steps below match the version you actually run.
 
-> ⚠️ **Security note.** The current [backend/.env.example](backend/.env.example) file contains what appear to be real Atlas connection strings. If this repo has ever been pushed to a public remote, rotate those database passwords in Atlas immediately and replace the values with placeholders.
+> ⚠️ **Security note.** The single source of truth for env vars in this repo is [backend/.env](backend/.env). It is gitignored — never commit it. If a secret ever leaks into git history, rotate it immediately at the provider.
 
 ---
 
-## 0. Create the file
+## 0. The `.env` file
 
-From the repo root:
+There is one env file: [backend/.env](backend/.env). The app loads it via `dotenv` (`^16.4.5`) at boot in [backend/src/index.ts](backend/src/index.ts) — restart the dev server after edits.
 
-```bash
-cp backend/.env.example backend/.env
-```
-
-Then fill in each section below. The app loads `.env` via `dotenv` (`^16.4.5`) at boot in [backend/src/index.ts](backend/src/index.ts) — restart the dev server after edits.
+If you don't have one yet (fresh clone), create it at `backend/.env` and copy the section structure from this guide. Every section below names the variables, what consumes them, and how to get the values.
 
 ---
 
@@ -30,9 +26,17 @@ No external account needed.
 
 ---
 
-## 2. MongoDB Atlas — `MONGO_URI_DEVELOPMENT`, `MONGO_URI_STAGING`, `MONGO_URI_PRODUCTION`, `MONGO_URI`
+## 2. MongoDB Atlas — `MONGO_URI`
 
-Used by **mongoose `^8.4.4`** in [src/config/db.ts](src/config/db.ts). The connector picks a URI based on `NODE_ENV` and falls back to `MONGO_URI` if the env-specific one is missing.
+Used by **mongoose `^8.4.4`** in [src/config/db.ts](src/config/db.ts). **One connection string for all environments** — the app automatically derives the database name from `NODE_ENV`:
+
+| `NODE_ENV` | Database used |
+| --- | --- |
+| `development` | `ebringgs-development` |
+| `staging` | `ebringgs-staging` |
+| `production` | `ebringgs-production` |
+
+All three databases live inside the same Atlas cluster. Mongoose creates them automatically on first write — no setup needed in Atlas itself.
 
 ### Steps
 
@@ -47,12 +51,12 @@ Used by **mongoose `^8.4.4`** in [src/config/db.ts](src/config/db.ts). The conne
    mongodb+srv://<db_user>:<db_password>@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
    ```
 6. Replace `<db_user>` and `<db_password>` with the credentials from step 3. **URL-encode** any special characters in the password (e.g. `@` → `%40`, `#` → `%23`).
-7. Append your database name before the `?`, e.g.:
+7. **Do NOT put a database name in the path.** Leave the URI as `.../?retryWrites=...` — the code injects the database name based on `NODE_ENV`. Paste the final URI into `.env`:
+   ```env
+   MONGO_URI=mongodb+srv://ebringgs-dev:STRONGPASS@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority&appName=ebringgs
    ```
-   mongodb+srv://ebringgs-dev:STRONGPASS@cluster0.xxxxx.mongodb.net/ebringgs?retryWrites=true&w=majority&appName=Cluster0
-   ```
-8. Repeat steps 2–7 for staging and production clusters (or use one cluster with three different database names if you're cost-constrained). Paste each into the matching `MONGO_URI_*` variable.
-9. `MONGO_URI` is the local-dev fallback — leave the default `mongodb://localhost:27017/ebringgs` if you ever want to use a local mongod, otherwise it's unused.
+8. Switching `NODE_ENV=staging` → app writes to `ebringgs-staging` on the same cluster. Switch to `production` → `ebringgs-production`. No code changes, no separate URIs.
+9. **For real production isolation later**, point `MONGO_URI` at a different Atlas cluster when deploying to prod (e.g. via your hosting platform's env-var settings). The database name still gets derived from `NODE_ENV` — one variable, three environments, optionally three clusters.
 
 ---
 

@@ -1,25 +1,26 @@
 import mongoose from 'mongoose';
 
-type Env = 'development' | 'staging' | 'production';
-
-const envUriMap: Record<Env, string | undefined> = {
-  development: process.env.MONGO_URI_DEVELOPMENT,
-  staging: process.env.MONGO_URI_STAGING,
-  production: process.env.MONGO_URI_PRODUCTION,
-};
-
+/**
+ * Resolves a single MongoDB cluster URI from `MONGO_URI` and derives the
+ * database name from `NODE_ENV` — so one connection string covers all
+ * environments. The actual database used is `ebringgs-{env}`:
+ *   development → ebringgs-development
+ *   staging     → ebringgs-staging
+ *   production  → ebringgs-production
+ */
 function resolveUri(): string {
-  const env = (process.env.NODE_ENV as Env) || 'development';
-  const uri = envUriMap[env] || process.env.MONGO_URI;
-
+  const uri = process.env.MONGO_URI;
   if (!uri) {
     throw new Error(
-      `No MongoDB URI configured for NODE_ENV="${env}". ` +
-      `Set MONGO_URI_${env.toUpperCase()} or MONGO_URI in your .env file.`
+      'MONGO_URI is not set in .env — provide your Atlas cluster connection string.'
     );
   }
-
   return uri;
+}
+
+function resolveDbName(): string {
+  const env = (process.env.NODE_ENV || 'development').toLowerCase();
+  return `ebringgs-${env}`;
 }
 
 function maskUri(uri: string): string {
@@ -29,15 +30,17 @@ function maskUri(uri: string): string {
 export const connectDB = async (): Promise<void> => {
   const env = process.env.NODE_ENV || 'development';
   const uri = resolveUri();
+  const dbName = resolveDbName();
 
   mongoose.set('strictQuery', true);
 
   try {
     await mongoose.connect(uri, {
+      dbName,
       serverSelectionTimeoutMS: 10000,
       maxPoolSize: env === 'production' ? 50 : 10,
     });
-    console.log(`MongoDB connected [${env}] → ${maskUri(uri)}`);
+    console.log(`MongoDB connected [${env}] → ${maskUri(uri)} (db: ${dbName})`);
   } catch (err) {
     console.error(`MongoDB connection error [${env}]:`, err);
     process.exit(1);

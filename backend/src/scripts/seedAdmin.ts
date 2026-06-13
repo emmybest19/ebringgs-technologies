@@ -28,20 +28,16 @@ async function main() {
   }
 
   const env = (process.env.NODE_ENV as 'development' | 'staging' | 'production') || 'development';
-  const uriMap = {
-    development: process.env.MONGO_URI_DEVELOPMENT,
-    staging: process.env.MONGO_URI_STAGING,
-    production: process.env.MONGO_URI_PRODUCTION,
-  };
-  const uri = uriMap[env] || process.env.MONGO_URI;
+  const uri = process.env.MONGO_URI;
+  const dbName = `ebringgs-${env}`;
 
   if (!uri) {
-    console.error(`❌ No MongoDB URI configured for NODE_ENV="${env}"`);
+    console.error('❌ MONGO_URI is not set in .env');
     process.exit(1);
   }
 
-  await mongoose.connect(uri);
-  console.log(`✓ Connected to MongoDB [${env}]`);
+  await mongoose.connect(uri, { dbName });
+  console.log(`✓ Connected to MongoDB [${env}] (db: ${dbName})`);
 
   const existing = await User.findOne({ email: email.toLowerCase() });
 
