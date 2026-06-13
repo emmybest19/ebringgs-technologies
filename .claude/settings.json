@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --prefix frontend install @emailjs/browser)",
+      "Bash(npm --prefix frontend exec tsc -b --noEmit)",
+      "Bash(npx vite *)",
+      "Bash(npm --prefix backend uninstall stripe)",
+      "Bash(npm --prefix backend run typecheck)"
+    ]
+  }
+}
