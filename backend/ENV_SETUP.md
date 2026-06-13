@@ -205,127 +205,21 @@ Leaving `GEMINI_API_KEY` blank disables the tutor gracefully — the controller 
 
 ## 8. WhatsApp Cloud API (optional) — `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_ACCESS_TOKEN`
 
-Optional channel used by [src/services/whatsapp.service.ts](src/services/whatsapp.service.ts). Leaving both blank disables WhatsApp notifications silently. The two free things you need to ship: a **test phone number** Meta provides (free, no setup) and an **access token**.
+Optional channel used by [src/services/whatsapp.service.ts](src/services/whatsapp.service.ts). Leaving both blank disables WhatsApp notifications silently.
 
-> 🧭 **Note on Meta's UI.** Meta redesigns this console 2–3 times a year, so labels may have shifted slightly by the time you read this. If a label doesn't match exactly, look for the closest equivalent — the *order* of operations below is what matters.
+### Steps
 
----
-
-### Part A — Create the Meta app (one-time, ~3 minutes)
-
-This creates the "app shell" that WhatsApp will attach to. Even though you'll never build a "Facebook app" in the consumer sense, this is how Meta groups API access.
-
-1. **Log in** at <https://developers.facebook.com/> with the Facebook account you want to own this app.
-   - If this is your first time, you'll be prompted to register as a developer — accept the terms.
-2. Top-right corner → click your **profile picture / "My Apps"** menu → **"Create App"**.
-   - Or go directly to <https://developers.facebook.com/apps/creation/>
-3. **Screen 1 — App details:**
-   - **App name**: `E-Bringgs` (this is internal — users don't see it)
-   - **App contact email**: `ebringgstechnologies@gmail.com`
-   - Click **Next**.
-4. **Screen 2 — "Select one or more use cases for your app":**
-   - Tick **"Other"** at the bottom (the WhatsApp-specific use cases require a Business Portfolio already exists; "Other" is the safe path).
-   - Click **Next**.
-5. **Screen 3 — "Select an app type":**
-   - Choose **"Business"** → **Next**.
-6. **Screen 4 — Business portfolio:**
-   - If you already have a Meta Business Portfolio (Business Manager), pick it.
-   - If not, leave it as **"I don't want to connect a business portfolio yet"** — you can add one later. Click **Next**.
-7. **Screen 5 — Review:**
-   - Confirm details → **"Create app"**.
-   - You may be asked to re-enter your Facebook password.
-8. You'll land in the **App Dashboard** — URL looks like `https://developers.facebook.com/apps/<APP_ID>/dashboard/`. Keep this tab open.
-
----
-
-### Part B — Add WhatsApp to the app
-
-1. In the App Dashboard, scroll down to **"Add products to your app"** (a grid of tiles).
-2. Find the **"WhatsApp"** tile → click **"Set up"** on it.
-   - If you don't see it in the grid, use the **left sidebar** → **"Add product"** → search "WhatsApp" → **Set up**.
-3. **WhatsApp setup wizard:**
-   - If you skipped business portfolio in Part A, Meta will now prompt to **"Create a Meta Business Account"** — give it the name `E-Bringgs Technologies` and your country (Nigeria). Click **Continue**.
-   - It will also create a **WhatsApp Business Account (WABA)** automatically with the same name.
-   - Click **Continue** through any onboarding prompts until you reach **WhatsApp → API Setup**.
-
----
-
-### Part C — Get the values for `.env` (the part you actually need)
-
-You should now be on the **WhatsApp → API Setup** page (left sidebar shows "WhatsApp" with sub-items: **"API Setup"**, **"Configuration"**, **"Templates"**, **"Quickstart"**, etc.). If not, click **API Setup** in the sidebar.
-
-This page has everything in one view:
-
-| What's on the screen | What it looks like | Goes into `.env` as |
-| --- | --- | --- |
-| Section **"Send and receive messages"** → **"From"** dropdown shows a test phone number Meta provided (e.g. `+1 555 123 4567`) | Right below the dropdown, you'll see **"Phone number ID: 1234567890123456"** | `WHATSAPP_PHONE_NUMBER_ID=1234567890123456` |
-| Section **"Temporary access token"** at the top | A long string starting with `EAA...`, with a **Copy** button next to it | `WHATSAPP_ACCESS_TOKEN=EAA…` |
-
-⚠️ **The temporary token expires in 24 hours.** It's fine for testing — confirm your integration works, then come back to Part D for a permanent token before production.
-
-You should also see a **"To"** field where you can add **your own personal WhatsApp number** as a test recipient. Click **"Manage phone number list"** → add your number → confirm via the OTP that WhatsApp sends you. Until you add a recipient, all sends will fail with `(#131030) Recipient phone number not in allowed list`. This is a sandbox restriction that goes away once the WABA is fully approved.
-
-**Test the send-message button** at the bottom of API Setup → if your test phone receives the message, your `WHATSAPP_PHONE_NUMBER_ID` + `WHATSAPP_ACCESS_TOKEN` are both correct.
-
----
-
-### Part D — Generate a permanent access token (for production)
-
-Skip this for now if you're just testing. Come back when you're ready to deploy.
-
-1. Open **Meta Business Suite** at <https://business.facebook.com/>.
-2. Bottom-left → click **"All tools"** → **"Business settings"** (gear icon). Direct link: <https://business.facebook.com/settings>.
-3. In Business Settings left sidebar → **"Users"** → **"System users"**.
-4. Click **"Add"** (top-right blue button).
-   - **System username**: `whatsapp-bot`
-   - **System user role**: **Admin**
-   - Click **"Create system user"** → confirm with your password.
-5. The new system user appears in the list. Click their name → **"Add assets"** (right-side panel).
-6. In the asset picker:
-   - **Asset type**: **"Apps"**
-   - Find your **E-Bringgs** app in the list → tick it
-   - **"Partial access"** → toggle **"Develop app"** ON
-   - **"Full control"** → toggle **"Manage app"** ON
-   - Click **"Save changes"**.
-7. Repeat **"Add assets"** for the **WhatsApp account**:
-   - **Asset type**: **"WhatsApp accounts"**
-   - Tick your WABA → enable **"Full control"** → **Save**.
-8. Back on the system user's page → click **"Generate new token"** (top-right).
-9. In the modal:
-   - **App**: select your E-Bringgs app
-   - **Token expiration**: **"Never"**
-   - **Permissions** — tick all three of these (use the search box):
-     - `whatsapp_business_messaging`
-     - `whatsapp_business_management`
-     - `business_management`
-   - Click **"Generate token"**.
-10. **Copy the token immediately** — Meta only shows it once. Paste into `.env` as the new `WHATSAPP_ACCESS_TOKEN`. Replace the temporary token.
-
----
-
-### Part E — Add your real business phone number (production only)
-
-The Meta-provided test number can only send to numbers you whitelist (~5 max) and shows the sender as a generic Meta number. For production, add your own:
-
-1. Back in the developer console → **WhatsApp → API Setup** → next to the **"From"** dropdown, click **"Add phone number"**.
-2. Enter:
-   - **Business display name**: `E-Bringgs Technologies` (this is what customers see)
-   - **Phone number**: a number you own — must be able to receive SMS or voice. **Cannot already be in use on the WhatsApp consumer app.** If it is, delete WhatsApp from that number first.
-3. Verify via SMS/voice OTP.
-4. Once verified, the new number appears in the **"From"** dropdown. Its **Phone number ID** is the new `WHATSAPP_PHONE_NUMBER_ID` for production.
-
-> 📒 **Free tier**: 1,000 service-initiated conversations per month per WABA, plus unlimited user-initiated conversations (within 24 hours of a customer message). Marketing/utility/auth message templates are billed per conversation — see <https://developers.facebook.com/docs/whatsapp/pricing>.
-
----
-
-### Common things that go wrong
-
-| Symptom | Cause | Fix |
-| --- | --- | --- |
-| `(#131030) Recipient phone number not in allowed list` | Using temp token + recipient not whitelisted | Add recipient to "To" list in API Setup |
-| `(#190) Invalid OAuth access token` | Temp token expired (24h) | Generate a new one in API Setup, or skip to Part D |
-| `(#10) Application does not have permission` | System user token missing scopes | Re-run Part D step 9 — make sure all three permissions ticked |
-| App stuck on "In development" | Default for new apps — limits you to test recipients | For production, complete Business Verification in Business Settings → fine for the test phone in dev |
+1. Go to <https://developers.facebook.com/apps>, sign in with a Facebook account, click **Create app**.
+2. App type: **Other** → **Business**. Give the app a name (e.g. `E-Bringgs`).
+3. In the new app's left sidebar, click **Add product** → find **WhatsApp** → **Set up**.
+4. On **WhatsApp → API Setup**:
+   - You get a free **Test phone number** Meta provides — copy its **Phone number ID** (the long numeric ID, not the actual phone number). That's `WHATSAPP_PHONE_NUMBER_ID`.
+   - Copy the **temporary access token** shown on the page. That's `WHATSAPP_ACCESS_TOKEN`. ⚠️ The temporary token expires in **24 hours** — fine for testing only.
+5. For production, generate a **permanent System User access token**:
+   - Meta Business Suite → **Business Settings → Users → System Users → Add** → name it (e.g. `whatsapp-bot`), role **Admin** → **Create System User**.
+   - Click **Generate New Token** on that system user → pick your app → check the `whatsapp_business_messaging` and `whatsapp_business_management` permissions → **Generate Token**. Copy it; this is the permanent `WHATSAPP_ACCESS_TOKEN`.
+6. Add a real phone number under **WhatsApp → API Setup → Add phone number** (requires SMS/voice verification). Use that number's Phone Number ID in production.
+7. Free tier: 1,000 service conversations/month per WABA.
 
 ---
 
