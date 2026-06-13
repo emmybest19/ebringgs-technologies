@@ -5,7 +5,9 @@
       "Bash(npm --prefix frontend exec tsc -b --noEmit)",
       "Bash(npx vite *)",
       "Bash(npm --prefix backend uninstall stripe)",
-      "Bash(npm --prefix backend run typecheck)"
+      "Bash(npm --prefix backend run typecheck)",
+      "WebFetch(domain:developers.facebook.com)",
+      "WebFetch(domain:business.facebook.com)"
     ]
   }
 }
