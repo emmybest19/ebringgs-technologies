@@ -40,20 +40,44 @@ export default function Logo({
   const src = variant === 'full' ? '/logo-full.jpg' : '/logo-mark.png';
   const height = size ?? (variant === 'full' ? 48 : 40);
 
+  // Both source files are square 1:1 canvases with the brand sitting in the
+  // middle surrounded by dead whitespace. We render the image larger than the
+  // visible box and clip the edges so the brand fills the container.
+  //   - "full" brand is roughly 1.6:1 (mark + wordmark + tagline) and fills
+  //     ~55% of the canvas height → scale 1.9x and use a wide box.
+  //   - "mark" brand is roughly square and fills ~70% of the canvas → scale
+  //     1.4x in a square box.
+  const cropScale = variant === 'full' ? 1.9 : 1.4;
+  const boxAspect = variant === 'full' ? 1.7 : 1;
+  const boxWidth = height * boxAspect;
+
+  const imgClass = onDark
+    ? ''
+    : '[mix-blend-mode:multiply] dark:[mix-blend-mode:normal]';
+
+  const wrapperClass = onDark
+    ? 'overflow-hidden rounded-lg bg-white shadow-sm'
+    : `overflow-hidden ${variant === 'mark' ? 'dark:rounded-lg dark:bg-white' : ''}`;
+
   const img = (
-    <img
-      src={src}
-      alt="E-Bringgs Technologies"
-      style={{ height, width: 'auto' }}
-      className={onDark && variant === 'mark' ? 'rounded-xl bg-white p-1' : ''}
-      draggable={false}
-    />
+    <span
+      className={`inline-flex items-center justify-center shrink-0 ${wrapperClass}`}
+      style={{ height, width: boxWidth }}
+    >
+      <img
+        src={src}
+        alt="E-Bringgs Technologies"
+        style={{ height: height * cropScale, width: 'auto', maxWidth: 'none' }}
+        className={imgClass}
+        draggable={false}
+      />
+    </span>
   );
 
   const content = withWordmark && variant === 'mark' ? (
     <div className="flex items-center gap-2">
       {img}
-      <span className={`font-bold text-xl ${wordmarkClass}`}>e-bringgs</span>
+      <span className={`font-extrabold text-xl tracking-tight ${wordmarkClass}`}>e-bringgs</span>
     </div>
   ) : img;
 
