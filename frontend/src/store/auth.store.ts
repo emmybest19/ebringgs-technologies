@@ -14,6 +14,8 @@ interface AuthState {
 interface AuthActions {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string, role?: string, referralCode?: string) => Promise<void>;
+  loginWithGoogle: (idToken: string, opts?: { role?: string; referralCode?: string }) => Promise<void>;
+  loginWithApple: (idToken: string, opts?: { name?: string; role?: string; referralCode?: string }) => Promise<void>;
   logout: () => void;
   fetchMe: () => Promise<void>;
 }
@@ -47,6 +49,32 @@ export const useAuthStore = create<AuthState & AuthActions>()(
             name, email, password, role,
             ...(referralCode ? { referralCode } : {}),
           });
+          const { user, accessToken, refreshToken } = data.data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          set({ user, accessToken, refreshToken, isAuthenticated: true });
+        } finally {
+          set({ isLoading: false });
+        }
+      },
+
+      loginWithGoogle: async (idToken, opts = {}) => {
+        set({ isLoading: true });
+        try {
+          const { data } = await api.post('/auth/oauth/google', { idToken, ...opts });
+          const { user, accessToken, refreshToken } = data.data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+          set({ user, accessToken, refreshToken, isAuthenticated: true });
+        } finally {
+          set({ isLoading: false });
+        }
+      },
+
+      loginWithApple: async (idToken, opts = {}) => {
+        set({ isLoading: true });
+        try {
+          const { data } = await api.post('/auth/oauth/apple', { idToken, ...opts });
           const { user, accessToken, refreshToken } = data.data;
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);

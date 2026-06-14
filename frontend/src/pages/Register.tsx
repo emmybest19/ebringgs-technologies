@@ -8,6 +8,7 @@ import {
 import toast from 'react-hot-toast';
 import { useAuthStore } from '../store/auth.store';
 import Logo from '../components/Logo';
+import SocialAuthButtons from '../components/auth/SocialAuthButtons';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type Role = 'student' | 'client';
@@ -347,7 +348,25 @@ export default function Register() {
               {step === 1 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">How will you use E-Bringgs?</h2>
-                  <p className="text-gray-500 dark:text-slate-400 text-sm mb-8">Choose the option that best describes you.</p>
+                  <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">Choose the option that best describes you.</p>
+
+                  {/* Social signup — skip the wizard entirely */}
+                  <SocialAuthButtons
+                    role={role}
+                    referralCode={referralCode.trim() || undefined}
+                    onSuccess={(socialRole) => {
+                      if (socialRole === 'admin') navigate('/admin');
+                      else if (socialRole === 'teacher') navigate('/teacher');
+                      else if (socialRole === 'client') navigate('/client');
+                      else navigate('/dashboard');
+                    }}
+                  />
+
+                  <div className="flex items-center gap-4 my-6">
+                    <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+                    <span className="text-xs text-gray-400 dark:text-slate-500 font-medium">OR PICK A ROLE TO SIGN UP WITH EMAIL</span>
+                    <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+                  </div>
 
                   <div className="space-y-4">
                     <button

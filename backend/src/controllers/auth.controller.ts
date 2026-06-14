@@ -1,12 +1,46 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
-import User from '../models/User.model';
+import { OAuth2Client } from 'google-auth-library';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
+import User, { IUser } from '../models/User.model';
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/jwt';
 import { AppError } from '../middleware/error.middleware';
 import { sendEmail, emailTemplates } from '../utils/email';
 import { AuthRequest } from '../types';
 
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+
+// ─── OAuth verifiers (lazy-init so missing env vars fail loudly at the
+//     endpoint, not at module-load time) ──────────────────────────────────
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const APPLE_CLIENT_ID = process.env.APPLE_CLIENT_ID; // Apple Service ID
+const googleClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : null;
+const appleJWKS = createRemoteJWKSet(new URL('https://appleid.apple.com/auth/keys'));
+
+function issueAuthResponse(user: IUser, res: Response, status = 200): void {
+  const accessToken = signAccessToken({ userId: user.id, role: user.role });
+  const refreshToken = signRefreshToken({ userId: user.id, role: user.role });
+  res.status(status).json({
+    status: 'success',
+    data: {
+      user: {
+        id: user.id, name: user.name, email: user.email, role: user.role,
+        avatar: user.avatar,
+        isEmailVerified: user.isEmailVerified,
+        points: user.points, referralCode: user.referralCode,
+        authProvider: user.authProvider,
+      },
+      accessToken,
+      refreshToken,
+    },
+  });
+}
+
+async function resolveReferrer(referralCode: unknown): Promise<string | undefined> {
+  if (!referralCode || typeof referralCode !== 'string') return undefined;
+  const referrer = await User.findOne({ referralCode: referralCode.toUpperCase() }).select('_id');
+  return referrer ? referrer.id : undefined;
+}
 
 export const register = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -204,6 +238,121 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
 
     res.json({ status: 'success', message: 'Password reset successful. Please log in.' });
   } catch (err) {
+    next(err);
+  }
+};
+
+// ─── OAuth: Google ────────────────────────────────────────────────────────
+// The frontend calls Google Identity Services, gets back an ID token (a JWT
+// signed by Google), and POSTs it here. We verify the signature + audience
+// against our Google Client ID, then either link the Google account to an
+// existing email-matched user, log in an existing Google user, or create a
+// new one. No password is set.
+export const oauthGoogle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    if (!googleClient || !GOOGLE_CLIENT_ID) {
+      return next(new AppError('Google sign-in is not configured on this server.', 503));
+    }
+    const { idToken, role, referralCode } = req.body;
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    if (!payload?.sub || !payload.email) {
+      return next(new AppError('Invalid Google token.', 401));
+    }
+
+    const googleId = payload.sub;
+    const email = payload.email.toLowerCase();
+    const name = payload.name || email.split('@')[0];
+    const avatar = payload.picture;
+    const emailVerified = payload.email_verified === true;
+
+    let user = await User.findOne({ $or: [{ googleId }, { email }] });
+
+    if (!user) {
+      const referredBy = await resolveReferrer(referralCode);
+      user = await User.create({
+        name,
+        email,
+        avatar,
+        role: role === 'client' ? 'client' : 'student',
+        authProvider: 'google',
+        googleId,
+        isEmailVerified: emailVerified,
+        ...(referredBy ? { referredBy } : {}),
+      });
+    } else if (!user.googleId) {
+      // Email-matched local user → link the Google account onto it
+      user.googleId = googleId;
+      if (!user.avatar && avatar) user.avatar = avatar;
+      if (emailVerified) user.isEmailVerified = true;
+      await user.save({ validateBeforeSave: false });
+    }
+
+    issueAuthResponse(user, res);
+  } catch (err) {
+    if ((err as Error)?.message?.toLowerCase().includes('token')) {
+      return next(new AppError('Invalid or expired Google token.', 401));
+    }
+    next(err);
+  }
+};
+
+// ─── OAuth: Apple ─────────────────────────────────────────────────────────
+// Apple's flow is similar to Google's but with two quirks:
+//   1. The ID token JWT must be verified against Apple's JWKS at
+//      https://appleid.apple.com/auth/keys (RS256).
+//   2. Apple only returns the user's name on the FIRST sign-in, sent
+//      out-of-band (not in the JWT). The frontend forwards it in the
+//      request body so we can populate the new account.
+export const oauthApple = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    if (!APPLE_CLIENT_ID) {
+      return next(new AppError('Apple sign-in is not configured on this server.', 503));
+    }
+    const { idToken, name: providedName, role, referralCode } = req.body;
+
+    const { payload } = await jwtVerify(idToken, appleJWKS, {
+      issuer: 'https://appleid.apple.com',
+      audience: APPLE_CLIENT_ID,
+    });
+
+    const appleId = payload.sub as string | undefined;
+    const email = (payload.email as string | undefined)?.toLowerCase();
+    const emailVerified = payload.email_verified === true || payload.email_verified === 'true';
+
+    if (!appleId || !email) {
+      return next(new AppError('Apple token did not include a user identifier or email.', 401));
+    }
+
+    let user = await User.findOne({ $or: [{ appleId }, { email }] });
+
+    if (!user) {
+      const referredBy = await resolveReferrer(referralCode);
+      user = await User.create({
+        name: providedName || email.split('@')[0],
+        email,
+        role: role === 'client' ? 'client' : 'student',
+        authProvider: 'apple',
+        appleId,
+        isEmailVerified: emailVerified,
+        ...(referredBy ? { referredBy } : {}),
+      });
+    } else if (!user.appleId) {
+      user.appleId = appleId;
+      if (emailVerified) user.isEmailVerified = true;
+      await user.save({ validateBeforeSave: false });
+    }
+
+    issueAuthResponse(user, res);
+  } catch (err) {
+    if ((err as Error)?.message?.toLowerCase().includes('jwt') ||
+        (err as Error)?.message?.toLowerCase().includes('signature')) {
+      return next(new AppError('Invalid or expired Apple token.', 401));
+    }
     next(err);
   }
 };

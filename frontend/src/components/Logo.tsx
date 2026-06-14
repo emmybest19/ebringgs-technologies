@@ -51,26 +51,33 @@ export default function Logo({
   const boxAspect = variant === 'full' ? 1.7 : 1;
   const boxWidth = height * boxAspect;
 
+  // Light mode: mix-blend-mode: multiply makes the baked-in white background
+  // blend into the page surface — no visible white card.
+  // Dark mode: render an actual white "card" around the logo (padding +
+  // rounded corners + soft shadow + hairline ring) so the brand colors stay
+  // legible and the badge looks like an intentional design element.
+  const cardClass = onDark
+    ? 'rounded-xl bg-white p-2 shadow-md ring-1 ring-black/5'
+    : 'dark:rounded-xl dark:bg-white dark:p-2 dark:shadow-md dark:ring-1 dark:ring-black/5';
+
   const imgClass = onDark
     ? ''
     : '[mix-blend-mode:multiply] dark:[mix-blend-mode:normal]';
 
-  const wrapperClass = onDark
-    ? 'overflow-hidden rounded-lg bg-white shadow-sm'
-    : `overflow-hidden ${variant === 'mark' ? 'dark:rounded-lg dark:bg-white' : ''}`;
-
   const img = (
-    <span
-      className={`inline-flex items-center justify-center shrink-0 ${wrapperClass}`}
-      style={{ height, width: boxWidth }}
-    >
-      <img
-        src={src}
-        alt="E-Bringgs Technologies"
-        style={{ height: height * cropScale, width: 'auto', maxWidth: 'none' }}
-        className={imgClass}
-        draggable={false}
-      />
+    <span className={`inline-flex items-center justify-center shrink-0 ${cardClass}`}>
+      <span
+        className="overflow-hidden inline-flex items-center justify-center"
+        style={{ height, width: boxWidth }}
+      >
+        <img
+          src={src}
+          alt="E-Bringgs Technologies"
+          style={{ height: height * cropScale, width: 'auto', maxWidth: 'none' }}
+          className={imgClass}
+          draggable={false}
+        />
+      </span>
     </span>
   );
 

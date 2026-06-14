@@ -10,6 +10,7 @@ import { useReviews } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import Logo from '../components/Logo';
+import SocialAuthButtons from '../components/auth/SocialAuthButtons';
 
 // ─── Floating Icons (same as Register for consistency) ──────────────────────
 const floatingIcons = [
@@ -229,6 +230,18 @@ export default function Login() {
               <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
               <span className="text-xs text-gray-400 dark:text-slate-500 font-medium">OR</span>
               <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+            </div>
+
+            {/* Social sign-in */}
+            <div className="mb-8">
+              <SocialAuthButtons
+                onSuccess={(socialRole) => {
+                  if (socialRole === 'admin') navigate('/admin');
+                  else if (socialRole === 'teacher') navigate('/teacher');
+                  else if (socialRole === 'client') navigate('/client');
+                  else navigate('/dashboard');
+                }}
+              />
             </div>
 
             {/* Quick info */}

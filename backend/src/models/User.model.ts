@@ -2,10 +2,12 @@ import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import { UserRole } from "../types";
 
+export type AuthProvider = 'local' | 'google' | 'apple';
+
 export interface IUser extends Document {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role: UserRole;
   isEmailVerified: boolean;
   emailVerificationToken?: string;
@@ -25,6 +27,10 @@ export interface IUser extends Document {
   referralCode: string;
   referredBy?: mongoose.Types.ObjectId;
   referralRewarded: boolean;
+  // OAuth
+  authProvider: AuthProvider;
+  googleId?: string;
+  appleId?: string;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidate: string): Promise<boolean>;
@@ -40,7 +46,16 @@ const userSchema = new Schema<IUser>(
       lowercase: true,
       trim: true,
     },
-    password: { type: String, required: true, minlength: 8, select: false },
+    // Password is only required for local-auth users. OAuth users (Google /
+    // Apple) sign in with an ID token and never set a password.
+    password: {
+      type: String,
+      minlength: 8,
+      select: false,
+      required: function (this: IUser) {
+        return this.authProvider === 'local';
+      },
+    },
     role: {
       type: String,
       enum: ["admin", "teacher", "student", "client"],
@@ -67,6 +82,14 @@ const userSchema = new Schema<IUser>(
     referralCode: { type: String, unique: true, sparse: true, index: true },
     referredBy: { type: Schema.Types.ObjectId, ref: 'User' },
     referralRewarded: { type: Boolean, default: false },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google', 'apple'],
+      default: 'local',
+      index: true,
+    },
+    googleId: { type: String, unique: true, sparse: true, index: true },
+    appleId: { type: String, unique: true, sparse: true, index: true },
   },
   { timestamps: true },
 );
@@ -81,7 +104,7 @@ userSchema.pre('save', function (next) {
 
 // Hash password before save
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password") || !this.password) return next();
   const salt = await bcrypt.genSalt(12);
   this.password = await bcrypt.hash(this.password, salt);
   next();
@@ -91,6 +114,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.comparePassword = async function (
   candidate: string,
 ): Promise<boolean> {
+  if (!this.password) return false;
   return bcrypt.compare(candidate, this.password);
 };
 

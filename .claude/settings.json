@@ -13,7 +13,17 @@
       "PowerShell(Resolve-DnsName ac-msp2vuh-shard-00-00.lggozd7.mongodb.net -Type A -ErrorAction SilentlyContinue)",
       "PowerShell(Test-NetConnection -ComputerName ac-msp2vuh-shard-00-00.lggozd7.mongodb.net -Port 27017 -InformationLevel Quiet -WarningAction SilentlyContinue)",
       "PowerShell(Resolve-DnsName -Type TXT ebringgs-development.lggozd7.mongodb.net -ErrorAction SilentlyContinue)",
-      "PowerShell(Resolve-DnsName -Type TXT ebringgs-development.lggozd7.mongodb.net -Server 8.8.8.8 -ErrorAction SilentlyContinue)"
+      "PowerShell(Resolve-DnsName -Type TXT ebringgs-development.lggozd7.mongodb.net -Server 8.8.8.8 -ErrorAction SilentlyContinue)",
+      "Bash(npm --prefix backend run dev)",
+      "Bash(netstat -ano)",
+      "Bash(powershell -NoProfile -Command \"Get-Process -Id 29360 | Select-Object Id,ProcessName,Path | Format-List\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} in %{time_total}s\\\\n\" http://localhost:5000/api/docs/)",
+      "Bash(curl -s http://localhost:5000/api/courses)",
+      "Bash(curl -s -o /dev/null -w \"GET /api/docs        → HTTP %{http_code} in %{time_total}s\\\\n\" http://localhost:5000/api/docs/)",
+      "Bash(curl -s -o /dev/null -w \"GET /api/courses     → HTTP %{http_code} in %{time_total}s\\\\n\" http://localhost:5000/api/courses)",
+      "Bash(curl -s -o /dev/null -w \"GET /api/services    → HTTP %{http_code} in %{time_total}s\\\\n\" http://localhost:5000/api/services)",
+      "Bash(npm --prefix backend install google-auth-library jose)",
+      "Bash(npm --prefix frontend install @react-oauth/google)"
     ]
   }
 }

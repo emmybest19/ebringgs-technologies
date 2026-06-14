@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { register, login, refreshToken, getMe, forgotPassword, resetPassword, verifyEmail, resendVerification } from '../controllers/auth.controller';
+import { register, login, refreshToken, getMe, forgotPassword, resetPassword, verifyEmail, resendVerification, oauthGoogle, oauthApple } from '../controllers/auth.controller';
 import { protect } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
-import { registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema, refreshTokenSchema } from '../validators/auth.validators';
+import { registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema, refreshTokenSchema, oauthGoogleSchema, oauthAppleSchema } from '../validators/auth.validators';
 
 const router = Router();
 
@@ -66,6 +66,57 @@ router.post('/register', validate(registerSchema), register);
  *         description: Invalid credentials
  */
 router.post('/login', validate(loginSchema), login);
+
+/**
+ * @swagger
+ * /auth/oauth/google:
+ *   post:
+ *     summary: Sign in (or sign up) with a Google ID token
+ *     tags: [Auth]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [idToken]
+ *             properties:
+ *               idToken:      { type: string, description: "ID token from Google Identity Services" }
+ *               role:         { type: string, enum: [student, client] }
+ *               referralCode: { type: string }
+ *     responses:
+ *       200: { description: "Returns accessToken, refreshToken, user" }
+ *       401: { description: "Invalid Google token" }
+ *       503: { description: "Google sign-in not configured" }
+ */
+router.post('/oauth/google', validate(oauthGoogleSchema), oauthGoogle);
+
+/**
+ * @swagger
+ * /auth/oauth/apple:
+ *   post:
+ *     summary: Sign in (or sign up) with an Apple ID token
+ *     tags: [Auth]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [idToken]
+ *             properties:
+ *               idToken:      { type: string, description: "ID token from Sign in with Apple" }
+ *               name:         { type: string, description: "Only present on first sign-in (Apple convention)" }
+ *               role:         { type: string, enum: [student, client] }
+ *               referralCode: { type: string }
+ *     responses:
+ *       200: { description: "Returns accessToken, refreshToken, user" }
+ *       401: { description: "Invalid Apple token" }
+ *       503: { description: "Apple sign-in not configured" }
+ */
+router.post('/oauth/apple', validate(oauthAppleSchema), oauthApple);
 
 /**
  * @swagger
