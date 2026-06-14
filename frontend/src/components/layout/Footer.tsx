@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
+import Logo from '../Logo';
 
 const footerLinks = {
   Company: [
@@ -34,11 +35,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">EB</span>
-              </div>
-              <span className="font-bold text-white text-lg">E-Bringgs</span>
+            <div className="mb-4 rounded-xl bg-white p-3 inline-block">
+              <Logo variant="full" size={72} asLink />
             </div>
             <p className="text-sm leading-relaxed mb-6">
               Empowering individuals and organizations through technology, learning, and innovation.

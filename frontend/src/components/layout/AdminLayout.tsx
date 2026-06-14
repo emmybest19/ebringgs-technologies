@@ -8,6 +8,7 @@ import {
 import { useAuthStore } from '../../store/auth.store';
 import { useUnreadCounts } from '../../services/queries';
 import PageTransition from '../ui/PageTransition';
+import Logo from '../Logo';
 
 const navItems = [
   { to: '/admin', label: 'Overview', icon: LayoutDashboard, end: true, badgeKey: null },
@@ -53,9 +54,7 @@ export default function AdminLayout() {
       {/* Mobile top bar — visible < lg only */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">EB</span>
-          </div>
+          <Logo variant="mark" size={32} onDark />
           <span className="font-bold text-white text-sm">Admin</span>
         </Link>
         <button
@@ -89,9 +88,7 @@ export default function AdminLayout() {
         <div className="px-6 py-5 border-b border-slate-800 flex items-start justify-between">
           <div>
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">EB</span>
-              </div>
+              <Logo variant="mark" size={32} onDark />
               <span className="font-bold text-white">E-Bringgs</span>
             </Link>
             <div className="flex items-center gap-1 mt-2 text-xs text-slate-400">

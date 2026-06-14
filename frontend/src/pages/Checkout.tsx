@@ -6,6 +6,7 @@ import { useAuthStore } from '../store/auth.store';
 import api from '../services/api';
 import { useService, useInitializePayment } from '../services/queries';
 import InstallmentSelector, { type InstallmentChoice } from '../components/payments/InstallmentSelector';
+import Logo from '../components/Logo';
 
 const INSTALLMENT_PRICE_FLOOR_KOBO = 200_000 * 100; // ₦200,000 in kobo
 
@@ -280,8 +281,8 @@ export default function Checkout() {
             <ArrowLeft size={14} /> {backLabel}
           </Link>
 
-          <div className="inline-flex w-10 h-10 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-xl items-center justify-center mb-6">
-            <span className="text-white font-bold text-sm">EB</span>
+          <div className="mb-6">
+            <Logo variant="mark" size={40} />
           </div>
 
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Order summary</h2>

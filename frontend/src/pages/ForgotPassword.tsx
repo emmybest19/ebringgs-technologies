@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '../services/api';
+import Logo from '../components/Logo';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -28,8 +29,8 @@ export default function ForgotPassword() {
       <div className="w-full max-w-md">
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-8">
           <div className="text-center mb-8">
-            <div className="inline-flex w-12 h-12 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-xl items-center justify-center mb-4">
-              <span className="text-white font-bold">EB</span>
+            <div className="inline-block mb-4">
+              <Logo variant="mark" size={48} />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Reset your password</h1>
             <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">We'll send a reset link to your email</p>

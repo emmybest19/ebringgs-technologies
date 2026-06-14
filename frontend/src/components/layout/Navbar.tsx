@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sun, Moon, Bell, BellOff } from 'lucide-react';
+import Logo from '../Logo';
 import { usePushNotifications } from '../../hooks/usePushNotifications';
 import { useAuthStore } from '../../store/auth.store';
 import { useThemeStore } from '../../store/theme.store';
@@ -33,12 +34,8 @@ export default function Navbar() {
     <header className="fixed top-0 inset-x-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-gray-100 dark:border-slate-800 shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">EB</span>
-          </div>
-          <span className="font-bold text-gray-900 dark:text-white text-lg">E-Bringgs</span>
-        </Link>
+        <Logo variant="mark" size={36} asLink withWordmark />
+
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-1">

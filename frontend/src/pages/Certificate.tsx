@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Award, Download, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../store/auth.store';
 import api from '../services/api';
+import Logo from '../components/Logo';
 
 interface CertificateData {
   studentName: string;
@@ -87,11 +88,8 @@ export default function Certificate() {
 
           <div className="flex flex-col items-center justify-center h-[calc(100%-12px)] px-16 py-10 text-center">
             {/* Logo / Brand */}
-            <div className="flex items-center gap-2 mb-8">
-              <div className="w-10 h-10 bg-teal-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-extrabold text-sm">EB</span>
-              </div>
-              <span className="text-lg font-extrabold text-gray-900 tracking-tight">E-Bringgs Technologies</span>
+            <div className="mb-8">
+              <Logo variant="full" size={64} />
             </div>
 
             {/* Award icon */}

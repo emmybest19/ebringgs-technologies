@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react';
 import api from '../services/api';
 import { useAuthStore } from '../store/auth.store';
+import Logo from '../components/Logo';
 
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();
@@ -40,8 +41,8 @@ export default function VerifyEmail() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-10 max-w-md w-full text-center">
-        <div className="inline-flex w-12 h-12 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-xl items-center justify-center mb-6">
-          <span className="text-white font-bold">EB</span>
+        <div className="inline-block mb-6">
+          <Logo variant="mark" size={48} />
         </div>
 
         {status === 'loading' && (

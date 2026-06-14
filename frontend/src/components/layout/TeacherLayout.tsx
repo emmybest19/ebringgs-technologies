@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
 import PageTransition from '../ui/PageTransition';
+import Logo from '../Logo';
 
 const navItems = [
   { to: '/teacher', label: 'Overview', icon: LayoutDashboard, end: true },
@@ -35,9 +36,7 @@ export default function TeacherLayout() {
       {/* Mobile top bar */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">EB</span>
-          </div>
+          <Logo variant="mark" size={32} onDark />
           <span className="font-bold text-white text-sm">Teacher</span>
         </Link>
         <button
@@ -71,9 +70,7 @@ export default function TeacherLayout() {
         <div className="px-6 py-5 border-b border-slate-800 flex items-start justify-between">
           <div>
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">EB</span>
-              </div>
+              <Logo variant="mark" size={32} onDark />
               <span className="font-bold text-white">E-Bringgs</span>
             </Link>
             <div className="flex items-center gap-1 mt-2 text-xs text-slate-400">

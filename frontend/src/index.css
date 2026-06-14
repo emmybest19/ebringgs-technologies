@@ -3,63 +3,6 @@
 /* Class-based dark mode (toggle .dark on <html>) */
 @custom-variant dark (&:is(.dark *));
 
-/* ─── Brand palette (forest green + warm cream + ochre) ──────────────────────
-   These overrides replace Tailwind's default teal/slate/gray scales so the
-   existing utility classes (`bg-teal-600`, `text-slate-300`, etc.) used across
-   the codebase render the new palette without touching any JSX.
-   ────────────────────────────────────────────────────────────────────────── */
-@theme {
-  /* Primary — Deep forest green (was: teal) */
-  --color-teal-50:  #E9F1EC;
-  --color-teal-100: #D0E1D5;
-  --color-teal-200: #A3C3AB;
-  --color-teal-300: #74A282;
-  --color-teal-400: #4A8460;
-  --color-teal-500: #2A6B47;
-  --color-teal-600: #1B5E3F;
-  --color-teal-700: #134A30;
-  --color-teal-800: #0E3823;
-  --color-teal-900: #092818;
-  --color-teal-950: #051B10;
-
-  /* Surface dark — Warm ink (was: cool slate) */
-  --color-slate-50:  #F4F0E8;
-  --color-slate-100: #E8E3D9;
-  --color-slate-200: #CFC9BC;
-  --color-slate-300: #B5AE9F;
-  --color-slate-400: #8E8878;
-  --color-slate-500: #6A6457;
-  --color-slate-600: #4D4A40;
-  --color-slate-700: #353329;
-  --color-slate-800: #1F2520;
-  --color-slate-900: #14201C;
-  --color-slate-950: #0B1612;
-
-  /* Neutrals — Warm gray (slight green undertone) */
-  --color-gray-50:  #F4F0E8;
-  --color-gray-100: #EBE6DC;
-  --color-gray-200: #DCD5C7;
-  --color-gray-300: #C2BAA8;
-  --color-gray-400: #8E8878;
-  --color-gray-500: #5C5648;
-  --color-gray-600: #44402F;
-  --color-gray-700: #2F2C24;
-  --color-gray-800: #1F1D17;
-  --color-gray-900: #1F2622;
-
-  /* Accent — Warm ochre (NEW family, reserve for premium CTAs / highlights) */
-  --color-accent-50:  #FBEFE0;
-  --color-accent-100: #F5DCBA;
-  --color-accent-200: #ECC288;
-  --color-accent-300: #DFA351;
-  --color-accent-400: #CC862A;
-  --color-accent-500: #C8761B;
-  --color-accent-600: #B8651B;
-  --color-accent-700: #9F571A;
-  --color-accent-800: #7F4717;
-  --color-accent-900: #5F3614;
-}
-
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -74,15 +17,15 @@ body {
   font-family: Inter, system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #1F2622;
-  background-color: #FAF6F0;
+  color: #111827;
+  background-color: #ffffff;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .dark body,
 body:is(.dark *) {
-  color: #E8E3D9;
-  background-color: #0F1714;
+  color: #f1f5f9;
+  background-color: #0f172a;
 }
 
 /* ─── Animated border card ─────────────────────────────────────────────────── */
@@ -107,7 +50,7 @@ body:is(.dark *) {
   pointer-events: none;
   background: conic-gradient(
     from var(--border-angle),
-    #1B5E3F, #2A6B47, #B8651B, #1B5E3F
+    #0d9488, #06b6d4, #8b5cf6, #ec4899, #f59e0b, #0d9488
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);

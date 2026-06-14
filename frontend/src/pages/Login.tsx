@@ -9,6 +9,7 @@ import { useAuthStore } from '../store/auth.store';
 import { useReviews } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
+import Logo from '../components/Logo';
 
 // ─── Floating Icons (same as Register for consistency) ──────────────────────
 const floatingIcons = [
@@ -54,11 +55,8 @@ function LeftPanel() {
       <div className="relative z-10 flex flex-col justify-center px-12 xl:px-16 py-16">
         {/* Logo */}
         <div className="mb-12">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-sm">EB</span>
-            </div>
-            <span className="font-bold text-white text-xl">E-Bringgs</span>
+          <Link to="/" className="inline-block rounded-2xl bg-white p-3 shadow-lg">
+            <Logo variant="full" size={56} />
           </Link>
         </div>
 
@@ -132,12 +130,8 @@ export default function Login() {
       <div className="w-full lg:w-1/2 flex flex-col min-h-screen">
         {/* Mobile header */}
         <div className="lg:hidden flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xs">EB</span>
-            </div>
-            <span className="font-bold text-gray-900 dark:text-white">E-Bringgs</span>
-          </Link>
+          <Logo variant="mark" size={32} asLink withWordmark wordmarkClass="text-gray-900 dark:text-white" />
+
           <Link to="/register" className="text-sm text-teal-600 font-medium">Sign up</Link>
         </div>
 
@@ -146,8 +140,8 @@ export default function Login() {
           <div className="w-full max-w-md">
             {/* Header */}
             <div className="mb-8">
-              <div className="hidden lg:inline-flex w-12 h-12 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-xl items-center justify-center mb-5">
-                <span className="text-white font-bold">EB</span>
+              <div className="hidden lg:block mb-5">
+                <Logo variant="mark" size={48} />
               </div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Sign in to your account</h1>
               <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">
