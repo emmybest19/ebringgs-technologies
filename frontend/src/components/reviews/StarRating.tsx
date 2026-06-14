@@ -42,9 +42,9 @@ export default function StarRating({
                 size={size}
                 className={
                   filled
-                    ? 'fill-amber-400 text-amber-400'
+                    ? 'fill-gold-500 text-gold-500'
                     : isHalf
-                    ? 'fill-amber-200 text-amber-400'
+                    ? 'fill-gold-200 text-gold-500'
                     : 'fill-transparent text-gray-300 dark:text-slate-600'
                 }
               />

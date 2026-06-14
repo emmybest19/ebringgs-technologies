@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Search, Shield, UserCheck, UserX, ChevronDown } from 'lucide-react';
 import type { UserRole } from '../../types';
 import { PageLoader } from '../../components/ui/LoadingSpinner';
@@ -49,7 +49,7 @@ export default function AdminUsers() {
       {loading ? <PageLoader /> : (
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px]">
+          <table className="w-full min-w-180">
             <thead>
               <tr className="border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-800">
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">User</th>

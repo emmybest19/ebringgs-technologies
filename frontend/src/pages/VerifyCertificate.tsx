@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Award, Search, CheckCircle2, XCircle, Loader2, Shield } from 'lucide-react';
 import api from '../services/api';
 
@@ -33,7 +33,7 @@ export default function VerifyCertificate() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-slate-900 via-teal-950 to-cyan-950 text-white py-20">
+      <section className="bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white py-20">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-500/20 rounded-2xl mb-6">
             <Shield size={28} className="text-teal-300" />

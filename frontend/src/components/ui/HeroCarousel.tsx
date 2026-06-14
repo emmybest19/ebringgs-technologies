@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 
 const slides = [
   {
@@ -64,7 +64,7 @@ export default function HeroCarousel() {
             className="w-full h-full object-cover rounded-2xl"
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+          <div className="absolute inset-0 rounded-2xl bg-linear-to-t from-black/60 via-black/10 to-transparent" />
 
           {/* Label */}
           <div
@@ -98,7 +98,7 @@ export default function HeroCarousel() {
       </div>
 
       {/* Decorative border glow */}
-      <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-teal-400/20 via-transparent to-cyan-400/20 -z-10 blur-sm" />
+      <div className="absolute -inset-1 rounded-3xl bg-linear-to-br from-teal-400/20 via-transparent to-cyan-400/20 -z-10 blur-sm" />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
+﻿import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Github, Loader2, Quote, ShoppingCart, Star, AlertCircle, GraduationCap, Briefcase } from 'lucide-react';
 import { useCaseStudy } from '../services/queries';
 
@@ -38,7 +38,7 @@ export default function CaseStudyDetail() {
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-slate-900 to-teal-950 text-white py-16 px-4">
+      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <Link to={backTo} className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white text-sm mb-6 transition-colors">
             <ArrowLeft size={14} /> {backLabel}
@@ -69,7 +69,7 @@ export default function CaseStudyDetail() {
 
           {/* Student profile (only on student projects) */}
           {study.type === 'student_project' && study.studentName && (
-            <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-950/60 dark:to-cyan-950/60 rounded-2xl border border-teal-100 dark:border-teal-900 p-6">
+            <div className="bg-linear-to-br from-teal-50 to-cyan-50 dark:from-teal-950/60 dark:to-cyan-950/60 rounded-2xl border border-teal-100 dark:border-teal-900 p-6">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-teal-100 dark:bg-teal-900 overflow-hidden flex items-center justify-center text-teal-700 dark:text-teal-300 font-bold text-xl shrink-0">
                   {study.studentAvatar ? (
@@ -118,7 +118,7 @@ export default function CaseStudyDetail() {
               <ul className="space-y-2">
                 {study.results.map((r) => (
                   <li key={r} className="flex items-start gap-3 p-4 bg-emerald-50 dark:bg-emerald-950 rounded-xl border border-emerald-100 dark:border-emerald-900">
-                    <span className="text-emerald-600 mt-0.5">→</span>
+                    <span className="text-emerald-600 mt-0.5">â†’</span>
                     <span className="text-sm text-gray-700 dark:text-slate-300">{r}</span>
                   </li>
                 ))}

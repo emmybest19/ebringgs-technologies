@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Users, BookOpen, Linkedin, Github, Globe, X } from 'lucide-react';
 
@@ -22,7 +22,7 @@ const instructors: Instructor[] = [
     id: '1',
     name: 'Kofi Mensah',
     avatar: 'KM',
-    title: 'Lead Instructor — Web Development',
+    title: 'Lead Instructor â€” Web Development',
     bio: 'Full-stack engineer with 10+ years building scalable web applications. Previously at Andela and Paystack. Passionate about mentoring the next generation of African developers.',
     specialties: ['React', 'Node.js', 'TypeScript', 'System Design'],
     experience: '10+ years',
@@ -36,7 +36,7 @@ const instructors: Instructor[] = [
     id: '2',
     name: 'Adaeze Okafor',
     avatar: 'AO',
-    title: 'Senior Instructor — Mobile Development',
+    title: 'Senior Instructor â€” Mobile Development',
     bio: 'Mobile engineer specialising in React Native and Flutter. Has shipped apps with 1M+ downloads. Believes in learning by building real products.',
     specialties: ['React Native', 'Flutter', 'Firebase', 'App Architecture'],
     experience: '8 years',
@@ -50,7 +50,7 @@ const instructors: Instructor[] = [
     id: '3',
     name: 'Yusuf Abdullahi',
     avatar: 'YA',
-    title: 'Senior Instructor — UI/UX Design',
+    title: 'Senior Instructor â€” UI/UX Design',
     bio: 'Product designer who has led design at two YC-backed startups. Specialises in user research, design systems, and making complex products simple.',
     specialties: ['Figma', 'User Research', 'Design Systems', 'Prototyping'],
     experience: '7 years',
@@ -64,7 +64,7 @@ const instructors: Instructor[] = [
     id: '4',
     name: 'Chinonso Eze',
     avatar: 'CE',
-    title: 'Instructor — Backend Engineering',
+    title: 'Instructor â€” Backend Engineering',
     bio: 'Backend specialist focused on distributed systems and API design. Contributor to open-source projects. Loves breaking down complex architecture into digestible lessons.',
     specialties: ['Python', 'Go', 'PostgreSQL', 'Microservices'],
     experience: '6 years',
@@ -77,7 +77,7 @@ const instructors: Instructor[] = [
     id: '5',
     name: 'Ngozi Ibe',
     avatar: 'NI',
-    title: 'Instructor — Data & Analytics',
+    title: 'Instructor â€” Data & Analytics',
     bio: 'Data scientist with experience at consulting firms and NGOs. Teaches data analysis, visualisation, and machine learning fundamentals with practical, real-world datasets.',
     specialties: ['Python', 'SQL', 'Tableau', 'Machine Learning'],
     experience: '5 years',
@@ -90,7 +90,7 @@ const instructors: Instructor[] = [
     id: '6',
     name: 'Emeka Nwankwo',
     avatar: 'EN',
-    title: 'Mentor — Career Development',
+    title: 'Mentor â€” Career Development',
     bio: 'Engineering manager who has hired 50+ developers across Africa. Runs our career coaching sessions, covering CVs, portfolios, interview prep, and salary negotiation.',
     specialties: ['Career Coaching', 'Interview Prep', 'Portfolio Review', 'Salary Negotiation'],
     experience: '12 years',
@@ -107,14 +107,14 @@ export default function Instructors() {
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-slate-900 via-teal-950 to-cyan-950 text-white py-20">
+      <section className="bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 text-teal-300 text-sm font-medium mb-6">
             <Users size={14} /> Our Team
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Meet Our Instructors</h1>
           <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-            Industry professionals who don't just teach — they've built, shipped, and scaled real products. Learn from people who've been where you want to go.
+            Industry professionals who don't just teach â€” they've built, shipped, and scaled real products. Learn from people who've been where you want to go.
           </p>
         </div>
       </section>
@@ -130,7 +130,7 @@ export default function Instructors() {
               <div className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="h-52 overflow-hidden relative">
                   <img src={inst.image} alt={inst.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="font-bold text-white text-lg">{inst.name}</p>
                     <p className="text-sm text-gray-200">{inst.title}</p>
@@ -138,7 +138,7 @@ export default function Instructors() {
                 </div>
                 <div className="p-5">
                   <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 mb-3">
-                    <span className="flex items-center gap-1"><Star size={13} className="fill-amber-400 text-amber-400" /> {inst.rating}</span>
+                    <span className="flex items-center gap-1"><Star size={13} className="fill-gold-500 text-gold-500" /> {inst.rating}</span>
                     <span className="flex items-center gap-1"><Users size={13} /> {inst.students} students</span>
                     <span className="flex items-center gap-1"><BookOpen size={13} /> {inst.experience}</span>
                   </div>
@@ -177,7 +177,7 @@ export default function Instructors() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-br from-teal-600 to-emerald-700 py-16">
+      <section className="bg-linear-to-br from-teal-600 to-emerald-700 py-16">
         <div className="max-w-3xl mx-auto px-4 text-center text-white">
           <h2 className="text-3xl font-extrabold mb-4">Learn from the best</h2>
           <p className="text-teal-200 text-lg mb-8">Join our next cohort and get direct access to our expert instructors.</p>
@@ -193,7 +193,7 @@ export default function Instructors() {
           <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="h-48 overflow-hidden rounded-t-2xl relative">
               <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
               <button onClick={() => setSelected(null)} className="absolute top-4 right-4 p-2 bg-black/30 text-white rounded-full hover:bg-black/50">
                 <X size={16} />
               </button>
@@ -203,7 +203,7 @@ export default function Instructors() {
               <p className="text-sm text-teal-600 dark:text-teal-400 mb-4">{selected.title}</p>
 
               <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 mb-4">
-                <span className="flex items-center gap-1"><Star size={13} className="fill-amber-400 text-amber-400" /> {selected.rating} rating</span>
+                <span className="flex items-center gap-1"><Star size={13} className="fill-gold-500 text-gold-500" /> {selected.rating} rating</span>
                 <span className="flex items-center gap-1"><Users size={13} /> {selected.students} students</span>
                 <span>{selected.experience} experience</span>
               </div>

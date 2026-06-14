@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Eye, EyeOff, Loader2, Mail, Lock, ArrowRight, CheckCircle2,
@@ -11,7 +11,7 @@ import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import Logo from '../components/Logo';
 
-// ─── Floating Icons (same as Register for consistency) ──────────────────────
+// â”€â”€â”€ Floating Icons (same as Register for consistency) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const floatingIcons = [
   { Icon: Code2, top: '12%', left: '8%', delay: '0s', size: 20 },
   { Icon: Smartphone, top: '25%', right: '12%', delay: '1.5s', size: 18 },
@@ -26,13 +26,13 @@ const stats = [
   { value: '15+', label: 'Expert mentors' },
 ];
 
-// ─── Left Panel ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Left Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function LeftPanel() {
   const { data } = useReviews({ featured: true, limit: 2 });
   const reviews: ReviewCardData[] = (data?.reviews ?? []) as unknown as ReviewCardData[];
 
   return (
-    <div className="hidden lg:flex lg:w-1/2 relative bg-gradient-to-br from-slate-900 via-teal-950 to-cyan-950 overflow-hidden">
+    <div className="hidden lg:flex lg:w-1/2 relative bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%2314b8a6%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
 
@@ -63,7 +63,7 @@ function LeftPanel() {
         {/* Main message */}
         <h2 className="text-3xl xl:text-4xl font-extrabold text-white leading-tight mb-4">
           Welcome back to{' '}
-          <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
             E-Bringgs
           </span>
         </h2>
@@ -94,7 +94,7 @@ function LeftPanel() {
   );
 }
 
-// ─── Main Login Page ────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Login Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function Login() {
   const location = useLocation();
   const prefilledEmail = (location.state as { email?: string } | null)?.email ?? '';
@@ -123,10 +123,10 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-slate-950">
-      {/* ── Left Panel ──────────────────────────────────────────────── */}
+      {/* â”€â”€ Left Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <LeftPanel />
 
-      {/* ── Right Panel (Form) ──────────────────────────────────────── */}
+      {/* â”€â”€ Right Panel (Form) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="w-full lg:w-1/2 flex flex-col min-h-screen">
         {/* Mobile header */}
         <div className="lg:hidden flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900">
@@ -193,7 +193,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    placeholder="••••••••"
+                    placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                     className="w-full pl-11 pr-12 py-4 rounded-xl border-2 border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
                   />
                   <button
@@ -261,7 +261,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ── Global CSS for animations ───────────────────────────────── */}
+      {/* â”€â”€ Global CSS for animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }

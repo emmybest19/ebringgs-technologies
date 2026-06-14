@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GraduationCap, Eye, EyeOff, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -32,11 +32,11 @@ export default function TeacherLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-950 to-indigo-950 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
+          <div className="inline-flex w-14 h-14 bg-linear-to-br from-indigo-500 to-purple-500 rounded-2xl items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
             <GraduationCap size={28} className="text-white" />
           </div>
           <h1 className="text-3xl font-extrabold text-white mb-2">Teacher Portal</h1>
@@ -78,7 +78,7 @@ export default function TeacherLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   autoComplete="current-password"
                   className="w-full pl-11 pr-12 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-sm"
                 />

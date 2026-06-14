@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Award, Download, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../store/auth.store';
@@ -65,8 +65,8 @@ export default function Certificate() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      {/* Toolbar — hidden when printing */}
+    <div className="min-h-screen bg-linear-to-br from-teal-50 via-white to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      {/* Toolbar â€” hidden when printing */}
       <div className="print:hidden bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 px-6 py-3 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white transition-colors">
           <ArrowLeft size={15} /> Back to Dashboard
@@ -84,7 +84,7 @@ export default function Certificate() {
           style={{ aspectRatio: '1.414 / 1' }}>
 
           {/* Top accent bar */}
-          <div className="h-3 bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-600" />
+          <div className="h-3 bg-linear-to-r from-teal-600 via-cyan-600 to-teal-600" />
 
           <div className="flex flex-col items-center justify-center h-[calc(100%-12px)] px-16 py-10 text-center">
             {/* Logo / Brand */}

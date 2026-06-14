@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Loader2, Linkedin, Github, Globe, Mail, BookOpen, Star, AlertCircle } from 'lucide-react';
 import api from '../../services/api';
@@ -66,10 +66,10 @@ export default function StudentInstructorDetail() {
 
       {/* Hero card */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden mb-6">
-        <div className="h-32 bg-gradient-to-br from-teal-600 via-cyan-600 to-emerald-600" />
+        <div className="h-32 bg-linear-to-br from-teal-600 via-cyan-600 to-emerald-600" />
         <div className="px-8 pb-8">
           <div className="flex flex-col sm:flex-row sm:items-end gap-5 -mt-12">
-            <div className="w-24 h-24 rounded-2xl border-4 border-white dark:border-slate-900 bg-gradient-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950 overflow-hidden shrink-0">
+            <div className="w-24 h-24 rounded-2xl border-4 border-white dark:border-slate-900 bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950 overflow-hidden shrink-0">
               {teacher.avatar ? (
                 <img src={teacher.avatar} alt={teacher.name} className="w-full h-full object-cover" />
               ) : (
@@ -137,7 +137,7 @@ export default function StudentInstructorDetail() {
           )}
         </div>
 
-        {/* Sidebar — contact / links */}
+        {/* Sidebar â€” contact / links */}
         <aside className="space-y-4">
           {teacher.social && (teacher.social.linkedin || teacher.social.github || teacher.social.website) && (
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
@@ -165,7 +165,7 @@ export default function StudentInstructorDetail() {
             </div>
           )}
 
-          <div className="bg-gradient-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-5 text-white">
+          <div className="bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-5 text-white">
             <Mail size={20} className="mb-3" />
             <p className="font-bold mb-1">Have a question?</p>
             <p className="text-teal-100 text-sm mb-4">

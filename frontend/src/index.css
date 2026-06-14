@@ -3,6 +3,23 @@
 /* Class-based dark mode (toggle .dark on <html>) */
 @custom-variant dark (&:is(.dark *));
 
+/* ─── Brand secondary: gold (matches the "eb" mark in the logo) ───────────
+   Use sparingly for highlights, "premium" tags, achievement/rating accents,
+   and hover micro-interactions. Teal stays the primary CTA color.
+   Available as bg-gold-50…900, text-gold-*, border-gold-*, etc. */
+@theme {
+  --color-gold-50:  #FEF8E7;
+  --color-gold-100: #FCEFC3;
+  --color-gold-200: #F9DF8A;
+  --color-gold-300: #F4CB51;
+  --color-gold-400: #EEB628;
+  --color-gold-500: #E8A317;
+  --color-gold-600: #C68512;
+  --color-gold-700: #9F6A0F;
+  --color-gold-800: #7B520C;
+  --color-gold-900: #5A3C09;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

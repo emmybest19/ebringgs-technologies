@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom';
+﻿import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Calendar, Eye, Tag, BookOpen } from 'lucide-react';
 import { useBlogs, type BlogListItem } from '../services/queries';
 import { PageLoader } from '../components/ui/LoadingSpinner';
@@ -18,7 +18,7 @@ function PostCard({ post }: { post: BlogListItem }) {
 
   return (
     <Link to={`/blog/${post.slug}`} className="card-hover-border group block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 hover:border-teal-100 hover:shadow-lg transition-all duration-300 overflow-hidden">
-      <div className="h-44 bg-gradient-to-br from-slate-100 to-teal-100 flex items-center justify-center">
+      <div className="h-44 bg-linear-to-br from-slate-100 to-teal-100 flex items-center justify-center">
         <BookOpen size={36} className="text-teal-200" />
       </div>
       <div className="p-6">
@@ -68,7 +68,7 @@ export default function Blog() {
   return (
     <div className="bg-white min-h-screen">
       {/* Header */}
-      <section className="bg-gradient-to-br from-slate-900 to-teal-950 text-white py-20 px-4">
+      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Blog & Insights</h1>
           <p className="text-slate-300 text-lg mb-8">Engineering, data, career advice, and industry perspectives.</p>

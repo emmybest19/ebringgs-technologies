@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -35,7 +35,7 @@ export default function ResetPassword() {
 
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-10 max-w-sm w-full text-center">
           <p className="text-gray-500 dark:text-slate-400">Invalid reset link. Please request a new one.</p>
           <Link to="/forgot-password" className="mt-4 inline-block text-teal-600 font-medium text-sm">Request reset</Link>
@@ -45,7 +45,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
       <div className="w-full max-w-md">
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-8">
           <div className="text-center mb-8">
@@ -62,7 +62,7 @@ export default function ResetPassword() {
                 <CheckCircle2 size={32} className="text-green-500" />
               </div>
               <h3 className="font-bold text-gray-900 dark:text-white mb-2">Password updated!</h3>
-              <p className="text-gray-500 dark:text-slate-400 text-sm">Redirecting you to sign in…</p>
+              <p className="text-gray-500 dark:text-slate-400 text-sm">Redirecting you to sign inâ€¦</p>
             </div>
           ) : (
             <>

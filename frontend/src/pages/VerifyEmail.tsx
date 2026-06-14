@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react';
 import api from '../services/api';
@@ -39,7 +39,7 @@ export default function VerifyEmail() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-slate-900 px-4">
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-10 max-w-md w-full text-center">
         <div className="inline-block mb-6">
           <Logo variant="mark" size={48} />
@@ -48,7 +48,7 @@ export default function VerifyEmail() {
         {status === 'loading' && (
           <>
             <Loader2 size={40} className="animate-spin text-teal-600 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Verifying your email…</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Verifying your emailâ€¦</h2>
             <p className="text-gray-500 dark:text-slate-400 text-sm">Please wait a moment.</p>
           </>
         )}

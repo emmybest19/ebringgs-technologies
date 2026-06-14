@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+﻿import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Code2, BarChart3, BookOpen, Layers,
@@ -12,7 +12,7 @@ import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import { useAuthStore } from '../store/auth.store';
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Hero() {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -22,7 +22,7 @@ function Hero() {
     : user?.role === 'client' ? '/client'
     : '/dashboard';
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-cyan-950 text-white">
+    <section className="relative overflow-hidden bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%239C92AC%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -30,22 +30,22 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — Copy */}
+          {/* Left â€” Copy */}
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 text-sm font-medium mb-8">
               <Zap size={14} className="fill-current" />
-              Technology · Learning · Innovation
+              Technology Â· Learning Â· Innovation
             </div>
 
             <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-6">
               Build. Learn.{' '}
-              <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
                 Grow.
               </span>
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
-              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting — all in one platform.
+              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting â€” all in one platform.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -82,7 +82,7 @@ function Hero() {
             </div>
           </div>
 
-          {/* Right — Image Carousel */}
+          {/* Right â€” Image Carousel */}
           <div className="hidden lg:block">
             <HeroCarousel />
           </div>
@@ -92,7 +92,7 @@ function Hero() {
   );
 }
 
-// ─── Stats ───────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -157,7 +157,7 @@ function Stats() {
   );
 }
 
-// ─── Services ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Services â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const serviceCards = [
   {
     icon: Code2,
@@ -200,7 +200,7 @@ function Services() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">What we do</h2>
           <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">
-            From software delivery to academic research — we bring technical excellence to every engagement.
+            From software delivery to academic research â€” we bring technical excellence to every engagement.
           </p>
         </div>
 
@@ -234,10 +234,10 @@ function Services() {
   );
 }
 
-// ─── Learning ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Learning() {
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-teal-950">
+    <section className="py-24 bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-teal-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -273,10 +273,10 @@ function Learning() {
           {/* Visual image grid */}
           <div className="grid grid-cols-2 gap-4">
             {[
-              { label: 'Web Development', duration: '8–12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
-              { label: 'Mobile Development', duration: '8–12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
-              { label: 'UI/UX Design', duration: '6–10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
-              { label: '1-on-1 Mentorship', duration: '10–12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
+              { label: 'Web Development', duration: '8â€“12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
+              { label: 'Mobile Development', duration: '8â€“12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
+              { label: 'UI/UX Design', duration: '6â€“10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
+              { label: '1-on-1 Mentorship', duration: '10â€“12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
             ].map((program) => (
               <div key={program.label} className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden group">
                 <div className="h-28 overflow-hidden">
@@ -296,19 +296,19 @@ function Learning() {
   );
 }
 
-// ─── Featured Student Work ───────────────────────────────────────────────────
+// â”€â”€â”€ Featured Student Work â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function FeaturedStudentWork() {
   // Backend sorts case studies by `featured: -1, createdAt: -1` already, so
   // a single top-3 fetch yields featured-first-then-recent automatically.
-  // (Previously this was a two-stage fetch — feature-filtered then fallback —
+  // (Previously this was a two-stage fetch â€” feature-filtered then fallback â€”
   // unnecessary given the server-side sort.)
   const { data: projects = [], isLoading: loading } = useCaseStudies({
     type: 'student_project',
     limit: 3,
   });
 
-  // Hide the whole section if there's nothing to show — better than an
+  // Hide the whole section if there's nothing to show â€” better than an
   // awkward empty grid in front of a marketing page.
   if (!loading && projects.length === 0) return null;
 
@@ -394,14 +394,14 @@ function FeaturedStudentWork() {
   );
 }
 
-// ─── Pricing CTA ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Pricing CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function PricingCTA() {
   const highlights = [
     {
       label: 'For Clients',
       title: 'Build your product',
-      description: 'Productized packages with fixed scope and fixed price — landing pages, full-stack web apps, mobile apps, data dashboards, and research writing.',
-      features: ['Web development from ₦150,000', 'Mobile apps from ₦1,500,000', 'Data dashboards from ₦400,000', 'Research writing from ₦100,000'],
+      description: 'Productized packages with fixed scope and fixed price â€” landing pages, full-stack web apps, mobile apps, data dashboards, and research writing.',
+      features: ['Web development from â‚¦150,000', 'Mobile apps from â‚¦1,500,000', 'Data dashboards from â‚¦400,000', 'Research writing from â‚¦100,000'],
       cta: 'View client pricing',
       link: '/pricing',
       gradient: true,
@@ -410,7 +410,7 @@ function PricingCTA() {
       label: 'For Learners',
       title: 'Launch your tech career',
       description: 'Live instructor-led classes, intensive cohorts, and 1-on-1 mentorship across 5 tracks. One fixed fee per tier.',
-      features: ['Frontend, Backend, Full-Stack tracks', 'Mobile App Development track', 'Research Writing track', '3 tiers from ₦50,000'],
+      features: ['Frontend, Backend, Full-Stack tracks', 'Mobile App Development track', 'Research Writing track', '3 tiers from â‚¦50,000'],
       cta: 'View training pricing',
       link: '/pricing',
       gradient: false,
@@ -422,7 +422,7 @@ function PricingCTA() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Pricing for every goal</h2>
-          <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">Whether you're building a product or building your skills — we've got you covered.</p>
+          <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">Whether you're building a product or building your skills â€” we've got you covered.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -431,7 +431,7 @@ function PricingCTA() {
               key={h.title}
               className={`relative rounded-2xl p-8 md:p-10 flex flex-col ${
                 h.gradient
-                  ? 'bg-gradient-to-br from-teal-600 to-emerald-700 text-white shadow-2xl shadow-teal-500/30'
+                  ? 'bg-linear-to-br from-teal-600 to-emerald-700 text-white shadow-2xl shadow-teal-500/30'
                   : 'bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700'
               }`}
             >
@@ -468,7 +468,7 @@ function PricingCTA() {
   );
 }
 
-// ─── Testimonials ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Testimonials() {
   const { data, isLoading: loading } = useReviews({ limit: 6 });
   const reviews: ReviewCardData[] = (data?.reviews ?? []) as unknown as ReviewCardData[];
@@ -477,7 +477,7 @@ function Testimonials() {
   return (
     <section className="relative py-24 text-white overflow-hidden">
       <img src="/images/general/african-students.jpg" alt="Students" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 to-teal-950/90" />
+      <div className="absolute inset-0 bg-linear-to-br from-slate-900/95 to-teal-950/90" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What our students & clients say</h2>
@@ -496,7 +496,7 @@ function Testimonials() {
           <div className="text-center text-slate-400 py-12">Loading reviews...</div>
         ) : reviews.length === 0 ? (
           <div className="text-center max-w-md mx-auto py-12 px-6 bg-white/5 backdrop-blur border border-white/10 rounded-2xl">
-            <p className="text-slate-300 mb-2">No reviews yet — be the first.</p>
+            <p className="text-slate-300 mb-2">No reviews yet â€” be the first.</p>
             <p className="text-sm text-slate-400">
               Once students complete a program and clients finish a project, their reviews will appear here.
             </p>
@@ -513,7 +513,7 @@ function Testimonials() {
   );
 }
 
-// ─── Newsletter ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Newsletter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Newsletter() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -542,7 +542,7 @@ function Newsletter() {
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">Stay in the loop</h2>
         <p className="text-gray-500 dark:text-slate-400 mb-8 max-w-lg mx-auto">
-          Get updates on new cohort openings, free workshops, and tech career tips. No spam — unsubscribe anytime.
+          Get updates on new cohort openings, free workshops, and tech career tips. No spam â€” unsubscribe anytime.
         </p>
 
         {status === 'success' ? (
@@ -577,12 +577,12 @@ function Newsletter() {
   );
 }
 
-// ─── Final CTA ───────────────────────────────────────────────────────────────
+// â”€â”€â”€ Final CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FinalCTA() {
   return (
     <section className="py-24 bg-white dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-gradient-to-br from-teal-600 to-emerald-700 p-12 md:p-20 text-center text-white relative overflow-hidden">
+        <div className="rounded-3xl bg-linear-to-br from-teal-600 to-emerald-700 p-12 md:p-20 text-center text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]" />
           <div className="relative">
             <Shield size={40} className="mx-auto mb-6 text-teal-200" />
@@ -605,7 +605,7 @@ function FinalCTA() {
   );
 }
 
-// ─── Page ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function Landing() {
   return (
     <>

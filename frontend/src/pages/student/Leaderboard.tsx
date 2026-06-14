@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Trophy, Medal, Gift } from 'lucide-react';
 import api from '../../services/api';
 import { useAuthStore } from '../../store/auth.store';
@@ -90,7 +90,7 @@ export default function StudentLeaderboard() {
                         <p className="text-xs font-semibold text-gray-900 dark:text-white text-center">{s.name.split(' ')[0]}</p>
                         <p className="text-xs text-gray-400 dark:text-slate-500">{s.points} pts</p>
                         <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">{formatNaira(s.points)}</p>
-                        <div className={`${heights[i]} w-20 bg-gradient-to-t ${s.rank === 1 ? 'from-amber-200 to-amber-100 dark:from-amber-900 dark:to-amber-950' : 'from-gray-100 to-gray-50 dark:from-slate-800 dark:to-slate-850'} rounded-t-lg mt-2 flex items-center justify-center`}>
+                        <div className={`${heights[i]} w-20 bg-linear-to-t ${s.rank === 1 ? 'from-amber-200 to-amber-100 dark:from-amber-900 dark:to-amber-950' : 'from-gray-100 to-gray-50 dark:from-slate-800 dark:to-slate-850'} rounded-t-lg mt-2 flex items-center justify-center`}>
                           <span className="text-lg font-extrabold text-gray-400 dark:text-slate-500">#{s.rank}</span>
                         </div>
                       </div>
@@ -127,7 +127,7 @@ export default function StudentLeaderboard() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Redeem your points */}
-          <div className="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-2xl shadow-sm p-5 text-white">
+          <div className="bg-linear-to-br from-emerald-600 to-teal-700 rounded-2xl shadow-sm p-5 text-white">
             <div className="flex items-center gap-2 mb-2">
               <Gift size={18} />
               <h3 className="font-bold">Redeem your points</h3>
@@ -137,10 +137,10 @@ export default function StudentLeaderboard() {
             </p>
             <div className="bg-white/10 backdrop-blur rounded-xl px-4 py-3 mb-3">
               <p className="text-xs text-emerald-100 mb-1">Conversion rate</p>
-              <p className="text-base font-bold">1 point = ₦{POINT_TO_NAIRA}</p>
+              <p className="text-base font-bold">1 point = â‚¦{POINT_TO_NAIRA}</p>
             </div>
             <p className="text-[11px] text-emerald-100">
-              Discount is applied automatically at checkout. No cash withdrawal — points only convert to enrollment credit.
+              Discount is applied automatically at checkout. No cash withdrawal â€” points only convert to enrollment credit.
             </p>
           </div>
 

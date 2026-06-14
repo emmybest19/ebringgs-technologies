@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader2, Star, Search, Users, ArrowRight, Sparkles } from 'lucide-react';
 import api from '../../services/api';
@@ -64,7 +64,7 @@ export default function StudentInstructors() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name or skill…"
+            placeholder="Search by name or skillâ€¦"
             className="w-full pl-9 pr-3 py-2 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none"
           />
         </div>
@@ -128,7 +128,7 @@ function InstructorCard({ t, featured }: { t: Teacher; featured?: boolean }) {
       to={`/dashboard/instructors/${t._id}`}
       className="group bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:border-teal-300 dark:hover:border-teal-700 hover:shadow-md transition-all overflow-hidden flex flex-col"
     >
-      <div className="h-40 overflow-hidden relative bg-gradient-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950">
+      <div className="h-40 overflow-hidden relative bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950">
         {t.avatar ? (
           <img src={t.avatar} alt={t.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (

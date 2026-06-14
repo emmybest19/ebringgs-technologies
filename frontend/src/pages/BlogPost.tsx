@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+﻿import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Eye, Tag, Clock } from 'lucide-react';
 import { useBlogPost } from '../services/queries';
 import { PageLoader } from '../components/ui/LoadingSpinner';
@@ -71,7 +71,7 @@ export default function BlogPostPage() {
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-slate-900 to-teal-950 text-white py-20 px-4">
+      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-20 px-4">
         <div className="max-w-3xl mx-auto">
           <Link to="/blog" className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white text-sm mb-8 transition-colors">
             <ArrowLeft size={14} /> Back to blog

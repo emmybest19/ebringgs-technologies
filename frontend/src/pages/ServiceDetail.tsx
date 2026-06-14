@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft, CheckCircle2, XCircle, Clock, ShoppingCart, ArrowRight,
@@ -54,7 +54,7 @@ function CustomQuoteModal({ serviceId, serviceTitle, onClose }: { serviceId: str
               <CheckCircle2 size={32} className="text-green-500" />
             </div>
             <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Inquiry sent!</h3>
-            <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">We'll send a tailored quote within 1–2 business days.</p>
+            <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">We'll send a tailored quote within 1â€“2 business days.</p>
             <button onClick={onClose} className="px-6 py-2 bg-teal-600 text-white rounded-lg text-sm font-medium hover:bg-teal-700">Close</button>
           </div>
         ) : (
@@ -121,7 +121,7 @@ export default function ServiceDetail() {
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-slate-900 to-teal-950 text-white py-20 px-4">
+      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <Link to="/services" className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white text-sm mb-8 transition-colors">
             <ArrowLeft size={14} /> All services
@@ -294,7 +294,7 @@ export default function ServiceDetail() {
                     <div className="flex items-baseline gap-1">
                       <span className="text-3xl font-extrabold">{formatNGN(service.price)}</span>
                     </div>
-                    <p className="text-teal-300 text-xs mt-1">Fixed price · one-time payment</p>
+                    <p className="text-teal-300 text-xs mt-1">Fixed price Â· one-time payment</p>
                   </div>
                   <button
                     onClick={handlePurchase}
@@ -317,7 +317,7 @@ export default function ServiceDetail() {
                 <>
                   <p className="font-bold text-lg mb-1">Custom engagement</p>
                   <p className="text-teal-100 text-sm mb-5">
-                    Scope and price depend on your needs. Tell us about your project and we'll send a quote within 1–2 business days.
+                    Scope and price depend on your needs. Tell us about your project and we'll send a quote within 1â€“2 business days.
                   </p>
                   <button
                     onClick={() => setShowInquiry(true)}

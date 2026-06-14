@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Calendar, Clock, Users, ArrowRight, ChevronLeft, ChevronRight,
@@ -9,7 +9,7 @@ import api from '../services/api';
 import { useCohorts, type Cohort } from '../services/queries';
 import { useSEO } from '../hooks/useSEO';
 
-/* ─── Types ───────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 interface PublicSession {
   _id: string;
@@ -22,10 +22,10 @@ interface PublicSession {
   enrolledCount: number;
 }
 
-// Cohort + CohortStatus are imported from services/queries — live-session
+// Cohort + CohortStatus are imported from services/queries â€” live-session
 // fetching still uses the old pattern until that domain is migrated.
 
-/* ─── Formatting helpers ──────────────────────────────────────────────── */
+/* â”€â”€â”€ Formatting helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = [
@@ -45,7 +45,7 @@ function formatNGN(naira: number) {
   return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(naira);
 }
 
-/* ─── Countdown ───────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Countdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 interface CountdownParts {
   days: number;
@@ -65,7 +65,7 @@ function useCountdown(targetIso?: string): CountdownParts {
   useEffect(() => {
     if (!targetIso) return;
     // Tick on a 1s interval. We don't try to sync to the wall-clock boundary
-    // — the visible jitter is imperceptible on display sizes.
+    // â€” the visible jitter is imperceptible on display sizes.
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, [targetIso]);
@@ -85,7 +85,7 @@ function useCountdown(targetIso?: string): CountdownParts {
   };
 }
 
-/* ─── ICS calendar export ─────────────────────────────────────────────── */
+/* â”€â”€â”€ ICS calendar export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function escapeIcs(s: string): string {
   // RFC 5545 says we need to escape backslashes, semicolons, commas, and newlines.
@@ -93,7 +93,7 @@ function escapeIcs(s: string): string {
 }
 
 function formatIcsDate(iso: string): string {
-  // YYYYMMDDTHHmmssZ — UTC. Strip non-digits and append the Z.
+  // YYYYMMDDTHHmmssZ â€” UTC. Strip non-digits and append the Z.
   const d = new Date(iso);
   const pad = (n: number) => String(n).padStart(2, '0');
   return (
@@ -109,7 +109,7 @@ function downloadCohortIcs(c: Cohort) {
   const end = formatIcsDate(endIso);
   const stamp = formatIcsDate(new Date().toISOString());
 
-  const summary = `${c.title} — kickoff`;
+  const summary = `${c.title} â€” kickoff`;
   const description = [
     c.description,
     c.instructor ? `Instructor: ${c.instructor}` : null,
@@ -150,7 +150,7 @@ function downloadCohortIcs(c: Cohort) {
   setTimeout(() => URL.revokeObjectURL(href), 1000);
 }
 
-/* ─── Page ────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 export default function Schedule() {
   useSEO({
@@ -165,7 +165,7 @@ export default function Schedule() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [activeProgram, setActiveProgram] = useState('All');
 
-  // Fetch live sessions (legacy pattern — live-session domain not yet migrated).
+  // Fetch live sessions (legacy pattern â€” live-session domain not yet migrated).
   useEffect(() => {
     api.get('/live-sessions?upcoming=true')
       .then(({ data }) => setSessions(Array.isArray(data.data) ? data.data : []))
@@ -173,7 +173,7 @@ export default function Schedule() {
       .finally(() => setLoadingSessions(false));
   }, []);
 
-  // Upcoming cohorts via TanStack. Cohorts are non-fatal — if the query fails,
+  // Upcoming cohorts via TanStack. Cohorts are non-fatal â€” if the query fails,
   // the rest of the schedule (live-session calendar) still renders.
   const {
     data: cohorts = [],
@@ -182,7 +182,7 @@ export default function Schedule() {
   } = useCohorts({ upcoming: true, limit: 20 });
   const error = cohortsErrored ? 'We could not load upcoming cohorts. Refresh to try again.' : '';
 
-  // The "next intake" is the soonest upcoming cohort — already sorted by API.
+  // The "next intake" is the soonest upcoming cohort â€” already sorted by API.
   const nextCohort = cohorts[0];
   const countdown = useCountdown(nextCohort?.startDate);
 
@@ -216,7 +216,7 @@ export default function Schedule() {
 
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
-      {/* ─── Hero with countdown ───────────────────────────────────── */}
+      {/* â”€â”€â”€ Hero with countdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <CountdownHero
         nextCohort={nextCohort}
         countdown={countdown}
@@ -231,7 +231,7 @@ export default function Schedule() {
         </div>
       )}
 
-      {/* ─── Upcoming cohort grid ──────────────────────────────────── */}
+      {/* â”€â”€â”€ Upcoming cohort grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
           <div>
@@ -276,7 +276,7 @@ export default function Schedule() {
         )}
       </section>
 
-      {/* ─── Live class calendar ───────────────────────────────────── */}
+      {/* â”€â”€â”€ Live class calendar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="bg-gray-50 dark:bg-slate-950 border-y border-gray-100 dark:border-slate-800 py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
@@ -444,8 +444,8 @@ export default function Schedule() {
         </div>
       </section>
 
-      {/* ─── Final CTA ─────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-teal-600 to-emerald-700 py-16">
+      {/* â”€â”€â”€ Final CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      <section className="bg-linear-to-br from-teal-600 to-emerald-700 py-16">
         <div className="max-w-3xl mx-auto px-4 text-center text-white">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Not sure which cohort to join?</h2>
           <p className="text-teal-100 text-lg mb-8">
@@ -471,7 +471,7 @@ export default function Schedule() {
   );
 }
 
-/* ─── Sub-components ──────────────────────────────────────────────────── */
+/* â”€â”€â”€ Sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function CountdownHero({
   nextCohort, countdown, loading,
@@ -481,7 +481,7 @@ function CountdownHero({
   loading: boolean;
 }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-cyan-950 text-white">
+    <section className="relative overflow-hidden bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white">
       <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
@@ -491,9 +491,9 @@ function CountdownHero({
         </div>
 
         <h1 className="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
-          {loading ? 'Loading next intake…'
+          {loading ? 'Loading next intakeâ€¦'
             : nextCohort
-              ? <>The next cohort starts in <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">{countdown.days} days</span></>
+              ? <>The next cohort starts in <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">{countdown.days} days</span></>
               : 'Live class schedule'}
         </h1>
 
@@ -503,14 +503,14 @@ function CountdownHero({
           </div>
         ) : !nextCohort ? (
           <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-            We are between cohorts right now — fresh intakes drop monthly.
+            We are between cohorts right now â€” fresh intakes drop monthly.
             Subscribe to the newsletter or talk to us to be first in line.
           </p>
         ) : (
           <>
             <p className="text-slate-300 text-lg max-w-2xl mx-auto mb-8">
               <span className="font-semibold text-white">{nextCohort.title}</span>
-              {nextCohort.durationLabel && <> · {nextCohort.durationLabel}</>} ·{' '}
+              {nextCohort.durationLabel && <> Â· {nextCohort.durationLabel}</>} Â·{' '}
               Starts {formatDate(nextCohort.startDate)}
             </p>
 
@@ -530,7 +530,7 @@ function CountdownHero({
                 to={`/checkout?plan=${encodeURIComponent(nextCohort.planId)}`}
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl transition-colors shadow-lg shadow-teal-500/30"
               >
-                Reserve my seat — {formatNGN(nextCohort.priceNgn)} <ArrowRight size={16} />
+                Reserve my seat â€” {formatNGN(nextCohort.priceNgn)} <ArrowRight size={16} />
               </Link>
               <button
                 onClick={() => downloadCohortIcs(nextCohort)}
@@ -563,7 +563,7 @@ function SpotsRemainingBadge({ cohort }: { cohort: Cohort }) {
   if (cohort.spotsRemaining <= 0) {
     return (
       <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-400/40 text-red-200 text-sm font-medium">
-        <AlertCircle size={14} /> This cohort is full — join the next one below.
+        <AlertCircle size={14} /> This cohort is full â€” join the next one below.
       </p>
     );
   }
@@ -586,7 +586,7 @@ function CohortCard({ cohort: c }: { cohort: Cohort }) {
   const isClosed = c.status === 'closed' || isFull;
   const pct = c.capacity > 0 ? Math.min(100, Math.round((c.enrolledCount / c.capacity) * 100)) : 0;
   // Show in_progress cohorts on the public page only if they were already running
-  // when the page loaded — they no longer count as "upcoming".
+  // when the page loaded â€” they no longer count as "upcoming".
   const startedAlready = new Date(c.startDate) <= new Date();
 
   return (
@@ -708,7 +708,7 @@ function SessionRow({ s }: { s: PublicSession }) {
         <p className="font-semibold text-gray-900 dark:text-white">{s.title}</p>
         {s.courseTitle && <p className="text-xs text-gray-500 dark:text-slate-400">{s.courseTitle}</p>}
         <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-gray-400 dark:text-slate-500">
-          <span className="flex items-center gap-1"><Clock size={12} /> {formatTime(s.scheduledAt)} · {s.durationMinutes} min</span>
+          <span className="flex items-center gap-1"><Clock size={12} /> {formatTime(s.scheduledAt)} Â· {s.durationMinutes} min</span>
           <span className="flex items-center gap-1"><Users size={12} /> {s.instructor}</span>
         </div>
       </div>

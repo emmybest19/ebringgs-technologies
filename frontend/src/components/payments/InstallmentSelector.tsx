@@ -1,14 +1,14 @@
-import { Calendar, Zap, AlertCircle } from 'lucide-react';
+﻿import { Calendar, Zap, AlertCircle } from 'lucide-react';
 
 /**
- * The Checkout-page selector: 1× / 2× / 3× monthly installments.
+ * The Checkout-page selector: 1Ã— / 2Ã— / 3Ã— monthly installments.
  *
- * Pure presentational — parent owns the state (which option is selected, and
+ * Pure presentational â€” parent owns the state (which option is selected, and
  * the auto-charge consent checkbox). Renders a 3-card radio group + the live
- * schedule preview + the required consent checkbox when 2× or 3× is chosen.
+ * schedule preview + the required consent checkbox when 2Ã— or 3Ã— is chosen.
  *
  * The parent (Checkout.tsx) wires the selection into the InitializePayment
- * payload — `installments` + `autoChargeConsent`. Server validates eligibility.
+ * payload â€” `installments` + `autoChargeConsent`. Server validates eligibility.
  */
 
 export type InstallmentChoice = 1 | 2 | 3;
@@ -23,8 +23,8 @@ interface Props {
   consent: boolean;
   onConsentChange: (v: boolean) => void;
   /**
-   * Whether this item is eligible at all (e.g. price ≥ ₦200,000). When false,
-   * the component renders only the 1× option and a small explanatory note —
+   * Whether this item is eligible at all (e.g. price â‰¥ â‚¦200,000). When false,
+   * the component renders only the 1Ã— option and a small explanatory note â€”
    * keeps the layout consistent with eligible items but disables splitting.
    */
   eligible: boolean;
@@ -67,14 +67,14 @@ export default function InstallmentSelector({
     },
     {
       choice: 2,
-      label: '2× monthly',
+      label: '2Ã— monthly',
       chargeNow: perInstallment2,
       schedule: `${formatNGN(perInstallment2)} today, ${formatNGN(perInstallment2)} on ${formatShortDate(addMonths(today, 1))}`,
       icon: Calendar,
     },
     {
       choice: 3,
-      label: '3× monthly',
+      label: '3Ã— monthly',
       chargeNow: perInstallment3,
       schedule: `${formatNGN(perInstallment3)} today, then ${formatShortDate(addMonths(today, 1))} & ${formatShortDate(addMonths(today, 2))}`,
       icon: Calendar,
@@ -84,7 +84,7 @@ export default function InstallmentSelector({
   const visibleOptions = eligible ? options : options.slice(0, 1);
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-xl p-5 mb-4 border border-blue-100 dark:border-blue-900">
+    <div className="bg-linear-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-xl p-5 mb-4 border border-blue-100 dark:border-blue-900">
       <p className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
         Choose your payment plan
       </p>
@@ -133,11 +133,11 @@ export default function InstallmentSelector({
       {!eligible && (
         <p className="mt-3 text-xs text-gray-500 dark:text-slate-400 flex items-start gap-1.5">
           <AlertCircle size={12} className="mt-0.5 shrink-0" />
-          Installment payments are available on items above ₦200,000.
+          Installment payments are available on items above â‚¦200,000.
         </p>
       )}
 
-      {/* Auto-charge consent — required when splitting */}
+      {/* Auto-charge consent â€” required when splitting */}
       {value > 1 && (
         <label className="mt-4 flex items-start gap-2.5 cursor-pointer bg-white/60 dark:bg-slate-900/40 px-3 py-2.5 rounded-lg border border-blue-200 dark:border-blue-800">
           <input

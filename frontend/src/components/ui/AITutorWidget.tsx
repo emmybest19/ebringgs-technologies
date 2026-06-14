@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { Sparkles, Send, X, Loader2, Bot, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../services/api';
@@ -86,7 +86,7 @@ export default function AITutorWidget() {
       {/* Floating launcher */}
       <button
         onClick={() => setOpen(true)}
-        className={`fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-teal-600 to-cyan-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center ${open ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-linear-to-br from-teal-600 to-cyan-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center ${open ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         title="Ask the AI tutor"
         aria-label="Open AI tutor"
       >
@@ -112,7 +112,7 @@ export default function AITutorWidget() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-slate-800 bg-gradient-to-br from-teal-600 to-cyan-600 text-white">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-slate-800 bg-linear-to-br from-teal-600 to-cyan-600 text-white">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
                     <Sparkles size={18} />
@@ -136,7 +136,7 @@ export default function AITutorWidget() {
                     <Bot size={32} className="text-teal-500 mx-auto mb-3" />
                     <p className="font-semibold text-gray-900 dark:text-white mb-1">Hi! I'm your AI tutor.</p>
                     <p className="text-sm text-gray-500 dark:text-slate-400 mb-5">
-                      Stuck on a concept? Ask me anything — I'm here 24/7.
+                      Stuck on a concept? Ask me anything â€” I'm here 24/7.
                     </p>
                     <div className="space-y-2 text-left">
                       {[
@@ -165,7 +165,7 @@ export default function AITutorWidget() {
                     </div>
                     <div className="bg-white dark:bg-slate-900 rounded-2xl rounded-tl-sm border border-gray-100 dark:border-slate-800 px-4 py-3 flex items-center gap-2">
                       <Loader2 size={14} className="animate-spin text-teal-600" />
-                      <span className="text-sm text-gray-500 dark:text-slate-400">Thinking…</span>
+                      <span className="text-sm text-gray-500 dark:text-slate-400">Thinkingâ€¦</span>
                     </div>
                   </div>
                 )}
@@ -189,7 +189,7 @@ export default function AITutorWidget() {
                         handleSend();
                       }
                     }}
-                    placeholder="Ask anything…"
+                    placeholder="Ask anythingâ€¦"
                     disabled={sending}
                     rows={1}
                     className="flex-1 max-h-32 px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none resize-none"

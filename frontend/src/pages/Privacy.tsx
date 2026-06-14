@@ -1,4 +1,4 @@
-import { useSEO } from '../hooks/useSEO';
+﻿import { useSEO } from '../hooks/useSEO';
 
 const sections = [
   { title: '1. Information We Collect', content: 'We collect information you provide directly (name, email, payment details), information collected automatically (IP address, browser type, pages visited, cookies), and information from third-party services (Paystack for payment processing).' },
@@ -19,7 +19,7 @@ export default function Privacy() {
 
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
-      <section className="bg-gradient-to-br from-slate-900 to-teal-950 text-white py-16 px-4 text-center">
+      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-16 px-4 text-center">
         <h1 className="text-4xl font-extrabold mb-3">Privacy Policy</h1>
         <p className="text-slate-400 text-sm">Last updated: February 2026</p>
       </section>

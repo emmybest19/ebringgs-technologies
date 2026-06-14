@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ShieldCheck, Eye, EyeOff, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -19,7 +19,7 @@ export default function AdminLogin() {
       await login(email, password);
       const role = useAuthStore.getState().user?.role;
       if (role !== 'admin') {
-        // Wrong role — sign back out and tell the user
+        // Wrong role â€” sign back out and tell the user
         logout();
         toast.error('This login is for administrators only.');
         return;
@@ -33,11 +33,11 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-teal-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-950 to-teal-950 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex w-14 h-14 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl items-center justify-center mb-4 shadow-lg shadow-teal-500/30">
+          <div className="inline-flex w-14 h-14 bg-linear-to-br from-teal-500 to-cyan-500 rounded-2xl items-center justify-center mb-4 shadow-lg shadow-teal-500/30">
             <ShieldCheck size={28} className="text-white" />
           </div>
           <h1 className="text-3xl font-extrabold text-white mb-2">Admin Portal</h1>
@@ -79,7 +79,7 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   autoComplete="current-password"
                   className="w-full pl-11 pr-12 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
                 />

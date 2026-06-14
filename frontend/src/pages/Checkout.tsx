@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Lock, Loader2, CheckCircle2, Gift, Ticket, X } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -8,7 +8,7 @@ import { useService, useInitializePayment } from '../services/queries';
 import InstallmentSelector, { type InstallmentChoice } from '../components/payments/InstallmentSelector';
 import Logo from '../components/Logo';
 
-const INSTALLMENT_PRICE_FLOOR_KOBO = 200_000 * 100; // ₦200,000 in kobo
+const INSTALLMENT_PRICE_FLOOR_KOBO = 200_000 * 100; // â‚¦200,000 in kobo
 
 const POINT_TO_NAIRA = 100;
 
@@ -21,37 +21,37 @@ interface Plan {
 }
 
 const planDetails: Record<string, Plan> = {
-  // ─── Current tracks (kept in sync with Pricing.tsx trainingCategories) ─
+  // â”€â”€â”€ Current tracks (kept in sync with Pricing.tsx trainingCategories) â”€
   // Frontend Development
-  'frontend-starter': { name: 'Frontend — Starter',         price: 75000,  duration: '8 weeks',  description: 'Live instructor-led HTML, CSS, JS, TS, React + Tailwind classes' },
-  'frontend-cohort':  { name: 'Frontend — Live Cohort',     price: 250000, duration: '12 weeks', description: 'Intensive 12-week React cohort — build & ship a real app' },
-  'frontend-mentor':  { name: 'Frontend — Mentorship',      price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior frontend engineer' },
+  'frontend-starter': { name: 'Frontend â€” Starter',         price: 75000,  duration: '8 weeks',  description: 'Live instructor-led HTML, CSS, JS, TS, React + Tailwind classes' },
+  'frontend-cohort':  { name: 'Frontend â€” Live Cohort',     price: 250000, duration: '12 weeks', description: 'Intensive 12-week React cohort â€” build & ship a real app' },
+  'frontend-mentor':  { name: 'Frontend â€” Mentorship',      price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior frontend engineer' },
   // Backend Development
-  'backend-starter':  { name: 'Backend — Starter',          price: 80000,  duration: '8 weeks',  description: 'Live classes building REST APIs with Node, Express, MongoDB' },
-  'backend-cohort':   { name: 'Backend — Live Cohort',      price: 270000, duration: '12 weeks', description: 'Ship a real production API — auth, payments, deployment' },
-  'backend-mentor':   { name: 'Backend — Mentorship',       price: 480000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior backend engineer' },
+  'backend-starter':  { name: 'Backend â€” Starter',          price: 80000,  duration: '8 weeks',  description: 'Live classes building REST APIs with Node, Express, MongoDB' },
+  'backend-cohort':   { name: 'Backend â€” Live Cohort',      price: 270000, duration: '12 weeks', description: 'Ship a real production API â€” auth, payments, deployment' },
+  'backend-mentor':   { name: 'Backend â€” Mentorship',       price: 480000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior backend engineer' },
   // Full-Stack Development
-  'fullstack-starter': { name: 'Full-Stack — Starter',      price: 100000, duration: '10 weeks', description: 'Live classes covering both halves of a modern web app' },
-  'fullstack-cohort':  { name: 'Full-Stack — Live Cohort',  price: 320000, duration: '14 weeks', description: 'Ship a real full-stack product to production' },
-  'fullstack-mentor':  { name: 'Full-Stack — Mentorship',   price: 550000, duration: '14 weeks', description: 'Weekly 1-on-1 sessions with a senior full-stack engineer' },
+  'fullstack-starter': { name: 'Full-Stack â€” Starter',      price: 100000, duration: '10 weeks', description: 'Live classes covering both halves of a modern web app' },
+  'fullstack-cohort':  { name: 'Full-Stack â€” Live Cohort',  price: 320000, duration: '14 weeks', description: 'Ship a real full-stack product to production' },
+  'fullstack-mentor':  { name: 'Full-Stack â€” Mentorship',   price: 550000, duration: '14 weeks', description: 'Weekly 1-on-1 sessions with a senior full-stack engineer' },
   // Mobile App Development
-  'mobile-dev-starter': { name: 'Mobile — Starter',         price: 85000,  duration: '8 weeks',  description: 'Live instructor-led React Native + Expo classes' },
-  'mobile-dev-cohort':  { name: 'Mobile — Live Cohort',     price: 280000, duration: '10 weeks', description: 'Intensive 10-week cohort — build & ship a real app to TestFlight + Play' },
-  'mobile-dev-mentor':  { name: 'Mobile — Mentorship',      price: 500000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior mobile engineer' },
+  'mobile-dev-starter': { name: 'Mobile â€” Starter',         price: 85000,  duration: '8 weeks',  description: 'Live instructor-led React Native + Expo classes' },
+  'mobile-dev-cohort':  { name: 'Mobile â€” Live Cohort',     price: 280000, duration: '10 weeks', description: 'Intensive 10-week cohort â€” build & ship a real app to TestFlight + Play' },
+  'mobile-dev-mentor':  { name: 'Mobile â€” Mentorship',      price: 500000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior mobile engineer' },
   // Research Writing
-  'research-writing-starter': { name: 'Research Writing — Starter',    price: 50000,  duration: '6 weeks',  description: 'Live classes on academic writing, citations, methodology' },
-  'research-writing-cohort':  { name: 'Research Writing — Live Cohort', price: 150000, duration: '8 weeks',  description: '8-week intensive — methodology + journal-ready writing' },
-  'research-writing-mentor':  { name: 'Research Writing — Mentorship', price: 320000, duration: '12 weeks', description: 'Personal mentorship — your paper, your timeline' },
+  'research-writing-starter': { name: 'Research Writing â€” Starter',    price: 50000,  duration: '6 weeks',  description: 'Live classes on academic writing, citations, methodology' },
+  'research-writing-cohort':  { name: 'Research Writing â€” Live Cohort', price: 150000, duration: '8 weeks',  description: '8-week intensive â€” methodology + journal-ready writing' },
+  'research-writing-mentor':  { name: 'Research Writing â€” Mentorship', price: 320000, duration: '12 weeks', description: 'Personal mentorship â€” your paper, your timeline' },
 
-  // ─── Legacy IDs (backwards compatibility for existing cohorts) ─────────
+  // â”€â”€â”€ Legacy IDs (backwards compatibility for existing cohorts) â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // These map to the closest current track. Don't remove unless you've
   // migrated every Cohort document in the DB to a new planId.
-  'web-dev-starter':  { name: 'Web Dev — Starter (legacy)',     price: 75000,  duration: '8 weeks',  description: 'Legacy — use frontend-starter or fullstack-starter for new cohorts' },
-  'web-dev-cohort':   { name: 'Web Dev — Live Cohort (legacy)', price: 250000, duration: '12 weeks', description: 'Legacy — use frontend-cohort or fullstack-cohort for new cohorts' },
-  'web-dev-mentor':   { name: 'Web Dev — Mentorship (legacy)',  price: 450000, duration: '12 weeks', description: 'Legacy — use frontend-mentor or fullstack-mentor for new cohorts' },
-  'uiux-starter':     { name: 'UI/UX — Starter (legacy)',   price: 60000,  duration: '6 weeks',  description: 'Legacy — UI/UX track has been retired' },
-  'uiux-cohort':      { name: 'UI/UX — Cohort (legacy)',    price: 200000, duration: '8 weeks',  description: 'Legacy — UI/UX track has been retired' },
-  'uiux-mentor':      { name: 'UI/UX — Mentorship (legacy)', price: 380000, duration: '10 weeks', description: 'Legacy — UI/UX track has been retired' },
+  'web-dev-starter':  { name: 'Web Dev â€” Starter (legacy)',     price: 75000,  duration: '8 weeks',  description: 'Legacy â€” use frontend-starter or fullstack-starter for new cohorts' },
+  'web-dev-cohort':   { name: 'Web Dev â€” Live Cohort (legacy)', price: 250000, duration: '12 weeks', description: 'Legacy â€” use frontend-cohort or fullstack-cohort for new cohorts' },
+  'web-dev-mentor':   { name: 'Web Dev â€” Mentorship (legacy)',  price: 450000, duration: '12 weeks', description: 'Legacy â€” use frontend-mentor or fullstack-mentor for new cohorts' },
+  'uiux-starter':     { name: 'UI/UX â€” Starter (legacy)',   price: 60000,  duration: '6 weeks',  description: 'Legacy â€” UI/UX track has been retired' },
+  'uiux-cohort':      { name: 'UI/UX â€” Cohort (legacy)',    price: 200000, duration: '8 weeks',  description: 'Legacy â€” UI/UX track has been retired' },
+  'uiux-mentor':      { name: 'UI/UX â€” Mentorship (legacy)', price: 380000, duration: '10 weeks', description: 'Legacy â€” UI/UX track has been retired' },
   student:            { name: 'Student',     price: 75000,  duration: '8 weeks',  description: 'Live classes + community access' },
   cohort:             { name: 'Cohort Pro',  price: 250000, duration: '12 weeks', description: 'Intensive live cohort + mentorship + career coaching' },
   mentorship:         { name: 'Mentorship',  price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 mentor sessions + personalised roadmap' },
@@ -147,7 +147,7 @@ export default function Checkout() {
   const [appliedVoucher, setAppliedVoucher] = useState<null | { code: string; nairaValue: number; note?: string }>(null);
   const [voucherError, setVoucherError] = useState('');
 
-  // Installment payments — 1× (default) | 2× | 3×
+  // Installment payments â€” 1Ã— (default) | 2Ã— | 3Ã—
   const [installmentChoice, setInstallmentChoice] = useState<InstallmentChoice>(1);
   const [autoChargeConsent, setAutoChargeConsent] = useState(false);
 
@@ -193,8 +193,8 @@ export default function Checkout() {
   const totalDiscountKobo = pointsDiscountKobo + voucherDiscountKobo;
   const finalKobo = Math.max(priceKobo - totalDiscountKobo, 0);
 
-  // Installment eligibility — services use the server-decorated flag; training
-  // plans + projects use the same ₦200,000 floor the server enforces.
+  // Installment eligibility â€” services use the server-decorated flag; training
+  // plans + projects use the same â‚¦200,000 floor the server enforces.
   const installmentEligible = item.type === 'service'
     ? serviceData?.installmentEligible === true
     : priceKobo >= INSTALLMENT_PRICE_FLOOR_KOBO;
@@ -218,7 +218,7 @@ export default function Checkout() {
         nairaValue: data.data.nairaValue,
         note: data.data.note,
       });
-      toast.success(`Voucher applied: ₦${data.data.nairaValue.toLocaleString()} off`);
+      toast.success(`Voucher applied: â‚¦${data.data.nairaValue.toLocaleString()} off`);
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
         || 'Invalid voucher code.';
@@ -252,7 +252,7 @@ export default function Checkout() {
       ...(installmentChoice > 1
         ? { installments: installmentChoice, autoChargeConsent }
         : {}),
-      // Service vs plan branching — server uses the catalog price when
+      // Service vs plan branching â€” server uses the catalog price when
       // serviceId is set, otherwise trusts amount/description from the body.
       ...(item.type === 'service'
         ? { serviceId: item.id }
@@ -265,7 +265,7 @@ export default function Checkout() {
     });
   };
 
-  // Keep `processing` semantics for the existing button — the navigation
+  // Keep `processing` semantics for the existing button â€” the navigation
   // away on success leaves the spinner showing until the new page loads.
   const processing = initializePayment.isPending || initializePayment.isSuccess;
 
@@ -338,7 +338,7 @@ export default function Checkout() {
             <div className="p-4 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-xl text-sm text-red-700 dark:text-red-400 mb-6">{error}</div>
           )}
 
-          {/* Installment selector — 1×/2×/3× */}
+          {/* Installment selector â€” 1Ã—/2Ã—/3Ã— */}
           <InstallmentSelector
             totalKobo={priceKobo}
             value={installmentChoice}
@@ -349,7 +349,7 @@ export default function Checkout() {
           />
 
           {/* Gift voucher */}
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 rounded-xl p-5 mb-4 border border-purple-100 dark:border-purple-900">
+          <div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 rounded-xl p-5 mb-4 border border-purple-100 dark:border-purple-900">
             <div className="flex items-center gap-1.5 mb-3">
               <Ticket size={14} className="text-purple-600 dark:text-purple-400" />
               <span className="text-sm font-semibold text-gray-900 dark:text-white">Have a gift voucher?</span>
@@ -361,7 +361,7 @@ export default function Checkout() {
                     {appliedVoucher.code}
                   </code>
                   <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-                    ₦{appliedVoucher.nairaValue.toLocaleString()} discount applied
+                    â‚¦{appliedVoucher.nairaValue.toLocaleString()} discount applied
                   </p>
                   {appliedVoucher.note && (
                     <p className="text-[10px] italic text-gray-400 dark:text-slate-500">"{appliedVoucher.note}"</p>
@@ -399,7 +399,7 @@ export default function Checkout() {
           </div>
 
           {availablePoints > 0 && (
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 rounded-xl p-5 mb-6 border border-emerald-100 dark:border-emerald-900">
+            <div className="bg-linear-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 rounded-xl p-5 mb-6 border border-emerald-100 dark:border-emerald-900">
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
                   type="checkbox"
@@ -416,7 +416,7 @@ export default function Checkout() {
                   </div>
                   <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
                     You have <span className="font-bold text-emerald-600 dark:text-emerald-400">{availablePoints} points</span>
-                    {' '}(worth ₦{(availablePoints * POINT_TO_NAIRA).toLocaleString()})
+                    {' '}(worth â‚¦{(availablePoints * POINT_TO_NAIRA).toLocaleString()})
                   </p>
                 </div>
               </label>
@@ -433,7 +433,7 @@ export default function Checkout() {
                   <div className="flex justify-between text-xs text-gray-500 dark:text-slate-400 mt-1">
                     <span>0 pts</span>
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                      {pointsToRedeem} pts = ₦{(pointsToRedeem * POINT_TO_NAIRA).toLocaleString()} off
+                      {pointsToRedeem} pts = â‚¦{(pointsToRedeem * POINT_TO_NAIRA).toLocaleString()} off
                     </span>
                     <span>{Math.min(availablePoints, Math.floor(priceKobo / 100 / POINT_TO_NAIRA))} pts</span>
                   </div>
@@ -466,8 +466,8 @@ export default function Checkout() {
             <p className="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">{formatNGN(chargeNowKobo)}</p>
             <p className="text-sm text-gray-500 dark:text-slate-400">
               {installmentChoice > 1
-                ? `Charged today · ${formatNGN(finalKobo)} total over ${installmentChoice} months`
-                : `One-time payment · ${item.duration}`}
+                ? `Charged today Â· ${formatNGN(finalKobo)} total over ${installmentChoice} months`
+                : `One-time payment Â· ${item.duration}`}
             </p>
           </div>
 

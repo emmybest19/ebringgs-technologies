@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+﻿import { useState, FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, MessageSquare, MapPin, Clock, Send, Loader2, CheckCircle2 } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
@@ -50,7 +50,7 @@ export default function Contact() {
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen">
       {/* Header */}
-      <section className="bg-gradient-to-br from-slate-900 to-teal-950 text-white py-20 px-4 text-center">
+      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-20 px-4 text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Get in touch</h1>
         <p className="text-slate-300 text-lg max-w-xl mx-auto">Have a question, project idea, or just want to say hello? We'd love to hear from you.</p>
       </section>

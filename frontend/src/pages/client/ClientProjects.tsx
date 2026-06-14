@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   FolderKanban, ArrowLeft, ExternalLink, Github, Clock,
@@ -20,11 +20,11 @@ const statusColor = (s: string) => {
 };
 
 function formatDate(iso?: string) {
-  if (!iso) return '—';
+  if (!iso) return 'â€”';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-/* ─── Project list ─── */
+/* â”€â”€â”€ Project list â”€â”€â”€ */
 function ProjectList() {
   const { data: projects = [], isLoading: loading } = useMyProjects();
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
@@ -96,7 +96,7 @@ function ProjectList() {
                     <p className="text-sm font-semibold text-gray-900 dark:text-white">Brief required</p>
                     <p className="text-xs text-gray-500 dark:text-slate-400">Tell us about your project so we can start work.</p>
                   </div>
-                  <span className="text-sm font-semibold text-purple-600 shrink-0">Continue →</span>
+                  <span className="text-sm font-semibold text-purple-600 shrink-0">Continue â†’</span>
                 </div>
               ) : (
                 <>
@@ -122,7 +122,7 @@ function ProjectList() {
   );
 }
 
-/* ─── Project detail ─── */
+/* â”€â”€â”€ Project detail â”€â”€â”€ */
 function ProjectDetail() {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
@@ -133,7 +133,7 @@ function ProjectDetail() {
   const { data: plans } = useMyPaymentPlans();
   const projectPlan = plans?.find((p) => p.linkedProject === projectId);
 
-  // Mirror the old catch-and-redirect behavior — if the fetch fails (typically
+  // Mirror the old catch-and-redirect behavior â€” if the fetch fails (typically
   // 404 because the project doesn't exist or isn't owned), bounce to the list.
   useEffect(() => {
     if (isError) navigate('/client/projects');
@@ -172,7 +172,7 @@ function ProjectDetail() {
       </div>
 
       {project.status === 'awaiting_brief' && (
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 border border-purple-200 dark:border-purple-800 rounded-2xl p-5 mb-4 flex items-center gap-4">
+        <div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 border border-purple-200 dark:border-purple-800 rounded-2xl p-5 mb-4 flex items-center gap-4">
           <div className="inline-flex p-3 bg-purple-100 dark:bg-purple-900 rounded-xl">
             <ClipboardList size={20} className="text-purple-700 dark:text-purple-300" />
           </div>
@@ -194,7 +194,7 @@ function ProjectDetail() {
           <p className="text-sm font-bold text-teal-600">{project.progress}%</p>
         </div>
         <div className="h-3 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all" style={{ width: `${project.progress}%` }} />
+          <div className="h-full bg-linear-to-r from-teal-500 to-cyan-500 rounded-full transition-all" style={{ width: `${project.progress}%` }} />
         </div>
       </div>
 

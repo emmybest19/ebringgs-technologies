@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+﻿import { Link, useNavigate } from 'react-router-dom';
 import {
   Code2, BarChart3, BookOpen, Layers, Smartphone, Brain, Map,
   Loader2, ArrowRight, MessageSquare, ShoppingCart,
@@ -118,7 +118,7 @@ export default function ClientServices() {
         </>
       )}
 
-      <div className="mt-8 bg-gradient-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
+      <div className="mt-8 bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
         <MessageSquare size={28} />
         <div className="flex-1">
           <p className="font-bold">Don't see what you need?</p>

@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom';
+﻿import { Link, useSearchParams } from 'react-router-dom';
 import { XCircle, RefreshCw, MessageSquare } from 'lucide-react';
 
 export default function PaymentFailed() {
@@ -10,7 +10,7 @@ export default function PaymentFailed() {
   const retryUrl = plan ? `/checkout?plan=${plan}&billing=${billing || 'monthly'}` : '/pricing';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-red-50 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 to-red-50 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center px-4">
       <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 p-10 max-w-md w-full text-center">
         <div className="inline-flex p-5 bg-red-50 dark:bg-red-950 rounded-full mb-6">
           <XCircle size={48} className="text-red-500" />
@@ -22,10 +22,10 @@ export default function PaymentFailed() {
         <div className="bg-amber-50 dark:bg-amber-950 rounded-xl p-4 mb-8 text-left border border-amber-100 dark:border-amber-900">
           <p className="text-sm font-semibold text-amber-800 dark:text-amber-200 mb-1">Common reasons for failure</p>
           <ul className="space-y-1.5 text-sm text-amber-700 dark:text-amber-300">
-            <li>• Insufficient funds on the card</li>
-            <li>• Card details entered incorrectly</li>
-            <li>• Card blocked for online transactions</li>
-            <li>• Bank declined the transaction</li>
+            <li>â€¢ Insufficient funds on the card</li>
+            <li>â€¢ Card details entered incorrectly</li>
+            <li>â€¢ Card blocked for online transactions</li>
+            <li>â€¢ Bank declined the transaction</li>
           </ul>
         </div>
 

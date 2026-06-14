@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   User,
@@ -65,7 +65,7 @@ export default function Profile() {
     updateProfile.mutate(
       { name, bio, phone, whatsappOptIn },
       {
-        // Auth store has its own copy of `user` — refresh it so the navbar
+        // Auth store has its own copy of `user` â€” refresh it so the navbar
         // avatar and other consumers reflect the new name/bio immediately.
         onSuccess: () => {
           fetchMe();
@@ -123,7 +123,7 @@ export default function Profile() {
           {/* Profile card */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
             <div className="flex items-center gap-5 mb-8">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white text-3xl font-bold">
+              <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white text-3xl font-bold">
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <div>
@@ -211,7 +211,7 @@ export default function Profile() {
                       </span>
                     </label>
                     <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
-                      Class reminders, project updates, and payment confirmations — straight to your WhatsApp.
+                      Class reminders, project updates, and payment confirmations â€” straight to your WhatsApp.
                     </p>
                   </div>
                 </div>
@@ -403,7 +403,7 @@ export default function Profile() {
                     Delete account
                   </p>
                   <p className="text-xs text-gray-400 dark:text-slate-500">
-                    Permanently delete your data — contact support
+                    Permanently delete your data â€” contact support
                   </p>
                 </div>
                 <a
