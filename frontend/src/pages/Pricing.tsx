@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CheckCircle2, ArrowRight, HelpCircle, ChevronDown,
@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../store/auth.store';
 
-// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Types ──────────────────────────────────────────────────────────────────
 type PricingTab = 'clients' | 'training';
 
 interface ServicePlan {
@@ -39,25 +39,25 @@ interface TrainingPlan {
   highlight: boolean;
 }
 
-// â”€â”€â”€ Client Service Plans â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Client Service Plans ───────────────────────────────────────────────────
 const clientPlans: ServicePlan[] = [
   {
     id: 'web-development',
     name: 'Web Development',
-    subtitle: 'Landing pages Â· marketing sites Â· full-stack apps',
+    subtitle: 'Landing pages · marketing sites · full-stack apps',
     icon: Code2,
     startingPrice: 150000,
     priceSuffix: '',
-    description: 'From a single high-converting landing page to a full-stack web application with authentication, payments and an admin panel â€” built on a modern React + Node stack and deployed to your domain.',
+    description: 'From a single high-converting landing page to a full-stack web application with authentication, payments and an admin panel — built on a modern React + Node stack and deployed to your domain.',
     features: [
-      'Responsive design (mobile Â· tablet Â· desktop)',
+      'Responsive design (mobile · tablet · desktop)',
       'React + TypeScript frontend',
       'Node.js + MongoDB backend (for full-stack)',
       'User authentication & role management',
       'Payment integration (Paystack / Stripe)',
       'SEO-friendly structure',
       'Deployment to your domain',
-      '7â€“30 days of post-launch support',
+      '7–30 days of post-launch support',
     ],
     highlight: true,
     cta: 'Browse packages',
@@ -70,7 +70,7 @@ const clientPlans: ServicePlan[] = [
     icon: Smartphone,
     startingPrice: 1500000,
     priceSuffix: '',
-    description: 'Cross-platform mobile apps built with React Native â€” one codebase, both stores. Includes auth, push notifications, and submission to TestFlight + Google Play internal testing.',
+    description: 'Cross-platform mobile apps built with React Native — one codebase, both stores. Includes auth, push notifications, and submission to TestFlight + Google Play internal testing.',
     features: [
       'iOS + Android from one codebase',
       'Up to 8 polished app screens',
@@ -86,11 +86,11 @@ const clientPlans: ServicePlan[] = [
   {
     id: 'research-writing',
     name: 'Research Writing',
-    subtitle: 'Undergraduate Â· MSc Â· PhD Â· journal manuscripts',
+    subtitle: 'Undergraduate · MSc · PhD · journal manuscripts',
     icon: BookOpen,
     startingPrice: 100000,
     priceSuffix: '',
-    description: 'End-to-end academic writing support â€” topic refinement, literature review, methodology, analysis, and citation. From BSc projects to PhD chapters and journal-ready manuscripts.',
+    description: 'End-to-end academic writing support — topic refinement, literature review, methodology, analysis, and citation. From BSc projects to PhD chapters and journal-ready manuscripts.',
     features: [
       'Up to 12,000 words for postgraduate',
       'Literature review with up to 50 sources',
@@ -99,7 +99,7 @@ const clientPlans: ServicePlan[] = [
       'Plagiarism-checked output',
       'APA / MLA / Harvard / Chicago / IEEE citations',
       'Reference manager file (Zotero / EndNote)',
-      '1â€“2 rounds of revisions',
+      '1–2 rounds of revisions',
     ],
     highlight: false,
     cta: 'View packages',
@@ -107,7 +107,7 @@ const clientPlans: ServicePlan[] = [
   {
     id: 'data-analysis',
     name: 'Data Analysis',
-    subtitle: 'Dashboards Â· reports Â· machine learning',
+    subtitle: 'Dashboards · reports · machine learning',
     icon: BarChart3,
     startingPrice: 400000,
     priceSuffix: '',
@@ -118,22 +118,22 @@ const clientPlans: ServicePlan[] = [
       'Automated weekly email report',
       'PostgreSQL / MongoDB / Sheets / Stripe support',
       '1-hour training session',
-      'Machine learning add-on (â‚¦800,000)',
+      'Machine learning add-on (₦800,000)',
     ],
     highlight: false,
     cta: 'View the package',
   },
 ];
 
-// â”€â”€â”€ Training Tracks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Training Tracks ────────────────────────────────────────────────────────
 // 5 student tracks (frontend, backend, full-stack, mobile, research writing).
 // Each has 3 tiers: Starter (live classes only), Live Cohort (cohort + projects),
-// Mentorship (1-on-1). Plan IDs match Checkout.tsx planDetails â€” if you rename
+// Mentorship (1-on-1). Plan IDs match Checkout.tsx planDetails — if you rename
 // one here, update there + AdminCohorts PLAN_OPTIONS too.
 const trainingCategories = [
   {
     category: 'Frontend Development',
-    stack: 'HTML Â· CSS Â· JavaScript Â· TypeScript Â· React Â· Tailwind Â· Vite',
+    stack: 'HTML · CSS · JavaScript · TypeScript · React · Tailwind · Vite',
     plans: [
       {
         id: 'frontend-starter',
@@ -149,7 +149,7 @@ const trainingCategories = [
           'React + Vite + Tailwind from scratch',
           'Responsive layouts & accessibility basics',
           'Git, GitHub & deployment to Vercel',
-          'Live classes (2Ã—/week)',
+          'Live classes (2×/week)',
           'Community forum access',
           'Certificate of completion',
         ],
@@ -163,7 +163,7 @@ const trainingCategories = [
         icon: Users,
         price: 250000,
         duration: '12 weeks',
-        description: 'Intensive 12-week cohort â€” build & ship a real React app with mentor reviews.',
+        description: 'Intensive 12-week cohort — build & ship a real React app with mentor reviews.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -172,7 +172,7 @@ const trainingCategories = [
           'State management with Zustand / TanStack Query',
           'Real-world capstone project',
           'Daily live classes',
-          '1-on-1 mentor calls (2Ã—/month)',
+          '1-on-1 mentor calls (2×/month)',
           'Career coaching & CV review',
           'Job referral network',
         ],
@@ -206,7 +206,7 @@ const trainingCategories = [
   },
   {
     category: 'Backend Development',
-    stack: 'Node.js Â· Express Â· TypeScript Â· MongoDB Â· REST APIs Â· JWT auth',
+    stack: 'Node.js · Express · TypeScript · MongoDB · REST APIs · JWT auth',
     plans: [
       {
         id: 'backend-starter',
@@ -223,7 +223,7 @@ const trainingCategories = [
           'Building REST APIs from scratch',
           'JWT authentication & middleware',
           'Postman testing & API docs',
-          'Live classes (2Ã—/week)',
+          'Live classes (2×/week)',
           'Community forum access',
           'Certificate of completion',
         ],
@@ -237,7 +237,7 @@ const trainingCategories = [
         icon: Users,
         price: 270000,
         duration: '12 weeks',
-        description: 'Build a real production API â€” auth, payments, deployment, the works.',
+        description: 'Build a real production API — auth, payments, deployment, the works.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -247,7 +247,7 @@ const trainingCategories = [
           'Deployment to Render / Railway / AWS',
           'Capstone: ship a real API to production',
           'Daily live classes',
-          '1-on-1 mentor calls (2Ã—/month)',
+          '1-on-1 mentor calls (2×/month)',
           'Career coaching',
         ],
         notIncluded: [],
@@ -280,7 +280,7 @@ const trainingCategories = [
   },
   {
     category: 'Full-Stack Development',
-    stack: 'React Â· Node.js Â· TypeScript Â· MongoDB Â· Tailwind Â· Auth Â· Payments',
+    stack: 'React · Node.js · TypeScript · MongoDB · Tailwind · Auth · Payments',
     plans: [
       {
         id: 'fullstack-starter',
@@ -297,7 +297,7 @@ const trainingCategories = [
           'Backend with Express + Mongoose',
           'JWT auth wired end-to-end',
           'Git, GitHub & deployment',
-          'Live classes (3Ã—/week)',
+          'Live classes (3×/week)',
           'Community forum access',
           'Certificate of completion',
         ],
@@ -311,7 +311,7 @@ const trainingCategories = [
         icon: Users,
         price: 320000,
         duration: '14 weeks',
-        description: 'The intensive â€” ship a real full-stack product to production with mentor support.',
+        description: 'The intensive — ship a real full-stack product to production with mentor support.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -321,7 +321,7 @@ const trainingCategories = [
           'Admin dashboards & role-based access',
           'Real production capstone',
           'Daily live classes',
-          '1-on-1 mentor calls (2Ã—/month)',
+          '1-on-1 mentor calls (2×/month)',
           'Career coaching & CV review',
           'Job referral network',
         ],
@@ -355,7 +355,7 @@ const trainingCategories = [
   },
   {
     category: 'Mobile App Development',
-    stack: 'React Native Â· Expo Â· TypeScript Â· Push notifications Â· Native modules',
+    stack: 'React Native · Expo · TypeScript · Push notifications · Native modules',
     plans: [
       {
         id: 'mobile-dev-starter',
@@ -371,7 +371,7 @@ const trainingCategories = [
           'Navigation & state management',
           'REST API integration',
           'Local storage & offline data',
-          'Live classes (2Ã—/week)',
+          'Live classes (2×/week)',
           'Community forum access',
           'Certificate of completion',
         ],
@@ -395,7 +395,7 @@ const trainingCategories = [
           'Build & publish to TestFlight + Google Play',
           'Native modules (camera, geolocation)',
           'Daily live classes',
-          '1-on-1 mentor calls (2Ã—/month)',
+          '1-on-1 mentor calls (2×/month)',
           'Career support',
         ],
         notIncluded: [],
@@ -427,7 +427,7 @@ const trainingCategories = [
   },
   {
     category: 'Research Writing',
-    stack: 'Academic methodology Â· Literature review Â· APA/MLA/Chicago Â· Zotero Â· Plagiarism tools',
+    stack: 'Academic methodology · Literature review · APA/MLA/Chicago · Zotero · Plagiarism tools',
     plans: [
       {
         id: 'research-writing-starter',
@@ -435,7 +435,7 @@ const trainingCategories = [
         icon: Zap,
         price: 50000,
         duration: '6 weeks',
-        description: 'Live classes on academic writing fundamentals â€” structure, citations, methodology.',
+        description: 'Live classes on academic writing fundamentals — structure, citations, methodology.',
         color: 'text-teal-600',
         bg: 'bg-teal-50',
         features: [
@@ -444,7 +444,7 @@ const trainingCategories = [
           'Reference management (Zotero / Mendeley)',
           'Literature review techniques',
           'Avoiding plagiarism',
-          'Live classes (2Ã—/week)',
+          'Live classes (2×/week)',
           'Community forum access',
           'Certificate of completion',
         ],
@@ -458,7 +458,7 @@ const trainingCategories = [
         icon: Users,
         price: 150000,
         duration: '8 weeks',
-        description: '8-week intensive â€” research methodology, statistical analysis, and journal-ready writing.',
+        description: '8-week intensive — research methodology, statistical analysis, and journal-ready writing.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -468,7 +468,7 @@ const trainingCategories = [
           'Writing journal-quality manuscripts',
           'Peer review workshops',
           'Daily live classes',
-          'Mentor critique on your paper drafts (2Ã—/month)',
+          'Mentor critique on your paper drafts (2×/month)',
           'Submission strategy for top journals',
         ],
         notIncluded: [],
@@ -481,7 +481,7 @@ const trainingCategories = [
         icon: Building2,
         price: 320000,
         duration: '12 weeks',
-        description: 'Personal mentorship with a researcher â€” your paper, your timeline.',
+        description: 'Personal mentorship with a researcher — your paper, your timeline.',
         color: 'text-purple-600',
         bg: 'bg-purple-50',
         features: [
@@ -501,11 +501,11 @@ const trainingCategories = [
   },
 ];
 
-// â”€â”€â”€ FAQs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── FAQs ───────────────────────────────────────────────────────────────────
 const faqs = [
   {
     q: 'How do client project prices work?',
-    a: 'Our listed prices are starting points. Every project is unique â€” after an initial consultation, we provide a detailed scope and fixed quote before any work begins. No surprises.',
+    a: 'Our listed prices are starting points. Every project is unique — after an initial consultation, we provide a detailed scope and fixed quote before any work begins. No surprises.',
   },
   {
     q: 'Can I switch training plans at any time?',
@@ -529,11 +529,11 @@ const faqs = [
   },
 ];
 
-// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Helpers ────────────────────────────────────────────────────────────────
 const formatNGN = (n: number) =>
   new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(n);
 
-// â”€â”€â”€ Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Components ─────────────────────────────────────────────────────────────
 function FAQItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boolean; onToggle: () => void }) {
   return (
     <div className="border border-gray-100 dark:border-slate-800 rounded-xl overflow-hidden">
@@ -709,7 +709,7 @@ function TrainingCard({ plan }: { plan: TrainingPlan }) {
   );
 }
 
-// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Page ──────────────────────────────────────────────────────────────
 export default function Pricing() {
   const [tab, setTab] = useState<PricingTab>('clients');
   const [activeTrainingCat, setActiveTrainingCat] = useState(0);
@@ -717,7 +717,7 @@ export default function Pricing() {
 
   return (
     <div className="bg-white dark:bg-slate-900">
-      {/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Header ─────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white py-24 px-4">
         <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
@@ -728,10 +728,10 @@ export default function Pricing() {
             <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">your goals</span>
           </h1>
           <p className="text-slate-300 text-lg mb-10 max-w-xl mx-auto">
-            Whether you're a business looking to build or a learner ready to grow â€” we've got a plan for you.
+            Whether you're a business looking to build or a learner ready to grow — we've got a plan for you.
           </p>
 
-          {/* â”€â”€ Main Toggle: Clients / Training â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          {/* ── Main Toggle: Clients / Training ─────────────────────── */}
           <div className="inline-flex items-center gap-1 bg-white/10 rounded-2xl p-1.5 border border-white/15 backdrop-blur">
             <button
               onClick={() => setTab('clients')}
@@ -755,7 +755,7 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* â”€â”€ Client Plans â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Client Plans ───────────────────────────────────────────────── */}
       {tab === 'clients' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center mb-12">
@@ -766,7 +766,7 @@ export default function Pricing() {
               Choose what you want to build
             </h2>
             <p className="text-gray-500 dark:text-slate-400 max-w-lg mx-auto">
-              Fixed-price packages with fixed scope. Every project starts with a free consultation â€” pick a package, brief us, we deliver.
+              Fixed-price packages with fixed scope. Every project starts with a free consultation — pick a package, brief us, we deliver.
             </p>
           </div>
 
@@ -793,7 +793,7 @@ export default function Pricing() {
         </section>
       )}
 
-      {/* â”€â”€ Training Plans â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Training Plans ─────────────────────────────────────────────── */}
       {tab === 'training' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center mb-10">
@@ -804,7 +804,7 @@ export default function Pricing() {
               Pick your learning track
             </h2>
             <p className="text-gray-500 dark:text-slate-400 max-w-lg mx-auto mb-8">
-              Each track offers three tiers â€” Starter, Live Cohort, or 1-on-1 Mentorship. All classes are taught live by our instructors. One fixed fee per tier.
+              Each track offers three tiers — Starter, Live Cohort, or 1-on-1 Mentorship. All classes are taught live by our instructors. One fixed fee per tier.
             </p>
           </div>
 
@@ -825,7 +825,7 @@ export default function Pricing() {
             ))}
           </div>
 
-          {/* Stack badge â€” what students will learn in this track */}
+          {/* Stack badge — what students will learn in this track */}
           <div className="flex justify-center mb-10">
             <div className="inline-flex items-center gap-2 max-w-3xl px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <Layers size={14} className="text-teal-600 shrink-0" />
@@ -861,7 +861,7 @@ export default function Pricing() {
         </section>
       )}
 
-      {/* â”€â”€ FAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── FAQ ────────────────────────────────────────────────────────── */}
       <section className="bg-gray-50 dark:bg-slate-950 py-24 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 justify-center mb-3">

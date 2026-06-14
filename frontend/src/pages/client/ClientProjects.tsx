@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import {
   FolderKanban, ArrowLeft, ExternalLink, Github, Clock,
@@ -20,11 +20,11 @@ const statusColor = (s: string) => {
 };
 
 function formatDate(iso?: string) {
-  if (!iso) return 'â€”';
+  if (!iso) return '—';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-/* â”€â”€â”€ Project list â”€â”€â”€ */
+/* ─── Project list ─── */
 function ProjectList() {
   const { data: projects = [], isLoading: loading } = useMyProjects();
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
@@ -96,7 +96,7 @@ function ProjectList() {
                     <p className="text-sm font-semibold text-gray-900 dark:text-white">Brief required</p>
                     <p className="text-xs text-gray-500 dark:text-slate-400">Tell us about your project so we can start work.</p>
                   </div>
-                  <span className="text-sm font-semibold text-purple-600 shrink-0">Continue â†’</span>
+                  <span className="text-sm font-semibold text-purple-600 shrink-0">Continue →</span>
                 </div>
               ) : (
                 <>
@@ -122,7 +122,7 @@ function ProjectList() {
   );
 }
 
-/* â”€â”€â”€ Project detail â”€â”€â”€ */
+/* ─── Project detail ─── */
 function ProjectDetail() {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
@@ -133,7 +133,7 @@ function ProjectDetail() {
   const { data: plans } = useMyPaymentPlans();
   const projectPlan = plans?.find((p) => p.linkedProject === projectId);
 
-  // Mirror the old catch-and-redirect behavior â€” if the fetch fails (typically
+  // Mirror the old catch-and-redirect behavior — if the fetch fails (typically
   // 404 because the project doesn't exist or isn't owned), bounce to the list.
   useEffect(() => {
     if (isError) navigate('/client/projects');

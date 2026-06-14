@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Users, FileText, Settings,
@@ -38,7 +38,7 @@ export default function AdminLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
-  // The hook polls every 30s on its own â€” gated on isAdmin so it doesn't fire
+  // The hook polls every 30s on its own — gated on isAdmin so it doesn't fire
   // before the redirect-to-login effect kicks in.
   const { data: counts = { serviceRequests: 0, assignments: 0, reviews: 0 } } =
     useUnreadCounts({ enabled: isAdmin });
@@ -51,7 +51,7 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-slate-950">
-      {/* Mobile top bar â€” visible < lg only */}
+      {/* Mobile top bar — visible < lg only */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
           <Logo variant="mark" size={32} onDark />
@@ -66,7 +66,7 @@ export default function AdminLayout() {
         </button>
       </div>
 
-      {/* Mobile backdrop â€” covers content when drawer is open */}
+      {/* Mobile backdrop — covers content when drawer is open */}
       {mobileOpen && (
         <button
           onClick={() => setMobileOpen(false)}
@@ -75,7 +75,7 @@ export default function AdminLayout() {
         />
       )}
 
-      {/* Sidebar â€” slides in on mobile, sticky on desktop */}
+      {/* Sidebar — slides in on mobile, sticky on desktop */}
       <aside
         className={`
           fixed inset-y-0 left-0 z-50 w-64 shrink-0 bg-slate-900 flex flex-col
@@ -149,7 +149,7 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      {/* Main â€” pushes down on mobile to clear the fixed top bar */}
+      {/* Main — pushes down on mobile to clear the fixed top bar */}
       <div className="flex-1 min-w-0 pt-14 lg:pt-0">
         <main className="p-4 sm:p-6 lg:p-8">
           <PageTransition>

@@ -1,4 +1,4 @@
-﻿import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, ArrowRight, BookOpen, Loader2, XCircle, ClipboardList } from 'lucide-react';
 import { useAuthStore } from '../store/auth.store';
 import { useVerifyPayment, useMyPaymentPlan } from '../services/queries';
@@ -9,7 +9,7 @@ export default function PaymentSuccess() {
   const reference = searchParams.get('reference') || searchParams.get('trxref');
   const { user } = useAuthStore();
 
-  // staleTime: Infinity inside the hook â€” a given reference is verified once
+  // staleTime: Infinity inside the hook — a given reference is verified once
   // per cache lifetime even if the user re-mounts this page.
   const { data, isLoading: verifying, isError } = useVerifyPayment(reference);
 
@@ -64,7 +64,7 @@ export default function PaymentSuccess() {
 
           <h1 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-2">Payment confirmed</h1>
           <p className="text-gray-500 dark:text-slate-400 mb-6">
-            One quick step before we kick off â€” tell us about your project so we can hit the ground running.
+            One quick step before we kick off — tell us about your project so we can hit the ground running.
           </p>
 
           <div className="bg-teal-50 dark:bg-teal-950 rounded-xl p-4 mb-8 text-left border border-teal-100 dark:border-teal-900">

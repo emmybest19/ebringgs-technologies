@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trophy, Medal, Gift } from 'lucide-react';
 import api from '../../services/api';
 import { useAuthStore } from '../../store/auth.store';
@@ -137,10 +137,10 @@ export default function StudentLeaderboard() {
             </p>
             <div className="bg-white/10 backdrop-blur rounded-xl px-4 py-3 mb-3">
               <p className="text-xs text-emerald-100 mb-1">Conversion rate</p>
-              <p className="text-base font-bold">1 point = â‚¦{POINT_TO_NAIRA}</p>
+              <p className="text-base font-bold">1 point = ₦{POINT_TO_NAIRA}</p>
             </div>
             <p className="text-[11px] text-emerald-100">
-              Discount is applied automatically at checkout. No cash withdrawal â€” points only convert to enrollment credit.
+              Discount is applied automatically at checkout. No cash withdrawal — points only convert to enrollment credit.
             </p>
           </div>
 

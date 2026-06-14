@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -62,7 +62,7 @@ export default function ResetPassword() {
                 <CheckCircle2 size={32} className="text-green-500" />
               </div>
               <h3 className="font-bold text-gray-900 dark:text-white mb-2">Password updated!</h3>
-              <p className="text-gray-500 dark:text-slate-400 text-sm">Redirecting you to sign inâ€¦</p>
+              <p className="text-gray-500 dark:text-slate-400 text-sm">Redirecting you to sign in…</p>
             </div>
           ) : (
             <>

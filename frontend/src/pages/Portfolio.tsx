@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, ExternalLink, Github, Filter, Loader2, GraduationCap,
@@ -7,15 +7,15 @@ import {
 import { useCaseStudies, type CaseStudy } from '../services/queries';
 import { useSEO } from '../hooks/useSEO';
 
-// `Portfolio` only shows student projects â€” we alias the shared CaseStudy
+// `Portfolio` only shows student projects — we alias the shared CaseStudy
 // type to keep the page-local variable names ergonomic.
 type StudentProject = CaseStudy;
 
 export default function Portfolio() {
   useSEO({
-    title: 'Student Portfolio â€” E-Bringgs Technologies',
+    title: 'Student Portfolio — E-Bringgs Technologies',
     description:
-      'Real apps, real outcomes. Browse projects built by E-Bringgs students â€” and see where they are working today.',
+      'Real apps, real outcomes. Browse projects built by E-Bringgs students — and see where they are working today.',
   });
 
   const { data: projects = [], isLoading: loading } = useCaseStudies({ type: 'student_project' });
@@ -44,7 +44,7 @@ export default function Portfolio() {
   const others = filtered.filter((p) => !p.featured);
 
   // Compose a short list of company names from student "current role" strings
-  // (we don't store companies separately â€” we extract from the free-text role).
+  // (we don't store companies separately — we extract from the free-text role).
   const employerStrip = useMemo(() => {
     const employers = projects
       .map((p) => p.studentRole || '')
@@ -78,7 +78,7 @@ export default function Portfolio() {
           </h1>
           <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-8">
             Every project below was built by a student during or after a cohort.
-            They are the proof that our programs work â€” and that you can build the next one.
+            They are the proof that our programs work — and that you can build the next one.
           </p>
 
           <div className="flex flex-wrap justify-center gap-3">
@@ -262,7 +262,7 @@ export default function Portfolio() {
   );
 }
 
-/* â”€â”€â”€ Small bits â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Small bits ──────────────────────────────────────────────────────── */
 
 function Chip({
   label, active, onClick,
@@ -294,7 +294,7 @@ function Stat({
     <div>
       <Icon size={22} className="mx-auto text-teal-600 dark:text-teal-400 mb-2" />
       <p className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white">
-        {fallback ? 'â€”' : (
+        {fallback ? '—' : (
           <>
             {value.toLocaleString()}
             {suffix}
@@ -306,7 +306,7 @@ function Stat({
   );
 }
 
-/* â”€â”€â”€ Cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Cards ───────────────────────────────────────────────────────────── */
 
 function FeaturedProjectCard({ p }: { p: StudentProject }) {
   return (
@@ -390,7 +390,7 @@ function ProjectCard({ p }: { p: StudentProject }) {
               <span className="inline-flex items-center gap-1"><Github size={11} /> Repo</span>
             )}
             {p.techStack && p.techStack[0] && (
-              <span className="truncate">Â· {p.techStack.slice(0, 3).join(' Â· ')}</span>
+              <span className="truncate">· {p.techStack.slice(0, 3).join(' · ')}</span>
             )}
           </div>
         )}

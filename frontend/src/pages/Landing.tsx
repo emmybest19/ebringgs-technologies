@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Code2, BarChart3, BookOpen, Layers,
@@ -12,7 +12,7 @@ import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import { useAuthStore } from '../store/auth.store';
 
-// â”€â”€â”€ Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -30,11 +30,11 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left â€” Copy */}
+          {/* Left — Copy */}
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 text-sm font-medium mb-8">
               <Zap size={14} className="fill-current" />
-              Technology Â· Learning Â· Innovation
+              Technology · Learning · Innovation
             </div>
 
             <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-6">
@@ -45,7 +45,7 @@ function Hero() {
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
-              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting â€” all in one platform.
+              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting — all in one platform.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -82,7 +82,7 @@ function Hero() {
             </div>
           </div>
 
-          {/* Right â€” Image Carousel */}
+          {/* Right — Image Carousel */}
           <div className="hidden lg:block">
             <HeroCarousel />
           </div>
@@ -92,7 +92,7 @@ function Hero() {
   );
 }
 
-// â”€â”€â”€ Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Stats ───────────────────────────────────────────────────────────────────
 function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -157,7 +157,7 @@ function Stats() {
   );
 }
 
-// â”€â”€â”€ Services â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Services ────────────────────────────────────────────────────────────────
 const serviceCards = [
   {
     icon: Code2,
@@ -200,7 +200,7 @@ function Services() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">What we do</h2>
           <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">
-            From software delivery to academic research â€” we bring technical excellence to every engagement.
+            From software delivery to academic research — we bring technical excellence to every engagement.
           </p>
         </div>
 
@@ -234,7 +234,7 @@ function Services() {
   );
 }
 
-// â”€â”€â”€ Learning â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Learning ────────────────────────────────────────────────────────────────
 function Learning() {
   return (
     <section className="py-24 bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-teal-950">
@@ -273,10 +273,10 @@ function Learning() {
           {/* Visual image grid */}
           <div className="grid grid-cols-2 gap-4">
             {[
-              { label: 'Web Development', duration: '8â€“12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
-              { label: 'Mobile Development', duration: '8â€“12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
-              { label: 'UI/UX Design', duration: '6â€“10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
-              { label: '1-on-1 Mentorship', duration: '10â€“12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
+              { label: 'Web Development', duration: '8–12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
+              { label: 'Mobile Development', duration: '8–12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
+              { label: 'UI/UX Design', duration: '6–10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
+              { label: '1-on-1 Mentorship', duration: '10–12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
             ].map((program) => (
               <div key={program.label} className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden group">
                 <div className="h-28 overflow-hidden">
@@ -296,19 +296,19 @@ function Learning() {
   );
 }
 
-// â”€â”€â”€ Featured Student Work â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Featured Student Work ───────────────────────────────────────────────────
 
 function FeaturedStudentWork() {
   // Backend sorts case studies by `featured: -1, createdAt: -1` already, so
   // a single top-3 fetch yields featured-first-then-recent automatically.
-  // (Previously this was a two-stage fetch â€” feature-filtered then fallback â€”
+  // (Previously this was a two-stage fetch — feature-filtered then fallback —
   // unnecessary given the server-side sort.)
   const { data: projects = [], isLoading: loading } = useCaseStudies({
     type: 'student_project',
     limit: 3,
   });
 
-  // Hide the whole section if there's nothing to show â€” better than an
+  // Hide the whole section if there's nothing to show — better than an
   // awkward empty grid in front of a marketing page.
   if (!loading && projects.length === 0) return null;
 
@@ -394,14 +394,14 @@ function FeaturedStudentWork() {
   );
 }
 
-// â”€â”€â”€ Pricing CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Pricing CTA ─────────────────────────────────────────────────────────────
 function PricingCTA() {
   const highlights = [
     {
       label: 'For Clients',
       title: 'Build your product',
-      description: 'Productized packages with fixed scope and fixed price â€” landing pages, full-stack web apps, mobile apps, data dashboards, and research writing.',
-      features: ['Web development from â‚¦150,000', 'Mobile apps from â‚¦1,500,000', 'Data dashboards from â‚¦400,000', 'Research writing from â‚¦100,000'],
+      description: 'Productized packages with fixed scope and fixed price — landing pages, full-stack web apps, mobile apps, data dashboards, and research writing.',
+      features: ['Web development from ₦150,000', 'Mobile apps from ₦1,500,000', 'Data dashboards from ₦400,000', 'Research writing from ₦100,000'],
       cta: 'View client pricing',
       link: '/pricing',
       gradient: true,
@@ -410,7 +410,7 @@ function PricingCTA() {
       label: 'For Learners',
       title: 'Launch your tech career',
       description: 'Live instructor-led classes, intensive cohorts, and 1-on-1 mentorship across 5 tracks. One fixed fee per tier.',
-      features: ['Frontend, Backend, Full-Stack tracks', 'Mobile App Development track', 'Research Writing track', '3 tiers from â‚¦50,000'],
+      features: ['Frontend, Backend, Full-Stack tracks', 'Mobile App Development track', 'Research Writing track', '3 tiers from ₦50,000'],
       cta: 'View training pricing',
       link: '/pricing',
       gradient: false,
@@ -422,7 +422,7 @@ function PricingCTA() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Pricing for every goal</h2>
-          <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">Whether you're building a product or building your skills â€” we've got you covered.</p>
+          <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">Whether you're building a product or building your skills — we've got you covered.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -468,7 +468,7 @@ function PricingCTA() {
   );
 }
 
-// â”€â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Testimonials ────────────────────────────────────────────────────────────
 function Testimonials() {
   const { data, isLoading: loading } = useReviews({ limit: 6 });
   const reviews: ReviewCardData[] = (data?.reviews ?? []) as unknown as ReviewCardData[];
@@ -496,7 +496,7 @@ function Testimonials() {
           <div className="text-center text-slate-400 py-12">Loading reviews...</div>
         ) : reviews.length === 0 ? (
           <div className="text-center max-w-md mx-auto py-12 px-6 bg-white/5 backdrop-blur border border-white/10 rounded-2xl">
-            <p className="text-slate-300 mb-2">No reviews yet â€” be the first.</p>
+            <p className="text-slate-300 mb-2">No reviews yet — be the first.</p>
             <p className="text-sm text-slate-400">
               Once students complete a program and clients finish a project, their reviews will appear here.
             </p>
@@ -513,7 +513,7 @@ function Testimonials() {
   );
 }
 
-// â”€â”€â”€ Newsletter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Newsletter ─────────────────────────────────────────────────────────────
 function Newsletter() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -542,7 +542,7 @@ function Newsletter() {
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">Stay in the loop</h2>
         <p className="text-gray-500 dark:text-slate-400 mb-8 max-w-lg mx-auto">
-          Get updates on new cohort openings, free workshops, and tech career tips. No spam â€” unsubscribe anytime.
+          Get updates on new cohort openings, free workshops, and tech career tips. No spam — unsubscribe anytime.
         </p>
 
         {status === 'success' ? (
@@ -577,7 +577,7 @@ function Newsletter() {
   );
 }
 
-// â”€â”€â”€ Final CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Final CTA ───────────────────────────────────────────────────────────────
 function FinalCTA() {
   return (
     <section className="py-24 bg-white dark:bg-slate-900">
@@ -605,7 +605,7 @@ function FinalCTA() {
   );
 }
 
-// â”€â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Page ────────────────────────────────────────────────────────────────────
 export default function Landing() {
   return (
     <>

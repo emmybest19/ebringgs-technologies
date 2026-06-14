@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Code2, BarChart3, BookOpen, Layers, Smartphone, Brain,
@@ -52,7 +52,7 @@ function InquiryModal({ serviceId, serviceTitle, onClose }: { serviceId: string 
               <CheckCircle2 size={32} className="text-green-500" />
             </div>
             <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Inquiry sent!</h3>
-            <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">We'll be in touch within 1â€“2 business days with a custom quote.</p>
+            <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">We'll be in touch within 1–2 business days with a custom quote.</p>
             <button onClick={onClose} className="px-6 py-2 bg-teal-600 text-white rounded-lg text-sm font-medium hover:bg-teal-700">
               Close
             </button>
@@ -187,7 +187,7 @@ export default function Services() {
                             <p className="text-2xl font-extrabold text-gray-900 dark:text-white">
                               {formatNGN(service.price)}
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-slate-400">Fixed price Â· one-time</p>
+                            <p className="text-xs text-gray-500 dark:text-slate-400">Fixed price · one-time</p>
                           </div>
                         )}
 
@@ -220,7 +220,7 @@ export default function Services() {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Need something custom?</h2>
                 </div>
                 <p className="text-gray-500 dark:text-slate-400 mb-6 max-w-2xl">
-                  These engagements vary too much for fixed pricing. Tell us about your project and we'll send a tailored quote within 1â€“2 business days.
+                  These engagements vary too much for fixed pricing. Tell us about your project and we'll send a tailored quote within 1–2 business days.
                 </p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {customOnly.map((service) => {

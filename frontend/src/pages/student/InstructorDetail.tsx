@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Loader2, Linkedin, Github, Globe, Mail, BookOpen, Star, AlertCircle } from 'lucide-react';
 import api from '../../services/api';
@@ -137,7 +137,7 @@ export default function StudentInstructorDetail() {
           )}
         </div>
 
-        {/* Sidebar â€” contact / links */}
+        {/* Sidebar — contact / links */}
         <aside className="space-y-4">
           {teacher.social && (teacher.social.linkedin || teacher.social.github || teacher.social.website) && (
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">

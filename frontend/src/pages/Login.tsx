@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Eye, EyeOff, Loader2, Mail, Lock, ArrowRight, CheckCircle2,
@@ -11,7 +11,7 @@ import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import Logo from '../components/Logo';
 
-// â”€â”€â”€ Floating Icons (same as Register for consistency) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Floating Icons (same as Register for consistency) ──────────────────────
 const floatingIcons = [
   { Icon: Code2, top: '12%', left: '8%', delay: '0s', size: 20 },
   { Icon: Smartphone, top: '25%', right: '12%', delay: '1.5s', size: 18 },
@@ -26,7 +26,7 @@ const stats = [
   { value: '15+', label: 'Expert mentors' },
 ];
 
-// â”€â”€â”€ Left Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Left Panel ─────────────────────────────────────────────────────────────
 function LeftPanel() {
   const { data } = useReviews({ featured: true, limit: 2 });
   const reviews: ReviewCardData[] = (data?.reviews ?? []) as unknown as ReviewCardData[];
@@ -94,7 +94,7 @@ function LeftPanel() {
   );
 }
 
-// â”€â”€â”€ Main Login Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Login Page ────────────────────────────────────────────────────────
 export default function Login() {
   const location = useLocation();
   const prefilledEmail = (location.state as { email?: string } | null)?.email ?? '';
@@ -123,10 +123,10 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-slate-950">
-      {/* â”€â”€ Left Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Left Panel ──────────────────────────────────────────────── */}
       <LeftPanel />
 
-      {/* â”€â”€ Right Panel (Form) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Right Panel (Form) ──────────────────────────────────────── */}
       <div className="w-full lg:w-1/2 flex flex-col min-h-screen">
         {/* Mobile header */}
         <div className="lg:hidden flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900">
@@ -193,7 +193,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                    placeholder="••••••••"
                     className="w-full pl-11 pr-12 py-4 rounded-xl border-2 border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
                   />
                   <button
@@ -261,7 +261,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* â”€â”€ Global CSS for animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Global CSS for animations ───────────────────────────────── */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }

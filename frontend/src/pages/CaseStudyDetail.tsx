@@ -1,4 +1,4 @@
-﻿import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Github, Loader2, Quote, ShoppingCart, Star, AlertCircle, GraduationCap, Briefcase } from 'lucide-react';
 import { useCaseStudy } from '../services/queries';
 
@@ -118,7 +118,7 @@ export default function CaseStudyDetail() {
               <ul className="space-y-2">
                 {study.results.map((r) => (
                   <li key={r} className="flex items-start gap-3 p-4 bg-emerald-50 dark:bg-emerald-950 rounded-xl border border-emerald-100 dark:border-emerald-900">
-                    <span className="text-emerald-600 mt-0.5">â†’</span>
+                    <span className="text-emerald-600 mt-0.5">→</span>
                     <span className="text-sm text-gray-700 dark:text-slate-300">{r}</span>
                   </li>
                 ))}

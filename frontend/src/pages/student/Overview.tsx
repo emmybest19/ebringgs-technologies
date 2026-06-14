@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Bell, ArrowRight, Video, Calendar, CheckCircle2, ClipboardList, Gift, Copy, Check,
@@ -100,7 +100,7 @@ export default function Overview() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1">{s.title}</p>
-                    <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">{s.instructor} Â· {formatDate(s.scheduledAt)}</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">{s.instructor} · {formatDate(s.scheduledAt)}</p>
                   </div>
                   <a href={s.meetingUrl || `/classroom/${s.roomId}`}
                     className="px-3 py-1.5 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 transition-colors shrink-0">
@@ -136,7 +136,7 @@ export default function Overview() {
               <h2 className="font-bold">Refer a friend</h2>
             </div>
             <p className="text-teal-100 text-sm mb-3">
-              Earn <span className="font-bold text-white">50 points (â‚¦5,000 discount)</span> for every friend who signs up and enrols.
+              Earn <span className="font-bold text-white">50 points (₦5,000 discount)</span> for every friend who signs up and enrols.
             </p>
             <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2">
               <input

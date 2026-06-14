@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Award, Download, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useAuthStore } from '../store/auth.store';
@@ -66,7 +66,7 @@ export default function Certificate() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-teal-50 via-white to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      {/* Toolbar â€” hidden when printing */}
+      {/* Toolbar — hidden when printing */}
       <div className="print:hidden bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 px-6 py-3 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white transition-colors">
           <ArrowLeft size={15} /> Back to Dashboard

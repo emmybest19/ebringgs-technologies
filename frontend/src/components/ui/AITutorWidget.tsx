@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Sparkles, Send, X, Loader2, Bot, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../services/api';
@@ -136,7 +136,7 @@ export default function AITutorWidget() {
                     <Bot size={32} className="text-teal-500 mx-auto mb-3" />
                     <p className="font-semibold text-gray-900 dark:text-white mb-1">Hi! I'm your AI tutor.</p>
                     <p className="text-sm text-gray-500 dark:text-slate-400 mb-5">
-                      Stuck on a concept? Ask me anything â€” I'm here 24/7.
+                      Stuck on a concept? Ask me anything — I'm here 24/7.
                     </p>
                     <div className="space-y-2 text-left">
                       {[
@@ -165,7 +165,7 @@ export default function AITutorWidget() {
                     </div>
                     <div className="bg-white dark:bg-slate-900 rounded-2xl rounded-tl-sm border border-gray-100 dark:border-slate-800 px-4 py-3 flex items-center gap-2">
                       <Loader2 size={14} className="animate-spin text-teal-600" />
-                      <span className="text-sm text-gray-500 dark:text-slate-400">Thinkingâ€¦</span>
+                      <span className="text-sm text-gray-500 dark:text-slate-400">Thinking…</span>
                     </div>
                   </div>
                 )}
@@ -189,7 +189,7 @@ export default function AITutorWidget() {
                         handleSend();
                       }
                     }}
-                    placeholder="Ask anythingâ€¦"
+                    placeholder="Ask anything…"
                     disabled={sending}
                     rows={1}
                     className="flex-1 max-h-32 px-3 py-2 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none resize-none"

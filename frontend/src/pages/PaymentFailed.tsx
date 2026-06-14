@@ -1,4 +1,4 @@
-﻿import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { XCircle, RefreshCw, MessageSquare } from 'lucide-react';
 
 export default function PaymentFailed() {
@@ -22,10 +22,10 @@ export default function PaymentFailed() {
         <div className="bg-amber-50 dark:bg-amber-950 rounded-xl p-4 mb-8 text-left border border-amber-100 dark:border-amber-900">
           <p className="text-sm font-semibold text-amber-800 dark:text-amber-200 mb-1">Common reasons for failure</p>
           <ul className="space-y-1.5 text-sm text-amber-700 dark:text-amber-300">
-            <li>â€¢ Insufficient funds on the card</li>
-            <li>â€¢ Card details entered incorrectly</li>
-            <li>â€¢ Card blocked for online transactions</li>
-            <li>â€¢ Bank declined the transaction</li>
+            <li>• Insufficient funds on the card</li>
+            <li>• Card details entered incorrectly</li>
+            <li>• Card blocked for online transactions</li>
+            <li>• Bank declined the transaction</li>
           </ul>
         </div>
 

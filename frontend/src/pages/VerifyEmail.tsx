@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react';
 import api from '../services/api';
@@ -48,7 +48,7 @@ export default function VerifyEmail() {
         {status === 'loading' && (
           <>
             <Loader2 size={40} className="animate-spin text-teal-600 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Verifying your emailâ€¦</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Verifying your email…</h2>
             <p className="text-gray-500 dark:text-slate-400 text-sm">Please wait a moment.</p>
           </>
         )}

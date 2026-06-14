@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Eye, EyeOff, Loader2, CheckCircle2, ArrowRight, ArrowLeft,
@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { useAuthStore } from '../store/auth.store';
 import Logo from '../components/Logo';
 
-// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Types ──────────────────────────────────────────────────────────────────
 type Role = 'student' | 'client';
 
 interface StepConfig {
@@ -26,11 +26,11 @@ const steps: StepConfig[] = [
   { id: 5, label: 'Confirm', icon: Shield },
 ];
 
-// â”€â”€â”€ Left Panel Content Per Step â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Left Panel Content Per Step ────────────────────────────────────────────
 const panelContent: Record<number, { title: string; subtitle: string; features: string[] }> = {
   1: {
     title: 'Join a community that builds the future',
-    subtitle: 'Whether you\'re here to learn or to build â€” you\'re in the right place.',
+    subtitle: 'Whether you\'re here to learn or to build — you\'re in the right place.',
     features: [
       'Structured learning programs',
       'Real-world client projects',
@@ -55,7 +55,7 @@ const panelContent: Record<number, { title: string; subtitle: string; features: 
       'Course & session reminders',
       'Progress reports',
       'Payment receipts',
-      'No spam â€” we promise',
+      'No spam — we promise',
     ],
   },
   4: {
@@ -80,7 +80,7 @@ const panelContent: Record<number, { title: string; subtitle: string; features: 
   },
 };
 
-// â”€â”€â”€ Floating Icons (Left Panel Decoration) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Floating Icons (Left Panel Decoration) ─────────────────────────────────
 const floatingIcons = [
   { Icon: Code2, top: '12%', left: '8%', delay: '0s', size: 20 },
   { Icon: Smartphone, top: '25%', right: '12%', delay: '1.5s', size: 18 },
@@ -89,7 +89,7 @@ const floatingIcons = [
   { Icon: Zap, top: '55%', left: '85%', delay: '2.2s', size: 14 },
 ];
 
-// â”€â”€â”€ Step Indicator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Step Indicator ─────────────────────────────────────────────────────────
 function StepIndicator({ currentStep }: { currentStep: number }) {
   return (
     <div className="flex items-center justify-between w-full max-w-md mx-auto mb-8">
@@ -146,7 +146,7 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
   );
 }
 
-// â”€â”€â”€ Left Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Left Panel ─────────────────────────────────────────────────────────────
 function LeftPanel({ currentStep }: { currentStep: number }) {
   const content = panelContent[currentStep];
   const [visible, setVisible] = useState(true);
@@ -233,7 +233,7 @@ function LeftPanel({ currentStep }: { currentStep: number }) {
   );
 }
 
-// â”€â”€â”€ Main Register Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Register Page ─────────────────────────────────────────────────────
 export default function Register() {
   const [step, setStep] = useState(1);
   const [role, setRole] = useState<Role>('student');
@@ -320,10 +320,10 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex bg-gray-50 dark:bg-slate-950">
-      {/* â”€â”€ Left Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Left Panel ──────────────────────────────────────────────── */}
       <LeftPanel currentStep={step} />
 
-      {/* â”€â”€ Right Panel (Form) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Right Panel (Form) ──────────────────────────────────────── */}
       <div className="w-full lg:w-1/2 flex flex-col min-h-screen">
         {/* Mobile header */}
         <div className="lg:hidden flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900">
@@ -343,7 +343,7 @@ export default function Register() {
               ref={formRef}
               className={`transition-all duration-300 ease-out ${slideClass}`}
             >
-              {/* â”€â”€ Step 1: Role â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+              {/* ── Step 1: Role ──────────────────────────────────── */}
               {step === 1 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">How will you use E-Bringgs?</h2>
@@ -389,7 +389,7 @@ export default function Register() {
                       </div>
                       <div className="flex-1">
                         <p className="font-bold text-gray-900 dark:text-white">Client</p>
-                        <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">I need professional services â€” website, web app, mobile app, or design.</p>
+                        <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">I need professional services — website, web app, mobile app, or design.</p>
                       </div>
                       {role === 'client' && (
                         <CheckCircle2 size={20} className="absolute top-4 right-4 text-teal-600" />
@@ -399,7 +399,7 @@ export default function Register() {
                 </div>
               )}
 
-              {/* â”€â”€ Step 2: Name â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+              {/* ── Step 2: Name ──────────────────────────────────── */}
               {step === 2 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">What's your name?</h2>
@@ -424,7 +424,7 @@ export default function Register() {
                 </div>
               )}
 
-              {/* â”€â”€ Step 3: Email â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+              {/* ── Step 3: Email ─────────────────────────────────── */}
               {step === 3 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">What's your email?</h2>
@@ -449,7 +449,7 @@ export default function Register() {
                 </div>
               )}
 
-              {/* â”€â”€ Step 4: Password â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+              {/* ── Step 4: Password ──────────────────────────────── */}
               {step === 4 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Create a password</h2>
@@ -515,7 +515,7 @@ export default function Register() {
                 </div>
               )}
 
-              {/* â”€â”€ Step 5: Confirm â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+              {/* ── Step 5: Confirm ───────────────────────────────── */}
               {step === 5 && (
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Review & create account</h2>
@@ -527,7 +527,7 @@ export default function Register() {
                       { label: 'Account type', value: role === 'student' ? 'Student' : 'Client', icon: role === 'student' ? GraduationCap : Briefcase, editable: 1 },
                       { label: 'Full name', value: name, icon: User, editable: 2 },
                       { label: 'Email', value: email, icon: Mail, editable: 3 },
-                      { label: 'Password', value: 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢', icon: Lock, editable: 4 },
+                      { label: 'Password', value: '••••••••', icon: Lock, editable: 4 },
                     ].map((item) => {
                       const ItemIcon = item.icon;
                       return (
@@ -605,7 +605,7 @@ export default function Register() {
               )}
             </div>
 
-            {/* â”€â”€ Navigation Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* ── Navigation Buttons ─────────────────────────────── */}
             <div className="flex items-center gap-3 mt-10">
               {step > 1 && (
                 <button
@@ -661,7 +661,7 @@ export default function Register() {
         </div>
       </div>
 
-      {/* â”€â”€ Global CSS for animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Global CSS for animations ───────────────────────────────── */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }

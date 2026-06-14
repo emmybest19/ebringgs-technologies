@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Target, Eye, Heart, Users } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
 
@@ -16,14 +16,14 @@ const teamMembers = [
 ];
 
 const values = [
-  { icon: Target, title: 'Excellence', description: 'We hold ourselves to the highest standard in everything we deliver â€” code, design, or curriculum.' },
+  { icon: Target, title: 'Excellence', description: 'We hold ourselves to the highest standard in everything we deliver — code, design, or curriculum.' },
   { icon: Heart, title: 'Empowerment', description: 'We believe every person deserves access to world-class technology skills and opportunities.' },
   { icon: Users, title: 'Community', description: 'We build relationships, not just products. Our alumni and client network is our greatest asset.' },
-  { icon: Eye, title: 'Transparency', description: 'Honest timelines, clear pricing, and open communication â€” no surprises, ever.' },
+  { icon: Eye, title: 'Transparency', description: 'Honest timelines, clear pricing, and open communication — no surprises, ever.' },
 ];
 
 export default function About() {
-  useSEO({ title: 'About Us', description: 'Learn about E-Bringgs Technologies â€” our mission, values, and the team behind the platform.' });
+  useSEO({ title: 'About Us', description: 'Learn about E-Bringgs Technologies — our mission, values, and the team behind the platform.' });
 
   return (
     <div className="bg-white dark:bg-slate-900">
@@ -45,7 +45,7 @@ export default function About() {
           <div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our mission</h2>
             <p className="text-gray-500 dark:text-slate-400 text-lg leading-relaxed">
-              To democratise access to technology education and high-quality software services â€” empowering individuals and organisations across Africa and beyond to compete at a global level.
+              To democratise access to technology education and high-quality software services — empowering individuals and organisations across Africa and beyond to compete at a global level.
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden shadow-lg">
@@ -83,12 +83,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team â€” Orbital Layout */}
+      {/* Team — Orbital Layout */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-24 overflow-hidden">
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-6">Meet the team</h2>
-        <p className="text-gray-500 dark:text-slate-400 text-center max-w-xl mx-auto mb-20">The people behind E-Bringgs â€” passionate about technology, education, and impact.</p>
+        <p className="text-gray-500 dark:text-slate-400 text-center max-w-xl mx-auto mb-20">The people behind E-Bringgs — passionate about technology, education, and impact.</p>
 
-        {/* Orbital container â€” hidden on small screens */}
+        {/* Orbital container — hidden on small screens */}
         <div className="relative mx-auto hidden sm:block" style={{ width: '100%', maxWidth: 800, height: 800 }}>
           {/* Orbit ring */}
           <div className="absolute rounded-full border-2 border-dashed border-gray-200 dark:border-slate-700/60" style={{ top: 75, left: 75, right: 75, bottom: 75 }} />
@@ -103,7 +103,7 @@ export default function About() {
             })}
           </svg>
 
-          {/* CEO â€” Center */}
+          {/* CEO — Center */}
           <div className="absolute z-10" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
             <div className="flex flex-col items-center">
               <div className="relative">
@@ -121,9 +121,9 @@ export default function About() {
             </div>
           </div>
 
-          {/* Team members â€” evenly spaced on the orbit circle */}
+          {/* Team members — evenly spaced on the orbit circle */}
           {teamMembers.map((member, i) => {
-            // 3 members at 90Â°, 210Â°, 330Â° (top, bottom-left, bottom-right)
+            // 3 members at 90°, 210°, 330° (top, bottom-left, bottom-right)
             const angle = (90 + i * 120) * (Math.PI / 180);
             const radius = 42; // % from center
             const top = 50 - radius * Math.cos(angle);
@@ -154,7 +154,7 @@ export default function About() {
           })}
         </div>
 
-        {/* Mobile fallback â€” stacked cards */}
+        {/* Mobile fallback — stacked cards */}
         <div className="mt-8 grid grid-cols-1 sm:hidden gap-4">
           {[ceo, ...teamMembers].map((member) => (
             <div key={member.name} className="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 dark:border-slate-800">
@@ -174,7 +174,7 @@ export default function About() {
       {/* CTA */}
       <section className="bg-teal-600 py-20 px-4 text-center text-white">
         <h2 className="text-3xl font-bold mb-3">Join us on the journey</h2>
-        <p className="text-teal-200 mb-8 max-w-xl mx-auto">Whether you want to learn, build something, or work with us â€” there's a place for you at E-Bringgs.</p>
+        <p className="text-teal-200 mb-8 max-w-xl mx-auto">Whether you want to learn, build something, or work with us — there's a place for you at E-Bringgs.</p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link to="/register" className="px-8 py-4 bg-white text-teal-700 font-bold rounded-xl hover:bg-teal-50 transition-colors">
             Get started

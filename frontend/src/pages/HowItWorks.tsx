@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, UserPlus, Search, CreditCard, BookOpen, Video,
@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
 
-/* â”€â”€â”€ Role tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Role tabs ─────────────────────────────────────────────────────────────── */
 
 type Role = 'student' | 'client';
 
@@ -16,7 +16,7 @@ const roles: { key: Role; label: string; icon: typeof GraduationCap; description
   { key: 'client', label: 'I need a service', icon: Briefcase, description: 'Software, design & consulting' },
 ];
 
-/* â”€â”€â”€ Steps per role â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Steps per role ────────────────────────────────────────────────────────── */
 
 interface Step {
   number: number;
@@ -32,19 +32,19 @@ const studentSteps: Step[] = [
   {
     number: 1,
     title: 'Create your free account',
-    description: 'Sign up in seconds with your email. Choose "Student" as your role during registration â€” this unlocks your personal learning dashboard.',
+    description: 'Sign up in seconds with your email. Choose "Student" as your role during registration — this unlocks your personal learning dashboard.',
     icon: UserPlus,
     image: '/images/hero/team-collaboration.jpg',
-    tips: ['Use a real email â€” you\'ll need it to verify your account', 'You can upgrade or change your plan later'],
+    tips: ['Use a real email — you\'ll need it to verify your account', 'You can upgrade or change your plan later'],
     cta: { label: 'Create account', to: '/register' },
   },
   {
     number: 2,
     title: 'Choose a training program',
-    description: 'Pick from Web Development, Mobile Development, or UI/UX Design â€” each with three tiers: Starter (live classes), Cohort (intensive group program), or Mentorship (1-on-1 sessions). All classes are taught live.',
+    description: 'Pick from Web Development, Mobile Development, or UI/UX Design — each with three tiers: Starter (live classes), Cohort (intensive group program), or Mentorship (1-on-1 sessions). All classes are taught live.',
     icon: Search,
     image: '/images/learning/students-laptop.jpg',
-    tips: ['Compare tiers on the pricing page to find the best fit', 'All programs have set class schedules â€” check availability'],
+    tips: ['Compare tiers on the pricing page to find the best fit', 'All programs have set class schedules — check availability'],
     cta: { label: 'View programs', to: '/pricing' },
   },
   {
@@ -75,7 +75,7 @@ const studentSteps: Step[] = [
   {
     number: 6,
     title: 'Submit assignments & earn your certificate',
-    description: 'Complete assignments given during live classes, get reviewed by your instructor, and when you finish the program â€” download your verified certificate of completion. Every certificate has a unique ID that employers can verify on our public verification page.',
+    description: 'Complete assignments given during live classes, get reviewed by your instructor, and when you finish the program — download your verified certificate of completion. Every certificate has a unique ID that employers can verify on our public verification page.',
     icon: Award,
     image: '/images/learning/mentorship.jpg',
     tips: ['Assignments are reviewed within 48 hours', 'Your certificate includes a unique ID for employer verification', 'Employers can verify your certificate at /verify-certificate'],
@@ -86,7 +86,7 @@ const clientSteps: Step[] = [
   {
     number: 1,
     title: 'Create your account',
-    description: 'Sign up and select "Client" as your role. This gives you access to the Client Dashboard where you can manage projects, payments, and communication â€” all in one place.',
+    description: 'Sign up and select "Client" as your role. This gives you access to the Client Dashboard where you can manage projects, payments, and communication — all in one place.',
     icon: UserPlus,
     image: '/images/hero/modern-workspace.jpg',
     tips: ['Choose "Client" during registration to get the right dashboard', 'You can also inquire without an account via the Services page'],
@@ -95,7 +95,7 @@ const clientSteps: Step[] = [
   {
     number: 2,
     title: 'Explore our services',
-    description: 'Browse what we offer â€” web apps, mobile apps, data analytics, ML, research support, UI/UX design, and product strategy. Each service page shows deliverables and what to expect.',
+    description: 'Browse what we offer — web apps, mobile apps, data analytics, ML, research support, UI/UX design, and product strategy. Each service page shows deliverables and what to expect.',
     icon: Code2,
     image: '/images/services/software-dev.jpg',
     tips: ['Not sure what you need? Use the "Talk to us" button on the Services page', 'Each service card lists exactly what you\'ll receive'],
@@ -104,7 +104,7 @@ const clientSteps: Step[] = [
   {
     number: 3,
     title: 'Submit a service inquiry',
-    description: 'Found what you need? Click "Request Service" and fill out a short form describing your project. Our team reviews every inquiry within 1â€“2 business days and reaches out with a plan.',
+    description: 'Found what you need? Click "Request Service" and fill out a short form describing your project. Our team reviews every inquiry within 1–2 business days and reaches out with a plan.',
     icon: MessageSquare,
     image: '/images/general/handshake.jpg',
     tips: ['Be as specific as possible about your project goals', 'Include your timeline and budget range if you have one'],
@@ -120,10 +120,10 @@ const clientSteps: Step[] = [
   {
     number: 5,
     title: 'Make payments securely',
-    description: 'Pay via Paystack â€” our secure payment gateway. View all your transactions, receipts, and payment history from the Payments section of your dashboard.',
+    description: 'Pay via Paystack — our secure payment gateway. View all your transactions, receipts, and payment history from the Payments section of your dashboard.',
     icon: CreditCard,
     image: '/images/hero/data-dashboard.jpg',
-    tips: ['All prices are in NGN', 'Fixed price per package â€” what you see is what you pay'],
+    tips: ['All prices are in NGN', 'Fixed price per package — what you see is what you pay'],
     cta: { label: 'View pricing', to: '/pricing' },
   },
   {
@@ -141,21 +141,21 @@ const stepsByRole: Record<Role, Step[]> = {
   client: clientSteps,
 };
 
-/* â”€â”€â”€ FAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── FAQ ───────────────────────────────────────────────────────────────────── */
 
 const faqs = [
-  { q: 'Is it free to create an account?', a: 'Yes â€” signing up is completely free. You only pay when you enrol in a training program or request a service.' },
+  { q: 'Is it free to create an account?', a: 'Yes — signing up is completely free. You only pay when you enrol in a training program or request a service.' },
   { q: 'Can I be both a student and a client?', a: 'Currently each account has one role. If you need both, contact us and we\'ll help you set up access.' },
-  { q: 'What payment methods do you accept?', a: 'We use Paystack, which supports bank transfers, cards (Visa, Mastercard), and USSD â€” all in Nigerian Naira.' },
-  { q: 'Are all classes live?', a: 'Yes â€” every class is taught live by our instructors. You join at the scheduled time from your dashboard. Camera, mic, screen sharing, and chat are all built in.' },
-  { q: 'What if I miss a live class?', a: 'No worries â€” all live sessions are recorded. You can watch them anytime from the Recordings tab in your dashboard.' },
-  { q: 'How does the referral program work?', a: 'Every student gets a unique referral link. Share it with friends â€” when they sign up and enrol, you earn rewards like discounts on future programs.' },
-  { q: 'Can employers verify my certificate?', a: 'Yes â€” every certificate has a unique ID. Employers can verify it on our public verification page at /verify-certificate.' },
+  { q: 'What payment methods do you accept?', a: 'We use Paystack, which supports bank transfers, cards (Visa, Mastercard), and USSD — all in Nigerian Naira.' },
+  { q: 'Are all classes live?', a: 'Yes — every class is taught live by our instructors. You join at the scheduled time from your dashboard. Camera, mic, screen sharing, and chat are all built in.' },
+  { q: 'What if I miss a live class?', a: 'No worries — all live sessions are recorded. You can watch them anytime from the Recordings tab in your dashboard.' },
+  { q: 'How does the referral program work?', a: 'Every student gets a unique referral link. Share it with friends — when they sign up and enrol, you earn rewards like discounts on future programs.' },
+  { q: 'Can employers verify my certificate?', a: 'Yes — every certificate has a unique ID. Employers can verify it on our public verification page at /verify-certificate.' },
   { q: 'Can I get a refund?', a: 'Refund policies vary by program and service. Contact us within 7 days of payment and we\'ll work it out.' },
-  { q: 'How fast do you respond to service inquiries?', a: 'We aim to respond within 1â€“2 business days with a plan and quote.' },
+  { q: 'How fast do you respond to service inquiries?', a: 'We aim to respond within 1–2 business days with a plan and quote.' },
 ];
 
-/* â”€â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Page ──────────────────────────────────────────────────────────────────── */
 
 export default function HowItWorks() {
   const [activeRole, setActiveRole] = useState<Role>('student');
@@ -176,7 +176,7 @@ export default function HowItWorks() {
         <div className="relative max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">How It Works</h1>
           <p className="text-slate-300 text-lg max-w-xl mx-auto">
-            Whether you're here to learn or to build â€” here's your step-by-step guide to getting the most out of E-Bringgs.
+            Whether you're here to learn or to build — here's your step-by-step guide to getting the most out of E-Bringgs.
           </p>
         </div>
       </section>
@@ -265,7 +265,7 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      {/* At a glance â€” visual summary */}
+      {/* At a glance — visual summary */}
       <section className="bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-teal-950 py-20 px-4">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-4">At a glance</h2>

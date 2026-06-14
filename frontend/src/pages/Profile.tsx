@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   User,
@@ -65,7 +65,7 @@ export default function Profile() {
     updateProfile.mutate(
       { name, bio, phone, whatsappOptIn },
       {
-        // Auth store has its own copy of `user` â€” refresh it so the navbar
+        // Auth store has its own copy of `user` — refresh it so the navbar
         // avatar and other consumers reflect the new name/bio immediately.
         onSuccess: () => {
           fetchMe();
@@ -211,7 +211,7 @@ export default function Profile() {
                       </span>
                     </label>
                     <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
-                      Class reminders, project updates, and payment confirmations â€” straight to your WhatsApp.
+                      Class reminders, project updates, and payment confirmations — straight to your WhatsApp.
                     </p>
                   </div>
                 </div>
@@ -403,7 +403,7 @@ export default function Profile() {
                     Delete account
                   </p>
                   <p className="text-xs text-gray-400 dark:text-slate-500">
-                    Permanently delete your data â€” contact support
+                    Permanently delete your data — contact support
                   </p>
                 </div>
                 <a
