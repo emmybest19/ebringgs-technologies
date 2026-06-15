@@ -35,9 +35,21 @@ const app = express();
 // Security headers
 app.use(helmet());
 
-// CORS
+// CORS — in development allow any localhost port (Vite picks 5174+ if 5173 is busy);
+// in production lock to CLIENT_URL.
+const allowedOrigin =
+  process.env.NODE_ENV === 'production'
+    ? (process.env.CLIENT_URL || 'http://localhost:5173')
+    : (origin: string | undefined, cb: (err: Error | null, allow?: boolean) => void) => {
+        if (!origin || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+          cb(null, true);
+        } else {
+          cb(new Error(`CORS: origin ${origin} not allowed`));
+        }
+      };
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: allowedOrigin,
   credentials: true,
 }));
 

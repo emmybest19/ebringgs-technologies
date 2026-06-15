@@ -50,7 +50,25 @@
       "Bash(curl -s --max-time 30 -X POST -H \"Content-Type: application/json\" http://localhost:5000/api/site-assistant/ask -d '{\"question\":\"I want to learn web development, what should I do?\"}' -w \"\\\\nHTTP %{http_code}\\\\n\")",
       "Bash(curl -s --max-time 30 -X POST -H \"Content-Type: application/json\" http://localhost:5000/api/site-assistant/ask -d '{\"question\":\"hello\"}' -w \"\\\\nHTTP %{http_code} time=%{time_total}s\\\\n\")",
       "Bash(curl -s -i -X OPTIONS http://localhost:5000/api/site-assistant/ask -H \"Origin: http://localhost:5173\" -H \"Access-Control-Request-Method: POST\" -H \"Access-Control-Request-Headers: Content-Type\")",
-      "Bash(curl -s -i --max-time 30 -X POST -H \"Content-Type: application/json\" -H \"Origin: http://localhost:5173\" http://localhost:5000/api/site-assistant/ask -d '{\"question\":\"test\"}')"
+      "Bash(curl -s -i --max-time 30 -X POST -H \"Content-Type: application/json\" -H \"Origin: http://localhost:5173\" http://localhost:5000/api/site-assistant/ask -d '{\"question\":\"test\"}')",
+      "Bash(curl -s --max-time 10 -o /dev/null -w \"GET /api/services -> HTTP %{http_code} time=%{time_total}s\\\\n\" http://localhost:5000/api/services)",
+      "Bash(curl -s --max-time 10 -o /dev/null -w \"GET /api/docs    -> HTTP %{http_code}\\\\n\" http://localhost:5000/api/docs/)",
+      "Bash(curl -s --max-time 30 -X POST -H \"Content-Type: application/json\" -H \"Origin: http://localhost:5173\" http://localhost:5000/api/site-assistant/ask -d '{\"question\":\"hi\"}' -w \"\\\\nHTTP %{http_code} time=%{time_total}s\\\\n\")",
+      "Bash(curl -s -o /dev/null -w \"GET http://localhost:5173 -> HTTP %{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(curl -s -i --max-time 30 -X POST -H \"Content-Type: application/json\" -H \"Origin: http://localhost:5173\" http://localhost:5000/api/site-assistant/ask -d '{\"question\":\"hi\"}')",
+      "Bash(curl -s -o /dev/null -w \"GET /api/services -> HTTP %{http_code} in %{time_total}s\\\\n\" http://localhost:5000/api/services)",
+      "Bash(curl -s -o /dev/null -w \"GET /api/docs     -> HTTP %{http_code}\\\\n\" http://localhost:5000/api/docs/)",
+      "Bash(curl -i -s -X POST http://localhost:5000/api/auth/register -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Test User\\\\\",\\\\\"email\\\\\":\\\\\"test_user_$\\(date +%s\\)@example.com\\\\\",\\\\\"password\\\\\":\\\\\"testpassword123\\\\\",\\\\\"role\\\\\":\\\\\"student\\\\\"}\")",
+      "Bash(curl -i -s -X POST http://localhost:5000/api/auth/login -H \"Content-Type: application/json\" -d \"{\\\\\"email\\\\\":\\\\\"emmanuelebri50@gmail.com\\\\\",\\\\\"password\\\\\":\\\\\"Mariociano10@\\\\\"}\")",
+      "Bash(curl -i -s -X POST http://localhost:5000/api/auth/register -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Ebri always\\\\\",\\\\\"email\\\\\":\\\\\"emmanuelebri50@gmail.com\\\\\",\\\\\"password\\\\\":\\\\\"Mariociano10@\\\\\",\\\\\"role\\\\\":\\\\\"client\\\\\"}\")",
+      "Bash(curl -i -s -X POST http://localhost:5000/api/auth/register -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Ebri always\\\\\",\\\\\"email\\\\\":\\\\\"emmanuelebri50+client@gmail.com\\\\\",\\\\\"password\\\\\":\\\\\"Mariociano10@\\\\\",\\\\\"role\\\\\":\\\\\"client\\\\\"}\")",
+      "Bash(curl -s -o /dev/null -w \"frontend: %{http_code}\\\\n\" http://localhost:5173/ -m 3)",
+      "Bash(curl -s -o /dev/null -w \"backend: %{http_code}\\\\n\" http://localhost:5000/api/docs -m 3)",
+      "Bash(curl -s -X OPTIONS http://localhost:5000/api/auth/register -H \"Origin: http://localhost:5174\" -H \"Access-Control-Request-Method: POST\" -H \"Access-Control-Request-Headers: content-type\" -i)",
+      "Bash(curl -v -X OPTIONS http://localhost:5000/api/auth/register -H \"Origin: http://localhost:5174\" -H \"Access-Control-Request-Method: POST\" -H \"Access-Control-Request-Headers: content-type\" -m 5)",
+      "Bash(curl -s -X OPTIONS http://localhost:5000/api/auth/register -H \"Origin: http://localhost:5174\" -H \"Access-Control-Request-Method: POST\" -H \"Access-Control-Request-Headers: content-type\" -m 5 -D - -o /dev/null)",
+      "Bash(npm install *)",
+      "WebSearch"
     ]
   }
 }

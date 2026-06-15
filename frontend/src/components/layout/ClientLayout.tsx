@@ -2,16 +2,21 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FolderKanban, CreditCard, LogOut, User, Star, Sparkles,
-  Menu, X,
+  Calendar, Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
 import PageTransition from '../ui/PageTransition';
 import Logo from '../Logo';
 
+const calendlyConfigured = Boolean(import.meta.env.VITE_CALENDLY_URL);
+
 const navItems = [
   { to: '/client', label: 'Overview', icon: LayoutDashboard, end: true },
   { to: '/client/projects', label: 'Projects', icon: FolderKanban },
   { to: '/client/services', label: 'Browse Services', icon: Sparkles },
+  ...(calendlyConfigured
+    ? [{ to: '/client/schedule-call', label: 'Schedule a Call', icon: Calendar }]
+    : []),
   { to: '/client/payments', label: 'Payments', icon: CreditCard },
   { to: '/client/reviews', label: 'My Reviews', icon: Star },
   { to: '/client/profile', label: 'Profile', icon: User },
@@ -76,9 +81,6 @@ export default function ClientLayout() {
               <Logo variant="mark" size={32} onDark />
               <span className="font-bold text-white">E-Bringgs</span>
             </Link>
-            <div className="flex items-center gap-1 mt-2 text-xs text-slate-400">
-              <User size={12} className="text-teal-400" /> Client portal
-            </div>
           </div>
           <button
             onClick={() => setMobileOpen(false)}

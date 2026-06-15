@@ -18,6 +18,10 @@
   --color-gold-700: #9F6A0F;
   --color-gold-800: #7B520C;
   --color-gold-900: #5A3C09;
+
+  /* Use Poppins across the whole app — overrides Tailwind's default sans stack
+     so `font-sans` (and the base `body`) both resolve to Poppins. */
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 *, *::before, *::after {
@@ -31,7 +35,7 @@
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #111827;

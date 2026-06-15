@@ -60,14 +60,17 @@ export default function ClientServices() {
 
                       {typeof s.price === 'number' && (
                         <div className="mb-3">
-                          <p className="text-xl font-extrabold text-gray-900 dark:text-white">{formatNGN(s.price)}</p>
+                          <p className="text-xl font-extrabold text-gray-900 dark:text-white">
+                            {formatNGN(s.price)}
+                            <span className="ml-1 text-xs font-medium text-gray-400 dark:text-slate-500">+ 7.5% VAT</span>
+                          </p>
                           {s.timeline && <p className="text-xs text-gray-500 dark:text-slate-400">{s.timeline}</p>}
                         </div>
                       )}
 
                       <div className="flex flex-col gap-2">
                         <Link
-                          to={`/services/${s.id}`}
+                          to={`/client/services/${s.id}`}
                           className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
                         >
                           View details
@@ -97,7 +100,7 @@ export default function ClientServices() {
                   return (
                     <Link
                       key={s.id}
-                      to={`/services/${s.id}`}
+                      to={`/client/services/${s.id}`}
                       className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors block"
                     >
                       <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">

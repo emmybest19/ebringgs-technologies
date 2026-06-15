@@ -85,6 +85,8 @@ import { ProjectList, ProjectDetail } from "./pages/client/ClientProjects";
 import ClientPayments from "./pages/client/ClientPayments";
 import ClientReviews from "./pages/client/ClientReviews";
 import ClientServices from "./pages/client/ClientServices";
+import ClientServiceDetail from "./pages/client/ClientServiceDetail";
+import ClientScheduleCall from "./pages/client/ClientScheduleCall";
 import ProjectBrief from "./pages/client/ProjectBrief";
 
 // Teacher pages
@@ -185,6 +187,8 @@ function App() {
           <Route path="projects/:projectId/brief" element={<ProjectBrief />} />
           <Route path="payments" element={<ClientPayments />} />
           <Route path="services" element={<ClientServices />} />
+          <Route path="services/:id" element={<ClientServiceDetail />} />
+          <Route path="schedule-call" element={<ClientScheduleCall />} />
           <Route path="reviews" element={<ClientReviews />} />
           <Route path="profile" element={<Profile />} />
         </Route>

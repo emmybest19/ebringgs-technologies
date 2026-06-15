@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
-import { FolderKanban, CreditCard, Clock, CheckCircle2, Loader2 } from 'lucide-react';
+import { FolderKanban, CreditCard, Clock, CheckCircle2, Loader2, Calendar, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
 import { useMyProjects, useMyTransactions, useMyPaymentPlans } from '../../services/queries';
 import NextPaymentBanner, { pickMostUrgentPlan } from '../../components/payments/NextPaymentBanner';
+
+const calendlyConfigured = Boolean(import.meta.env.VITE_CALENDLY_URL);
 
 export default function ClientOverview() {
   const { user } = useAuthStore();
@@ -43,6 +45,35 @@ export default function ClientOverview() {
       <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">
         Here's an overview of your projects and payments.
       </p>
+
+      {calendlyConfigured && (
+        <Link
+          to="/client/schedule-call"
+          className="group relative block overflow-hidden rounded-2xl bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white p-6 mb-6 shadow-lg hover:shadow-2xl hover:shadow-teal-500/20 transition-all"
+        >
+          <div className="pointer-events-none absolute -top-12 -right-12 w-48 h-48 bg-teal-500/20 rounded-full blur-3xl group-hover:bg-teal-400/30 transition-colors" />
+          <div className="pointer-events-none absolute -bottom-16 -left-16 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl" />
+          <div className="relative flex items-center gap-5">
+            <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-sm items-center justify-center shrink-0">
+              <Calendar size={24} className="text-teal-300" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-teal-300 font-bold mb-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> Book a Call
+              </div>
+              <p className="font-bold text-base sm:text-lg leading-tight">
+                Talk to us — pick a time that works for you
+              </p>
+              <p className="text-slate-300 text-xs sm:text-sm mt-1">
+                20-minute call · video or audio · zero commitment
+              </p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white text-teal-700 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
+              <ArrowRight size={18} />
+            </div>
+          </div>
+        </Link>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
