@@ -13,24 +13,24 @@ import { QueryClient } from '@tanstack/react-query';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Data is considered fresh for 30s — navigation within that window
+      // Data is considered fresh for 30s, navigation within that window
       // serves from cache without a refetch. Tune up for read-heavy public
       // pages (blog list), tune down for fast-changing data (live counts).
       staleTime: 30 * 1000,
 
       // Keep unused query data in cache for 5 minutes after the last
-      // subscriber unmounts. Default — explicit for clarity.
+      // subscriber unmounts. Default, explicit for clarity.
       gcTime: 5 * 60 * 1000,
 
       // One retry on failure. Network-flake friendly without masking real bugs.
       retry: 1,
       retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 8000),
 
-      // Off — refetching mid-lesson when the user tabs back to the classroom
+      // Off, refetching mid-lesson when the user tabs back to the classroom
       // restarts video players and resets forms. The 30s staleTime is enough.
       refetchOnWindowFocus: false,
 
-      // On — coming back online should pull fresh data.
+      // On, coming back online should pull fresh data.
       refetchOnReconnect: true,
     },
     mutations: {

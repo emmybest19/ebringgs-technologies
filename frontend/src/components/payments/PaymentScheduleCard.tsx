@@ -9,7 +9,7 @@ import type { Installment, PaymentPlan } from '../../services/queries';
  *   - ClientProjects → ProjectDetail (when the project has a payment plan)
  *   - student/Overview (training plan in progress)
  *
- * Self-contained — fetch the plan upstream, pass it in.
+ * Self-contained, fetch the plan upstream, pass it in.
  */
 
 interface Props {
@@ -36,7 +36,7 @@ function statusMeta(install: Installment): { label: string; tone: 'paid' | 'due'
   if (install.status === 'manual') return { label: 'Marked paid', tone: 'manual', icon: CheckCircle2 };
   if (install.status === 'failed') return { label: 'Failed', tone: 'overdue', icon: AlertCircle };
 
-  // Pending — colour by how urgent
+  // Pending, colour by how urgent
   const days = daysUntil(install.dueDate);
   if (days < 0) return { label: `Overdue ${Math.abs(days)}d`, tone: 'overdue', icon: AlertCircle };
   if (days === 0) return { label: 'Due today', tone: 'due', icon: Clock };
@@ -116,7 +116,7 @@ export default function PaymentScheduleCard({ plan, compact = false }: Props) {
                   {install.status === 'paid' && install.paidAt
                     ? `Paid on ${formatDate(install.paidAt)}`
                     : install.status === 'manual'
-                      ? `Marked paid${install.lastChargeMessage ? ` — ${install.lastChargeMessage}` : ''}`
+                      ? `Marked paid${install.lastChargeMessage ? `, ${install.lastChargeMessage}` : ''}`
                       : `Due ${formatDate(install.dueDate)}`}
                 </p>
               )}

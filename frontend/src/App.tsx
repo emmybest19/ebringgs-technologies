@@ -4,21 +4,22 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "./services/queryClient";
 import { useThemeInit } from "./hooks/useThemeInit";
-import { useAuthStore } from "./store/auth.store";
 import Layout from "./components/layout/Layout";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
-import ChatWidget from "./components/ui/ChatWidget";
+import ScrollToTopButton from "./components/ui/ScrollToTopButton";
+import SiteAssistantWidget from "./components/ui/SiteAssistantWidget";
 import AdminLayout from "./components/layout/AdminLayout";
 import ClientLayout from "./components/layout/ClientLayout";
 import TeacherLayout from "./components/layout/TeacherLayout";
 import StudentLayout from "./components/layout/StudentLayout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Public pages
 import Landing from "./pages/Landing";
 import Pricing from "./pages/Pricing";
 import Services from "./pages/Services";
-import ServiceDetail from "./pages/ServiceDetail";
+import CapabilityDetail from "./pages/CapabilityDetail";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import About from "./pages/About";
@@ -100,32 +101,32 @@ import AdminLogin from "./pages/admin/AdminLogin";
 
 function App() {
   useThemeInit();
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
-        {/* Auth — standalone (no nav) */}
+        {/* Auth, standalone (no nav) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
 
-        {/* Payment — standalone */}
+        {/* Payment, standalone */}
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment/success" element={<PaymentSuccess />} />
         <Route path="/payment/failed" element={<PaymentFailed />} />
         <Route path="/payments/plan/:id" element={<PaymentPlanDetail />} />
 
-        {/* Classroom — full-screen, no nav */}
+        {/* Classroom, full-screen, no nav */}
         <Route path="/classroom/:roomId" element={<Classroom />} />
 
-        {/* Dedicated portal logins — standalone, no layout */}
+        {/* Dedicated portal logins, standalone, no layout */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/teacher/login" element={<TeacherLogin />} />
 
-        {/* Admin — sidebar layout (gated to admin role) */}
+        {/* Admin, sidebar layout (gated to admin role) */}
         <Route
           path="/admin"
           element={
@@ -151,7 +152,7 @@ function App() {
           <Route path="settings" element={<AdminSettings />} />
         </Route>
 
-        {/* Teacher — sidebar layout (gated to teacher role) */}
+        {/* Teacher, sidebar layout (gated to teacher role) */}
         <Route
           path="/teacher"
           element={
@@ -169,7 +170,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
 
-        {/* Client — sidebar layout (gated to client role) */}
+        {/* Client, sidebar layout (gated to client role) */}
         <Route
           path="/client"
           element={
@@ -193,7 +194,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/services/:id" element={<ServiceDetail />} />
+          <Route path="/services/:slug" element={<CapabilityDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/about" element={<About />} />
@@ -212,7 +213,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        {/* Student — sidebar layout (gated to student role) */}
+        {/* Student, sidebar layout (gated to student role) */}
         <Route
           path="/dashboard"
           element={
@@ -232,8 +233,9 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
-      {isAuthenticated && <ChatWidget />}
+      <SiteAssistantWidget />
       <WhatsAppButton />
+      <ScrollToTopButton />
       <Toaster
         position="top-right"
         toastOptions={{

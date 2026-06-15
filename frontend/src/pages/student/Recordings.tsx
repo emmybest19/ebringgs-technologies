@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Video, Play, CheckCircle2 } from 'lucide-react';
 
 const sampleRecordings = [
-  { id: '1', title: 'Intro to React Hooks', program: 'Web Dev — Starter', instructor: 'Kofi Mensah', date: '2026-03-28', duration: '1h 12m', thumbnail: '/images/learning/video-class.jpg', watched: true },
-  { id: '2', title: 'Building REST APIs with Express', program: 'Web Dev — Starter', instructor: 'Kofi Mensah', date: '2026-03-25', duration: '1h 30m', thumbnail: '/images/general/coding-screen.jpg', watched: true },
-  { id: '3', title: 'State Management with Zustand', program: 'Web Dev — Cohort', instructor: 'Kofi Mensah', date: '2026-03-21', duration: '58m', thumbnail: '/images/hero/developer-coding.jpg', watched: false },
-  { id: '4', title: 'React Native Navigation Deep Dive', program: 'Mobile Dev — Cohort', instructor: 'Adaeze Okafor', date: '2026-03-18', duration: '1h 05m', thumbnail: '/images/general/mobile-app.jpg', watched: false },
-  { id: '5', title: 'Figma Auto-Layout Masterclass', program: 'UI/UX — Starter', instructor: 'Yusuf Abdullahi', date: '2026-03-15', duration: '45m', thumbnail: '/images/services/ux-design.jpg', watched: false },
-  { id: '6', title: 'TypeScript Generics Explained', program: 'Web Dev — Cohort', instructor: 'Chinonso Eze', date: '2026-03-12', duration: '1h 20m', thumbnail: '/images/learning/students-laptop.jpg', watched: false },
+  { id: '1', title: 'Intro to React Hooks', program: 'Web Dev, Starter', instructor: 'Kofi Mensah', date: '2026-03-28', duration: '1h 12m', thumbnail: '/images/learning/video-class.jpg', watched: true },
+  { id: '2', title: 'Building REST APIs with Express', program: 'Web Dev, Starter', instructor: 'Kofi Mensah', date: '2026-03-25', duration: '1h 30m', thumbnail: '/images/general/coding-screen.jpg', watched: true },
+  { id: '3', title: 'State Management with Zustand', program: 'Web Dev, Cohort', instructor: 'Kofi Mensah', date: '2026-03-21', duration: '58m', thumbnail: '/images/hero/developer-coding.jpg', watched: false },
+  { id: '4', title: 'React Native Navigation Deep Dive', program: 'Mobile Dev, Cohort', instructor: 'Adaeze Okafor', date: '2026-03-18', duration: '1h 05m', thumbnail: '/images/general/mobile-app.jpg', watched: false },
+  { id: '5', title: 'Figma Auto-Layout Masterclass', program: 'UI/UX, Starter', instructor: 'Yusuf Abdullahi', date: '2026-03-15', duration: '45m', thumbnail: '/images/services/ux-design.jpg', watched: false },
+  { id: '6', title: 'TypeScript Generics Explained', program: 'Web Dev, Cohort', instructor: 'Chinonso Eze', date: '2026-03-12', duration: '1h 20m', thumbnail: '/images/learning/students-laptop.jpg', watched: false },
 ];
 
 export default function StudentRecordings() {

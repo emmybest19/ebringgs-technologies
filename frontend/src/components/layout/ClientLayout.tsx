@@ -22,7 +22,7 @@ export default function ClientLayout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Mobile drawer state — auto-closes on route change.
+  // Mobile drawer state, auto-closes on route change.
   const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 

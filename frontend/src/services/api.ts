@@ -20,7 +20,7 @@ api.interceptors.response.use(
     const status = error.response?.status;
     const body = error.response?.data as { error?: string; paymentPlanId?: string; message?: string } | undefined;
 
-    // 403 PAYMENT_REQUIRED — user has a suspended installment plan blocking
+    // 403 PAYMENT_REQUIRED, user has a suspended installment plan blocking
     // the resource they tried to access. The backend's feature-access
     // middleware sends `{ error: 'PAYMENT_REQUIRED', paymentPlanId, ... }`.
     // We redirect the user to the plan page so they can settle and continue.

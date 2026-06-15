@@ -6,16 +6,16 @@ import type { PaymentPlan } from '../../services/queries';
  * Reusable status banner for ANY page where it's useful to remind the user
  * of an outstanding installment. Three tones:
  *
- *   - `info`    (teal)  — Active plan, next installment > 7 days away.
- *   - `warning` (amber) — Next due in ≤ 7 days, or plan is overdue (charge failed).
- *   - `critical`(red)   — Plan is suspended (grace expired). Paid feature blocked
+ *   - `info`    (teal) , Active plan, next installment > 7 days away.
+ *   - `warning` (amber), Next due in ≤ 7 days, or plan is overdue (charge failed).
+ *   - `critical`(red)  , Plan is suspended (grace expired). Paid feature blocked
  *                         until they settle.
  *
  * Auto-derives the tone from `plan.status` + days-until-next-due. Renders
- * nothing for `completed` and `cancelled` plans — caller doesn't need to
+ * nothing for `completed` and `cancelled` plans, caller doesn't need to
  * pre-filter.
  *
- * Drops anywhere — Overview pages, ProjectDetail header, etc. Self-contained.
+ * Drops anywhere, Overview pages, ProjectDetail header, etc. Self-contained.
  */
 
 interface Props {
@@ -58,7 +58,7 @@ export default function NextPaymentBanner({ plan, ctaTo }: Props) {
         <div className="flex-1 min-w-0">
           <p className="font-bold text-gray-900 dark:text-white">Access paused</p>
           <p className="text-sm text-gray-600 dark:text-slate-400">
-            {plan.description} — settle {amount} to restore access.
+            {plan.description}, settle {amount} to restore access.
           </p>
         </div>
         <Link
@@ -82,7 +82,7 @@ export default function NextPaymentBanner({ plan, ctaTo }: Props) {
         <div className="flex-1 min-w-0">
           <p className="font-bold text-gray-900 dark:text-white">Payment failed</p>
           <p className="text-sm text-gray-600 dark:text-slate-400">
-            {plan.description} — {amount} pending.
+            {plan.description}, {amount} pending.
             {graceLeft > 0 && ` Access will pause in ${graceLeft} day${graceLeft === 1 ? '' : 's'} if not resolved.`}
           </p>
         </div>
@@ -121,7 +121,7 @@ export default function NextPaymentBanner({ plan, ctaTo }: Props) {
     );
   }
 
-  // Not urgent (next installment > 7 days away) — render nothing. The user
+  // Not urgent (next installment > 7 days away), render nothing. The user
   // doesn't need a banner; the PaymentScheduleCard on /payments/plan/:id is
   // enough.
   return null;

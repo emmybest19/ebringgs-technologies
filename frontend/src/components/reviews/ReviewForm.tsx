@@ -89,7 +89,7 @@ export default function ReviewForm({ targetType, targetId, targetName, onSubmitt
           required
           rows={5}
           maxLength={1000}
-          placeholder="Share your honest experience — what worked, what could be better..."
+          placeholder="Share your honest experience, what worked, what could be better..."
           className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm resize-none"
         />
         <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">

@@ -81,8 +81,8 @@ export default function AdminSettings() {
   const storageRows: SettingRow[] = [
     { label: 'Database', value: 'MongoDB via Mongoose', status: 'ok' },
     { label: 'File uploads', value: 'Local disk (uploads/ directory)', status: 'warn' },
-    { label: 'Cloud storage', value: 'Not configured — use Cloudinary/S3 in prod', status: 'warn' },
-    { label: 'Payments', value: 'Paystack — Transactions + Webhooks', status: 'ok' },
+    { label: 'Cloud storage', value: 'Not configured, use Cloudinary/S3 in prod', status: 'warn' },
+    { label: 'Payments', value: 'Paystack, Transactions + Webhooks', status: 'ok' },
     { label: 'API docs', value: 'Swagger UI at /api/docs', status: 'ok' },
   ];
 

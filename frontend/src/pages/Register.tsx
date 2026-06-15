@@ -31,7 +31,7 @@ const steps: StepConfig[] = [
 const panelContent: Record<number, { title: string; subtitle: string; features: string[] }> = {
   1: {
     title: 'Join a community that builds the future',
-    subtitle: 'Whether you\'re here to learn or to build — you\'re in the right place.',
+    subtitle: 'Whether you\'re here to learn or to build, you\'re in the right place.',
     features: [
       'Structured learning programs',
       'Real-world client projects',
@@ -56,7 +56,7 @@ const panelContent: Record<number, { title: string; subtitle: string; features: 
       'Course & session reminders',
       'Progress reports',
       'Payment receipts',
-      'No spam — we promise',
+      'No spam, we promise',
     ],
   },
   4: {
@@ -350,7 +350,7 @@ export default function Register() {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">How will you use E-Bringgs?</h2>
                   <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">Choose the option that best describes you.</p>
 
-                  {/* Social signup — skip the wizard entirely */}
+                  {/* Social signup, skip the wizard entirely */}
                   <SocialAuthButtons
                     role={role}
                     referralCode={referralCode.trim() || undefined}
@@ -408,7 +408,7 @@ export default function Register() {
                       </div>
                       <div className="flex-1">
                         <p className="font-bold text-gray-900 dark:text-white">Client</p>
-                        <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">I need professional services — website, web app, mobile app, or design.</p>
+                        <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">I need professional services, website, web app, mobile app, or design.</p>
                       </div>
                       {role === 'client' && (
                         <CheckCircle2 size={20} className="absolute top-4 right-4 text-teal-600" />

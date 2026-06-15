@@ -10,7 +10,7 @@ interface LogoProps {
   asLink?: boolean;
   /** Extra classes on the outer element. */
   className?: string;
-  /** Wrap the mark in a white rounded badge — useful on dark backgrounds so the
+  /** Wrap the mark in a white rounded badge, useful on dark backgrounds so the
    *  baked-in white background of the PNG reads as intentional. Only meaningful
    *  for variant="mark". */
   onDark?: boolean;
@@ -25,7 +25,7 @@ interface LogoProps {
  *  - "mark" → just the eb icon (for tight UI: navbar, sidebars)
  *  - "full" → eb icon + e-bringgs technologies + Build. Launch. Grow.
  *
- * Files live in /public so they're referenced by absolute URL — no import
+ * Files live in /public so they're referenced by absolute URL, no import
  * needed and they don't go through the bundler.
  */
 export default function Logo({
@@ -52,7 +52,7 @@ export default function Logo({
   const boxWidth = height * boxAspect;
 
   // Light mode: mix-blend-mode: multiply makes the baked-in white background
-  // blend into the page surface — no visible white card.
+  // blend into the page surface, no visible white card.
   // Dark mode: render an actual white "card" around the logo (padding +
   // rounded corners + soft shadow + hairline ring) so the brand colors stay
   // legible and the badge looks like an intentional design element.

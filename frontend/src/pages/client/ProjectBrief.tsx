@@ -22,7 +22,7 @@ export default function ProjectBrief() {
   const [values, setValues] = useState<Record<string, FieldValue>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // If the project has already been briefed, bounce out — same behavior as before.
+  // If the project has already been briefed, bounce out, same behavior as before.
   useEffect(() => {
     if (project && project.status !== 'awaiting_brief') {
       navigate(`/client/projects/${project._id}`, { replace: true });

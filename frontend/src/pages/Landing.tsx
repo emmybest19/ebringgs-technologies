@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Code2, BarChart3, BookOpen, Layers,
+  ArrowRight, Code2,
   CheckCircle2, Star, Zap, Shield, Users, GraduationCap, Globe, Mail, Loader2,
   ExternalLink, Github, Sparkles,
 } from 'lucide-react';
@@ -30,7 +30,7 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left — Copy */}
+          {/* Left, Copy */}
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 text-sm font-medium mb-8">
               <Zap size={14} className="fill-current" />
@@ -45,7 +45,7 @@ function Hero() {
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
-              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting — all in one platform.
+              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting, all in one platform.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -82,7 +82,7 @@ function Hero() {
             </div>
           </div>
 
-          {/* Right — Image Carousel */}
+          {/* Right, Image Carousel */}
           <div className="hidden lg:block">
             <HeroCarousel />
           </div>
@@ -157,83 +157,6 @@ function Stats() {
   );
 }
 
-// ─── Services ────────────────────────────────────────────────────────────────
-const serviceCards = [
-  {
-    icon: Code2,
-    title: 'Software Development',
-    description: 'Full-stack web & mobile applications built with modern tech stacks.',
-    color: 'text-teal-600',
-    bg: 'bg-teal-50',
-    img: '/images/services/software-dev.jpg',
-  },
-  {
-    icon: BarChart3,
-    title: 'Data Analysis & ML',
-    description: 'Transform raw data into actionable insights and predictive models.',
-    color: 'text-emerald-600',
-    bg: 'bg-emerald-50',
-    img: '/images/services/data-analysis.jpg',
-  },
-  {
-    icon: BookOpen,
-    title: 'Research Support',
-    description: 'Academic research, statistical analysis, and literature reviews.',
-    color: 'text-amber-600',
-    bg: 'bg-amber-50',
-    img: '/images/services/research.jpg',
-  },
-  {
-    icon: Layers,
-    title: 'UX / Product Design',
-    description: 'User-centered design, product strategy, and go-to-market planning.',
-    color: 'text-purple-600',
-    bg: 'bg-purple-50',
-    img: '/images/services/ux-design.jpg',
-  },
-];
-
-function Services() {
-  return (
-    <section className="py-24 bg-white dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">What we do</h2>
-          <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">
-            From software delivery to academic research — we bring technical excellence to every engagement.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {serviceCards.map(({ icon: Icon, title, description, color, bg, img }) => (
-            <div key={title} className="card-hover-border group rounded-2xl border border-gray-100 dark:border-slate-800 hover:border-teal-100 hover:shadow-xl transition-all duration-300 dark:bg-slate-800 overflow-hidden">
-              <div className="h-40 overflow-hidden">
-                <img src={img} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div className="p-6">
-                <div className={`inline-flex p-3 rounded-xl ${bg} mb-4`}>
-                  <Icon size={24} className={color} />
-                </div>
-                <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">{title}</h3>
-                <p className="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">{description}</p>
-                <Link to="/services" className={`inline-flex items-center gap-1 mt-4 text-sm font-medium ${color} opacity-0 group-hover:opacity-100 transition-opacity`}>
-                  Learn more <ArrowRight size={14} />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-10">
-          <Link to="/services" className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 hover:text-teal-600 transition-colors">
-            View all services <ArrowRight size={16} />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ─── Learning ────────────────────────────────────────────────────────────────
 function Learning() {
   return (
@@ -273,10 +196,10 @@ function Learning() {
           {/* Visual image grid */}
           <div className="grid grid-cols-2 gap-4">
             {[
-              { label: 'Web Development', duration: '8–12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
-              { label: 'Mobile Development', duration: '8–12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
-              { label: 'UI/UX Design', duration: '6–10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
-              { label: '1-on-1 Mentorship', duration: '10–12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
+              { label: 'Web Development', duration: '8-12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
+              { label: 'Mobile Development', duration: '8-12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
+              { label: 'UI/UX Design', duration: '6-10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
+              { label: '1-on-1 Mentorship', duration: '10-12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
             ].map((program) => (
               <div key={program.label} className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden group">
                 <div className="h-28 overflow-hidden">
@@ -301,14 +224,14 @@ function Learning() {
 function FeaturedStudentWork() {
   // Backend sorts case studies by `featured: -1, createdAt: -1` already, so
   // a single top-3 fetch yields featured-first-then-recent automatically.
-  // (Previously this was a two-stage fetch — feature-filtered then fallback —
+  // (Previously this was a two-stage fetch, feature-filtered then fallback -
   // unnecessary given the server-side sort.)
   const { data: projects = [], isLoading: loading } = useCaseStudies({
     type: 'student_project',
     limit: 3,
   });
 
-  // Hide the whole section if there's nothing to show — better than an
+  // Hide the whole section if there's nothing to show, better than an
   // awkward empty grid in front of a marketing page.
   if (!loading && projects.length === 0) return null;
 
@@ -394,80 +317,6 @@ function FeaturedStudentWork() {
   );
 }
 
-// ─── Pricing CTA ─────────────────────────────────────────────────────────────
-function PricingCTA() {
-  const highlights = [
-    {
-      label: 'For Clients',
-      title: 'Build your product',
-      description: 'Productized packages with fixed scope and fixed price — landing pages, full-stack web apps, mobile apps, data dashboards, and research writing.',
-      features: ['Web development from ₦150,000', 'Mobile apps from ₦1,500,000', 'Data dashboards from ₦400,000', 'Research writing from ₦100,000'],
-      cta: 'View client pricing',
-      link: '/pricing',
-      gradient: true,
-    },
-    {
-      label: 'For Learners',
-      title: 'Launch your tech career',
-      description: 'Live instructor-led classes, intensive cohorts, and 1-on-1 mentorship across 5 tracks. One fixed fee per tier.',
-      features: ['Frontend, Backend, Full-Stack tracks', 'Mobile App Development track', 'Research Writing track', '3 tiers from ₦50,000'],
-      cta: 'View training pricing',
-      link: '/pricing',
-      gradient: false,
-    },
-  ];
-
-  return (
-    <section className="py-24 bg-white dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Pricing for every goal</h2>
-          <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">Whether you're building a product or building your skills — we've got you covered.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {highlights.map((h) => (
-            <div
-              key={h.title}
-              className={`relative rounded-2xl p-8 md:p-10 flex flex-col ${
-                h.gradient
-                  ? 'bg-linear-to-br from-teal-600 to-emerald-700 text-white shadow-2xl shadow-teal-500/30'
-                  : 'bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700'
-              }`}
-            >
-              <span className={`text-xs font-bold uppercase tracking-wider mb-4 ${h.gradient ? 'text-teal-200' : 'text-teal-600 dark:text-teal-400'}`}>
-                {h.label}
-              </span>
-              <h3 className={`font-bold text-2xl mb-2 ${h.gradient ? 'text-white' : 'text-gray-900 dark:text-white'}`}>{h.title}</h3>
-              <p className={`text-sm mb-6 leading-relaxed ${h.gradient ? 'text-teal-100' : 'text-gray-500 dark:text-slate-400'}`}>{h.description}</p>
-
-              <ul className="space-y-2.5 flex-1 mb-8">
-                {h.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2.5">
-                    <CheckCircle2 size={16} className={`shrink-0 ${h.gradient ? 'text-teal-200' : 'text-teal-600'}`} />
-                    <span className={`text-sm ${h.gradient ? 'text-teal-100' : 'text-gray-600 dark:text-slate-400'}`}>{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                to={h.link}
-                className={`inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
-                  h.gradient
-                    ? 'bg-white text-teal-700 hover:bg-teal-50 shadow-lg'
-                    : 'bg-teal-600 text-white hover:bg-teal-700'
-                }`}
-              >
-                {h.cta} <ArrowRight size={16} />
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ─── Testimonials ────────────────────────────────────────────────────────────
 function Testimonials() {
   const { data, isLoading: loading } = useReviews({ limit: 6 });
@@ -496,7 +345,7 @@ function Testimonials() {
           <div className="text-center text-slate-400 py-12">Loading reviews...</div>
         ) : reviews.length === 0 ? (
           <div className="text-center max-w-md mx-auto py-12 px-6 bg-white/5 backdrop-blur border border-white/10 rounded-2xl">
-            <p className="text-slate-300 mb-2">No reviews yet — be the first.</p>
+            <p className="text-slate-300 mb-2">No reviews yet, be the first.</p>
             <p className="text-sm text-slate-400">
               Once students complete a program and clients finish a project, their reviews will appear here.
             </p>
@@ -542,7 +391,7 @@ function Newsletter() {
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">Stay in the loop</h2>
         <p className="text-gray-500 dark:text-slate-400 mb-8 max-w-lg mx-auto">
-          Get updates on new cohort openings, free workshops, and tech career tips. No spam — unsubscribe anytime.
+          Get updates on new cohort openings, free workshops, and tech career tips. No spam, unsubscribe anytime.
         </p>
 
         {status === 'success' ? (
@@ -611,10 +460,8 @@ export default function Landing() {
     <>
       <Hero />
       <Stats />
-      <Services />
       <Learning />
       <FeaturedStudentWork />
-      <PricingCTA />
       <Testimonials />
       <Newsletter />
       <FinalCTA />

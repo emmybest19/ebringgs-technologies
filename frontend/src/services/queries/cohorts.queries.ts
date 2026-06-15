@@ -47,7 +47,7 @@ export type CohortInput = Omit<
  * Hierarchical key factory. Invalidate the whole subtree with `cohortKeys.all`,
  * or a narrower slice with `cohortKeys.lists()`, `cohortKeys.adminAll()`, etc.
  *
- * Follow this pattern for every other domain (`blogKeys`, `userKeys`, …) — it's
+ * Follow this pattern for every other domain (`blogKeys`, `userKeys`, …), it's
  * the single best lever TanStack gives us over the old manual-refetch pattern.
  */
 export const cohortKeys = {
@@ -88,7 +88,7 @@ async function fetchAdminCohorts(): Promise<Cohort[]> {
 /* ─── Public queries ──────────────────────────────────────────────────── */
 
 /**
- * Public cohort list. Filters object becomes part of the query key — pass
+ * Public cohort list. Filters object becomes part of the query key, pass
  * the same filters object identity-wise to share a cache entry.
  */
 export function useCohorts(filters: CohortListFilters = {}) {
@@ -99,14 +99,14 @@ export function useCohorts(filters: CohortListFilters = {}) {
 }
 
 /**
- * The single soonest upcoming cohort — drives the /schedule countdown.
+ * The single soonest upcoming cohort, drives the /schedule countdown.
  * Shorter staleTime because the countdown wants reasonably fresh data.
  */
 export function useNextCohort() {
   return useQuery({
     queryKey: cohortKeys.next(),
     queryFn: fetchNextCohort,
-    staleTime: 10 * 1000, // 10s — overrides the default 30s
+    staleTime: 10 * 1000, // 10s, overrides the default 30s
   });
 }
 
@@ -130,7 +130,7 @@ export function useAdminCohorts() {
 /* ─── Mutations ───────────────────────────────────────────────────────── */
 
 /**
- * Each mutation invalidates `cohortKeys.all` on success — a single broad
+ * Each mutation invalidates `cohortKeys.all` on success, a single broad
  * stroke that refreshes every cohort-related view. Cheap: a couple of GET
  * requests against an indexed Mongo query.
  */

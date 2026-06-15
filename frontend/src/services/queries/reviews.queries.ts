@@ -7,7 +7,7 @@ export type ReviewTargetType = 'program' | 'service' | 'platform';
 
 export interface Review {
   _id: string;
-  rating: number;             // 1–5
+  rating: number;             // 1-5
   title?: string;
   content: string;
   targetType: ReviewTargetType;

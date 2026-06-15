@@ -110,7 +110,7 @@ export default function SuccessStories() {
       <section className="bg-linear-to-br from-teal-600 to-emerald-700 py-16">
         <div className="max-w-3xl mx-auto px-4 text-center text-white">
           <h2 className="text-3xl font-extrabold mb-4">Ready to build yours?</h2>
-          <p className="text-teal-200 text-lg mb-8">Whether you want to learn or to ship a product — we've got you.</p>
+          <p className="text-teal-200 text-lg mb-8">Whether you want to learn or to ship a product, we've got you.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/services" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-teal-700 font-bold rounded-xl hover:bg-teal-50 transition-colors">
               Buy a service <ArrowRight size={16} />

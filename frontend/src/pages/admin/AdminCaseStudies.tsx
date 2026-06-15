@@ -100,7 +100,7 @@ export default function AdminCaseStudies() {
                   <td className="px-5 py-3 text-sm text-gray-600 dark:text-slate-400">
                     {s.type === 'client_work' ? 'Client work' : 'Student project'}
                   </td>
-                  <td className="px-5 py-3 text-sm text-gray-600 dark:text-slate-400">{s.category || '—'}</td>
+                  <td className="px-5 py-3 text-sm text-gray-600 dark:text-slate-400">{s.category || '-'}</td>
                   <td className="px-5 py-3 text-center">
                     <button onClick={() => toggleFeatured(s)} className="inline-flex">
                       <Star size={16} className={s.featured ? 'fill-amber-400 text-amber-400' : 'text-gray-300'} />
@@ -307,7 +307,7 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
                 </Field>
                 <Field label="Cohort batch">
                   <input value={form.cohortBatch || ''} onChange={(e) => set('cohortBatch', e.target.value)}
-                    placeholder="Web Dev — Batch 3"
+                    placeholder="Web Dev, Batch 3"
                     className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
                 </Field>
                 <Field label="Current role">
@@ -324,7 +324,7 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
               <Field label="Short bio (shown on portfolio detail page, max 600 chars)">
                 <textarea value={form.studentBio || ''} onChange={(e) => set('studentBio', e.target.value)} rows={3}
                   maxLength={600}
-                  placeholder="A sentence or two about the student — where they came from, what they built, where they ended up."
+                  placeholder="A sentence or two about the student, where they came from, what they built, where they ended up."
                   className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none resize-none" />
               </Field>
             </div>

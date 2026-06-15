@@ -51,7 +51,7 @@ export default function AdminOverview() {
         <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">Platform summary as of today</p>
       </div>
 
-      {/* Stats grid — 6 cards in 2 rows */}
+      {/* Stats grid, 6 cards in 2 rows */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {statCards.map(({ label, value, sub, icon: Icon, color, bg, link }) => (
           <Link key={label} to={link}
@@ -60,7 +60,7 @@ export default function AdminOverview() {
               <Icon size={20} className={color} />
             </div>
             <p className={`text-2xl font-bold text-gray-900 dark:text-white transition-opacity ${loading ? 'opacity-30' : ''}`}>
-              {loading ? '—' : value}
+              {loading ? '-' : value}
             </p>
             <div className="flex items-center justify-between mt-1">
               <div>

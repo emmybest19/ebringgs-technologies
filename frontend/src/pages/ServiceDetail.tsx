@@ -54,7 +54,7 @@ function CustomQuoteModal({ serviceId, serviceTitle, onClose }: { serviceId: str
               <CheckCircle2 size={32} className="text-green-500" />
             </div>
             <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Inquiry sent!</h3>
-            <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">We'll send a tailored quote within 1–2 business days.</p>
+            <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">We'll send a tailored quote within 1-2 business days.</p>
             <button onClick={onClose} className="px-6 py-2 bg-teal-600 text-white rounded-lg text-sm font-medium hover:bg-teal-700">Close</button>
           </div>
         ) : (
@@ -317,7 +317,7 @@ export default function ServiceDetail() {
                 <>
                   <p className="font-bold text-lg mb-1">Custom engagement</p>
                   <p className="text-teal-100 text-sm mb-5">
-                    Scope and price depend on your needs. Tell us about your project and we'll send a quote within 1–2 business days.
+                    Scope and price depend on your needs. Tell us about your project and we'll send a quote within 1-2 business days.
                   </p>
                   <button
                     onClick={() => setShowInquiry(true)}

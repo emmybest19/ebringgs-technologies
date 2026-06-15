@@ -49,7 +49,7 @@ export default function ClientPayments() {
         {activePlans.length > 0 && ` · ${activePlans.length} active installment plan${activePlans.length === 1 ? '' : 's'}`}
       </p>
 
-      {/* Active installment plans — each as its own schedule card so the user
+      {/* Active installment plans, each as its own schedule card so the user
           can see exactly what's coming up + when. Skips paid-in-full plans. */}
       {activePlans.length > 0 && (
         <div className="space-y-4 mb-8">

@@ -136,7 +136,7 @@ export default function AITutorWidget() {
                     <Bot size={32} className="text-teal-500 mx-auto mb-3" />
                     <p className="font-semibold text-gray-900 dark:text-white mb-1">Hi! I'm your AI tutor.</p>
                     <p className="text-sm text-gray-500 dark:text-slate-400 mb-5">
-                      Stuck on a concept? Ask me anything — I'm here 24/7.
+                      Stuck on a concept? Ask me anything, I'm here 24/7.
                     </p>
                     <div className="space-y-2 text-left">
                       {[

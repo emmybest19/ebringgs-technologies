@@ -14,7 +14,7 @@ export interface IntakeField {
 }
 
 /**
- * Unified Service shape — every optional field comes from the in-memory
+ * Unified Service shape, every optional field comes from the in-memory
  * services catalog on the backend. The fields populated depend on whether
  * the service is `productized` (fixed-price) or custom-quote.
  */
@@ -40,7 +40,7 @@ export interface Service {
   intakeFields?: IntakeField[];
   /**
    * Server gate for whether the Checkout page should offer 1×/2×/3× installments.
-   * Computed server-side via `isServiceInstallmentEligible()` — explicit flag
+   * Computed server-side via `isServiceInstallmentEligible()`, explicit flag
    * wins; falls back to price ≥ ₦200,000.
    */
   installmentEligible?: boolean;
@@ -80,7 +80,7 @@ async function fetchService(id: string): Promise<Service | null> {
 /* ─── Queries ─────────────────────────────────────────────────────────── */
 
 /**
- * The services catalog is a static in-memory array on the backend — it only
+ * The services catalog is a static in-memory array on the backend, it only
  * changes on deploy. Bump the staleTime way up so we don't re-fetch when
  * navigating between /services and /services/:id.
  */

@@ -19,7 +19,7 @@ import {
  *   - Manually mark the next installment as paid (e.g. client wired the money
  *     offline). The installment status flips to 'manual'.
  *
- * No "delete plan" action — a cancelled plan should be the terminal state, but
+ * No "delete plan" action, a cancelled plan should be the terminal state, but
  * we keep the data for audit. To cancel, an admin would use a direct DB op for
  * v1 (intentionally friction).
  */
@@ -154,7 +154,7 @@ export default function AdminPaymentPlans() {
                             </span>
                           </>
                         ) : (
-                          <span className="text-xs text-gray-400">—</span>
+                          <span className="text-xs text-gray-400">-</span>
                         )}
                       </td>
                       <td className="px-5 py-3">
@@ -254,14 +254,14 @@ function ActionModal({
           {mode === 'extend' ? 'Extend due date' : 'Mark installment as paid'}
         </h3>
         <p className="text-sm text-gray-500 dark:text-slate-400 mb-5">
-          {plan.description} — next installment <strong>{formatNGN(next.amount)}</strong> due{' '}
+          {plan.description}, next installment <strong>{formatNGN(next.amount)}</strong> due{' '}
           {formatDate(next.dueDate)}.
         </p>
 
         {mode === 'extend' ? (
           <div className="mb-5">
             <label className="block text-xs font-semibold text-gray-700 dark:text-slate-300 mb-1.5">
-              Extra days (1–30)
+              Extra days (1-30)
             </label>
             <input
               type="number"
@@ -288,7 +288,7 @@ function ActionModal({
               className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white text-sm resize-none"
             />
             <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-1.5">
-              ⚠️ This bypasses Paystack — only use when you've confirmed payment outside the system.
+              ⚠️ This bypasses Paystack, only use when you've confirmed payment outside the system.
             </p>
           </div>
         )}

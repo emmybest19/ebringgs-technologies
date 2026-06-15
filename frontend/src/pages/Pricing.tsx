@@ -5,7 +5,6 @@ import {
   Code2, Smartphone, Zap, Users, Building2,
   Briefcase, GraduationCap, BarChart3, BookOpen, Layers,
 } from 'lucide-react';
-import { useAuthStore } from '../store/auth.store';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type PricingTab = 'clients' | 'training';
@@ -48,7 +47,7 @@ const clientPlans: ServicePlan[] = [
     icon: Code2,
     startingPrice: 150000,
     priceSuffix: '',
-    description: 'From a single high-converting landing page to a full-stack web application with authentication, payments and an admin panel — built on a modern React + Node stack and deployed to your domain.',
+    description: 'From a single high-converting landing page to a full-stack web application with authentication, payments and an admin panel, built on a modern React + Node stack and deployed to your domain.',
     features: [
       'Responsive design (mobile · tablet · desktop)',
       'React + TypeScript frontend',
@@ -57,7 +56,7 @@ const clientPlans: ServicePlan[] = [
       'Payment integration (Paystack / Stripe)',
       'SEO-friendly structure',
       'Deployment to your domain',
-      '7–30 days of post-launch support',
+      '7-30 days of post-launch support',
     ],
     highlight: true,
     cta: 'Browse packages',
@@ -70,7 +69,7 @@ const clientPlans: ServicePlan[] = [
     icon: Smartphone,
     startingPrice: 1500000,
     priceSuffix: '',
-    description: 'Cross-platform mobile apps built with React Native — one codebase, both stores. Includes auth, push notifications, and submission to TestFlight + Google Play internal testing.',
+    description: 'Cross-platform mobile apps built with React Native, one codebase, both stores. Includes auth, push notifications, and submission to TestFlight + Google Play internal testing.',
     features: [
       'iOS + Android from one codebase',
       'Up to 8 polished app screens',
@@ -90,7 +89,7 @@ const clientPlans: ServicePlan[] = [
     icon: BookOpen,
     startingPrice: 100000,
     priceSuffix: '',
-    description: 'End-to-end academic writing support — topic refinement, literature review, methodology, analysis, and citation. From BSc projects to PhD chapters and journal-ready manuscripts.',
+    description: 'End-to-end academic writing support, topic refinement, literature review, methodology, analysis, and citation. From BSc projects to PhD chapters and journal-ready manuscripts.',
     features: [
       'Up to 12,000 words for postgraduate',
       'Literature review with up to 50 sources',
@@ -99,7 +98,7 @@ const clientPlans: ServicePlan[] = [
       'Plagiarism-checked output',
       'APA / MLA / Harvard / Chicago / IEEE citations',
       'Reference manager file (Zotero / EndNote)',
-      '1–2 rounds of revisions',
+      '1-2 rounds of revisions',
     ],
     highlight: false,
     cta: 'View packages',
@@ -128,7 +127,7 @@ const clientPlans: ServicePlan[] = [
 // ─── Training Tracks ────────────────────────────────────────────────────────
 // 5 student tracks (frontend, backend, full-stack, mobile, research writing).
 // Each has 3 tiers: Starter (live classes only), Live Cohort (cohort + projects),
-// Mentorship (1-on-1). Plan IDs match Checkout.tsx planDetails — if you rename
+// Mentorship (1-on-1). Plan IDs match Checkout.tsx planDetails, if you rename
 // one here, update there + AdminCohorts PLAN_OPTIONS too.
 const trainingCategories = [
   {
@@ -163,7 +162,7 @@ const trainingCategories = [
         icon: Users,
         price: 250000,
         duration: '12 weeks',
-        description: 'Intensive 12-week cohort — build & ship a real React app with mentor reviews.',
+        description: 'Intensive 12-week cohort, build & ship a real React app with mentor reviews.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -237,7 +236,7 @@ const trainingCategories = [
         icon: Users,
         price: 270000,
         duration: '12 weeks',
-        description: 'Build a real production API — auth, payments, deployment, the works.',
+        description: 'Build a real production API, auth, payments, deployment, the works.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -311,7 +310,7 @@ const trainingCategories = [
         icon: Users,
         price: 320000,
         duration: '14 weeks',
-        description: 'The intensive — ship a real full-stack product to production with mentor support.',
+        description: 'The intensive, ship a real full-stack product to production with mentor support.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -435,7 +434,7 @@ const trainingCategories = [
         icon: Zap,
         price: 50000,
         duration: '6 weeks',
-        description: 'Live classes on academic writing fundamentals — structure, citations, methodology.',
+        description: 'Live classes on academic writing fundamentals, structure, citations, methodology.',
         color: 'text-teal-600',
         bg: 'bg-teal-50',
         features: [
@@ -458,7 +457,7 @@ const trainingCategories = [
         icon: Users,
         price: 150000,
         duration: '8 weeks',
-        description: '8-week intensive — research methodology, statistical analysis, and journal-ready writing.',
+        description: '8-week intensive, research methodology, statistical analysis, and journal-ready writing.',
         color: 'text-white',
         bg: 'bg-white/20',
         features: [
@@ -481,7 +480,7 @@ const trainingCategories = [
         icon: Building2,
         price: 320000,
         duration: '12 weeks',
-        description: 'Personal mentorship with a researcher — your paper, your timeline.',
+        description: 'Personal mentorship with a researcher, your paper, your timeline.',
         color: 'text-purple-600',
         bg: 'bg-purple-50',
         features: [
@@ -505,7 +504,7 @@ const trainingCategories = [
 const faqs = [
   {
     q: 'How do client project prices work?',
-    a: 'Our listed prices are starting points. Every project is unique — after an initial consultation, we provide a detailed scope and fixed quote before any work begins. No surprises.',
+    a: 'Our listed prices are starting points. Every project is unique, after an initial consultation, we provide a detailed scope and fixed quote before any work begins. No surprises.',
   },
   {
     q: 'Can I switch training plans at any time?',
@@ -613,7 +612,7 @@ function ClientCard({ plan }: { plan: ServicePlan }) {
         </ul>
 
         <Link
-          to="/services"
+          to="/login"
           className={`w-full py-3 px-6 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all ${
             plan.highlight
               ? 'bg-white text-teal-700 hover:bg-teal-50 shadow-lg'
@@ -628,13 +627,11 @@ function ClientCard({ plan }: { plan: ServicePlan }) {
 }
 
 function TrainingCard({ plan }: { plan: TrainingPlan }) {
-  const { isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
   const Icon = plan.icon;
 
   const handleSelect = () => {
-    if (!isAuthenticated) { navigate('/register'); return; }
-    navigate(`/checkout?plan=${plan.id}`);
+    navigate('/login');
   };
 
   return (
@@ -728,7 +725,7 @@ export default function Pricing() {
             <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">your goals</span>
           </h1>
           <p className="text-slate-300 text-lg mb-10 max-w-xl mx-auto">
-            Whether you're a business looking to build or a learner ready to grow — we've got a plan for you.
+            Whether you're a business looking to build or a learner ready to grow, we've got a plan for you.
           </p>
 
           {/* ── Main Toggle: Clients / Training ─────────────────────── */}
@@ -766,12 +763,12 @@ export default function Pricing() {
               Choose what you want to build
             </h2>
             <p className="text-gray-500 dark:text-slate-400 max-w-lg mx-auto">
-              Fixed-price packages with fixed scope. Every project starts with a free consultation — pick a package, brief us, we deliver.
+              Fixed-price packages with fixed scope. Every project starts with a free consultation, pick a package, brief us, we deliver.
             </p>
           </div>
 
-          {/* 4 cards: 2-up on tablet, 4-up on desktop */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* 2-up on tablet+ */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {clientPlans.map((plan) => (
               <ClientCard key={plan.id} plan={plan} />
             ))}
@@ -804,7 +801,7 @@ export default function Pricing() {
               Pick your learning track
             </h2>
             <p className="text-gray-500 dark:text-slate-400 max-w-lg mx-auto mb-8">
-              Each track offers three tiers — Starter, Live Cohort, or 1-on-1 Mentorship. All classes are taught live by our instructors. One fixed fee per tier.
+              Each track offers three tiers, Starter, Live Cohort, or 1-on-1 Mentorship. All classes are taught live by our instructors. One fixed fee per tier.
             </p>
           </div>
 
@@ -825,7 +822,7 @@ export default function Pricing() {
             ))}
           </div>
 
-          {/* Stack badge — what students will learn in this track */}
+          {/* Stack badge, what students will learn in this track */}
           <div className="flex justify-center mb-10">
             <div className="inline-flex items-center gap-2 max-w-3xl px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
               <Layers size={14} className="text-teal-600 shrink-0" />
@@ -839,7 +836,7 @@ export default function Pricing() {
           </div>
 
           {/* Plans grid */}
-          <div className="grid md:grid-cols-3 gap-6 items-stretch">
+          <div className="grid md:grid-cols-2 gap-6 items-stretch max-w-5xl mx-auto">
             {trainingCategories[activeTrainingCat].plans.map((plan) => (
               <TrainingCard key={plan.id} plan={plan} />
             ))}

@@ -8,7 +8,7 @@ const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID as string | undefin
 const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI as string | undefined;
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined;
 
-// Apple's JS SDK is attached to the global window. Minimal typing — enough
+// Apple's JS SDK is attached to the global window. Minimal typing, enough
 // to call init + signIn without pulling extra packages.
 interface AppleIDAuth {
   init(opts: { clientId: string; scope: string; redirectURI: string; usePopup: boolean }): void;
@@ -91,7 +91,7 @@ export default function SocialAuthButtons({ onSuccess, role, referralCode }: Soc
       toast.success('Welcome!');
       onSuccess(useAuthStore.getState().user?.role);
     } catch (err) {
-      // Apple's SDK rejects on user-cancel — only surface real backend errors.
+      // Apple's SDK rejects on user-cancel, only surface real backend errors.
       const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
       if (msg) toast.error(msg);
     } finally {
@@ -101,7 +101,7 @@ export default function SocialAuthButtons({ onSuccess, role, referralCode }: Soc
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {/* Google — official rendered button, sized to our row */}
+      {/* Google, official rendered button, sized to our row */}
       <div className="flex items-stretch [&>div]:flex-1 [&>div>div]:w-full!">
         {GOOGLE_CLIENT_ID ? (
           <GoogleLogin
@@ -118,7 +118,7 @@ export default function SocialAuthButtons({ onSuccess, role, referralCode }: Soc
         )}
       </div>
 
-      {/* Apple — custom button (Apple has no React component) */}
+      {/* Apple, custom button (Apple has no React component) */}
       <button
         type="button"
         onClick={handleAppleClick}

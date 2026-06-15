@@ -16,8 +16,8 @@ const quickQuestions = [
 ];
 
 const botResponses: Record<string, string> = {
-  'what programs do you offer?': 'We offer five tracks: Frontend Development, Backend Development, Full-Stack Development, Mobile App Development, and Research Writing. Each track has three tiers — Starter (live classes), Cohort (intensive group program), and Mentorship (1-on-1 sessions).',
-  'how much does training cost?': 'Tracks range from ₦50,000 (Research Writing Starter) to ₦550,000 (Full-Stack Mentorship). Fixed price per tier — what you see on the pricing page is what you pay.',
+  'what programs do you offer?': 'We offer five tracks: Frontend Development, Backend Development, Full-Stack Development, Mobile App Development, and Research Writing. Each track has three tiers, Starter (live classes), Cohort (intensive group program), and Mentorship (1-on-1 sessions).',
+  'how much does training cost?': 'Tracks range from ₦50,000 (Research Writing Starter) to ₦550,000 (Full-Stack Mentorship). Fixed price per tier, what you see on the pricing page is what you pay.',
   'when does the next cohort start?': 'New cohorts start every month! Check our /schedule page for exact dates, or contact us for the latest availability.',
   'do you offer payment plans?': 'Yes! We can arrange installment payments for most programs. Contact us via WhatsApp or the contact form to discuss a plan that works for you.',
 };
@@ -41,7 +41,7 @@ function getBotReply(input: string): string {
   if (lower.includes('payment') || lower.includes('installment') || lower.includes('plan')) {
     return botResponses['do you offer payment plans?'];
   }
-  return "Thanks for reaching out! For detailed questions, please contact us via the contact form or WhatsApp — we'll get back to you within 1–2 business days.";
+  return "Thanks for reaching out! For detailed questions, please contact us via the contact form or WhatsApp, we'll get back to you within 1-2 business days.";
 }
 
 function timeNow() {

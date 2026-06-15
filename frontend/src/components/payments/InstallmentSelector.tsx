@@ -3,12 +3,12 @@ import { Calendar, Zap, AlertCircle } from 'lucide-react';
 /**
  * The Checkout-page selector: 1× / 2× / 3× monthly installments.
  *
- * Pure presentational — parent owns the state (which option is selected, and
+ * Pure presentational, parent owns the state (which option is selected, and
  * the auto-charge consent checkbox). Renders a 3-card radio group + the live
  * schedule preview + the required consent checkbox when 2× or 3× is chosen.
  *
  * The parent (Checkout.tsx) wires the selection into the InitializePayment
- * payload — `installments` + `autoChargeConsent`. Server validates eligibility.
+ * payload, `installments` + `autoChargeConsent`. Server validates eligibility.
  */
 
 export type InstallmentChoice = 1 | 2 | 3;
@@ -24,7 +24,7 @@ interface Props {
   onConsentChange: (v: boolean) => void;
   /**
    * Whether this item is eligible at all (e.g. price ≥ ₦200,000). When false,
-   * the component renders only the 1× option and a small explanatory note —
+   * the component renders only the 1× option and a small explanatory note -
    * keeps the layout consistent with eligible items but disables splitting.
    */
   eligible: boolean;
@@ -137,7 +137,7 @@ export default function InstallmentSelector({
         </p>
       )}
 
-      {/* Auto-charge consent — required when splitting */}
+      {/* Auto-charge consent, required when splitting */}
       {value > 1 && (
         <label className="mt-4 flex items-start gap-2.5 cursor-pointer bg-white/60 dark:bg-slate-900/40 px-3 py-2.5 rounded-lg border border-blue-200 dark:border-blue-800">
           <input

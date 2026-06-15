@@ -13,13 +13,13 @@ import { useAuthStore } from '../store/auth.store';
  * The destination page for "View plan" CTAs and the 403 PAYMENT_REQUIRED
  * redirect. Shows the user:
  *
- *   - A status banner (NextPaymentBanner — auto-coloured by plan state)
+ *   - A status banner (NextPaymentBanner, auto-coloured by plan state)
  *   - The full payment schedule (PaymentScheduleCard)
  *   - A "Pay now" button that fires a fresh Paystack checkout for the next
- *     unpaid installment — used to manually retry after an auto-charge failed
+ *     unpaid installment, used to manually retry after an auto-charge failed
  *     or to restore access after suspension
  *
- * Route mounted at `/payments/plan/:id` — accessible to any logged-in user
+ * Route mounted at `/payments/plan/:id`, accessible to any logged-in user
  * (their own plans only; the API enforces ownership).
  */
 
@@ -30,7 +30,7 @@ export default function PaymentPlanDetail() {
   const { data: plan, isLoading, isError } = useMyPaymentPlan(id);
 
   if (!isAuthenticated) {
-    // Defensive — should never hit because all routes that link here are gated
+    // Defensive, should never hit because all routes that link here are gated
     navigate('/login');
     return null;
   }
@@ -79,7 +79,7 @@ export default function PaymentPlanDetail() {
 
         <PaymentScheduleCard plan={plan} />
 
-        {/* Pay-now action — only when there's something to pay AND the plan is
+        {/* Pay-now action, only when there's something to pay AND the plan is
             past auto-charge (i.e. user needs to act). For an active plan with
             an upcoming installment, the cron will handle it automatically. */}
         {(plan.status === 'overdue' || plan.status === 'suspended') && plan.nextInstallment && (
@@ -100,7 +100,7 @@ function ManualPaySection({ plan }: { plan: PaymentPlan }) {
 
   const handlePay = () => {
     setError('');
-    // Reuse the existing initialize flow — sends a fresh Paystack checkout
+    // Reuse the existing initialize flow, sends a fresh Paystack checkout
     // for just the outstanding installment amount. On success, verify +
     // webhook will mark this installment paid + flip status back to 'active'.
     initialize.mutate(

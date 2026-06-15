@@ -11,25 +11,25 @@ import {
 
 /**
  * The plan IDs available in [frontend/src/pages/Checkout.tsx](Checkout.tsx)'s
- * planDetails. Keep this in sync — if you add a new plan there, add it here
+ * planDetails. Keep this in sync, if you add a new plan there, add it here
  * too so admins get a dropdown rather than free-text input.
  */
 const PLAN_OPTIONS: { id: string; label: string }[] = [
-  { id: 'frontend-starter',            label: 'Frontend — Starter' },
-  { id: 'frontend-cohort',             label: 'Frontend — Live Cohort' },
-  { id: 'frontend-mentor',             label: 'Frontend — Mentorship' },
-  { id: 'backend-starter',             label: 'Backend — Starter' },
-  { id: 'backend-cohort',              label: 'Backend — Live Cohort' },
-  { id: 'backend-mentor',              label: 'Backend — Mentorship' },
-  { id: 'fullstack-starter',           label: 'Full-Stack — Starter' },
-  { id: 'fullstack-cohort',            label: 'Full-Stack — Live Cohort' },
-  { id: 'fullstack-mentor',            label: 'Full-Stack — Mentorship' },
-  { id: 'mobile-dev-starter',          label: 'Mobile — Starter' },
-  { id: 'mobile-dev-cohort',           label: 'Mobile — Live Cohort' },
-  { id: 'mobile-dev-mentor',           label: 'Mobile — Mentorship' },
-  { id: 'research-writing-starter',    label: 'Research Writing — Starter' },
-  { id: 'research-writing-cohort',     label: 'Research Writing — Live Cohort' },
-  { id: 'research-writing-mentor',     label: 'Research Writing — Mentorship' },
+  { id: 'frontend-starter',            label: 'Frontend, Starter' },
+  { id: 'frontend-cohort',             label: 'Frontend, Live Cohort' },
+  { id: 'frontend-mentor',             label: 'Frontend, Mentorship' },
+  { id: 'backend-starter',             label: 'Backend, Starter' },
+  { id: 'backend-cohort',              label: 'Backend, Live Cohort' },
+  { id: 'backend-mentor',              label: 'Backend, Mentorship' },
+  { id: 'fullstack-starter',           label: 'Full-Stack, Starter' },
+  { id: 'fullstack-cohort',            label: 'Full-Stack, Live Cohort' },
+  { id: 'fullstack-mentor',            label: 'Full-Stack, Mentorship' },
+  { id: 'mobile-dev-starter',          label: 'Mobile, Starter' },
+  { id: 'mobile-dev-cohort',           label: 'Mobile, Live Cohort' },
+  { id: 'mobile-dev-mentor',           label: 'Mobile, Mentorship' },
+  { id: 'research-writing-starter',    label: 'Research Writing, Starter' },
+  { id: 'research-writing-cohort',     label: 'Research Writing, Live Cohort' },
+  { id: 'research-writing-mentor',     label: 'Research Writing, Mentorship' },
 ];
 
 const PROGRAM_OPTIONS = [
@@ -109,7 +109,7 @@ export default function AdminCohorts() {
   const [editing, setEditing] = useState<FormState | null>(null);
 
   // Surface fetch failures the same way the old manual fetch did, but only
-  // once per error transition — not every render.
+  // once per error transition, not every render.
   useEffect(() => {
     if (isError) toast.error('Failed to load cohorts.');
   }, [isError]);
@@ -428,11 +428,11 @@ function CohortEditor({
         </div>
 
         <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-6 space-y-5">
-          <Field label="Title *" hint="Shown on cards — e.g. &quot;Web Dev — Live Cohort · May 2026&quot;">
+          <Field label="Title *" hint="Shown on cards, e.g. &quot;Web Dev, Live Cohort · May 2026&quot;">
             <input
               value={state.title}
               onChange={(e) => set('title', e.target.value)}
-              placeholder="Web Dev — Live Cohort · May 2026"
+              placeholder="Web Dev, Live Cohort · May 2026"
               className="input"
               required
             />
@@ -600,7 +600,7 @@ function CohortEditor({
         </div>
       </div>
 
-      {/* Inline style for the shared `.input` class — avoids 30+ repeats above */}
+      {/* Inline style for the shared `.input` class, avoids 30+ repeats above */}
       <style>{`
         .input {
           width: 100%;

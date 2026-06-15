@@ -25,7 +25,7 @@ export interface UpdateProfileInput {
   avatar?: string;
   phone?: string;
   whatsappOptIn?: boolean;
-  // Teacher-only — server silently ignores these for non-teacher roles.
+  // Teacher-only, server silently ignores these for non-teacher roles.
   title?: string;
   specialties?: string[];
   experience?: string;
@@ -89,7 +89,7 @@ export function useUnreadCounts(options: { enabled?: boolean } = {}) {
     enabled: options.enabled ?? true,
     refetchInterval: 30 * 1000,
     refetchIntervalInBackground: false,
-    staleTime: 25 * 1000, // a hair under the refetch interval — no over-eager refetch on mount
+    staleTime: 25 * 1000, // a hair under the refetch interval, no over-eager refetch on mount
     placeholderData: { serviceRequests: 0, assignments: 0, reviews: 0 },
   });
 }
@@ -117,7 +117,7 @@ export function useUpdateProfile() {
       return data?.data?.user;
     },
     onSuccess: () => {
-      // The admin user list shows profile info — invalidate it too.
+      // The admin user list shows profile info, invalidate it too.
       qc.invalidateQueries({ queryKey: userKeys.adminList() });
       // Auth store has a copy of `user`; consumers should call fetchMe() if they need it refreshed.
     },

@@ -1,6 +1,6 @@
 /**
  * Barrel re-exports for every query module. Import from `services/queries`
- * rather than reaching into a specific file — keeps refactors painless.
+ * rather than reaching into a specific file, keeps refactors painless.
  */
 export * from './cohorts.queries';
 export * from './projects.queries';

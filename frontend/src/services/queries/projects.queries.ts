@@ -23,7 +23,7 @@ export interface ProjectTimelineItem {
   completed: boolean;
 }
 
-/** Client-side view of a project — `client` is just an ObjectId string. */
+/** Client-side view of a project, `client` is just an ObjectId string. */
 export interface Project {
   _id: string;
   serviceId: string;
@@ -50,7 +50,7 @@ export interface Project {
   updatedAt: string;
 }
 
-/** Admin-side view — `client` is populated with name/email/avatar. */
+/** Admin-side view, `client` is populated with name/email/avatar. */
 export interface AdminProject extends Omit<Project, 'client'> {
   client: { _id: string; name: string; email: string; avatar?: string } | string;
 }
@@ -108,7 +108,7 @@ export interface AddProjectUpdateInput {
 /* ─── Query key factory ───────────────────────────────────────────────── */
 
 /**
- * Note: `adminDetail(id)` shares the same query key as `adminList()` — it's
+ * Note: `adminDetail(id)` shares the same query key as `adminList()`, it's
  * implemented as a `select`-derived slice of the list. Backend has no admin
  * single-project endpoint today, so the detail page reuses the list cache
  * rather than triggering a second round trip.
@@ -170,7 +170,7 @@ export function useAdminProjects() {
 }
 
 /**
- * Admin single-project view — derived from the cached list. The backend
+ * Admin single-project view, derived from the cached list. The backend
  * doesn't expose an admin GET-by-id endpoint, so we share the list cache
  * and pick the one we need. Free re-renders when the list updates.
  */

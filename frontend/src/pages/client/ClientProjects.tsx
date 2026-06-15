@@ -20,7 +20,7 @@ const statusColor = (s: string) => {
 };
 
 function formatDate(iso?: string) {
-  if (!iso) return '—';
+  if (!iso) return '-';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
@@ -133,7 +133,7 @@ function ProjectDetail() {
   const { data: plans } = useMyPaymentPlans();
   const projectPlan = plans?.find((p) => p.linkedProject === projectId);
 
-  // Mirror the old catch-and-redirect behavior — if the fetch fails (typically
+  // Mirror the old catch-and-redirect behavior, if the fetch fails (typically
   // 404 because the project doesn't exist or isn't owned), bounce to the list.
   useEffect(() => {
     if (isError) navigate('/client/projects');

@@ -54,7 +54,7 @@ export function AdminProjectsList() {
       ) : (
         <div className="space-y-3">
           {projects.map((p) => {
-            const clientName = typeof p.client === 'string' ? '—' : p.client?.name || '—';
+            const clientName = typeof p.client === 'string' ? '-' : p.client?.name || '-';
             return (
               <Link
                 key={p._id}
@@ -89,7 +89,7 @@ export function AdminProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // useAdminProject derives from the cached useAdminProjects list — no extra
+  // useAdminProject derives from the cached useAdminProjects list, no extra
   // round trip when navigating from the list page, and `refreshKey` is gone
   // because mutations auto-invalidate the underlying query.
   const { data: project, isLoading: loading } = useAdminProject(id);
@@ -105,7 +105,7 @@ export function AdminProjectDetail() {
   const [url, setUrl] = useState('');
   const [progressChange, setProgressChange] = useState<string>('');
 
-  // Quick-edit links — local copies, synced whenever the project's persisted
+  // Quick-edit links, local copies, synced whenever the project's persisted
   // values change (e.g. after a save invalidates and refetches).
   const [githubRepo, setGithubRepo] = useState('');
   const [liveUrl, setLiveUrl] = useState('');
@@ -176,7 +176,7 @@ export function AdminProjectDetail() {
     );
   }
 
-  const clientName = typeof project.client === 'string' ? '—' : project.client?.name || '—';
+  const clientName = typeof project.client === 'string' ? '-' : project.client?.name || '-';
   const clientEmail = typeof project.client === 'string' ? '' : project.client?.email || '';
 
   return (
@@ -283,7 +283,7 @@ export function AdminProjectDetail() {
               onChange={(e) => setMessage(e.target.value)}
               rows={3}
               maxLength={2000}
-              placeholder="Message (optional) — what changed, what to expect..."
+              placeholder="Message (optional), what changed, what to expect..."
               className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white text-sm resize-none"
             />
             <div className="grid sm:grid-cols-2 gap-3">

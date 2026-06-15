@@ -27,6 +27,7 @@ import reviewRoutes from './routes/review.routes';
 import voucherRoutes from './routes/voucher.routes';
 import caseStudyRoutes from './routes/caseStudy.routes';
 import aiTutorRoutes from './routes/aiTutor.routes';
+import siteAssistantRoutes from './routes/siteAssistant.routes';
 import { errorHandler } from './middleware/error.middleware';
 
 const app = express();
@@ -78,6 +79,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/vouchers', voucherRoutes);
 app.use('/api/case-studies', caseStudyRoutes);
 app.use('/api/ai-tutor', aiTutorRoutes);
+app.use('/api/site-assistant', siteAssistantRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));

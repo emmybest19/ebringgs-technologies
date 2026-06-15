@@ -23,35 +23,35 @@ interface Plan {
 const planDetails: Record<string, Plan> = {
   // ─── Current tracks (kept in sync with Pricing.tsx trainingCategories) ─
   // Frontend Development
-  'frontend-starter': { name: 'Frontend — Starter',         price: 75000,  duration: '8 weeks',  description: 'Live instructor-led HTML, CSS, JS, TS, React + Tailwind classes' },
-  'frontend-cohort':  { name: 'Frontend — Live Cohort',     price: 250000, duration: '12 weeks', description: 'Intensive 12-week React cohort — build & ship a real app' },
-  'frontend-mentor':  { name: 'Frontend — Mentorship',      price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior frontend engineer' },
+  'frontend-starter': { name: 'Frontend, Starter',         price: 75000,  duration: '8 weeks',  description: 'Live instructor-led HTML, CSS, JS, TS, React + Tailwind classes' },
+  'frontend-cohort':  { name: 'Frontend, Live Cohort',     price: 250000, duration: '12 weeks', description: 'Intensive 12-week React cohort, build & ship a real app' },
+  'frontend-mentor':  { name: 'Frontend, Mentorship',      price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior frontend engineer' },
   // Backend Development
-  'backend-starter':  { name: 'Backend — Starter',          price: 80000,  duration: '8 weeks',  description: 'Live classes building REST APIs with Node, Express, MongoDB' },
-  'backend-cohort':   { name: 'Backend — Live Cohort',      price: 270000, duration: '12 weeks', description: 'Ship a real production API — auth, payments, deployment' },
-  'backend-mentor':   { name: 'Backend — Mentorship',       price: 480000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior backend engineer' },
+  'backend-starter':  { name: 'Backend, Starter',          price: 80000,  duration: '8 weeks',  description: 'Live classes building REST APIs with Node, Express, MongoDB' },
+  'backend-cohort':   { name: 'Backend, Live Cohort',      price: 270000, duration: '12 weeks', description: 'Ship a real production API, auth, payments, deployment' },
+  'backend-mentor':   { name: 'Backend, Mentorship',       price: 480000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior backend engineer' },
   // Full-Stack Development
-  'fullstack-starter': { name: 'Full-Stack — Starter',      price: 100000, duration: '10 weeks', description: 'Live classes covering both halves of a modern web app' },
-  'fullstack-cohort':  { name: 'Full-Stack — Live Cohort',  price: 320000, duration: '14 weeks', description: 'Ship a real full-stack product to production' },
-  'fullstack-mentor':  { name: 'Full-Stack — Mentorship',   price: 550000, duration: '14 weeks', description: 'Weekly 1-on-1 sessions with a senior full-stack engineer' },
+  'fullstack-starter': { name: 'Full-Stack, Starter',      price: 100000, duration: '10 weeks', description: 'Live classes covering both halves of a modern web app' },
+  'fullstack-cohort':  { name: 'Full-Stack, Live Cohort',  price: 320000, duration: '14 weeks', description: 'Ship a real full-stack product to production' },
+  'fullstack-mentor':  { name: 'Full-Stack, Mentorship',   price: 550000, duration: '14 weeks', description: 'Weekly 1-on-1 sessions with a senior full-stack engineer' },
   // Mobile App Development
-  'mobile-dev-starter': { name: 'Mobile — Starter',         price: 85000,  duration: '8 weeks',  description: 'Live instructor-led React Native + Expo classes' },
-  'mobile-dev-cohort':  { name: 'Mobile — Live Cohort',     price: 280000, duration: '10 weeks', description: 'Intensive 10-week cohort — build & ship a real app to TestFlight + Play' },
-  'mobile-dev-mentor':  { name: 'Mobile — Mentorship',      price: 500000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior mobile engineer' },
+  'mobile-dev-starter': { name: 'Mobile, Starter',         price: 85000,  duration: '8 weeks',  description: 'Live instructor-led React Native + Expo classes' },
+  'mobile-dev-cohort':  { name: 'Mobile, Live Cohort',     price: 280000, duration: '10 weeks', description: 'Intensive 10-week cohort, build & ship a real app to TestFlight + Play' },
+  'mobile-dev-mentor':  { name: 'Mobile, Mentorship',      price: 500000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior mobile engineer' },
   // Research Writing
-  'research-writing-starter': { name: 'Research Writing — Starter',    price: 50000,  duration: '6 weeks',  description: 'Live classes on academic writing, citations, methodology' },
-  'research-writing-cohort':  { name: 'Research Writing — Live Cohort', price: 150000, duration: '8 weeks',  description: '8-week intensive — methodology + journal-ready writing' },
-  'research-writing-mentor':  { name: 'Research Writing — Mentorship', price: 320000, duration: '12 weeks', description: 'Personal mentorship — your paper, your timeline' },
+  'research-writing-starter': { name: 'Research Writing, Starter',    price: 50000,  duration: '6 weeks',  description: 'Live classes on academic writing, citations, methodology' },
+  'research-writing-cohort':  { name: 'Research Writing, Live Cohort', price: 150000, duration: '8 weeks',  description: '8-week intensive, methodology + journal-ready writing' },
+  'research-writing-mentor':  { name: 'Research Writing, Mentorship', price: 320000, duration: '12 weeks', description: 'Personal mentorship, your paper, your timeline' },
 
   // ─── Legacy IDs (backwards compatibility for existing cohorts) ─────────
   // These map to the closest current track. Don't remove unless you've
   // migrated every Cohort document in the DB to a new planId.
-  'web-dev-starter':  { name: 'Web Dev — Starter (legacy)',     price: 75000,  duration: '8 weeks',  description: 'Legacy — use frontend-starter or fullstack-starter for new cohorts' },
-  'web-dev-cohort':   { name: 'Web Dev — Live Cohort (legacy)', price: 250000, duration: '12 weeks', description: 'Legacy — use frontend-cohort or fullstack-cohort for new cohorts' },
-  'web-dev-mentor':   { name: 'Web Dev — Mentorship (legacy)',  price: 450000, duration: '12 weeks', description: 'Legacy — use frontend-mentor or fullstack-mentor for new cohorts' },
-  'uiux-starter':     { name: 'UI/UX — Starter (legacy)',   price: 60000,  duration: '6 weeks',  description: 'Legacy — UI/UX track has been retired' },
-  'uiux-cohort':      { name: 'UI/UX — Cohort (legacy)',    price: 200000, duration: '8 weeks',  description: 'Legacy — UI/UX track has been retired' },
-  'uiux-mentor':      { name: 'UI/UX — Mentorship (legacy)', price: 380000, duration: '10 weeks', description: 'Legacy — UI/UX track has been retired' },
+  'web-dev-starter':  { name: 'Web Dev, Starter (legacy)',     price: 75000,  duration: '8 weeks',  description: 'Legacy, use frontend-starter or fullstack-starter for new cohorts' },
+  'web-dev-cohort':   { name: 'Web Dev, Live Cohort (legacy)', price: 250000, duration: '12 weeks', description: 'Legacy, use frontend-cohort or fullstack-cohort for new cohorts' },
+  'web-dev-mentor':   { name: 'Web Dev, Mentorship (legacy)',  price: 450000, duration: '12 weeks', description: 'Legacy, use frontend-mentor or fullstack-mentor for new cohorts' },
+  'uiux-starter':     { name: 'UI/UX, Starter (legacy)',   price: 60000,  duration: '6 weeks',  description: 'Legacy, UI/UX track has been retired' },
+  'uiux-cohort':      { name: 'UI/UX, Cohort (legacy)',    price: 200000, duration: '8 weeks',  description: 'Legacy, UI/UX track has been retired' },
+  'uiux-mentor':      { name: 'UI/UX, Mentorship (legacy)', price: 380000, duration: '10 weeks', description: 'Legacy, UI/UX track has been retired' },
   student:            { name: 'Student',     price: 75000,  duration: '8 weeks',  description: 'Live classes + community access' },
   cohort:             { name: 'Cohort Pro',  price: 250000, duration: '12 weeks', description: 'Intensive live cohort + mentorship + career coaching' },
   mentorship:         { name: 'Mentorship',  price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 mentor sessions + personalised roadmap' },
@@ -147,7 +147,7 @@ export default function Checkout() {
   const [appliedVoucher, setAppliedVoucher] = useState<null | { code: string; nairaValue: number; note?: string }>(null);
   const [voucherError, setVoucherError] = useState('');
 
-  // Installment payments — 1× (default) | 2× | 3×
+  // Installment payments, 1× (default) | 2× | 3×
   const [installmentChoice, setInstallmentChoice] = useState<InstallmentChoice>(1);
   const [autoChargeConsent, setAutoChargeConsent] = useState(false);
 
@@ -193,7 +193,7 @@ export default function Checkout() {
   const totalDiscountKobo = pointsDiscountKobo + voucherDiscountKobo;
   const finalKobo = Math.max(priceKobo - totalDiscountKobo, 0);
 
-  // Installment eligibility — services use the server-decorated flag; training
+  // Installment eligibility, services use the server-decorated flag; training
   // plans + projects use the same ₦200,000 floor the server enforces.
   const installmentEligible = item.type === 'service'
     ? serviceData?.installmentEligible === true
@@ -252,7 +252,7 @@ export default function Checkout() {
       ...(installmentChoice > 1
         ? { installments: installmentChoice, autoChargeConsent }
         : {}),
-      // Service vs plan branching — server uses the catalog price when
+      // Service vs plan branching, server uses the catalog price when
       // serviceId is set, otherwise trusts amount/description from the body.
       ...(item.type === 'service'
         ? { serviceId: item.id }
@@ -265,7 +265,7 @@ export default function Checkout() {
     });
   };
 
-  // Keep `processing` semantics for the existing button — the navigation
+  // Keep `processing` semantics for the existing button, the navigation
   // away on success leaves the spinner showing until the new page loads.
   const processing = initializePayment.isPending || initializePayment.isSuccess;
 
@@ -338,7 +338,7 @@ export default function Checkout() {
             <div className="p-4 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-xl text-sm text-red-700 dark:text-red-400 mb-6">{error}</div>
           )}
 
-          {/* Installment selector — 1×/2×/3× */}
+          {/* Installment selector, 1×/2×/3× */}
           <InstallmentSelector
             totalKobo={priceKobo}
             value={installmentChoice}

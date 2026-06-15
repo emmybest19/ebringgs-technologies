@@ -34,7 +34,7 @@ export default function ClientOverview() {
   return (
     <div>
       {/* Surface the most-urgent installment plan (if any). Auto-hides for
-          paid-in-full / future-due plans — see pickMostUrgentPlan rules. */}
+          paid-in-full / future-due plans, see pickMostUrgentPlan rules. */}
       <UrgentPlanBanner />
 
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">

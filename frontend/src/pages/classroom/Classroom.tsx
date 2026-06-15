@@ -139,7 +139,7 @@ export default function Classroom() {
             })));
             break;
 
-          // WebRTC signaling (basic forwarding — full mesh would need more logic)
+          // WebRTC signaling (basic forwarding, full mesh would need more logic)
           case 'offer':
           case 'answer':
           case 'ice-candidate':
@@ -328,9 +328,9 @@ export default function Classroom() {
       <div className="flex flex-1 overflow-hidden">
         {/* Video grid */}
         <div className="flex-1 p-4 grid grid-cols-2 md:grid-cols-3 gap-3 content-start overflow-auto">
-          {/* Local — spans full width when screen sharing for usable annotation area */}
+          {/* Local, spans full width when screen sharing for usable annotation area */}
           <div className={`relative bg-slate-800 rounded-2xl overflow-hidden aspect-video ${isScreenSharing ? 'col-span-full' : ''}`}>
-            {/* Always-rendered video element — shows camera or screen-share. Hidden only when camera-off and not sharing. */}
+            {/* Always-rendered video element, shows camera or screen-share. Hidden only when camera-off and not sharing. */}
             <video
               ref={localVideoRef}
               autoPlay
@@ -350,7 +350,7 @@ export default function Classroom() {
               </div>
             )}
 
-            {/* Floating Annotate button — top-right of the tile, visible for ANY share type (screen, window, or tab) */}
+            {/* Floating Annotate button, top-right of the tile, visible for ANY share type (screen, window, or tab) */}
             {isScreenSharing && (
               <button
                 type="button"
@@ -367,7 +367,7 @@ export default function Classroom() {
               </button>
             )}
 
-            {/* Mirror-loop tip — small banner only when sharing entire screen, with dismiss */}
+            {/* Mirror-loop tip, small banner only when sharing entire screen, with dismiss */}
             {isScreenSharing && showMirrorTip && !isAnnotating && (
               <div className="absolute top-3 left-3 z-20 max-w-xs bg-amber-500/95 text-amber-950 text-xs rounded-lg p-3 flex items-start gap-2 shadow-lg">
                 <Info size={14} className="shrink-0 mt-0.5" />

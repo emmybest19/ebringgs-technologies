@@ -187,7 +187,7 @@ export default function AdminAssignments() {
                         <p className="text-xs font-semibold text-green-700 dark:text-green-400">Feedback from {a.reviewedBy?.name ?? 'instructor'}</p>
                         {a.grade && <span className="text-xs font-bold text-green-700 dark:text-green-400">{a.grade}</span>}
                       </div>
-                      <p className="text-sm text-gray-700 dark:text-slate-300">{a.feedback || '—'}</p>
+                      <p className="text-sm text-gray-700 dark:text-slate-300">{a.feedback || '-'}</p>
                       <button onClick={() => openReview(a)}
                         className="text-xs text-teal-600 hover:underline mt-1">
                         Edit feedback

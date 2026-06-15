@@ -22,7 +22,7 @@ interface PublicSession {
   enrolledCount: number;
 }
 
-// Cohort + CohortStatus are imported from services/queries — live-session
+// Cohort + CohortStatus are imported from services/queries, live-session
 // fetching still uses the old pattern until that domain is migrated.
 
 /* ─── Formatting helpers ──────────────────────────────────────────────── */
@@ -65,7 +65,7 @@ function useCountdown(targetIso?: string): CountdownParts {
   useEffect(() => {
     if (!targetIso) return;
     // Tick on a 1s interval. We don't try to sync to the wall-clock boundary
-    // — the visible jitter is imperceptible on display sizes.
+    //, the visible jitter is imperceptible on display sizes.
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, [targetIso]);
@@ -93,7 +93,7 @@ function escapeIcs(s: string): string {
 }
 
 function formatIcsDate(iso: string): string {
-  // YYYYMMDDTHHmmssZ — UTC. Strip non-digits and append the Z.
+  // YYYYMMDDTHHmmssZ, UTC. Strip non-digits and append the Z.
   const d = new Date(iso);
   const pad = (n: number) => String(n).padStart(2, '0');
   return (
@@ -109,7 +109,7 @@ function downloadCohortIcs(c: Cohort) {
   const end = formatIcsDate(endIso);
   const stamp = formatIcsDate(new Date().toISOString());
 
-  const summary = `${c.title} — kickoff`;
+  const summary = `${c.title}, kickoff`;
   const description = [
     c.description,
     c.instructor ? `Instructor: ${c.instructor}` : null,
@@ -165,7 +165,7 @@ export default function Schedule() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [activeProgram, setActiveProgram] = useState('All');
 
-  // Fetch live sessions (legacy pattern — live-session domain not yet migrated).
+  // Fetch live sessions (legacy pattern, live-session domain not yet migrated).
   useEffect(() => {
     api.get('/live-sessions?upcoming=true')
       .then(({ data }) => setSessions(Array.isArray(data.data) ? data.data : []))
@@ -173,7 +173,7 @@ export default function Schedule() {
       .finally(() => setLoadingSessions(false));
   }, []);
 
-  // Upcoming cohorts via TanStack. Cohorts are non-fatal — if the query fails,
+  // Upcoming cohorts via TanStack. Cohorts are non-fatal, if the query fails,
   // the rest of the schedule (live-session calendar) still renders.
   const {
     data: cohorts = [],
@@ -182,7 +182,7 @@ export default function Schedule() {
   } = useCohorts({ upcoming: true, limit: 20 });
   const error = cohortsErrored ? 'We could not load upcoming cohorts. Refresh to try again.' : '';
 
-  // The "next intake" is the soonest upcoming cohort — already sorted by API.
+  // The "next intake" is the soonest upcoming cohort, already sorted by API.
   const nextCohort = cohorts[0];
   const countdown = useCountdown(nextCohort?.startDate);
 
@@ -503,7 +503,7 @@ function CountdownHero({
           </div>
         ) : !nextCohort ? (
           <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-            We are between cohorts right now — fresh intakes drop monthly.
+            We are between cohorts right now, fresh intakes drop monthly.
             Subscribe to the newsletter or talk to us to be first in line.
           </p>
         ) : (
@@ -530,7 +530,7 @@ function CountdownHero({
                 to={`/checkout?plan=${encodeURIComponent(nextCohort.planId)}`}
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl transition-colors shadow-lg shadow-teal-500/30"
               >
-                Reserve my seat — {formatNGN(nextCohort.priceNgn)} <ArrowRight size={16} />
+                Reserve my seat, {formatNGN(nextCohort.priceNgn)} <ArrowRight size={16} />
               </Link>
               <button
                 onClick={() => downloadCohortIcs(nextCohort)}
@@ -563,7 +563,7 @@ function SpotsRemainingBadge({ cohort }: { cohort: Cohort }) {
   if (cohort.spotsRemaining <= 0) {
     return (
       <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-400/40 text-red-200 text-sm font-medium">
-        <AlertCircle size={14} /> This cohort is full — join the next one below.
+        <AlertCircle size={14} /> This cohort is full, join the next one below.
       </p>
     );
   }
@@ -586,7 +586,7 @@ function CohortCard({ cohort: c }: { cohort: Cohort }) {
   const isClosed = c.status === 'closed' || isFull;
   const pct = c.capacity > 0 ? Math.min(100, Math.round((c.enrolledCount / c.capacity) * 100)) : 0;
   // Show in_progress cohorts on the public page only if they were already running
-  // when the page loaded — they no longer count as "upcoming".
+  // when the page loaded, they no longer count as "upcoming".
   const startedAlready = new Date(c.startDate) <= new Date();
 
   return (

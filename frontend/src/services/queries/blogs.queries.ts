@@ -99,7 +99,7 @@ export function useBlogs(filters: BlogListFilters = {}) {
 /**
  * NOTE on caching + view counts: the GET endpoint atomically increments
  * `views` on each request. With a 30s staleTime, repeated mounts inside that
- * window won't trigger a network call — meaning two views from the same
+ * window won't trigger a network call, meaning two views from the same
  * browser within 30s count as one. That's almost always what you want
  * (refreshes, back-button, etc. shouldn't inflate the counter), but worth
  * knowing if you ever need raw refetch behavior.

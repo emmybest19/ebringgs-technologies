@@ -140,7 +140,7 @@ export default function StudentLeaderboard() {
               <p className="text-base font-bold">1 point = ₦{POINT_TO_NAIRA}</p>
             </div>
             <p className="text-[11px] text-emerald-100">
-              Discount is applied automatically at checkout. No cash withdrawal — points only convert to enrollment credit.
+              Discount is applied automatically at checkout. No cash withdrawal, points only convert to enrollment credit.
             </p>
           </div>
 

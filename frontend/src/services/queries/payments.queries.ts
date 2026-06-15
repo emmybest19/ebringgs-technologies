@@ -8,7 +8,7 @@ export type TransactionStatus = 'pending' | 'succeeded' | 'failed' | 'refunded';
 /**
  * Transactions are fetched from `/api/paystack/transactions`. The
  * `stripePaymentIntentId` field is a legacy column name that now stores
- * the Paystack transaction reference — rename to `providerReference` in a
+ * the Paystack transaction reference, rename to `providerReference` in a
  * future migration.
  */
 export interface Transaction {
@@ -35,11 +35,11 @@ export interface InitializePaymentInput {
   amount?: number;             // kobo
   description?: string;
   projectId?: string;
-  // Training plan id (e.g. 'frontend-cohort') — used by server to link the
+  // Training plan id (e.g. 'frontend-cohort'), used by server to link the
   // PaymentPlan to the right training program.
   planId?: string;
   // Installment payments: 1 (default) | 2 | 3. When > 1, autoChargeConsent
-  // must also be true — server rejects otherwise.
+  // must also be true, server rejects otherwise.
   installments?: 1 | 2 | 3;
   autoChargeConsent?: boolean;
 }
@@ -48,7 +48,7 @@ export interface InitializePaymentResponse {
   authorizationUrl: string;
   accessCode: string;
   reference: string;
-  /** Set when installments > 1 was requested — the new PaymentPlan id. */
+  /** Set when installments > 1 was requested, the new PaymentPlan id. */
   paymentPlanId?: string;
   /** Echoes back what the server interpreted (1/2/3). */
   installmentCount?: number;
@@ -97,7 +97,7 @@ export function useMyTransactions() {
   });
 }
 
-/** Admin — every user's transactions. */
+/** Admin, every user's transactions. */
 export function useAllTransactions() {
   return useQuery({
     queryKey: paymentKeys.adminTransactions(),
@@ -106,7 +106,7 @@ export function useAllTransactions() {
 }
 
 /**
- * Verify a Paystack transaction by reference. Yes, GET — but the server
+ * Verify a Paystack transaction by reference. Yes, GET, but the server
  * has side effects (creates Project, claims voucher, awards referral
  * points). `staleTime: Infinity` ensures we only ever verify a given
  * reference once per cache lifetime.
@@ -126,7 +126,7 @@ export function useVerifyPayment(reference: string | null | undefined) {
 
 /**
  * Initialize a Paystack checkout. The success handler returns the
- * authorizationUrl — the caller usually redirects the browser to it.
+ * authorizationUrl, the caller usually redirects the browser to it.
  */
 export function useInitializePayment() {
   const qc = useQueryClient();
@@ -136,7 +136,7 @@ export function useInitializePayment() {
       return data?.data;
     },
     onSuccess: () => {
-      // A pending Transaction row was just created server-side — refresh
+      // A pending Transaction row was just created server-side, refresh
       // the transactions list so the user sees it.
       qc.invalidateQueries({ queryKey: paymentKeys.myTransactions() });
     },

@@ -78,9 +78,9 @@ export default function Navbar() {
                 aria-label={isSubscribed ? 'Disable notifications' : 'Enable notifications'}
                 title={
                   permission === 'denied'
-                    ? 'Notifications blocked — enable in browser settings'
+                    ? 'Notifications blocked, enable in browser settings'
                     : isSubscribed
-                      ? 'Notifications enabled — click to disable'
+                      ? 'Notifications enabled, click to disable'
                       : 'Enable push notifications'
                 }
               >

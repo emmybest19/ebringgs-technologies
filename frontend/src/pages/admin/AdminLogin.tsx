@@ -19,7 +19,7 @@ export default function AdminLogin() {
       await login(email, password);
       const role = useAuthStore.getState().user?.role;
       if (role !== 'admin') {
-        // Wrong role — sign back out and tell the user
+        // Wrong role, sign back out and tell the user
         logout();
         toast.error('This login is for administrators only.');
         return;
