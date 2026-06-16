@@ -79,7 +79,7 @@ async function fetchMyTransactions(): Promise<Transaction[]> {
 }
 
 async function fetchAllTransactions(): Promise<Transaction[]> {
-  const { data } = await api.get('/payments/transactions');
+  const { data } = await api.get('/paystack/admin/transactions');
   return data?.data?.transactions ?? [];
 }
 

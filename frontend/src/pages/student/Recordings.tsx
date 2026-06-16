@@ -1,79 +1,106 @@
 import { useState } from 'react';
-import { Video, Play, CheckCircle2 } from 'lucide-react';
+import { Video, Loader2, Play, X } from 'lucide-react';
+import {
+  useMyRecordings,
+  recordingPlayUrl,
+  formatBytes,
+  formatDuration,
+  type Recording,
+} from '../../services/queries';
 
-const sampleRecordings = [
-  { id: '1', title: 'Intro to React Hooks', program: 'Web Dev, Starter', instructor: 'Kofi Mensah', date: '2026-03-28', duration: '1h 12m', thumbnail: '/images/learning/video-class.jpg', watched: true },
-  { id: '2', title: 'Building REST APIs with Express', program: 'Web Dev, Starter', instructor: 'Kofi Mensah', date: '2026-03-25', duration: '1h 30m', thumbnail: '/images/general/coding-screen.jpg', watched: true },
-  { id: '3', title: 'State Management with Zustand', program: 'Web Dev, Cohort', instructor: 'Kofi Mensah', date: '2026-03-21', duration: '58m', thumbnail: '/images/hero/developer-coding.jpg', watched: false },
-  { id: '4', title: 'React Native Navigation Deep Dive', program: 'Mobile Dev, Cohort', instructor: 'Adaeze Okafor', date: '2026-03-18', duration: '1h 05m', thumbnail: '/images/general/mobile-app.jpg', watched: false },
-  { id: '5', title: 'Figma Auto-Layout Masterclass', program: 'UI/UX, Starter', instructor: 'Yusuf Abdullahi', date: '2026-03-15', duration: '45m', thumbnail: '/images/services/ux-design.jpg', watched: false },
-  { id: '6', title: 'TypeScript Generics Explained', program: 'Web Dev, Cohort', instructor: 'Chinonso Eze', date: '2026-03-12', duration: '1h 20m', thumbnail: '/images/learning/students-laptop.jpg', watched: false },
-];
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' });
+}
 
 export default function StudentRecordings() {
-  const [filter, setFilter] = useState('all');
-  const programs = ['all', ...new Set(sampleRecordings.map((r) => r.program))];
-  const filtered = filter === 'all' ? sampleRecordings : sampleRecordings.filter((r) => r.program === filter);
+  const { data: recordings = [], isLoading, isError } = useMyRecordings();
+  const [playing, setPlaying] = useState<Recording | null>(null);
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Class Recordings</h1>
-        <div className="flex gap-2 flex-wrap">
-          {programs.map((p) => (
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Recordings</h1>
+        <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">
+          Re-watch any class you missed or want to revisit.
+        </p>
+      </div>
+
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-[40vh]">
+          <Loader2 size={28} className="animate-spin text-teal-600" />
+        </div>
+      ) : isError ? (
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+          <p className="text-gray-500 dark:text-slate-400">Couldn't load recordings.</p>
+        </div>
+      ) : recordings.length === 0 ? (
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+          <Video size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
+          <p className="font-medium text-gray-500 dark:text-slate-400">No recordings available</p>
+          <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
+            Your instructor's class recordings will appear here.
+          </p>
+        </div>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {recordings.map((rec) => (
             <button
-              key={p}
-              onClick={() => setFilter(p)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                filter === p
-                  ? 'bg-teal-600 text-white'
-                  : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700'
-              }`}
+              key={rec._id}
+              onClick={() => setPlaying(rec)}
+              className="text-left bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors group"
             >
-              {p === 'all' ? 'All' : p}
+              <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3 group-hover:bg-teal-600 transition-colors">
+                <Play size={18} className="text-teal-600 group-hover:text-white transition-colors fill-current" />
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-1 line-clamp-2">{rec.title}</h3>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mb-2">
+                {typeof rec.uploader === 'object' && rec.uploader?.name ? rec.uploader.name : 'Instructor'} · {formatDate(rec.createdAt)}
+              </p>
+              <p className="text-[11px] text-gray-400 dark:text-slate-500 tabular-nums">
+                {formatDuration(rec.durationSec)} · {formatBytes(rec.sizeBytes)}
+              </p>
             </button>
           ))}
         </div>
-      </div>
-
-      {filtered.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
-          <Video size={40} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
-          <p className="font-medium text-gray-500 dark:text-slate-400">No recordings available</p>
-          <p className="text-sm text-gray-400 dark:text-slate-500 mt-1">Recordings from your live classes will appear here.</p>
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((rec) => (
-            <div key={rec.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden group">
-              <div className="h-36 overflow-hidden relative">
-                <img src={rec.thumbnail} alt={rec.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center">
-                    <Play size={20} className="text-teal-600 ml-0.5" />
-                  </div>
-                </div>
-                <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/70 text-white text-xs rounded font-medium">
-                  {rec.duration}
-                </div>
-                {rec.watched && (
-                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-green-600 text-white text-xs rounded font-medium flex items-center gap-1">
-                    <CheckCircle2 size={10} /> Watched
-                  </div>
-                )}
-              </div>
-              <div className="p-4">
-                <p className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1">{rec.title}</p>
-                <p className="text-xs text-teal-600 dark:text-teal-400 mt-0.5">{rec.program}</p>
-                <div className="flex items-center justify-between mt-2 text-xs text-gray-400 dark:text-slate-500">
-                  <span>{rec.instructor}</span>
-                  <span>{new Date(rec.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
       )}
+
+      {playing && <PlayerModal recording={playing} onClose={() => setPlaying(null)} />}
+    </div>
+  );
+}
+
+function PlayerModal({ recording, onClose }: { recording: Recording; onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-slate-900 rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-white truncate">{recording.title}</p>
+            <p className="text-xs text-slate-400">
+              {formatDuration(recording.durationSec)} · {formatBytes(recording.sizeBytes)}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="Close player"
+            className="p-1.5 text-slate-400 hover:text-white rounded-md hover:bg-slate-800"
+          >
+            <X size={18} />
+          </button>
+        </div>
+        <video
+          src={recordingPlayUrl(recording)}
+          controls
+          autoPlay
+          className="w-full aspect-video bg-black"
+        />
+      </div>
     </div>
   );
 }

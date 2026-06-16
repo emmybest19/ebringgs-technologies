@@ -1,147 +1,188 @@
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Code2, BarChart3, BookOpen, Layers, Smartphone, Brain, Map,
-  Loader2, ArrowRight, MessageSquare, ShoppingCart,
+  Code2, BarChart3, BookOpen, Layers, Smartphone, Palette, Server, Briefcase,
+  Loader2, ShoppingCart, GraduationCap, UserCheck, AlertCircle, RefreshCw,
 } from 'lucide-react';
-import { useServices } from '../../services/queries';
+import { useTutoringGroups, type TutoringTrack } from '../../services/queries';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  code: Code2, smartphone: Smartphone, 'bar-chart': BarChart3,
-  brain: Brain, 'book-open': BookOpen, layout: Layers, map: Map,
+  code: Code2,
+  server: Server,
+  layers: Layers,
+  smartphone: Smartphone,
+  'bar-chart': BarChart3,
+  'book-open': BookOpen,
+  palette: Palette,
+  briefcase: Briefcase,
 };
 
 function formatNGN(amount: number) {
-  return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(amount);
+  return new Intl.NumberFormat('en-NG', {
+    style: 'currency', currency: 'NGN', maximumFractionDigits: 0,
+  }).format(amount);
 }
 
 export default function StudentServices() {
-  const { data: services = [], isLoading: loading } = useServices();
-  const navigate = useNavigate();
-
-  const productized = services.filter((s) => s.productized);
-  const customOnly = services.filter((s) => !s.productized);
+  const { data: groups = [], isLoading, isError, refetch, isFetching } = useTutoringGroups();
 
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Browse Services</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Tutoring & Mentorship</h1>
         <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">
-          Need something built or designed alongside your training? Buy a productized package or request a custom quote.
+          Hands-on programs that take you from zero to shippable. Join a small live cohort, or get a private 1-on-1 mentor — your goals, your pace.
         </p>
       </div>
 
-      {loading ? (
+      {isLoading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
           <Loader2 size={28} className="animate-spin text-teal-600" />
         </div>
-      ) : services.length === 0 ? (
+      ) : isError ? (
+        // Distinct from "no data" — fetch actually failed (usually the
+        // backend is down or unreachable). Give the user a retry instead
+        // of a misleading "no programs" message.
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-red-200 dark:border-red-900 shadow-sm p-10 text-center">
+          <AlertCircle size={36} className="text-red-500 mx-auto mb-3" />
+          <p className="text-gray-700 dark:text-slate-200 font-semibold mb-1">Couldn't load tutoring programs</p>
+          <p className="text-gray-500 dark:text-slate-400 text-sm mb-4">
+            The catalog server didn't respond. This usually clears in a moment.
+          </p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors"
+          >
+            <RefreshCw size={14} className={isFetching ? 'animate-spin' : ''} />
+            {isFetching ? 'Retrying…' : 'Try again'}
+          </button>
+        </div>
+      ) : groups.length === 0 ? (
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
-          <Sparkles className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
-          <p className="text-gray-500 dark:text-slate-400">No services available right now.</p>
+          <GraduationCap size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
+          <p className="text-gray-500 dark:text-slate-400">No tutoring programs available right now.</p>
         </div>
       ) : (
-        <>
-          {productized.length > 0 && (
-            <>
-              <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">
-                Productized packages
-              </h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-                {productized.map((s) => {
-                  const Icon = iconMap[s.icon] || Code2;
-                  return (
-                    <div key={s.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
-                      <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">
-                        <Icon size={20} className="text-teal-600" />
-                      </div>
-                      <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mb-1">{s.category}</p>
-                      <h3 className="font-bold text-gray-900 dark:text-white text-base mb-2">{s.title}</h3>
-                      <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3 flex-1">{s.description}</p>
-
-                      {typeof s.price === 'number' && (
-                        <div className="mb-3">
-                          <p className="text-xl font-extrabold text-gray-900 dark:text-white">
-                            {formatNGN(s.price)}
-                            <span className="ml-1 text-xs font-medium text-gray-400 dark:text-slate-500">+ 7.5% VAT</span>
-                          </p>
-                          {s.timeline && <p className="text-xs text-gray-500 dark:text-slate-400">{s.timeline}</p>}
-                        </div>
-                      )}
-
-                      <div className="flex flex-col gap-2">
-                        <Link
-                          to={`/dashboard/services/${s.id}`}
-                          className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
-                        >
-                          View details
-                        </Link>
-                        <button
-                          onClick={() => navigate(`/checkout?type=service&id=${s.id}`)}
-                          className="w-full py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center gap-2"
-                        >
-                          <ShoppingCart size={14} /> Purchase
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
-
-          {customOnly.length > 0 && (
-            <>
-              <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">
-                Custom engagements
-              </h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {customOnly.map((s) => {
-                  const Icon = iconMap[s.icon] || Code2;
-                  return (
-                    <Link
-                      key={s.id}
-                      to={`/dashboard/services/${s.id}`}
-                      className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors block"
-                    >
-                      <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">
-                        <Icon size={20} className="text-teal-600" />
-                      </div>
-                      <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mb-1">{s.category}</p>
-                      <h3 className="font-bold text-gray-900 dark:text-white text-base mb-2">{s.title}</h3>
-                      <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">{s.description}</p>
-                      <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 hover:text-teal-800">
-                        Request a quote <ArrowRight size={14} />
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </>
-      )}
-
-      <div className="mt-8 bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
-        <MessageSquare size={28} />
-        <div className="flex-1">
-          <p className="font-bold">Don't see what you need?</p>
-          <p className="text-teal-100 text-sm">Talk to us directly and we'll work something out.</p>
+        <div className="space-y-10">
+          {groups.map((g) => (
+            <CategorySection key={g.category} category={g.category} tracks={g.tracks} />
+          ))}
         </div>
-        <Link
-          to="/contact"
-          className="px-5 py-2.5 bg-white text-teal-700 font-semibold text-sm rounded-xl hover:bg-teal-50 transition-colors shrink-0"
-        >
-          Contact us
-        </Link>
-      </div>
+      )}
     </div>
   );
 }
 
-function Sparkles({ className }: { className?: string }) {
+/* ─── Category section ─────────────────────────────────────────────── */
+
+function CategorySection({ category, tracks }: { category: string; tracks: TutoringTrack[] }) {
+  // Software Development has sub-tracks (Frontend / Backend / Full-Stack);
+  // every other category is flat.
+  const hasSubTracks = tracks.some((t) => t.subTrack);
+
+  if (!hasSubTracks) {
+    return (
+      <section>
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-3">{category}</h2>
+        <div className="grid sm:grid-cols-2 gap-5">
+          {tracks.map((t) => <TrackCard key={t.id} track={t} />)}
+        </div>
+      </section>
+    );
+  }
+
+  // Group by subTrack for Software Development.
+  const order: TutoringTrack['subTrack'][] = ['Frontend', 'Backend', 'Full-Stack'];
+  const bySubTrack = order
+    .map((sub) => ({ sub, items: tracks.filter((t) => t.subTrack === sub) }))
+    .filter((g) => g.items.length > 0);
+
   return (
-    <svg className={className} width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
-    </svg>
+    <section>
+      <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{category}</h2>
+      <p className="text-xs text-gray-500 dark:text-slate-400 mb-4">Pick a track that fits where you are now.</p>
+      <div className="space-y-6">
+        {bySubTrack.map(({ sub, items }) => (
+          <div key={sub}>
+            <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-400 uppercase tracking-wide mb-3">
+              {sub}
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {items.map((t) => <TrackCard key={t.id} track={t} />)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── Single track card ────────────────────────────────────────────── */
+
+function TrackCard({ track }: { track: TutoringTrack }) {
+  const navigate = useNavigate();
+  const Icon = iconMap[track.icon] || Code2;
+  const TierIcon = track.tier === 'cohort' ? GraduationCap : UserCheck;
+  const tierLabel = track.tier === 'cohort' ? 'Cohort' : '1-on-1 Mentorship';
+  const tierClass =
+    track.tier === 'cohort'
+      ? 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-400'
+      : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400';
+
+  return (
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
+      <div className="flex items-start justify-between mb-3">
+        <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center shrink-0">
+          <Icon size={20} className="text-teal-600" />
+        </div>
+        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold ${tierClass}`}>
+          <TierIcon size={11} />
+          {tierLabel}
+        </span>
+      </div>
+
+      <h3 className="font-bold text-gray-900 dark:text-white text-base mb-2">{track.title}</h3>
+      <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3 flex-1">
+        {track.summary}
+      </p>
+
+      <div className="grid grid-cols-2 gap-2 text-xs mb-4">
+        <div className="px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800">
+          <p className="text-[10px] text-gray-400 dark:text-slate-500 uppercase tracking-wide">Duration</p>
+          <p className="font-semibold text-gray-700 dark:text-slate-300">{track.durationLabel}</p>
+        </div>
+        <div className="px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800">
+          <p className="text-[10px] text-gray-400 dark:text-slate-500 uppercase tracking-wide">Per week</p>
+          <p className="font-semibold text-gray-700 dark:text-slate-300 line-clamp-1">{track.weeklyCommitment}</p>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <p className="text-xl font-extrabold text-gray-900 dark:text-white">
+          {formatNGN(track.priceNgn)}
+          {track.installmentEligible && (
+            <span className="ml-2 text-[10px] font-semibold text-teal-700 dark:text-teal-400 uppercase tracking-wider">
+              Installments OK
+            </span>
+          )}
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Link
+          to={`/dashboard/services/${track.id}`}
+          className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
+        >
+          View details
+        </Link>
+        <button
+          onClick={() => navigate(`/checkout?type=plan&id=${track.id}`)}
+          className="w-full py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center gap-2"
+        >
+          <ShoppingCart size={14} /> Enrol now
+        </button>
+      </div>
+    </div>
   );
 }

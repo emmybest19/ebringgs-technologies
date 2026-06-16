@@ -80,6 +80,50 @@ export const updateUserRole = async (req: AuthRequest, res: Response, next: Next
   } catch (err) { next(err); }
 };
 
+/**
+ * POST /api/users/teacher — admin-only.
+ *
+ * Lets the admin create a teacher account directly with name/email/password
+ * (and optional bio + title) instead of waiting for the teacher to register
+ * themselves and then flipping their role. The admin shares the credentials
+ * with the teacher out-of-band; the teacher signs in at /teacher/login.
+ *
+ * Email is auto-verified — the admin vouches for them, no verification mail.
+ */
+export const createTeacher = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const { name, email, password, title, bio } = req.body || {};
+
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      return next(new AppError('Name is required.', 400));
+    }
+    if (!email || typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
+      return next(new AppError('A valid email is required.', 400));
+    }
+    if (!password || typeof password !== 'string' || password.length < 8) {
+      return next(new AppError('Password must be at least 8 characters.', 400));
+    }
+
+    const normalisedEmail = email.toLowerCase().trim();
+    const existing = await User.findOne({ email: normalisedEmail });
+    if (existing) return next(new AppError('Email already in use.', 409));
+
+    const user = await User.create({
+      name: name.trim(),
+      email: normalisedEmail,
+      password, // pre-save hook hashes it
+      role: 'teacher',
+      isEmailVerified: true,        // admin-created, no need to verify
+      title: typeof title === 'string' ? title.trim() || undefined : undefined,
+      bio: typeof bio === 'string' ? bio.trim() || undefined : undefined,
+    });
+
+    // Strip password before returning.
+    const safe = await User.findById(user.id).select('-password');
+    res.status(201).json({ status: 'success', data: { user: safe } });
+  } catch (err) { next(err); }
+};
+
 /* ─── Teacher / instructor directory ─────────────────────────────────── */
 
 const TEACHER_PUBLIC_FIELDS = 'name avatar bio title specialties experience social featured createdAt';

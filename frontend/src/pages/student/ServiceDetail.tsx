@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
-import ServiceDetailContent from '../../components/services/ServiceDetailContent';
+import TutoringDetailContent from '../../components/tutoring/TutoringDetailContent';
 
 export default function StudentServiceDetail() {
   const { id } = useParams<{ id: string }>();
   return (
-    <ServiceDetailContent
-      serviceId={id}
+    <TutoringDetailContent
+      trackId={id}
       backHref="/dashboard/services"
-      backLabel="Back to services"
+      backLabel="Back to tutoring"
       embedded
     />
   );

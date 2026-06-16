@@ -702,3 +702,17 @@ export const getMyTransactions = async (req: AuthRequest, res: Response, next: N
     res.json({ status: 'success', data: { transactions } });
   } catch (err) { next(err); }
 };
+
+/**
+ * Admin-only: every transaction across all users, newest first. Used by the
+ * /admin/payments ledger page. We populate `user` with name + email so the
+ * table can render the buyer's identity without an N+1.
+ */
+export const getAllTransactions = async (_req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const transactions = await Transaction.find()
+      .populate('user', 'name email')
+      .sort({ createdAt: -1 });
+    res.json({ status: 'success', data: { transactions } });
+  } catch (err) { next(err); }
+};

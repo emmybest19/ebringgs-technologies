@@ -32,11 +32,11 @@ export default function TeacherLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-950 to-indigo-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-950 to-teal-950 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex w-14 h-14 bg-linear-to-br from-indigo-500 to-purple-500 rounded-2xl items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
+          <div className="inline-flex w-14 h-14 bg-linear-to-br from-teal-500 to-teal-700 rounded-2xl items-center justify-center mb-4 shadow-lg shadow-teal-500/30">
             <GraduationCap size={28} className="text-white" />
           </div>
           <h1 className="text-3xl font-extrabold text-white mb-2">Teacher Portal</h1>
@@ -61,7 +61,7 @@ export default function TeacherLogin() {
                   autoFocus
                   placeholder="teacher@yourdomain.com"
                   autoComplete="username"
-                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-sm"
+                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
                 />
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function TeacherLogin() {
                   required
                   placeholder="••••••••"
                   autoComplete="current-password"
-                  className="w-full pl-11 pr-12 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all text-sm"
+                  className="w-full pl-11 pr-12 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
                 />
                 <button
                   type="button"
@@ -98,7 +98,7 @@ export default function TeacherLogin() {
               className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold transition-all ${
                 isLoading
                   ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40'
+                  : 'bg-teal-600 text-white hover:bg-teal-700 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40'
               }`}
             >
               {isLoading ? (
@@ -118,7 +118,7 @@ export default function TeacherLogin() {
 
         <p className="text-center text-xs text-slate-500 mt-6">
           Are you a student?{' '}
-          <a href="/login" className="text-indigo-400 hover:text-indigo-300">Sign in here</a>
+          <a href="/login" className="text-teal-400 hover:text-teal-300">Sign in here</a>
         </p>
       </div>
     </div>

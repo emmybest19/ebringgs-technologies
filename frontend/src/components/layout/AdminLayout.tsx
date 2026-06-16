@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Users, FileText, Settings,
-  CreditCard, LogOut, ShieldCheck, Inbox, CalendarDays, ClipboardList, Star, User as UserIcon, FolderKanban, Sparkles, GraduationCap, Receipt,
+  CreditCard, LogOut, Inbox, CalendarDays, ClipboardList, Star, User as UserIcon, FolderKanban, Sparkles, GraduationCap, Receipt,
   Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
@@ -91,9 +91,6 @@ export default function AdminLayout() {
               <Logo variant="mark" size={32} onDark />
               <span className="font-bold text-white">E-Bringgs</span>
             </Link>
-            <div className="flex items-center gap-1 mt-2 text-xs text-slate-400">
-              <ShieldCheck size={12} className="text-teal-400" /> Admin panel
-            </div>
           </div>
           <button
             onClick={() => setMobileOpen(false)}

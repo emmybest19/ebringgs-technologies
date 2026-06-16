@@ -29,6 +29,8 @@ import caseStudyRoutes from './routes/caseStudy.routes';
 import aiTutorRoutes from './routes/aiTutor.routes';
 import siteAssistantRoutes from './routes/siteAssistant.routes';
 import publicRoutes from './routes/public.routes';
+import tutoringRoutes from './routes/tutoring.routes';
+import recordingRoutes from './routes/recording.routes';
 import { errorHandler } from './middleware/error.middleware';
 
 const app = express();
@@ -40,7 +42,7 @@ app.use(helmet());
 // in production lock to CLIENT_URL.
 const allowedOrigin =
   process.env.NODE_ENV === 'production'
-    ? (process.env.CLIENT_URL || 'http://localhost:5174')
+    ? (process.env.CLIENT_URL || 'http://localhost:5173')
     : (origin: string | undefined, cb: (err: Error | null, allow?: boolean) => void) => {
         if (!origin || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
           cb(null, true);
@@ -94,6 +96,8 @@ app.use('/api/case-studies', caseStudyRoutes);
 app.use('/api/ai-tutor', aiTutorRoutes);
 app.use('/api/site-assistant', siteAssistantRoutes);
 app.use('/api/public', publicRoutes);
+app.use('/api/tutoring', tutoringRoutes);
+app.use('/api/recordings', recordingRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));

@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { Users, ClipboardList, CalendarDays, Video, ArrowRight } from 'lucide-react';
 
 const stats = [
-  { label: 'Active Students', value: '0', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-50 dark:bg-indigo-950' },
+  { label: 'Active Students', value: '0', icon: Users, color: 'text-teal-600', bg: 'bg-teal-50 dark:bg-teal-950' },
   { label: 'Upcoming Sessions', value: '0', icon: CalendarDays, color: 'text-teal-600', bg: 'bg-teal-50 dark:bg-teal-950' },
-  { label: 'Pending Reviews', value: '0', icon: ClipboardList, color: 'text-amber-600', bg: 'bg-amber-50 dark:bg-amber-950' },
-  { label: 'Recordings', value: '0', icon: Video, color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-950' },
+  { label: 'Pending Reviews', value: '0', icon: ClipboardList, color: 'text-teal-600', bg: 'bg-teal-50 dark:bg-teal-950' },
+  { label: 'Recordings', value: '0', icon: Video, color: 'text-teal-600', bg: 'bg-teal-50 dark:bg-teal-950' },
 ];
 
 const quickActions = [
@@ -43,9 +43,9 @@ export default function TeacherOverview() {
             <Link
               key={to}
               to={to}
-              className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-slate-950 rounded-xl border border-gray-100 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-800 transition-colors group"
+              className="flex items-center gap-3 p-4 bg-gray-50 dark:bg-slate-950 rounded-xl border border-gray-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-800 transition-colors group"
             >
-              <Icon size={18} className="text-indigo-600 dark:text-indigo-400" />
+              <Icon size={18} className="text-teal-600 dark:text-teal-400" />
               <span className="text-sm font-medium text-gray-700 dark:text-slate-300 flex-1">{label}</span>
               <ArrowRight size={14} className="text-gray-400 dark:text-slate-500 group-hover:translate-x-0.5 transition-transform" />
             </Link>

@@ -21,37 +21,47 @@ interface Plan {
 }
 
 const planDetails: Record<string, Plan> = {
-  // ─── Current tracks (kept in sync with Pricing.tsx trainingCategories) ─
-  // Frontend Development
-  'frontend-starter': { name: 'Frontend, Starter',         price: 75000,  duration: '8 weeks',  description: 'Live instructor-led HTML, CSS, JS, TS, React + Tailwind classes' },
-  'frontend-cohort':  { name: 'Frontend, Live Cohort',     price: 250000, duration: '12 weeks', description: 'Intensive 12-week React cohort, build & ship a real app' },
-  'frontend-mentor':  { name: 'Frontend, Mentorship',      price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior frontend engineer' },
-  // Backend Development
-  'backend-starter':  { name: 'Backend, Starter',          price: 80000,  duration: '8 weeks',  description: 'Live classes building REST APIs with Node, Express, MongoDB' },
-  'backend-cohort':   { name: 'Backend, Live Cohort',      price: 270000, duration: '12 weeks', description: 'Ship a real production API, auth, payments, deployment' },
-  'backend-mentor':   { name: 'Backend, Mentorship',       price: 480000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior backend engineer' },
-  // Full-Stack Development
-  'fullstack-starter': { name: 'Full-Stack, Starter',      price: 100000, duration: '10 weeks', description: 'Live classes covering both halves of a modern web app' },
-  'fullstack-cohort':  { name: 'Full-Stack, Live Cohort',  price: 320000, duration: '14 weeks', description: 'Ship a real full-stack product to production' },
-  'fullstack-mentor':  { name: 'Full-Stack, Mentorship',   price: 550000, duration: '14 weeks', description: 'Weekly 1-on-1 sessions with a senior full-stack engineer' },
+  // ─── Tutoring catalog — IDs match backend/src/config/tutoring.catalog.ts ─
+  // Keep prices and durations in sync with that file (server is the source
+  // of truth for what users actually pay; this map is just for display).
+  // Software Development — Frontend
+  'frontend-cohort':  { name: 'Frontend Development — Cohort',           price: 200000, duration: '12 weeks', description: 'Live cohort: HTML, CSS, JS, TS, React + Tailwind. Ship two real apps.' },
+  'frontend-mentor':  { name: 'Frontend Development — 1-on-1 Mentorship', price: 400000, duration: '12 weeks', description: 'Private frontend mentorship, your goals and your pace.' },
+  // Software Development — Backend
+  'backend-cohort':   { name: 'Backend Development — Cohort',            price: 220000, duration: '12 weeks', description: 'Live cohort: Node, Express, MongoDB, auth, payments, deployment.' },
+  'backend-mentor':   { name: 'Backend Development — 1-on-1 Mentorship', price: 420000, duration: '12 weeks', description: 'Private backend mentorship around a real API project.' },
+  // Software Development — Full-Stack
+  'fullstack-cohort': { name: 'Full-Stack Development — Cohort',         price: 300000, duration: '14 weeks', description: 'Full-stack cohort: React frontend + Node API, end to end.' },
+  'fullstack-mentor': { name: 'Full-Stack Development — 1-on-1 Mentorship', price: 500000, duration: '14 weeks', description: 'Private full-stack mentorship around a real product.' },
   // Mobile App Development
-  'mobile-dev-starter': { name: 'Mobile, Starter',         price: 85000,  duration: '8 weeks',  description: 'Live instructor-led React Native + Expo classes' },
-  'mobile-dev-cohort':  { name: 'Mobile, Live Cohort',     price: 280000, duration: '10 weeks', description: 'Intensive 10-week cohort, build & ship a real app to TestFlight + Play' },
-  'mobile-dev-mentor':  { name: 'Mobile, Mentorship',      price: 500000, duration: '12 weeks', description: 'Weekly 1-on-1 sessions with a senior mobile engineer' },
+  'mobile-dev-cohort': { name: 'Mobile App Development — Cohort',        price: 250000, duration: '10 weeks', description: 'Cross-platform mobile with Flutter or React Native, shipped to TestFlight + Play internal.' },
+  'mobile-dev-mentor': { name: 'Mobile App Development — 1-on-1 Mentorship', price: 450000, duration: '10 weeks', description: 'Private mobile mentorship around a real app of yours.' },
+  // Data Analysis
+  'data-analysis-cohort': { name: 'Data Analysis — Cohort',              price: 180000, duration: '10 weeks', description: 'Excel → SQL → Python → Power BI. Land a junior data analyst role.' },
+  'data-analysis-mentor': { name: 'Data Analysis — 1-on-1 Mentorship',   price: 350000, duration: '10 weeks', description: 'Private data analysis mentorship using your own dataset.' },
   // Research Writing
-  'research-writing-starter': { name: 'Research Writing, Starter',    price: 50000,  duration: '6 weeks',  description: 'Live classes on academic writing, citations, methodology' },
-  'research-writing-cohort':  { name: 'Research Writing, Live Cohort', price: 150000, duration: '8 weeks',  description: '8-week intensive, methodology + journal-ready writing' },
-  'research-writing-mentor':  { name: 'Research Writing, Mentorship', price: 320000, duration: '12 weeks', description: 'Personal mentorship, your paper, your timeline' },
+  'research-writing-cohort': { name: 'Research Writing — Cohort',        price: 120000, duration: '8 weeks',  description: 'Topic refinement, literature review, methodology, writing style.' },
+  'research-writing-mentor': { name: 'Research Writing — 1-on-1 Mentorship', price: 280000, duration: '8 weeks', description: 'Private mentorship on your dissertation / chapter / manuscript.' },
+  // UI/UX Design
+  'uiux-cohort':      { name: 'UI/UX Design — Cohort',                  price: 150000, duration: '8 weeks',  description: 'Product design from research to high-fidelity Figma prototypes.' },
+  'uiux-mentor':      { name: 'UI/UX Design — 1-on-1 Mentorship',       price: 300000, duration: '8 weeks',  description: 'Private design mentorship + portfolio critique.' },
+  // Office Automation
+  'office-automation-cohort': { name: 'Office Automation — Cohort',     price: 100000, duration: '6 weeks',  description: 'Word, Excel, PowerPoint, Outlook, OneDrive / Google Drive — the everyday tools the working world runs on.' },
+  'office-automation-mentor': { name: 'Office Automation — 1-on-1 Mentorship', price: 200000, duration: '6 weeks', description: 'Private Office training built around your actual work.' },
 
-  // ─── Legacy IDs (backwards compatibility for existing cohorts) ─────────
-  // These map to the closest current track. Don't remove unless you've
-  // migrated every Cohort document in the DB to a new planId.
-  'web-dev-starter':  { name: 'Web Dev, Starter (legacy)',     price: 75000,  duration: '8 weeks',  description: 'Legacy, use frontend-starter or fullstack-starter for new cohorts' },
-  'web-dev-cohort':   { name: 'Web Dev, Live Cohort (legacy)', price: 250000, duration: '12 weeks', description: 'Legacy, use frontend-cohort or fullstack-cohort for new cohorts' },
-  'web-dev-mentor':   { name: 'Web Dev, Mentorship (legacy)',  price: 450000, duration: '12 weeks', description: 'Legacy, use frontend-mentor or fullstack-mentor for new cohorts' },
-  'uiux-starter':     { name: 'UI/UX, Starter (legacy)',   price: 60000,  duration: '6 weeks',  description: 'Legacy, UI/UX track has been retired' },
-  'uiux-cohort':      { name: 'UI/UX, Cohort (legacy)',    price: 200000, duration: '8 weeks',  description: 'Legacy, UI/UX track has been retired' },
-  'uiux-mentor':      { name: 'UI/UX, Mentorship (legacy)', price: 380000, duration: '10 weeks', description: 'Legacy, UI/UX track has been retired' },
+  // ─── Legacy / backwards-compat IDs ────────────────────────────────────
+  // Keep these so any historical cohort documents or saved transactions
+  // still resolve to a sensible display. New purchases should never use
+  // these — the tutoring catalog is the source of truth going forward.
+  'frontend-starter':         { name: 'Frontend, Starter (legacy)',          price: 75000,  duration: '8 weeks',  description: 'Legacy track — use frontend-cohort instead.' },
+  'backend-starter':          { name: 'Backend, Starter (legacy)',           price: 80000,  duration: '8 weeks',  description: 'Legacy track — use backend-cohort instead.' },
+  'fullstack-starter':        { name: 'Full-Stack, Starter (legacy)',        price: 100000, duration: '10 weeks', description: 'Legacy track — use fullstack-cohort instead.' },
+  'mobile-dev-starter':       { name: 'Mobile, Starter (legacy)',            price: 85000,  duration: '8 weeks',  description: 'Legacy track — use mobile-dev-cohort instead.' },
+  'research-writing-starter': { name: 'Research Writing, Starter (legacy)',  price: 50000,  duration: '6 weeks',  description: 'Legacy track — use research-writing-cohort instead.' },
+  'web-dev-starter':  { name: 'Web Dev, Starter (legacy)',     price: 75000,  duration: '8 weeks',  description: 'Legacy, use frontend-cohort or fullstack-cohort.' },
+  'web-dev-cohort':   { name: 'Web Dev, Live Cohort (legacy)', price: 250000, duration: '12 weeks', description: 'Legacy, use frontend-cohort or fullstack-cohort.' },
+  'web-dev-mentor':   { name: 'Web Dev, Mentorship (legacy)',  price: 450000, duration: '12 weeks', description: 'Legacy, use frontend-mentor or fullstack-mentor.' },
+  'uiux-starter':     { name: 'UI/UX, Starter (legacy)',       price: 60000,  duration: '6 weeks',  description: 'Legacy — use uiux-cohort instead.' },
   student:            { name: 'Student',     price: 75000,  duration: '8 weeks',  description: 'Live classes + community access' },
   cohort:             { name: 'Cohort Pro',  price: 250000, duration: '12 weeks', description: 'Intensive live cohort + mentorship + career coaching' },
   mentorship:         { name: 'Mentorship',  price: 450000, duration: '12 weeks', description: 'Weekly 1-on-1 mentor sessions + personalised roadmap' },
@@ -279,17 +289,28 @@ export default function Checkout() {
   // away on success leaves the spinner showing until the new page loads.
   const processing = initializePayment.isPending || initializePayment.isSuccess;
 
-  const backLink = item.type === 'service' ? `/services/${item.id}` : '/pricing';
-  const backLabel = item.type === 'service' ? 'Back to service' : 'Back to pricing';
+  // Checkout is reachable from multiple places: /pricing, public /services/:id,
+  // /client/services/:id, and /dashboard/services/:id (tutoring). Hardcoding a
+  // single back path sent users to the wrong page (the public home in some
+  // flows). Use browser history so we always return to whatever they clicked
+  // from. Label stays generic for the same reason.
+  const goBack = () => {
+    if (window.history.length > 1) navigate(-1);
+    else navigate(item.type === 'service' ? `/services/${item.id}` : '/pricing');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950 flex items-start justify-center py-12 px-4">
       <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-start">
         {/* Order summary */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
-          <Link to={backLink} className="inline-flex items-center gap-1.5 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 text-sm mb-6 transition-colors">
-            <ArrowLeft size={14} /> {backLabel}
-          </Link>
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex items-center gap-1.5 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 text-sm mb-6 transition-colors"
+          >
+            <ArrowLeft size={14} /> Back
+          </button>
 
           <div className="mb-6">
             <Logo variant="mark" size={40} />

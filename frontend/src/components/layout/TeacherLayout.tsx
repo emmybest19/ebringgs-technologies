@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Users, ClipboardList, CalendarDays,
-  Video, GraduationCap, LogOut, BookOpen, User as UserIcon,
+  Video, LogOut, BookOpen, User as UserIcon,
   Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
@@ -73,9 +73,6 @@ export default function TeacherLayout() {
               <Logo variant="mark" size={32} onDark />
               <span className="font-bold text-white">E-Bringgs</span>
             </Link>
-            <div className="flex items-center gap-1 mt-2 text-xs text-slate-400">
-              <GraduationCap size={12} className="text-indigo-400" /> Teacher panel
-            </div>
           </div>
           <button
             onClick={() => setMobileOpen(false)}
@@ -96,7 +93,7 @@ export default function TeacherLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-teal-600 text-white'
                     : 'text-slate-400 hover:text-white hover:bg-slate-800'
                 }`
               }
@@ -110,7 +107,7 @@ export default function TeacherLayout() {
         {/* User */}
         <div className="px-3 py-4 border-t border-slate-800">
           <div className="flex items-center gap-3 px-3 py-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
               {user.name.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">

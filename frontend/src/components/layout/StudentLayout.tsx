@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, CalendarDays, ClipboardList, Video, Trophy, Star,
-  LogOut, User as UserIcon, Users, ShoppingBag,
+  LogOut, User as UserIcon, Users, GraduationCap,
   Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
@@ -15,7 +15,7 @@ const navItems = [
   { to: '/dashboard/schedule', label: 'Schedule', icon: CalendarDays },
   { to: '/dashboard/assignments', label: 'Assignments', icon: ClipboardList },
   { to: '/dashboard/recordings', label: 'Recordings', icon: Video },
-  { to: '/dashboard/services', label: 'Services', icon: ShoppingBag },
+  { to: '/dashboard/services', label: 'Services', icon: GraduationCap },
   { to: '/dashboard/instructors', label: 'Instructors', icon: Users },
   { to: '/dashboard/leaderboard', label: 'Leaderboard', icon: Trophy },
   { to: '/dashboard/reviews', label: 'My Reviews', icon: Star },
@@ -87,7 +87,7 @@ export default function StudentLayout() {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+        <nav className="flex-1 overflow-y-hidden px-3 py-1 space-y-0.5 ">
           {navItems.map(({ to, label, icon: Icon, end }) => (
             <NavLink
               key={to}

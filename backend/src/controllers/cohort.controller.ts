@@ -2,10 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 import { AuthRequest } from '../types';
 import Cohort, { deriveCohortStatus, ICohort } from '../models/Cohort.model';
 import Transaction from '../models/Transaction.model';
+import { getTutoringTrack } from '../config/tutoring.catalog';
 import { AppError } from '../middleware/error.middleware';
 
-/** Default cohort duration when admin hasn't created a Cohort doc yet. */
-const COHORT_DURATION_MONTHS = 2;
+/**
+ * Fallback duration (in weeks) when no tutoring track matches the buyer's
+ * planId — e.g. legacy plan IDs we kept for backwards-compat. Matches the
+ * shortest current track so we don't over-promise time.
+ */
+const FALLBACK_DURATION_WEEKS = 8;
 
 const ADMIN_EDITABLE_FIELDS = [
   'program', 'title', 'planId', 'startDate', 'endDate', 'durationLabel',
@@ -148,23 +153,32 @@ export const getMyNext = async (req: AuthRequest, res: Response, next: NextFunct
       }
     }
 
-    // 2) Synthesise: 2 months from the later of (purchase date, now).
-    const now = new Date();
-    const baseline = purchase.createdAt > now ? purchase.createdAt : now;
-    const start = new Date(baseline);
-    start.setMonth(start.getMonth() + COHORT_DURATION_MONTHS);
-    const end = new Date(start);
-    end.setMonth(end.getMonth() + COHORT_DURATION_MONTHS);
+    // 2) Synthesise: look up the buyer's plan in the tutoring catalog and
+    // use its real duration. Anchor `start` to the PURCHASE date (not
+    // `now`) so the countdown actually counts down day by day — using
+    // `now` made every refresh show the same number, which isn't a
+    // countdown at all. The downside is two buyers of the same track see
+    // different personal start dates; the fix for shared intakes is for
+    // admin to create a real Cohort doc, which the branch above prefers.
+    const track = getTutoringTrack(planId);
+    const weeks = track?.durationWeeks ?? FALLBACK_DURATION_WEEKS;
+    const durationLabel = track?.durationLabel ?? `${weeks} weeks`;
+    const title = track?.title ?? purchase.description ?? 'Your cohort';
+
+    const purchaseMs = new Date(purchase.createdAt).getTime();
+    const cohortMs = weeks * 7 * 24 * 60 * 60 * 1000;
+    const start = new Date(purchaseMs + cohortMs);
+    const end = new Date(start.getTime() + cohortMs);
 
     return res.json({
       status: 'success',
       data: {
         cohort: {
           planId,
-          title: purchase.description || 'Your cohort',
+          title,
           startDate: start,
           endDate: end,
-          durationLabel: `${COHORT_DURATION_MONTHS} months`,
+          durationLabel,
           status: 'open',
         },
         eligible: true,

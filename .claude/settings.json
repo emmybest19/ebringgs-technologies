@@ -78,7 +78,18 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:5174/src/pages/Checkout.tsx\" -m 5)",
       "Bash(curl -s http://localhost:5173/ -m 3)",
       "Bash(curl -s http://localhost:5174/ -m 3)",
-      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" http://localhost:5000/api/public/stats)"
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" http://localhost:5000/api/public/stats)",
+      "PowerShell(Get-NetTCPConnection -State Listen -LocalPort 5000,5173,5174,5175,5176,5177 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 11660,21560,21012 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetTCPConnection -State Listen -LocalPort 5000,5173,5174,5175 -ErrorAction SilentlyContinue)",
+      "Bash(npm --prefix frontend run dev)",
+      "Bash(rm c:/Users/EBRY/.claude/projects/c--Users-EBRY-Desktop-my-company-e-bringgs/memory/project_cohort_durations_pending.md)",
+      "Bash(grep -n \"{error}\\\\|{error &&\\\\|\\\\\\\\berror\\\\\\\\b\" c:/Users/EBRY/Desktop/my-company/e-bringgs/frontend/src/pages/Checkout.tsx)",
+      "PowerShell(Get-NetTCPConnection -State Listen -LocalPort 5000 -ErrorAction SilentlyContinue)",
+      "Bash(curl -s \"http://localhost:5000/api/tutoring?grouped=true\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory"
     ]
   }
 }

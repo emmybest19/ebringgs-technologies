@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -102,6 +102,32 @@ import TeacherResources from "./pages/teacher/TeacherResources";
 
 // Admin login (separate from public login)
 import AdminLogin from "./pages/admin/AdminLogin";
+
+/**
+ * Floating widgets (SiteAssistantWidget chat bubble + WhatsAppButton)
+ * should only appear on public marketing pages — they're for prospects,
+ * not for logged-in admins/teachers/students/clients who have role-specific
+ * dashboards. Also hidden on full-screen flows (classroom, checkout,
+ * payment confirmation) where the floating UI is in the way.
+ */
+const PRIVATE_PREFIXES = [
+  '/admin', '/teacher', '/dashboard', '/client',
+  '/classroom', '/checkout', '/payment', '/payments',
+];
+
+function PublicOnlyWidgets() {
+  const { pathname } = useLocation();
+  const isPrivate = PRIVATE_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(p + '/'),
+  );
+  if (isPrivate) return null;
+  return (
+    <>
+      <SiteAssistantWidget />
+      <WhatsAppButton />
+    </>
+  );
+}
 
 function App() {
   useThemeInit();
@@ -241,8 +267,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
-      <SiteAssistantWidget />
-      <WhatsAppButton />
+      <PublicOnlyWidgets />
       <ScrollToTopButton />
       <Toaster
         position="top-right"

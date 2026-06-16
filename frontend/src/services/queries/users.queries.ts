@@ -37,6 +37,14 @@ export interface ChangePasswordInput {
   newPassword: string;
 }
 
+export interface CreateTeacherInput {
+  name: string;
+  email: string;
+  password: string;
+  title?: string;
+  bio?: string;
+}
+
 /* ─── Query key factory ───────────────────────────────────────────────── */
 
 export const userKeys = {
@@ -101,6 +109,24 @@ export function useUpdateUserRole() {
   return useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: UserRole }): Promise<User> => {
       const { data } = await api.patch(`/users/${userId}/role`, { role });
+      return data?.data?.user;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: userKeys.adminList() });
+    },
+  });
+}
+
+/**
+ * Admin-only: create a teacher account directly. Skips the public
+ * registration + email-verification path so the admin can hand the
+ * credentials over and the teacher signs in immediately at /teacher/login.
+ */
+export function useCreateTeacher() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: CreateTeacherInput): Promise<User> => {
+      const { data } = await api.post('/users/teacher', payload);
       return data?.data?.user;
     },
     onSuccess: () => {

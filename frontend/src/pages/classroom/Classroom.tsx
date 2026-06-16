@@ -3,9 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   Mic, MicOff, Video, VideoOff, Monitor, MonitorOff,
   MessageSquare, Users, PhoneOff, Send, X, UserMinus,
-  VolumeX, ClipboardList, Pencil, Info,
+  VolumeX, ClipboardList, Pencil, Info, Circle, Square, Loader2,
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../../store/auth.store';
+import { useUploadRecording } from '../../services/queries';
 import AnnotationOverlay from './AnnotationOverlay';
 
 interface ChatMessage {
@@ -50,7 +52,121 @@ export default function Classroom() {
   const [showMirrorTip, setShowMirrorTip] = useState(true);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const isInstructor = user?.role === 'admin';
+  const isInstructor = user?.role === 'admin' || user?.role === 'teacher';
+
+  /* ─── Class recording (MediaRecorder, instructor-only) ──────────────
+     v1: captures the teacher's local camera + mic only. Screen share is
+     NOT captured (separate stream). On stop, opens a small dialog asking
+     for a title and uploads the blob via POST /api/recordings. */
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
+  const recordingStartedAtRef = useRef<number | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingElapsed, setRecordingElapsed] = useState(0);
+  const [pendingRecording, setPendingRecording] = useState<{ blob: Blob; durationSec: number } | null>(null);
+  const [saveTitle, setSaveTitle] = useState('');
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const uploadRecording = useUploadRecording();
+
+  // Tick the elapsed timer once a second while recording.
+  useEffect(() => {
+    if (!isRecording) return;
+    const id = setInterval(() => {
+      if (recordingStartedAtRef.current) {
+        setRecordingElapsed(Math.floor((Date.now() - recordingStartedAtRef.current) / 1000));
+      }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [isRecording]);
+
+  const startRecording = () => {
+    if (!localStream) {
+      toast.error('Camera + mic not ready yet.');
+      return;
+    }
+    if (typeof MediaRecorder === 'undefined') {
+      toast.error('Your browser does not support MediaRecorder.');
+      return;
+    }
+    try {
+      recordedChunksRef.current = [];
+      const mr = new MediaRecorder(localStream, {
+        mimeType: MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')
+          ? 'video/webm;codecs=vp9,opus'
+          : 'video/webm',
+      });
+      mr.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) recordedChunksRef.current.push(e.data);
+      };
+      mr.onstop = () => {
+        const blob = new Blob(recordedChunksRef.current, { type: mr.mimeType || 'video/webm' });
+        const startedAt = recordingStartedAtRef.current ?? Date.now();
+        const durationSec = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+        setPendingRecording({ blob, durationSec });
+        // Pre-fill a sensible default title.
+        setSaveTitle(`Class ${new Date().toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' })}`);
+      };
+      // Chunk every 5 s so a crash mid-class still leaves something usable.
+      mr.start(5000);
+      mediaRecorderRef.current = mr;
+      recordingStartedAtRef.current = Date.now();
+      setRecordingElapsed(0);
+      setIsRecording(true);
+      toast.success('Recording started.');
+    } catch (err) {
+      console.error(err);
+      toast.error('Could not start recording.');
+    }
+  };
+
+  const stopRecording = () => {
+    const mr = mediaRecorderRef.current;
+    if (mr && mr.state !== 'inactive') mr.stop();
+    setIsRecording(false);
+    mediaRecorderRef.current = null;
+  };
+
+  const cancelPendingRecording = () => {
+    setPendingRecording(null);
+    setSaveTitle('');
+    setUploadProgress(null);
+    recordedChunksRef.current = [];
+  };
+
+  const uploadPendingRecording = () => {
+    if (!pendingRecording) return;
+    const title = saveTitle.trim();
+    if (!title) {
+      toast.error('Give the recording a title before uploading.');
+      return;
+    }
+    setUploadProgress(0);
+    uploadRecording.mutate(
+      {
+        file: pendingRecording.blob,
+        title,
+        durationSec: pendingRecording.durationSec,
+        roomId: roomId || undefined,
+        onProgress: (pct) => setUploadProgress(pct),
+      },
+      {
+        onSuccess: () => {
+          toast.success('Recording saved.');
+          cancelPendingRecording();
+        },
+        onError: () => {
+          toast.error('Upload failed. The recording is still in memory — try again.');
+          setUploadProgress(null);
+        },
+      },
+    );
+  };
+
+  const recordingLabel = (() => {
+    const m = Math.floor(recordingElapsed / 60);
+    const s = recordingElapsed % 60;
+    return `${m}:${String(s).padStart(2, '0')}`;
+  })();
 
   useEffect(() => {
     if (!isAuthenticated) { navigate('/login'); }
@@ -597,6 +713,15 @@ export default function Classroom() {
             <ControlBtn onClick={muteAll} label="Mute all" activeColor="bg-amber-600 hover:bg-amber-700">
               <VolumeX size={20} />
             </ControlBtn>
+
+            <ControlBtn
+              onClick={isRecording ? stopRecording : startRecording}
+              active={isRecording}
+              activeColor="bg-red-600 hover:bg-red-700"
+              label={isRecording ? `Stop · ${recordingLabel}` : 'Record'}
+            >
+              {isRecording ? <Square size={20} /> : <Circle size={20} className="fill-current" />}
+            </ControlBtn>
           </>
         )}
 
@@ -606,6 +731,71 @@ export default function Classroom() {
           <span className="text-xs">Leave</span>
         </button>
       </div>
+
+      {/* Recording-saved dialog: title prompt + upload progress */}
+      {pendingRecording && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-red-950 flex items-center justify-center">
+                <Circle size={16} className="text-red-500 fill-current" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-white">Save recording</h2>
+                <p className="text-xs text-slate-400">
+                  {Math.floor(pendingRecording.durationSec / 60)}m {pendingRecording.durationSec % 60}s ·{' '}
+                  {(pendingRecording.blob.size / (1024 * 1024)).toFixed(1)} MB
+                </p>
+              </div>
+            </div>
+
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Title</label>
+            <input
+              type="text"
+              value={saveTitle}
+              onChange={(e) => setSaveTitle(e.target.value)}
+              disabled={uploadProgress !== null}
+              autoFocus
+              placeholder="e.g. Week 5 — Hooks deep dive"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-700 bg-slate-950 text-sm text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none disabled:opacity-50"
+            />
+
+            {uploadProgress !== null && (
+              <div className="mt-4">
+                <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+                  <span>Uploading...</span>
+                  <span className="font-mono tabular-nums">{uploadProgress}%</span>
+                </div>
+                <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-teal-600 transition-all duration-150"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="mt-5 grid grid-cols-2 gap-2">
+              <button
+                onClick={cancelPendingRecording}
+                disabled={uploadProgress !== null && uploadProgress < 100}
+                className="px-4 py-2.5 rounded-lg border border-slate-700 text-sm font-semibold text-slate-300 hover:border-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Discard
+              </button>
+              <button
+                onClick={uploadPendingRecording}
+                disabled={uploadProgress !== null || !saveTitle.trim()}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold transition-colors disabled:bg-slate-700 disabled:cursor-not-allowed"
+              >
+                {uploadProgress !== null
+                  ? <><Loader2 size={14} className="animate-spin" /> Uploading...</>
+                  : 'Save recording'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

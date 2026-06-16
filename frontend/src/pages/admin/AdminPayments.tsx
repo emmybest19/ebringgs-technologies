@@ -9,10 +9,18 @@ const statusConfig = {
   refunded: { label: 'Refunded', icon: TrendingUp, color: 'text-gray-600 bg-gray-100' },
 };
 
+function formatNGN(kobo: number) {
+  return new Intl.NumberFormat('en-NG', {
+    style: 'currency', currency: 'NGN', maximumFractionDigits: 0,
+  }).format(kobo / 100);
+}
+
 export default function AdminPayments() {
   const { data: transactions = [], isLoading: loading } = useAllTransactions();
 
-  const totalRevenue = transactions.filter(t => t.status === 'succeeded').reduce((s, t) => s + t.amount, 0) / 100;
+  const totalRevenueKobo = transactions
+    .filter((t) => t.status === 'succeeded')
+    .reduce((s, t) => s + t.amount, 0);
 
   return (
     <div>
@@ -24,7 +32,7 @@ export default function AdminPayments() {
       {/* Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
-          { label: 'Total revenue', value: `$${totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-emerald-600 bg-emerald-50' },
+          { label: 'Total revenue', value: formatNGN(totalRevenueKobo), icon: DollarSign, color: 'text-emerald-600 bg-emerald-50' },
           { label: 'Transactions', value: transactions.length, icon: CreditCard, color: 'text-teal-600 bg-teal-50' },
           { label: 'Succeeded', value: transactions.filter(t => t.status === 'succeeded').length, icon: CheckCircle2, color: 'text-green-600 bg-green-50' },
         ].map(({ label, value, icon: Icon, color }) => (

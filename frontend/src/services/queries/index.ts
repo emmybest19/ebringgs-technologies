@@ -6,6 +6,8 @@ export * from './cohorts.queries';
 export * from './projects.queries';
 export * from './blogs.queries';
 export * from './services.queries';
+export * from './tutoring.queries';
+export * from './recordings.queries';
 export * from './caseStudies.queries';
 export * from './users.queries';
 export * from './payments.queries';
