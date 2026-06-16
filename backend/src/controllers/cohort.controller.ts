@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthRequest } from '../types';
 import Cohort, { deriveCohortStatus, ICohort } from '../models/Cohort.model';
+import Transaction from '../models/Transaction.model';
 import { AppError } from '../middleware/error.middleware';
+
+/** Default cohort duration when admin hasn't created a Cohort doc yet. */
+const COHORT_DURATION_MONTHS = 2;
 
 const ADMIN_EDITABLE_FIELDS = [
   'program', 'title', 'planId', 'startDate', 'endDate', 'durationLabel',
@@ -80,6 +84,94 @@ export const getNext = async (_req: Request, res: Response, next: NextFunction) 
     res.json({
       status: 'success',
       data: { cohort: cohort ? decorate(cohort) : null },
+    });
+  } catch (err) { next(err); }
+};
+
+/**
+ * GET /api/cohorts/my-next — student-only. Returns the next cohort the
+ * caller is scheduled into, plus a live countdown source date.
+ *
+ * Eligibility: the caller must have at least one succeeded plan-type
+ * Transaction whose metadata.planId contains "cohort" (matches all
+ * -cohort plan IDs from frontend/src/pages/Checkout.tsx, plus the
+ * legacy single "cohort" ID).
+ *
+ * Resolution:
+ *   1. If an admin-created Cohort with the buyer's planId and a future
+ *      startDate exists, that's the source of truth.
+ *   2. Otherwise we synthesise: startDate = purchase date + 2 months
+ *      (or now + 2 months, whichever is later — so refreshing the page
+ *      a year after purchase doesn't show a negative timer).
+ *
+ * Returns `{ cohort: null, eligible: false }` when the user hasn't
+ * bought a cohort plan — the frontend uses this to hide the block.
+ */
+export const getMyNext = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const purchase = await Transaction.findOne({
+      user: req.user!.userId,
+      status: 'succeeded',
+      'metadata.purchaseType': 'plan',
+      'metadata.planId': /cohort/i,
+    }).sort({ createdAt: 1 }); // earliest cohort purchase wins
+
+    if (!purchase) {
+      return res.json({ status: 'success', data: { cohort: null, eligible: false } });
+    }
+
+    // metadata is a Mongoose Map — read via .get when present, fall back to plain access.
+    const planIdRaw =
+      (purchase.metadata && typeof (purchase.metadata as unknown as Map<string, string>).get === 'function'
+        ? (purchase.metadata as unknown as Map<string, string>).get('planId')
+        : (purchase.metadata as unknown as Record<string, string>)?.planId) || '';
+    const planId = String(planIdRaw);
+
+    // 1) Real admin-created cohort takes precedence.
+    if (planId) {
+      const real = await Cohort.findOne({
+        planId,
+        startDate: { $gte: new Date() },
+      }).sort({ startDate: 1, order: 1 });
+
+      if (real) {
+        return res.json({
+          status: 'success',
+          data: {
+            cohort: decorate(real),
+            eligible: true,
+            isPlaceholder: false,
+            planId,
+            purchaseDate: purchase.createdAt,
+          },
+        });
+      }
+    }
+
+    // 2) Synthesise: 2 months from the later of (purchase date, now).
+    const now = new Date();
+    const baseline = purchase.createdAt > now ? purchase.createdAt : now;
+    const start = new Date(baseline);
+    start.setMonth(start.getMonth() + COHORT_DURATION_MONTHS);
+    const end = new Date(start);
+    end.setMonth(end.getMonth() + COHORT_DURATION_MONTHS);
+
+    return res.json({
+      status: 'success',
+      data: {
+        cohort: {
+          planId,
+          title: purchase.description || 'Your cohort',
+          startDate: start,
+          endDate: end,
+          durationLabel: `${COHORT_DURATION_MONTHS} months`,
+          status: 'open',
+        },
+        eligible: true,
+        isPlaceholder: true,
+        planId,
+        purchaseDate: purchase.createdAt,
+      },
     });
   } catch (err) { next(err); }
 };

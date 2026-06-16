@@ -59,6 +59,8 @@ import StudentLeaderboard from "./pages/student/Leaderboard";
 import StudentReviews from "./pages/student/Reviews";
 import StudentInstructors from "./pages/student/Instructors";
 import StudentInstructorDetail from "./pages/student/InstructorDetail";
+import StudentServices from "./pages/student/Services";
+import StudentServiceDetail from "./pages/student/ServiceDetail";
 
 // Classroom
 import Classroom from "./pages/classroom/Classroom";
@@ -232,6 +234,8 @@ function App() {
           <Route path="recordings" element={<StudentRecordings />} />
           <Route path="instructors" element={<StudentInstructors />} />
           <Route path="instructors/:id" element={<StudentInstructorDetail />} />
+          <Route path="services" element={<StudentServices />} />
+          <Route path="services/:id" element={<StudentServiceDetail />} />
           <Route path="leaderboard" element={<StudentLeaderboard />} />
           <Route path="reviews" element={<StudentReviews />} />
           <Route path="profile" element={<Profile />} />

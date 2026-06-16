@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { protect, authorize } from '../middleware/auth.middleware';
 import {
-  listPublic, getPublic, getNext, listAll, create, update, remove,
+  listPublic, getPublic, getNext, getMyNext, listAll, create, update, remove,
 } from '../controllers/cohort.controller';
 
 const router = Router();
@@ -44,6 +44,20 @@ router.get('/', listPublic);
  *       200: { description: Cohort or null }
  */
 router.get('/next', getNext);
+
+/**
+ * @swagger
+ * /cohorts/my-next:
+ *   get:
+ *     summary: Get the caller's next cohort + countdown source date
+ *     description: Returns `{ cohort, eligible, isPlaceholder }`. Eligible only for users who bought a cohort plan. Falls back to `today + 2 months` when no admin-created Cohort exists yet.
+ *     tags: [Cohorts]
+ *     security: [ { bearerAuth: [] } ]
+ *     responses:
+ *       200: { description: Cohort or null }
+ *       401: { description: Unauthenticated }
+ */
+router.get('/my-next', protect, getMyNext);
 
 /**
  * @swagger

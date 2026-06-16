@@ -326,6 +326,7 @@ export const initializeTransaction = async (req: AuthRequest, res: Response, nex
         description,
         projectId: projectId || '',
         serviceId: serviceId || '',
+        planId: purchaseType === 'plan' && planId ? String(planId) : '',
         purchaseType,
         basePriceKobo,
         pointsRedeemed,
@@ -357,7 +358,13 @@ export const initializeTransaction = async (req: AuthRequest, res: Response, nex
       status: 'pending',
       type: isInstallmentFlow ? 'installment' : 'one_time',
       description: isInstallmentFlow ? `${description} (1 of ${installmentCount})` : description,
-      metadata: { projectId: projectId || '', serviceId: serviceId || '', purchaseType, provider: 'paystack' },
+      metadata: {
+        projectId: projectId || '',
+        serviceId: serviceId || '',
+        planId: purchaseType === 'plan' && planId ? String(planId) : '',
+        purchaseType,
+        provider: 'paystack',
+      },
       paymentPlanId: paymentPlan?._id,
       installmentNumber: isInstallmentFlow ? 1 : undefined,
     });

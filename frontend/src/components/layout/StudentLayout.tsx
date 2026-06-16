@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, CalendarDays, ClipboardList, Video, Trophy, Star,
-  LogOut, User as UserIcon, Users,
+  LogOut, User as UserIcon, Users, ShoppingBag,
   Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
@@ -15,6 +15,7 @@ const navItems = [
   { to: '/dashboard/schedule', label: 'Schedule', icon: CalendarDays },
   { to: '/dashboard/assignments', label: 'Assignments', icon: ClipboardList },
   { to: '/dashboard/recordings', label: 'Recordings', icon: Video },
+  { to: '/dashboard/services', label: 'Services', icon: ShoppingBag },
   { to: '/dashboard/instructors', label: 'Instructors', icon: Users },
   { to: '/dashboard/leaderboard', label: 'Leaderboard', icon: Trophy },
   { to: '/dashboard/reviews', label: 'My Reviews', icon: Star },
