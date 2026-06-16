@@ -27,6 +27,10 @@ export interface IUser extends Document {
   referralCode: string;
   referredBy?: mongoose.Types.ObjectId;
   referralRewarded: boolean;
+  // Client-specific referral reward — pays out as naira credit applied at checkout.
+  // Separate from the (student-facing) points system; never overlaps with it.
+  referralCreditNaira: number;
+  clientReferralCredited: boolean;
   // OAuth
   authProvider: AuthProvider;
   googleId?: string;
@@ -82,6 +86,8 @@ const userSchema = new Schema<IUser>(
     referralCode: { type: String, unique: true, sparse: true, index: true },
     referredBy: { type: Schema.Types.ObjectId, ref: 'User' },
     referralRewarded: { type: Boolean, default: false },
+    referralCreditNaira: { type: Number, default: 0, min: 0 },
+    clientReferralCredited: { type: Boolean, default: false },
     authProvider: {
       type: String,
       enum: ['local', 'google', 'apple'],

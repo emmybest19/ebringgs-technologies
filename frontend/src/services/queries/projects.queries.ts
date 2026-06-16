@@ -66,12 +66,17 @@ export interface ProjectUpdate {
   url?: string;
   progressChange?: number;
   createdAt: string;
-  author: { name: string; avatar?: string; role?: string };
+  // Optional — system-posted entries (e.g. GitHub commit poller) have no human author.
+  author?: { name: string; avatar?: string; role?: string } | null;
+  // Per-type extras. Currently used by `commit` entries → `{ sha, avatarUrl }`.
+  meta?: { avatarUrl?: string; sha?: string } & Record<string, unknown>;
 }
 
 export interface ProjectUpdatesPayload {
   updates: ProjectUpdate[];
   lastUpdatedAt: string | null;
+  /** Name of the user who last touched the project (admin/team/client). */
+  lastUpdatedByName?: string | null;
 }
 
 export interface CreateProjectInput {

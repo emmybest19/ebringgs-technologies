@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FolderKanban, CreditCard, Clock, CheckCircle2, Loader2, Calendar, ArrowRight } from 'lucide-react';
+import { FolderKanban, CreditCard, Clock, CheckCircle2, Loader2, Calendar, ArrowRight, Gift, Copy, Check, Wallet } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useAuthStore } from '../../store/auth.store';
 import { useMyProjects, useMyTransactions, useMyPaymentPlans } from '../../services/queries';
 import NextPaymentBanner, { pickMostUrgentPlan } from '../../components/payments/NextPaymentBanner';
@@ -45,6 +47,8 @@ export default function ClientOverview() {
       <p className="text-gray-500 dark:text-slate-400 text-sm mb-6">
         Here's an overview of your projects and payments.
       </p>
+
+      <ReferralCard />
 
       {calendlyConfigured && (
         <Link
@@ -212,4 +216,68 @@ function UrgentPlanBanner() {
   const urgent = pickMostUrgentPlan(plans);
   if (!urgent) return null;
   return <NextPaymentBanner plan={urgent} />;
+}
+
+/**
+ * Referral card — shows the client their shareable code, available naira
+ * credit, and a one-click copy of the signup link with their code prefilled.
+ * Renders nothing if the user hasn't loaded yet or has no referral code.
+ */
+function ReferralCard() {
+  const { user } = useAuthStore();
+  const [copied, setCopied] = useState(false);
+
+  if (!user?.referralCode) return null;
+
+  const credit = user.referralCreditNaira ?? 0;
+  const shareUrl = `${window.location.origin}/register?ref=${user.referralCode}`;
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      toast.success('Referral link copied');
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error('Could not copy. Long-press the code to copy manually.');
+    }
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-linear-to-br from-emerald-50 via-white to-teal-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-teal-950/40 p-5 mb-6">
+      <div className="pointer-events-none absolute -top-12 -right-12 w-40 h-40 bg-emerald-400/10 rounded-full blur-3xl" />
+      <div className="relative flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+          <Gift size={22} />
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-baseline gap-2 mb-1">
+            <p className="text-sm font-bold text-gray-900 dark:text-white">Refer a client, earn ₦20,000 credit</p>
+            {credit > 0 && (
+              <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-0.5 rounded-full">
+                <Wallet size={12} /> ₦{credit.toLocaleString()} available
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-gray-500 dark:text-slate-400">
+            Share your code. When their first project payment clears, your credit applies automatically at your next checkout.
+          </p>
+        </div>
+
+        <div className="flex items-stretch gap-2 shrink-0">
+          <div className="px-3 py-2 rounded-lg bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-700 font-mono text-sm font-bold text-gray-900 dark:text-white tracking-wider flex items-center">
+            {user.referralCode}
+          </div>
+          <button
+            type="button"
+            onClick={copy}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition-colors"
+          >
+            {copied ? <><Check size={14} /> Copied</> : <><Copy size={14} /> Share link</>}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }

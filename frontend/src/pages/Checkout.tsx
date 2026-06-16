@@ -141,6 +141,10 @@ export default function Checkout() {
   const [usePoints, setUsePoints] = useState(false);
   const [pointsToRedeem, setPointsToRedeem] = useState(0);
 
+  // Client referral credit (naira). Separate from points; clients only.
+  const availableCreditNaira = (user?.role === 'client' && user.referralCreditNaira) ? user.referralCreditNaira : 0;
+  const [useCredit, setUseCredit] = useState(availableCreditNaira > 0);
+
   // Voucher redemption
   const [voucherInput, setVoucherInput] = useState('');
   const [voucherChecking, setVoucherChecking] = useState(false);
@@ -190,7 +194,12 @@ export default function Checkout() {
   const effectivePoints = usePoints ? Math.min(pointsToRedeem, availablePoints) : 0;
   const pointsDiscountKobo = effectivePoints * POINT_TO_NAIRA * 100;
   const voucherDiscountKobo = appliedVoucher ? Math.min(appliedVoucher.nairaValue * 100, priceKobo - pointsDiscountKobo) : 0;
-  const totalDiscountKobo = pointsDiscountKobo + voucherDiscountKobo;
+  // Credit applies after points + voucher, capped at the remaining bill.
+  const creditDiscountKobo = useCredit
+    ? Math.max(0, Math.min(availableCreditNaira * 100, priceKobo - pointsDiscountKobo - voucherDiscountKobo))
+    : 0;
+  const effectiveCreditNaira = Math.floor(creditDiscountKobo / 100);
+  const totalDiscountKobo = pointsDiscountKobo + voucherDiscountKobo + creditDiscountKobo;
   const finalKobo = Math.max(priceKobo - totalDiscountKobo, 0);
 
   // Installment eligibility, services use the server-decorated flag; training
@@ -249,6 +258,7 @@ export default function Checkout() {
       callbackUrl: `${window.location.origin}/payment/success`,
       ...(effectivePoints > 0 ? { pointsToRedeem: effectivePoints } : {}),
       ...(appliedVoucher ? { voucherCode: appliedVoucher.code } : {}),
+      ...(effectiveCreditNaira > 0 ? { referralCreditToUseNaira: effectiveCreditNaira } : {}),
       ...(installmentChoice > 1
         ? { installments: installmentChoice, autoChargeConsent }
         : {}),
@@ -349,27 +359,29 @@ export default function Checkout() {
           />
 
           {/* Gift voucher */}
-          <div className="bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 rounded-xl p-5 mb-4 border border-purple-100 dark:border-purple-900">
-            <div className="flex items-center gap-1.5 mb-3">
-              <Ticket size={14} className="text-purple-600 dark:text-purple-400" />
+          <div className="bg-white dark:bg-slate-900 rounded-xl p-5 mb-4 border border-gray-200 dark:border-slate-800">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-7 h-7 rounded-md bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
+                <Ticket size={13} className="text-teal-700 dark:text-teal-400" />
+              </div>
               <span className="text-sm font-semibold text-gray-900 dark:text-white">Have a gift voucher?</span>
             </div>
             {appliedVoucher ? (
-              <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900 rounded-lg border border-purple-200 dark:border-purple-800">
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-slate-800">
                 <div className="flex-1 min-w-0">
-                  <code className="text-sm font-mono font-bold text-purple-700 dark:text-purple-300 block truncate">
+                  <code className="text-sm font-mono font-semibold text-gray-900 dark:text-white block truncate">
                     {appliedVoucher.code}
                   </code>
-                  <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                  <p className="text-xs text-teal-700 dark:text-teal-400 font-medium mt-0.5">
                     ₦{appliedVoucher.nairaValue.toLocaleString()} discount applied
                   </p>
                   {appliedVoucher.note && (
-                    <p className="text-[10px] italic text-gray-400 dark:text-slate-500">"{appliedVoucher.note}"</p>
+                    <p className="text-[10px] italic text-gray-400 dark:text-slate-500 mt-1">"{appliedVoucher.note}"</p>
                   )}
                 </div>
                 <button
                   onClick={removeVoucher}
-                  className="p-1.5 hover:bg-purple-100 dark:hover:bg-purple-900 rounded text-gray-400 hover:text-red-600"
+                  className="p-1.5 hover:bg-gray-100 dark:hover:bg-slate-800 rounded text-gray-400 hover:text-gray-700 dark:hover:text-slate-200"
                   title="Remove voucher"
                 >
                   <X size={14} />
@@ -383,12 +395,12 @@ export default function Checkout() {
                     value={voucherInput}
                     onChange={(e) => { setVoucherInput(e.target.value.toUpperCase()); setVoucherError(''); }}
                     placeholder="GIFT-XXXX-XXXX"
-                    className="flex-1 px-3 py-2 rounded-lg border border-purple-200 dark:border-purple-800 bg-white dark:bg-slate-900 text-gray-900 dark:text-white text-sm font-mono uppercase placeholder-gray-400"
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-gray-900 dark:text-white text-sm font-mono uppercase placeholder-gray-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/15 outline-none"
                   />
                   <button
                     onClick={applyVoucher}
                     disabled={voucherChecking || !voucherInput.trim()}
-                    className="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 disabled:opacity-60"
+                    className="px-4 py-2 bg-teal-700 text-white text-sm font-semibold rounded-lg hover:bg-teal-800 disabled:opacity-60"
                   >
                     {voucherChecking ? <Loader2 size={14} className="animate-spin" /> : 'Apply'}
                   </button>
@@ -398,25 +410,60 @@ export default function Checkout() {
             )}
           </div>
 
+          {availableCreditNaira > 0 && (
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-5 mb-4 border border-gray-200 dark:border-slate-800">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={useCredit}
+                  onChange={(e) => setUseCredit(e.target.checked)}
+                  className="mt-1 w-4 h-4 accent-teal-700"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
+                      <Gift size={13} className="text-teal-700 dark:text-teal-400" />
+                    </div>
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                      Apply referral credit
+                    </span>
+                    <span className="ml-auto text-xs font-semibold text-gray-700 dark:text-slate-300 tabular-nums">
+                      ₦{availableCreditNaira.toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1.5 ml-9">
+                    {effectiveCreditNaira > 0
+                      ? <>Applies <span className="font-semibold text-teal-700 dark:text-teal-400">₦{effectiveCreditNaira.toLocaleString()}</span> to this purchase. The rest stays on your account.</>
+                      : 'Earned by referring friends who become clients.'}
+                  </p>
+                </div>
+              </label>
+            </div>
+          )}
+
           {availablePoints > 0 && (
-            <div className="bg-linear-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 rounded-xl p-5 mb-6 border border-emerald-100 dark:border-emerald-900">
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-5 mb-6 border border-gray-200 dark:border-slate-800">
               <label className="flex items-start gap-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={usePoints}
                   onChange={(e) => setUsePoints(e.target.checked)}
-                  className="mt-1 w-4 h-4 accent-emerald-600"
+                  className="mt-1 w-4 h-4 accent-teal-700"
                 />
                 <div className="flex-1">
-                  <div className="flex items-center gap-1.5">
-                    <Gift size={14} className="text-emerald-600 dark:text-emerald-400" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
+                      <Gift size={13} className="text-teal-700 dark:text-teal-400" />
+                    </div>
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                      Apply your reward points
+                      Apply reward points
+                    </span>
+                    <span className="ml-auto text-xs font-semibold text-gray-700 dark:text-slate-300 tabular-nums">
+                      {availablePoints} pts
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
-                    You have <span className="font-bold text-emerald-600 dark:text-emerald-400">{availablePoints} points</span>
-                    {' '}(worth ₦{(availablePoints * POINT_TO_NAIRA).toLocaleString()})
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1.5 ml-9">
+                    Worth <span className="font-semibold text-teal-700 dark:text-teal-400">₦{(availablePoints * POINT_TO_NAIRA).toLocaleString()}</span> off any purchase.
                   </p>
                 </div>
               </label>
@@ -428,11 +475,11 @@ export default function Checkout() {
                     max={Math.min(availablePoints, Math.floor(priceKobo / 100 / POINT_TO_NAIRA))}
                     value={pointsToRedeem}
                     onChange={(e) => setPointsToRedeem(Number(e.target.value))}
-                    className="w-full accent-emerald-600"
+                    className="w-full accent-teal-700"
                   />
                   <div className="flex justify-between text-xs text-gray-500 dark:text-slate-400 mt-1">
                     <span>0 pts</span>
-                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span className="font-semibold text-teal-700 dark:text-teal-400 tabular-nums">
                       {pointsToRedeem} pts = ₦{(pointsToRedeem * POINT_TO_NAIRA).toLocaleString()} off
                     </span>
                     <span>{Math.min(availablePoints, Math.floor(priceKobo / 100 / POINT_TO_NAIRA))} pts</span>
@@ -450,15 +497,21 @@ export default function Checkout() {
                   <span>{formatNGN(priceKobo)}</span>
                 </div>
                 {effectivePoints > 0 && (
-                  <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-medium">
+                  <div className="flex justify-between text-gray-700 dark:text-slate-300">
                     <span>Points discount</span>
-                    <span>-{formatNGN(pointsDiscountKobo)}</span>
+                    <span className="font-medium tabular-nums">-{formatNGN(pointsDiscountKobo)}</span>
                   </div>
                 )}
                 {voucherDiscountKobo > 0 && (
-                  <div className="flex justify-between text-purple-600 dark:text-purple-400 font-medium">
+                  <div className="flex justify-between text-gray-700 dark:text-slate-300">
                     <span>Voucher discount</span>
-                    <span>-{formatNGN(voucherDiscountKobo)}</span>
+                    <span className="font-medium tabular-nums">-{formatNGN(voucherDiscountKobo)}</span>
+                  </div>
+                )}
+                {creditDiscountKobo > 0 && (
+                  <div className="flex justify-between text-gray-700 dark:text-slate-300">
+                    <span>Referral credit</span>
+                    <span className="font-medium tabular-nums">-{formatNGN(creditDiscountKobo)}</span>
                   </div>
                 )}
               </div>

@@ -1,4 +1,5 @@
 import { startInstallmentsCron, stopInstallmentsCron } from './installments.cron';
+import { startGithubCron, stopGithubCron } from './github.cron';
 
 /**
  * Single entry point for all background jobs. Called once from `index.ts`
@@ -9,9 +10,11 @@ import { startInstallmentsCron, stopInstallmentsCron } from './installments.cron
  */
 export function startJobs(): void {
   startInstallmentsCron();
+  startGithubCron();
 }
 
 /** Graceful-shutdown helper. Stops every registered cron. */
 export function stopJobs(): void {
   stopInstallmentsCron();
+  stopGithubCron();
 }

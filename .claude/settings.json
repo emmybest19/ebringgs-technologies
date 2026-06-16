@@ -68,7 +68,17 @@
       "Bash(curl -v -X OPTIONS http://localhost:5000/api/auth/register -H \"Origin: http://localhost:5174\" -H \"Access-Control-Request-Method: POST\" -H \"Access-Control-Request-Headers: content-type\" -m 5)",
       "Bash(curl -s -X OPTIONS http://localhost:5000/api/auth/register -H \"Origin: http://localhost:5174\" -H \"Access-Control-Request-Method: POST\" -H \"Access-Control-Request-Headers: content-type\" -m 5 -D - -o /dev/null)",
       "Bash(npm install *)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(curl -s http://localhost:5000/api/services/15)",
+      "Bash(curl -s http://localhost:5000/api/services/17)",
+      "Bash(curl -s -o /dev/null -w \"5173: %{http_code}\\\\n\" http://localhost:5173/ -m 3)",
+      "Bash(curl -s -o /dev/null -w \"5174: %{http_code}\\\\n\" http://localhost:5174/ -m 3)",
+      "Bash(curl -s -o /dev/null -w \"5175: %{http_code}\\\\n\" http://localhost:5175/ -m 3)",
+      "Bash(curl -s \"http://localhost:5174/src/pages/Checkout.tsx\" -m 5)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:5174/src/pages/Checkout.tsx\" -m 5)",
+      "Bash(curl -s http://localhost:5173/ -m 3)",
+      "Bash(curl -s http://localhost:5174/ -m 3)",
+      "Bash(curl -s -w \"\\\\nHTTP %{http_code}\\\\n\" http://localhost:5000/api/public/stats)"
     ]
   }
 }

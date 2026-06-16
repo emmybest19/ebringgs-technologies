@@ -1,4 +1,5 @@
 import { Response, NextFunction } from 'express';
+import mongoose from 'mongoose';
 import { AuthRequest } from '../types';
 import Project from '../models/Project.model';
 import ProjectUpdate from '../models/ProjectUpdate.model';
@@ -76,9 +77,68 @@ export const updateProject = async (req: AuthRequest, res: Response, next: NextF
     if (updates.status === 'completed' && !updates.completedAt) {
       updates.completedAt = new Date();
     }
+
+    // Load the pre-update snapshot so we can diff and auto-log meaningful
+    // changes as activity entries the client will see in their timeline.
+    const before = await Project.findById(req.params.id);
+    if (!before) return next(new AppError('Project not found.', 404));
+
+    updates.lastUpdatedBy = new mongoose.Types.ObjectId(req.user!.userId);
+
     const project = await Project.findByIdAndUpdate(req.params.id, updates, { new: true })
       .populate('client', 'name email avatar');
     if (!project) return next(new AppError('Project not found.', 404));
+
+    // Auto-post a ProjectUpdate for each meaningful change. Failures are
+    // non-fatal — the project itself was already updated successfully.
+    type ActivityEntry = {
+      type: 'progress' | 'commit' | 'deploy' | 'note' | 'milestone' | 'attachment';
+      title: string;
+      message?: string;
+      url?: string;
+      progressChange?: number;
+    };
+    const activityEntries: ActivityEntry[] = [];
+
+    if (updates.status && updates.status !== before.status) {
+      activityEntries.push({
+        type: 'milestone',
+        title: `Status changed to ${String(updates.status).replace(/_/g, ' ')}`,
+      });
+    }
+    if (typeof updates.progress === 'number' && updates.progress !== before.progress) {
+      activityEntries.push({
+        type: 'progress',
+        title: `Progress updated to ${updates.progress}%`,
+        progressChange: updates.progress,
+      });
+    }
+    if (typeof updates.githubRepo === 'string' && updates.githubRepo && updates.githubRepo !== before.githubRepo) {
+      activityEntries.push({
+        type: 'note',
+        title: 'Linked GitHub repository',
+        url: updates.githubRepo,
+      });
+    }
+    if (typeof updates.liveUrl === 'string' && updates.liveUrl && updates.liveUrl !== before.liveUrl) {
+      activityEntries.push({
+        type: 'deploy',
+        title: 'Live site published',
+        url: updates.liveUrl,
+      });
+    }
+
+    if (activityEntries.length > 0) {
+      await Promise.all(
+        activityEntries.map((entry) =>
+          ProjectUpdate.create({
+            project: project._id,
+            author: req.user!.userId,
+            ...entry,
+          }).catch((err) => console.error('[project] auto-activity insert failed:', err)),
+        ),
+      );
+    }
 
     // Notify the client about project status update
     if (updates.status) {
@@ -109,7 +169,8 @@ export const deleteProject = async (req: AuthRequest, res: Response, next: NextF
 // GET /api/projects/:id/updates — auth (client owner OR admin)
 export const getProjectUpdates = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id)
+      .populate<{ lastUpdatedBy: { name: string; avatar?: string } | null }>('lastUpdatedBy', 'name avatar');
     if (!project) return next(new AppError('Project not found.', 404));
 
     const isOwner = project.client.toString() === req.user!.userId;
@@ -121,7 +182,14 @@ export const getProjectUpdates = async (req: AuthRequest, res: Response, next: N
       .sort({ createdAt: -1 })
       .lean();
 
-    res.json({ status: 'success', data: { updates, lastUpdatedAt: project.updatedAt } });
+    res.json({
+      status: 'success',
+      data: {
+        updates,
+        lastUpdatedAt: project.updatedAt,
+        lastUpdatedByName: project.lastUpdatedBy?.name ?? null,
+      },
+    });
   } catch (err) { next(err); }
 };
 
@@ -150,7 +218,8 @@ export const addProjectUpdate = async (req: AuthRequest, res: Response, next: Ne
     if (typeof progressChange === 'number' && progressChange >= 0 && progressChange <= 100) {
       project.progress = progressChange;
     }
-    // Touch updatedAt either way
+    // Touch updatedAt either way + record who acted
+    project.lastUpdatedBy = new mongoose.Types.ObjectId(req.user!.userId);
     project.markModified('updatedAt');
     await project.save();
 
@@ -214,6 +283,7 @@ export const submitBrief = async (req: AuthRequest, res: Response, next: NextFun
     project.briefSubmittedAt = new Date();
     project.status = 'in_progress';
     project.startDate = project.startDate || new Date();
+    project.lastUpdatedBy = new mongoose.Types.ObjectId(req.user!.userId);
     await project.save();
 
     // Add an activity timeline entry

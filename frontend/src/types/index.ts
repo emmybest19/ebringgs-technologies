@@ -10,6 +10,7 @@ export interface User {
   bio?: string;
   points?: number;
   referralCode?: string;
+  referralCreditNaira?: number;
 }
 
 export interface AuthState {

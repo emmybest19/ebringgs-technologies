@@ -83,6 +83,7 @@ export const register = async (req: Request, res: Response, next: NextFunction):
           id: user.id, name: user.name, email: user.email, role: user.role,
           isEmailVerified: user.isEmailVerified,
           points: user.points, referralCode: user.referralCode,
+          referralCreditNaira: user.referralCreditNaira,
         },
         accessToken,
         refreshToken,
@@ -152,6 +153,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
           id: user.id, name: user.name, email: user.email, role: user.role,
           isEmailVerified: user.isEmailVerified,
           points: user.points, referralCode: user.referralCode,
+          referralCreditNaira: user.referralCreditNaira,
         },
         accessToken,
         refreshToken,
@@ -190,6 +192,7 @@ export const getMe = async (req: AuthRequest, res: Response, next: NextFunction)
           id: user.id, name: user.name, email: user.email, role: user.role,
           avatar: user.avatar, bio: user.bio, isEmailVerified: user.isEmailVerified,
           points: user.points, referralCode: user.referralCode,
+          referralCreditNaira: user.referralCreditNaira,
         },
       },
     });

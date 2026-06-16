@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, ArrowRight, BookOpen, Loader2, XCircle, ClipboardList } from 'lucide-react';
 import { useAuthStore } from '../store/auth.store';
@@ -7,11 +8,19 @@ import PaymentScheduleCard from '../components/payments/PaymentScheduleCard';
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const reference = searchParams.get('reference') || searchParams.get('trxref');
-  const { user } = useAuthStore();
+  const { user, fetchMe } = useAuthStore();
 
   // staleTime: Infinity inside the hook, a given reference is verified once
   // per cache lifetime even if the user re-mounts this page.
   const { data, isLoading: verifying, isError } = useVerifyPayment(reference);
+
+  // Refresh the auth user so the spent referral credit (and any other
+  // server-side balance changes) reflect immediately in the dashboard.
+  useEffect(() => {
+    if (data?.paymentStatus === 'succeeded') {
+      fetchMe().catch(() => {});
+    }
+  }, [data?.paymentStatus, fetchMe]);
 
   const verified = !!reference && data?.paymentStatus === 'succeeded';
   const failed = !!reference && (isError || (!!data && data.paymentStatus !== 'succeeded'));

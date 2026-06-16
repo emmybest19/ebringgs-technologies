@@ -145,6 +145,7 @@ export const initializeTransaction = async (req: AuthRequest, res: Response, nex
       callbackUrl,
       pointsToRedeem,
       voucherCode,
+      referralCreditToUseNaira, // client-only: spend referral credit as discount
       installments,            // 1 | 2 | 3 — defaults to 1 (no plan created)
       autoChargeConsent,       // required true when installments > 1
     } = req.body;
@@ -205,6 +206,7 @@ export const initializeTransaction = async (req: AuthRequest, res: Response, nex
     let finalAmount = basePriceKobo;
     let pointsRedeemed = 0;
     let appliedVoucherCode: string | undefined;
+    let referralCreditAppliedNaira = 0;
 
     /* ── Apply points discount (own balance) ────────────────────────────── */
     if (pointsToRedeem && Number(pointsToRedeem) > 0) {
@@ -243,6 +245,30 @@ export const initializeTransaction = async (req: AuthRequest, res: Response, nex
       finalAmount -= voucherCappedKobo;
       appliedVoucherCode = code;
       // Voucher is fully claimed only on successful payment (verify endpoint / webhook)
+    }
+
+    /* ── Apply client referral credit (own balance, naira) ──────────────── */
+    if (referralCreditToUseNaira && Number(referralCreditToUseNaira) > 0) {
+      const creditUser = await User.findById(req.user!.userId).select('referralCreditNaira role');
+      if (creditUser && creditUser.role === 'client' && (creditUser.referralCreditNaira ?? 0) > 0) {
+        const requested = Math.floor(Number(referralCreditToUseNaira));
+        const available = creditUser.referralCreditNaira;
+        // Cap at: requested, available, and the remaining bill (in naira).
+        const remainingBillNaira = Math.floor(finalAmount / 100);
+        const useNaira = Math.max(0, Math.min(requested, available, remainingBillNaira));
+        if (useNaira > 0) {
+          // Atomic decrement so two parallel checkouts can't double-spend.
+          const updated = await User.findOneAndUpdate(
+            { _id: req.user!.userId, referralCreditNaira: { $gte: useNaira } },
+            { $inc: { referralCreditNaira: -useNaira } },
+            { new: true, projection: { referralCreditNaira: 1 } },
+          );
+          if (updated) {
+            referralCreditAppliedNaira = useNaira;
+            finalAmount -= useNaira * 100;
+          }
+        }
+      }
     }
 
     if (finalAmount < 100) {
@@ -304,6 +330,7 @@ export const initializeTransaction = async (req: AuthRequest, res: Response, nex
         basePriceKobo,
         pointsRedeemed,
         voucherCode: appliedVoucherCode,
+        referralCreditAppliedNaira,
         // Installment metadata — verify + webhook use these to mark the right
         // installment paid + capture the card authorization onto the plan.
         paymentPlanId: paymentPlan?._id?.toString(),
@@ -372,6 +399,7 @@ export const verifyTransaction = async (req: AuthRequest, res: Response, next: N
         pointsRedeemed?: number;
         voucherCode?: string;
         basePriceKobo?: number;
+        referralCreditAppliedNaira?: number;
         paymentPlanId?: string;
         installmentNumber?: number;
       };
@@ -427,6 +455,9 @@ export const verifyTransaction = async (req: AuthRequest, res: Response, next: N
       await rewardReferrerOnFirstPayment(txPaystack.metadata.userId, reference).catch((err) =>
         console.error('[points] referral reward failed:', err),
       );
+      await creditReferrerOnClientFirstPayment(txPaystack.metadata.userId, reference).catch((err) =>
+        console.error('[referral] client credit award failed:', err),
+      );
     }
 
     // On failure: refund redeemed points and unclaim voucher
@@ -443,6 +474,12 @@ export const verifyTransaction = async (req: AuthRequest, res: Response, next: N
       }
       if (txPaystack.metadata?.voucherCode) {
         await refundVoucher(txPaystack.metadata.voucherCode).catch(() => {});
+      }
+      const creditRefund = Number(txPaystack.metadata.referralCreditAppliedNaira || 0);
+      if (creditRefund > 0) {
+        await User.findByIdAndUpdate(txPaystack.metadata.userId, {
+          $inc: { referralCreditNaira: creditRefund },
+        }).catch(() => {});
       }
     }
 
@@ -533,6 +570,23 @@ async function rewardReferrerOnFirstPayment(userId: string, txReference: string)
   console.log(`[points] referral commission awarded for tx ${txReference}`);
 }
 
+// ─── Client referral credit ──────────────────────────────────────────────
+// Pays out as naira credit (applied as a checkout discount) — NOT points.
+// Fires only when the user who paid is a `client`, so the student points
+// flow above stays untouched.
+export const CLIENT_REFERRAL_CREDIT_NAIRA = 20_000;
+
+async function creditReferrerOnClientFirstPayment(userId: string, txReference: string): Promise<void> {
+  const user = await User.findById(userId).select('role referredBy clientReferralCredited');
+  if (!user || user.role !== 'client' || !user.referredBy || user.clientReferralCredited) return;
+
+  await User.findByIdAndUpdate(user.referredBy, {
+    $inc: { referralCreditNaira: CLIENT_REFERRAL_CREDIT_NAIRA },
+  });
+  await User.findByIdAndUpdate(userId, { clientReferralCredited: true });
+  console.log(`[referral] ₦${CLIENT_REFERRAL_CREDIT_NAIRA.toLocaleString()} credit awarded to referrer for client tx ${txReference}`);
+}
+
 // Paystack webhook
 export const paystackWebhook = async (req: Request, res: Response) => {
   const hash = crypto
@@ -560,6 +614,7 @@ export const paystackWebhook = async (req: Request, res: Response) => {
         pointsRedeemed?: number;
         voucherCode?: string;
         basePriceKobo?: number;
+        referralCreditAppliedNaira?: number;
         paymentPlanId?: string;
         installmentNumber?: number;
       };
@@ -599,6 +654,7 @@ export const paystackWebhook = async (req: Request, res: Response) => {
     }
     if (event.data.metadata?.userId) {
       await rewardReferrerOnFirstPayment(event.data.metadata.userId, event.data.reference).catch(() => {});
+      await creditReferrerOnClientFirstPayment(event.data.metadata.userId, event.data.reference).catch(() => {});
     }
   } else if (event.event === 'charge.failed') {
     await Transaction.findOneAndUpdate(
@@ -618,6 +674,12 @@ export const paystackWebhook = async (req: Request, res: Response) => {
       }
       if (event.data.metadata?.voucherCode) {
         await refundVoucher(event.data.metadata.voucherCode).catch(() => {});
+      }
+      const creditRefund = Number(event.data.metadata.referralCreditAppliedNaira || 0);
+      if (creditRefund > 0) {
+        await User.findByIdAndUpdate(event.data.metadata.userId, {
+          $inc: { referralCreditNaira: creditRefund },
+        }).catch(() => {});
       }
     }
   }

@@ -33,6 +33,7 @@ export default function ActivityTimeline({ projectId }: Props) {
   const { data, isLoading: loading, isFetching, refetch } = useProjectUpdates(projectId);
   const updates = data?.updates ?? [];
   const lastUpdatedAt = data?.lastUpdatedAt ?? null;
+  const lastUpdatedByName = data?.lastUpdatedByName ?? null;
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
@@ -42,6 +43,7 @@ export default function ActivityTimeline({ projectId }: Props) {
           {lastUpdatedAt && (
             <p className="text-xs text-gray-400 dark:text-slate-500 mt-0.5">
               Last updated {timeAgo(lastUpdatedAt)}
+              {lastUpdatedByName ? ` by ${lastUpdatedByName}` : ''}
             </p>
           )}
         </div>
@@ -101,9 +103,21 @@ export default function ActivityTimeline({ projectId }: Props) {
                     Progress → {u.progressChange}%
                   </p>
                 )}
-                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
-                  {u.author?.name || 'Team'} · {timeAgo(u.createdAt)}
-                </p>
+                <div className="flex items-center gap-1.5 mt-1">
+                  {/* Commit entries from the GitHub poller carry an avatar URL
+                      in meta — render it so the client sees who committed. */}
+                  {u.type === 'commit' && u.meta?.avatarUrl && (
+                    <img
+                      src={u.meta.avatarUrl}
+                      alt=""
+                      loading="lazy"
+                      className="w-4 h-4 rounded-full object-cover"
+                    />
+                  )}
+                  <p className="text-[11px] text-gray-400 dark:text-slate-500">
+                    {u.author?.name || (u.type === 'commit' ? 'GitHub' : 'Team')} · {timeAgo(u.createdAt)}
+                  </p>
+                </div>
               </li>
             );
           })}

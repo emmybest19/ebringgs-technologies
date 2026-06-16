@@ -31,6 +31,7 @@ export interface IProject extends Document {
   brief?: Record<string, unknown>;
   briefSubmittedAt?: Date;
   source?: 'self_serve' | 'inquiry';
+  lastUpdatedBy?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -74,6 +75,7 @@ const projectSchema = new Schema<IProject>(
     brief: { type: Schema.Types.Mixed },
     briefSubmittedAt: { type: Date },
     source: { type: String, enum: ['self_serve', 'inquiry'], default: 'inquiry' },
+    lastUpdatedBy: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }
 );

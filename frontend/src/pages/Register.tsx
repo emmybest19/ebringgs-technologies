@@ -573,32 +573,32 @@ export default function Register() {
                     })}
                   </div>
 
-                  {/* Referral code (students only, optional) */}
-                  {role === 'student' && (
-                    <div className="mb-6 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900">
-                      <label className="block">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                            Referral code
-                          </span>
-                          <span className="text-[10px] uppercase tracking-wide font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900 px-2 py-0.5 rounded-full">
-                            Optional
-                          </span>
-                        </div>
-                        <input
-                          type="text"
-                          value={referralCode}
-                          onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
-                          placeholder="Enter friend's code (e.g. K7M2X9P3)"
-                          maxLength={8}
-                          className="w-full px-4 py-2.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none text-sm font-mono tracking-wider uppercase"
-                        />
-                        <p className="text-xs text-gray-500 dark:text-slate-400 mt-2">
-                          Got a code from a friend? Enter it here so they earn rewards when you enrol in a program.
-                        </p>
-                      </label>
-                    </div>
-                  )}
+                  {/* Referral code (optional) — students earn points, clients earn naira credit */}
+                  <div className="mb-6 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900">
+                    <label className="block">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                          Referral code
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wide font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900 px-2 py-0.5 rounded-full">
+                          Optional
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        value={referralCode}
+                        onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+                        placeholder="Enter friend's code (e.g. K7M2X9P3)"
+                        maxLength={8}
+                        className="w-full px-4 py-2.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none text-sm font-mono tracking-wider uppercase"
+                      />
+                      <p className="text-xs text-gray-500 dark:text-slate-400 mt-2">
+                        {role === 'student'
+                          ? 'Got a code from a friend? Enter it here so they earn rewards when you enrol in a program.'
+                          : "Got a code from a friend? Enter it here so they earn ₦20,000 credit when your first project payment clears."}
+                      </p>
+                    </label>
+                  </div>
 
                   {/* Terms checkbox */}
                   <label className="flex items-start gap-3 cursor-pointer select-none mb-2">

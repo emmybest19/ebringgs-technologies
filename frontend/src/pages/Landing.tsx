@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Code2,
   CheckCircle2, Star, Zap, Shield, Users, GraduationCap, Globe, Mail, Loader2,
-  ExternalLink, Github, Sparkles,
+  ExternalLink, Github, Sparkles, GitCommit,
 } from 'lucide-react';
 import HeroCarousel from '../components/ui/HeroCarousel';
 import api from '../services/api';
@@ -130,18 +131,42 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
+interface PublicStats {
+  projectsInFlight: number;
+  projectsDelivered: number;
+  commitsThisWeek: number;
+  studentsTrained: number;
+  nairaDelivered: number;
+}
+
 function Stats() {
+  // Live counts from /api/public/stats — backend caches 5 min server-side.
+  // On any failure (offline, 500, slow network) we fall back to the same
+  // hardcoded numbers we used to show — the page never breaks.
+  const { data: live } = useQuery<PublicStats>({
+    queryKey: ['public-stats'],
+    queryFn: async () => {
+      const { data } = await api.get('/public/stats');
+      return data.data as PublicStats;
+    },
+    staleTime: 5 * 60 * 1000, // matches backend cache
+    retry: 0,
+  });
+
+  // Static fallbacks — also used as the visible value while loading so there's
+  // no jarring "0 → real number" flicker.
   const stats = [
-    { value: 500, suffix: '+', label: 'Students trained', icon: GraduationCap },
-    { value: 50, suffix: '+', label: 'Projects delivered', icon: Code2 },
-    { value: 15, suffix: '+', label: 'Expert instructors', icon: Users },
+    { value: live?.studentsTrained ?? 500, suffix: '+', label: 'Students trained', icon: GraduationCap },
+    { value: live?.projectsDelivered ?? 50, suffix: '+', label: 'Projects delivered', icon: Code2 },
+    { value: live?.commitsThisWeek ?? 0, suffix: '', label: 'Commits this week', icon: GitCommit },
+    { value: live?.projectsInFlight ?? 15, suffix: '', label: 'Projects in flight', icon: Users },
     { value: 95, suffix: '%', label: 'Completion rate', icon: Globe },
   ];
 
   return (
     <section className="bg-teal-600 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {stats.map(({ value, suffix, label, icon: Icon }) => (
             <div key={label} className="text-center">
               <Icon size={28} className="mx-auto mb-3 text-teal-200" />
