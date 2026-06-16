@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Bell, ArrowRight, Video, Calendar, CheckCircle2, ClipboardList, Gift, Copy, Check,
+  Bell, ArrowRight, Video, Calendar, CheckCircle2, ClipboardList, Gift, Copy, Check, Link2, MessageCircle,
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import api from '../../services/api';
 import { useAuthStore } from '../../store/auth.store';
 import { useMyPaymentPlans } from '../../services/queries';
@@ -39,7 +40,23 @@ export default function Overview() {
     { label: 'Points', value: String(user.points ?? 0), icon: Gift, color: 'text-emerald-600', bg: 'bg-emerald-50 dark:bg-emerald-950' },
   ];
 
-  const referralLink = `${window.location.origin}/register?ref=${user.referralCode || user.id}`;
+  const referralCode = user.referralCode || '';
+  const referralLink = `${window.location.origin}/register?ref=${referralCode || user.id}`;
+
+  const copyTo = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success(`${label} copied`);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error('Could not copy. Long-press to copy manually.');
+    }
+  };
+
+  const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(
+    `Join me on E-Bringgs and learn to ship real products. Sign up with my code ${referralCode} → ${referralLink}`,
+  )}`;
 
   return (
     <div>
@@ -130,35 +147,68 @@ export default function Overview() {
           </div>
 
           {/* Referral */}
-          <div className="bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-5 text-white">
-            <div className="flex items-center gap-2 mb-3">
-              <Gift size={18} />
-              <h2 className="font-bold">Refer a friend</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 p-5">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-md bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
+                  <Gift size={13} className="text-teal-700 dark:text-teal-400" />
+                </div>
+                <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Refer &amp; earn</h2>
+              </div>
+              <span className="text-[10px] uppercase tracking-wider font-bold text-teal-700 dark:text-teal-400 tabular-nums">
+                50 pts / friend
+              </span>
             </div>
-            <p className="text-teal-100 text-sm mb-3">
-              Earn <span className="font-bold text-white">50 points (₦5,000 discount)</span> for every friend who signs up and enrols.
+            <p className="text-xs text-gray-500 dark:text-slate-400 ml-9 mb-4">
+              Every friend who enrols earns you <span className="font-semibold text-teal-700 dark:text-teal-400">50 points</span> (worth <span className="font-semibold text-teal-700 dark:text-teal-400">₦5,000</span> off your next purchase).
             </p>
-            <div className="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2">
-              <input
-                readOnly
-                value={referralLink}
-                className="flex-1 bg-transparent text-sm text-white outline-none truncate"
-              />
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(referralLink);
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 2000);
-                }}
-                className="shrink-0 p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                title="Copy link"
-              >
-                {copied ? <Check size={14} /> : <Copy size={14} />}
-              </button>
-            </div>
-            <p className="text-[11px] text-teal-200 mt-2">
-              {copied ? 'Copied!' : 'Share via WhatsApp, email, or social media'}
-            </p>
+
+            {referralCode ? (
+              <>
+                {/* The code itself — stamp-style, prominent */}
+                <div className="flex items-stretch gap-2 mb-3">
+                  <div className="flex-1 px-3 py-3 rounded-lg bg-gray-50 dark:bg-slate-950 border border-dashed border-gray-300 dark:border-slate-700 text-center">
+                    <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-slate-500 font-semibold mb-0.5">Your code</p>
+                    <code className="text-lg font-bold font-mono tracking-[0.2em] text-gray-900 dark:text-white">
+                      {referralCode}
+                    </code>
+                  </div>
+                </div>
+
+                {/* Three quick share actions — copy code, copy link, WhatsApp */}
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => copyTo(referralCode, 'Code')}
+                    className="inline-flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 dark:hover:border-teal-700 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+                  >
+                    {copied ? <Check size={13} /> : <Copy size={13} />}
+                    Code
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => copyTo(referralLink, 'Link')}
+                    className="inline-flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 dark:hover:border-teal-700 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+                  >
+                    <Link2 size={13} />
+                    Link
+                  </button>
+                  <a
+                    href={whatsappShareUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 px-2 py-2 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold transition-colors"
+                  >
+                    <MessageCircle size={13} />
+                    Share
+                  </a>
+                </div>
+              </>
+            ) : (
+              <p className="text-xs text-gray-400 dark:text-slate-500 italic">
+                Your referral code will appear here once your account finishes setting up.
+              </p>
+            )}
           </div>
         </div>
       </div>

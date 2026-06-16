@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, CalendarDays, ClipboardList, Video, Trophy, Star,
-  GraduationCap, LogOut, User as UserIcon, Users,
+  LogOut, User as UserIcon, Users,
   Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
@@ -75,9 +75,6 @@ export default function StudentLayout() {
               <Logo variant="mark" size={32} onDark />
               <span className="font-bold text-white">E-Bringgs</span>
             </Link>
-            <div className="flex items-center gap-1 mt-2 text-xs text-slate-400">
-              <GraduationCap size={12} className="text-teal-400" /> Student
-            </div>
           </div>
           <button
             onClick={() => setMobileOpen(false)}
