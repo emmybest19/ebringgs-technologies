@@ -1,5 +1,7 @@
 import { startInstallmentsCron, stopInstallmentsCron } from './installments.cron';
 import { startGithubCron, stopGithubCron } from './github.cron';
+import { startLiveSessionRemindersCron, stopLiveSessionRemindersCron } from './liveSessionReminders.cron';
+import { startCertificateIssuanceCron, stopCertificateIssuanceCron } from './certificateIssuance.cron';
 
 /**
  * Single entry point for all background jobs. Called once from `index.ts`
@@ -11,10 +13,14 @@ import { startGithubCron, stopGithubCron } from './github.cron';
 export function startJobs(): void {
   startInstallmentsCron();
   startGithubCron();
+  startLiveSessionRemindersCron();
+  startCertificateIssuanceCron();
 }
 
 /** Graceful-shutdown helper. Stops every registered cron. */
 export function stopJobs(): void {
   stopInstallmentsCron();
   stopGithubCron();
+  stopLiveSessionRemindersCron();
+  stopCertificateIssuanceCron();
 }

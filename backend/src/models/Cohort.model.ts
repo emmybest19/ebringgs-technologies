@@ -40,8 +40,16 @@ export interface ICohort extends Document {
   /** Hard cap on enrollees for this intake. */
   capacity: number;
 
-  /** Current confirmed enrollees — admin-maintained. */
+  /** Current confirmed enrollees — kept in sync with `students.length` by pre-save. */
   enrolledCount: number;
+
+  /**
+   * The actual student userIds enrolled in this intake. Drives certificate
+   * issuance — the auto-issuance cron iterates this list when the cohort ends.
+   * Populated by admin enrollment endpoints (and, in a future PR, by the
+   * Paystack success hook so paid enrollments land here automatically).
+   */
+  students: mongoose.Types.ObjectId[];
 
   /** When false, the cohort is hidden from the public schedule. */
   isEnrollmentOpen: boolean;
@@ -87,6 +95,7 @@ const cohortSchema = new Schema<ICohort>(
     priceNgn: { type: Number, required: true, min: 0 },
     capacity: { type: Number, required: true, min: 1, max: 1000 },
     enrolledCount: { type: Number, default: 0, min: 0 },
+    students: [{ type: Schema.Types.ObjectId, ref: 'User', index: true }],
     isEnrollmentOpen: { type: Boolean, default: true, index: true },
     status: { type: String, enum: ['open', 'closed', 'in_progress', 'ended'] },
     description: { type: String, maxlength: 1000 },
@@ -118,9 +127,12 @@ cohortSchema.pre('validate', async function (next) {
   next();
 });
 
-// Clamp enrolledCount to capacity. Cheaper than a separate validator
-// because it's idempotent — repeated saves don't drift.
+// Keep enrolledCount in sync with the students[] array, then clamp to capacity.
+// Idempotent — repeated saves don't drift.
 cohortSchema.pre('save', function (next) {
+  if (this.isModified('students')) {
+    this.enrolledCount = this.students.length;
+  }
   if (this.enrolledCount > this.capacity) this.enrolledCount = this.capacity;
   if (this.enrolledCount < 0) this.enrolledCount = 0;
   next();

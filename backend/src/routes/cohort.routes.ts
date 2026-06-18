@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { protect, authorize } from '../middleware/auth.middleware';
 import {
   listPublic, getPublic, getNext, getMyNext, listAll, create, update, remove,
+  listStudents, enrollStudent, unenrollStudent,
 } from '../controllers/cohort.controller';
 
 const router = Router();
@@ -137,5 +138,39 @@ router.patch('/:id', protect, authorize('admin'), update);
  *       404: { description: Not found }
  */
 router.delete('/:id', protect, authorize('admin'), remove);
+
+/**
+ * @swagger
+ * /cohorts/{id}/students:
+ *   get:
+ *     summary: List students enrolled in a cohort (admin)
+ *     tags: [Cohorts]
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     summary: Enroll a student in a cohort (admin)
+ *     tags: [Cohorts]
+ *     security: [ { bearerAuth: [] } ]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [studentId]
+ *             properties:
+ *               studentId: { type: string }
+ */
+router.get('/:id/students', protect, authorize('admin'), listStudents);
+router.post('/:id/students', protect, authorize('admin'), enrollStudent);
+
+/**
+ * @swagger
+ * /cohorts/{id}/students/{studentId}:
+ *   delete:
+ *     summary: Remove a student from a cohort (admin)
+ *     tags: [Cohorts]
+ *     security: [ { bearerAuth: [] } ]
+ */
+router.delete('/:id/students/:studentId', protect, authorize('admin'), unenrollStudent);
 
 export default router;

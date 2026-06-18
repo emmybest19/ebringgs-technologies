@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthRequest } from '../types';
 import Review from '../models/Review.model';
+import User from '../models/User.model';
 import { AppError } from '../middleware/error.middleware';
+import { sendPushToUser } from '../utils/pushNotification';
 
 // POST /api/reviews — auth'd user submits a review
 export const submitReview = async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -141,12 +143,29 @@ export const listAllReviews = async (req: Request, res: Response, next: NextFunc
 export const setApproval = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { isApproved } = req.body;
+    const before = await Review.findById(req.params.id).select('isApproved user');
+    if (!before) return next(new AppError('Review not found.', 404));
+
     const review = await Review.findByIdAndUpdate(
       req.params.id,
       { isApproved: !!isApproved },
       { new: true },
     );
     if (!review) return next(new AppError('Review not found.', 404));
+
+    // Only notify on the false → true transition so re-approvals don't spam.
+    if (!before.isApproved && review.isApproved) {
+      User.findById(review.user).select('role').lean().then((author) => {
+        const url = author?.role === 'client' ? '/client/reviews' : '/dashboard/reviews';
+        return sendPushToUser(review.user.toString(), {
+          title: 'Your review is live',
+          body: 'Thanks for sharing your feedback — it’s now public.',
+          url,
+          tag: 'review-approved',
+        });
+      }).catch(() => {});
+    }
+
     res.json({ status: 'success', data: { review } });
   } catch (err) { next(err); }
 };

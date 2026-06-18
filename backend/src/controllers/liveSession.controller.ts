@@ -79,11 +79,25 @@ export const updateSession = async (req: AuthRequest, res: Response, next: NextF
       if (req.body[key] !== undefined) updates[key] = req.body[key];
     }
 
+    const before = await LiveSession.findById(req.params.id).select('status');
+    if (!before) return next(new AppError('Live session not found.', 404));
+
     const session = await LiveSession.findByIdAndUpdate(req.params.id, updates, {
       new: true,
       runValidators: true,
     });
     if (!session) return next(new AppError('Live session not found.', 404));
+
+    // Notify students when a session transitions into the 'live' state.
+    if (before.status !== 'live' && session.status === 'live') {
+      sendPushToRole('student', {
+        title: 'Class is starting now',
+        body: `"${session.title}" is live — tap to join.`,
+        url: `/classroom/${session.roomId}`,
+        tag: 'live-session-live',
+      }).catch(() => {});
+    }
+
     res.json({ status: 'success', data: session });
   } catch (err) { next(err); }
 };

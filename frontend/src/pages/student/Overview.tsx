@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Video, Calendar, CheckCircle2, ClipboardList, Gift, Copy, Check,
-  Link2, MessageCircle, Trophy, Loader2, Rocket, Clock,
+  Link2, MessageCircle, Trophy, Loader2, Rocket, Clock, Award,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '../../services/api';
@@ -136,6 +136,9 @@ export default function Overview() {
           </div>
         )}
       </div>
+
+      {/* Earned certificates — only renders if the student has any */}
+      <CertificatesSection />
 
       {/* Recent assignments */}
       <div>
@@ -439,6 +442,78 @@ function CohortCountdown() {
             </Link>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Earned certificates ──────────────────────────────────────────────── */
+
+interface EarnedCertificate {
+  _id: string;
+  certificateId: string;
+  program: string;
+  completedAt: string;
+  isValid: boolean;
+}
+
+/**
+ * Renders nothing until certs load, then renders nothing if the student has
+ * none. Once they earn one, it surfaces as a small horizontal stack of cards
+ * with a deep-link straight into the printable certificate page.
+ */
+function CertificatesSection() {
+  const [certs, setCerts] = useState<EarnedCertificate[] | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    api.get('/certificates/my')
+      .then(({ data }) => {
+        if (!active) return;
+        const list = data?.data?.certificates ?? [];
+        setCerts(Array.isArray(list) ? list : []);
+      })
+      .catch(() => { if (active) setCerts([]); });
+    return () => { active = false; };
+  }, []);
+
+  if (!certs || certs.length === 0) return null;
+
+  return (
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">Your certificates</h2>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {certs.map((c) => (
+          <Link
+            key={c._id}
+            to={`/certificate/${c.certificateId}`}
+            className={`flex items-center gap-4 bg-white dark:bg-slate-900 rounded-2xl border shadow-sm p-4 transition-colors ${
+              c.isValid
+                ? 'border-gray-100 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700'
+                : 'border-red-100 dark:border-red-900 opacity-60'
+            }`}
+          >
+            <div className="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-950 flex items-center justify-center shrink-0">
+              <Award size={20} className="text-amber-500" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1">
+                {c.program}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5 font-mono">
+                {c.certificateId} · {formatDate(c.completedAt)}
+              </p>
+              {!c.isValid && (
+                <p className="text-[10px] uppercase tracking-wider font-bold text-red-600 dark:text-red-400 mt-1">
+                  Revoked
+                </p>
+              )}
+            </div>
+            <ArrowRight size={16} className="text-gray-400 shrink-0" />
+          </Link>
+        ))}
       </div>
     </div>
   );

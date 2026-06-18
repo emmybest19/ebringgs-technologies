@@ -10,6 +10,8 @@ export interface ILiveSession extends Document {
   roomId: string;
   status: 'upcoming' | 'live' | 'ended';
   enrolledCount: number;
+  /** Stamped by the reminder cron once the T-15 push has been sent. Used purely for dedup. */
+  notifiedStartReminderAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -29,6 +31,7 @@ const liveSessionSchema = new Schema<ILiveSession>(
       default: 'upcoming',
     },
     enrolledCount: { type: Number, default: 0 },
+    notifiedStartReminderAt: { type: Date },
   },
   { timestamps: true },
 );

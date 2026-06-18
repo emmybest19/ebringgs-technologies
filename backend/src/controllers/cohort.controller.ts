@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import mongoose from 'mongoose';
 import { AuthRequest } from '../types';
 import Cohort, { deriveCohortStatus, ICohort } from '../models/Cohort.model';
 import Transaction from '../models/Transaction.model';
+import User from '../models/User.model';
 import { getTutoringTrack } from '../config/tutoring.catalog';
 import { AppError } from '../middleware/error.middleware';
 
@@ -250,5 +252,66 @@ export const remove = async (req: AuthRequest, res: Response, next: NextFunction
     const cohort = await Cohort.findByIdAndDelete(req.params.id);
     if (!cohort) return next(new AppError('Cohort not found.', 404));
     res.json({ status: 'success', message: 'Cohort deleted.' });
+  } catch (err) { next(err); }
+};
+
+/**
+ * GET /api/cohorts/:id/students — admin lists enrolled students.
+ */
+export const listStudents = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const cohort = await Cohort.findById(req.params.id)
+      .populate('students', 'name email avatar');
+    if (!cohort) return next(new AppError('Cohort not found.', 404));
+    res.json({ status: 'success', data: { students: cohort.students } });
+  } catch (err) { next(err); }
+};
+
+/**
+ * POST /api/cohorts/:id/students — admin enrolls a student.
+ * Body: { studentId }.  Idempotent — re-enrolling is a no-op, not an error.
+ */
+export const enrollStudent = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const { studentId } = req.body;
+    if (!studentId) return next(new AppError('studentId is required.', 400));
+    if (!mongoose.isValidObjectId(studentId)) {
+      return next(new AppError('Invalid studentId.', 400));
+    }
+
+    const [cohort, student] = await Promise.all([
+      Cohort.findById(req.params.id),
+      User.findById(studentId).select('name email'),
+    ]);
+    if (!cohort) return next(new AppError('Cohort not found.', 404));
+    if (!student) return next(new AppError('Student not found.', 404));
+
+    const sid = new mongoose.Types.ObjectId(studentId);
+    const already = cohort.students.some((s) => s.equals(sid));
+    if (!already) {
+      if (cohort.students.length >= cohort.capacity) {
+        return next(new AppError('Cohort is at capacity.', 409));
+      }
+      cohort.students.push(sid);
+      await cohort.save();
+    }
+
+    res.json({ status: 'success', data: { cohort: decorate(cohort) } });
+  } catch (err) { next(err); }
+};
+
+/**
+ * DELETE /api/cohorts/:id/students/:studentId — admin removes a student.
+ */
+export const unenrollStudent = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const cohort = await Cohort.findById(req.params.id);
+    if (!cohort) return next(new AppError('Cohort not found.', 404));
+
+    const sid = req.params.studentId;
+    cohort.students = cohort.students.filter((s) => s.toString() !== sid);
+    await cohort.save();
+
+    res.json({ status: 'success', data: { cohort: decorate(cohort) } });
   } catch (err) { next(err); }
 };

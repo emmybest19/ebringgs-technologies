@@ -4,6 +4,7 @@ import path from 'path';
 import { AuthRequest } from '../types';
 import { AppError } from '../middleware/error.middleware';
 import Recording from '../models/Recording.model';
+import { sendPushToRole } from '../utils/pushNotification';
 
 /**
  * POST /api/recordings — teacher / admin upload a class recording.
@@ -34,6 +35,15 @@ export const createRecording = async (req: AuthRequest, res: Response, next: Nex
       planId: typeof planId === 'string' ? planId.trim() || undefined : undefined,
       visibleToStudents: visibleToStudents === 'false' ? false : true,
     });
+
+    if (recording.visibleToStudents) {
+      sendPushToRole('student', {
+        title: 'New recording available',
+        body: recording.title,
+        url: '/dashboard/recordings',
+        tag: 'recording-new',
+      }).catch(() => {});
+    }
 
     res.status(201).json({ status: 'success', data: { recording } });
   } catch (err) { next(err); }
