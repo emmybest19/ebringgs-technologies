@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from './auth.store';
 import type { UserRole } from '@ebringgs/types';
 
 interface ProtectedRouteProps {

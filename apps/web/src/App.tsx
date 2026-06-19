@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { queryClient } from "./services/queryClient";
-import { useThemeInit } from "./hooks/useThemeInit";
+import { queryClient } from "@ebringgs/api";
 import Layout from "./components/layout/Layout";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import ScrollToTopButton from "./components/ui/ScrollToTopButton";
@@ -12,7 +11,7 @@ import AdminLayout from "./components/layout/AdminLayout";
 import ClientLayout from "./components/layout/ClientLayout";
 import TeacherLayout from "./components/layout/TeacherLayout";
 import StudentLayout from "./components/layout/StudentLayout";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { ProtectedRoute, useThemeInit } from "@ebringgs/auth";
 import { ScrollToTop } from "@ebringgs/ui";
 
 // Public pages

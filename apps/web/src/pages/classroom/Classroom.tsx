@@ -6,7 +6,7 @@ import {
   VolumeX, ClipboardList, Pencil, Info, Circle, Square, Loader2,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { useUploadRecording } from '../../services/queries';
 import AnnotationOverlay from './AnnotationOverlay';
 

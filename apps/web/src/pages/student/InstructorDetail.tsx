@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Loader2, Linkedin, Github, Globe, Mail, BookOpen, Star, AlertCircle } from 'lucide-react';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 
 interface Teacher {
   _id: string;

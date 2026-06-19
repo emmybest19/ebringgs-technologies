@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { User } from '@ebringgs/types';
-import api from '../services/api';
+import api from '@ebringgs/api';
 
 interface AuthState {
   user: User | null;

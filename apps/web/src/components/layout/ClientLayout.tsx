@@ -4,7 +4,7 @@ import {
   LayoutDashboard, FolderKanban, CreditCard, LogOut, User, Star, Sparkles,
   Calendar, Menu, X,
 } from 'lucide-react';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { Logo, PageTransition } from '@ebringgs/ui';
 
 const calendlyConfigured = Boolean(import.meta.env.VITE_CALENDLY_URL);

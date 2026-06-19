@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { ClipboardList, Plus, X, Upload, Paperclip } from 'lucide-react';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 import { formatDate } from './_utils';
 import type { MyAssignment } from './_utils';
 

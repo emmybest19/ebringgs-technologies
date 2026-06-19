@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google';
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 
 const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID as string | undefined;
 const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI as string | undefined;

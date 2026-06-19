@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ClipboardList, CheckCircle2 } from 'lucide-react';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 
 interface Assignment {
   _id: string;

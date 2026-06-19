@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Gift, Copy, Check, X, Loader2, Plus } from 'lucide-react';
 import toast from 'react-hot-toast';
-import api from '../services/api';
+import api from '@ebringgs/api';
 
 interface Voucher {
   _id: string;

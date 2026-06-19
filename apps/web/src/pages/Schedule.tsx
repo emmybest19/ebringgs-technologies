@@ -5,7 +5,7 @@ import {
   MapPin, Video, Loader2, CalendarPlus, AlertCircle, Sparkles,
   CheckCircle2, GraduationCap,
 } from 'lucide-react';
-import api from '../services/api';
+import api from '@ebringgs/api';
 import { useCohorts, type Cohort } from '../services/queries';
 import { useSEO } from '../hooks/useSEO';
 

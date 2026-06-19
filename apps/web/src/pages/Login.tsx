@@ -5,7 +5,7 @@ import {
   Code2, Smartphone, BarChart3, Globe, Zap,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAuthStore } from '../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { useReviews } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';

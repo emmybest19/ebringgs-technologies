@@ -3,7 +3,7 @@ import {
   Calendar, Clock, Sparkles, ShieldCheck, Video, MessageSquare, Phone, Zap,
 } from 'lucide-react';
 import CalendlyInline from '../../components/calendly/CalendlyInline';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 
 const reasonsToBook = [
   {

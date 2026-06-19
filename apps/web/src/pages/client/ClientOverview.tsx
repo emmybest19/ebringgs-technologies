@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FolderKanban, CreditCard, Clock, CheckCircle2, Loader2, Calendar, ArrowRight, Gift, Copy, Check, Wallet } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { useMyProjects, useMyTransactions, useMyPaymentPlans } from '../../services/queries';
 import NextPaymentBanner, { pickMostUrgentPlan } from '../../components/payments/NextPaymentBanner';
 

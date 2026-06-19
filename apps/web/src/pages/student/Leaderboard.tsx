@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Trophy, Medal, Gift } from 'lucide-react';
-import api from '../../services/api';
-import { useAuthStore } from '../../store/auth.store';
+import api from '@ebringgs/api';
+import { useAuthStore } from '@ebringgs/auth';
 import GiftVoucherCard from '../../components/GiftVoucherCard';
 import { POINT_TO_NAIRA, formatNaira } from './_utils';
 

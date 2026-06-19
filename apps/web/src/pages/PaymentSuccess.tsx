@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, ArrowRight, BookOpen, Loader2, XCircle, ClipboardList } from 'lucide-react';
-import { useAuthStore } from '../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { useVerifyPayment, useMyPaymentPlan } from '../services/queries';
 import PaymentScheduleCard from '../components/payments/PaymentScheduleCard';
 

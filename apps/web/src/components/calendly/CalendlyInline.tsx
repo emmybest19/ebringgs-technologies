@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useCalendlyScript } from '../../hooks/useCalendlyScript';
-import { useThemeStore } from '../../store/theme.store';
+import { useThemeStore } from '@ebringgs/auth';
 
 interface CalendlyInlineProps {
   url: string;

@@ -7,7 +7,7 @@ import {
 } from '../services/queries';
 import PaymentScheduleCard from '../components/payments/PaymentScheduleCard';
 import NextPaymentBanner from '../components/payments/NextPaymentBanner';
-import { useAuthStore } from '../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 
 /**
  * The destination page for "View plan" CTAs and the 403 PAYMENT_REQUIRED

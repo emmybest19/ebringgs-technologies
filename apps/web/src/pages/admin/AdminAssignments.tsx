@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle2, Clock, FileText, ChevronDown, ChevronUp, Loader2, X } from 'lucide-react';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 import { PageLoader } from '@ebringgs/ui';
 
 interface Assignment {

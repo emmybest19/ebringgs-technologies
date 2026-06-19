@@ -5,7 +5,7 @@ import {
   Code2, BarChart3, BookOpen, Layers, Smartphone, Brain, Map, Loader2,
   Send, X, ShieldCheck,
 } from "lucide-react";
-import { useAuthStore } from "../../store/auth.store";
+import { useAuthStore } from "@ebringgs/auth";
 import { useService, useSubmitInquiry, useCaseStudies } from "../../services/queries";
 
 const iconMap: Record<

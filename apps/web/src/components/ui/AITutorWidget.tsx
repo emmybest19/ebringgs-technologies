@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Sparkles, Send, X, Loader2, Bot, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 
 interface ChatTurn {
   role: 'user' | 'model';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Video, X, Loader2, Calendar, Clock, ExternalLink } from 'lucide-react';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 import { PageLoader } from '@ebringgs/ui';
 
 interface LiveSession {

@@ -7,11 +7,11 @@ import {
   ExternalLink, Github, Sparkles, GitCommit,
 } from 'lucide-react';
 import HeroCarousel from '../components/ui/HeroCarousel';
-import api from '../services/api';
+import api from '@ebringgs/api';
 import { useReviews, useCaseStudies } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
-import { useAuthStore } from '../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {

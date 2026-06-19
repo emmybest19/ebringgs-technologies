@@ -11,6 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ebringgs/api": "workspace:*",
+    "@ebringgs/auth": "workspace:*",
     "@ebringgs/styles": "workspace:*",
     "@ebringgs/types": "workspace:*",
     "@ebringgs/ui": "workspace:*",

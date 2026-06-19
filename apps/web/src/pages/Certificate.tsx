@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Award, Download, ArrowLeft, CheckCircle2 } from 'lucide-react';
-import api from '../services/api';
+import api from '@ebringgs/api';
 import { Logo } from '@ebringgs/ui';
 
 /**

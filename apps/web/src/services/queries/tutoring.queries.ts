@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '../api';
+import api from '@ebringgs/api';
 
 /* ─── Types — mirror backend/src/config/tutoring.catalog.ts ───────────── */
 

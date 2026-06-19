@@ -5,7 +5,7 @@ import {
   CreditCard, LogOut, Inbox, CalendarDays, ClipboardList, Star, User as UserIcon, FolderKanban, Sparkles, GraduationCap, Receipt,
   Menu, X,
 } from 'lucide-react';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { useUnreadCounts } from '../../services/queries';
 import { Logo, PageTransition } from '@ebringgs/ui';
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react';
-import api from '../services/api';
-import { useAuthStore } from '../store/auth.store';
+import api from '@ebringgs/api';
+import { useAuthStore } from '@ebringgs/auth';
 import { Logo } from '@ebringgs/ui';
 
 export default function VerifyEmail() {

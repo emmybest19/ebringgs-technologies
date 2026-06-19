@@ -15,7 +15,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import { useAuthStore } from "../store/auth.store";
+import { useAuthStore } from "@ebringgs/auth";
 import { useUpdateProfile, useChangePassword } from "../services/queries";
 
 export default function Profile() {

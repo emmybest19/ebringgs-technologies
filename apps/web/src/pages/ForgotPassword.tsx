@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import api from '../services/api';
+import api from '@ebringgs/api';
 import { Logo } from '@ebringgs/ui';
 
 export default function ForgotPassword() {

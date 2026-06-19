@@ -1,0 +1,21 @@
+{
+  "name": "@ebringgs/api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared axios HTTP client (with auto-refresh + PAYMENT_REQUIRED interceptor) + TanStack QueryClient",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "peerDependencies": {
+    "axios": "^1.0.0",
+    "@tanstack/react-query": "^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3"
+  }
+}

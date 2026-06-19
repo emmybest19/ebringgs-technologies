@@ -5,8 +5,8 @@ import {
   Link2, MessageCircle, Trophy, Loader2, Rocket, Clock, Award,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import api from '../../services/api';
-import { useAuthStore } from '../../store/auth.store';
+import api from '@ebringgs/api';
+import { useAuthStore } from '@ebringgs/auth';
 import { useMyPaymentPlans } from '../../services/queries';
 import NextPaymentBanner, { pickMostUrgentPlan } from '../../components/payments/NextPaymentBanner';
 import { formatDate } from './_utils';

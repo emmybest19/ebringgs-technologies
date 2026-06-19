@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ShieldCheck, Eye, EyeOff, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');

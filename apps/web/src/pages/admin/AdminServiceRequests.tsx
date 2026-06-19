@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Mail, Clock, Tag, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 import { PageLoader, EmptyState } from '@ebringgs/ui';
 
 interface Inquiry {

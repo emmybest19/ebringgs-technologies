@@ -5,7 +5,7 @@ import {
   Video, LogOut, BookOpen, User as UserIcon,
   Menu, X,
 } from 'lucide-react';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import { Logo, PageTransition } from '@ebringgs/ui';
 
 const navItems = [

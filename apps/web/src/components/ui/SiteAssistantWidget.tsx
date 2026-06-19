@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bot, Send, X, Loader2, Sparkles, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../services/api';
+import api from '@ebringgs/api';
 
 // Public-site AI assistant. Distinct from the StudentLayout AITutorWidget,
 // that one helps cohort students with lessons (auth-gated /ai-tutor/*).

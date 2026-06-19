@@ -5,7 +5,7 @@ import {
   LogOut, User as UserIcon, Users, GraduationCap,
   Menu, X,
 } from 'lucide-react';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 import AITutorWidget from '../ui/AITutorWidget';
 import { Logo, PageTransition } from '@ebringgs/ui';
 

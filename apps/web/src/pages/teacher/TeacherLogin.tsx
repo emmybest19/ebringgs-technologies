@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GraduationCap, Eye, EyeOff, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAuthStore } from '../../store/auth.store';
+import { useAuthStore } from '@ebringgs/auth';
 
 export default function TeacherLogin() {
   const [email, setEmail] = useState('');

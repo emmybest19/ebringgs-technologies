@@ -1,6 +1,6 @@
 ﻿import { useState } from 'react';
 import { Award, Search, CheckCircle2, XCircle, Loader2, Shield } from 'lucide-react';
-import api from '../services/api';
+import api from '@ebringgs/api';
 
 interface CertResult {
   certificateId: string;

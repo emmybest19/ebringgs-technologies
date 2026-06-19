@@ -3,8 +3,8 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sun, Moon, Bell, BellOff } from 'lucide-react';
 import { Logo } from '@ebringgs/ui';
 import { usePushNotifications } from '../../hooks/usePushNotifications';
-import { useAuthStore } from '../../store/auth.store';
-import { useThemeStore } from '../../store/theme.store';
+import { useAuthStore } from '@ebringgs/auth';
+import { useThemeStore } from '@ebringgs/auth';
 
 const navLinks = [
   { label: 'Services', to: '/services' },
