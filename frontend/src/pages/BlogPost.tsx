@@ -1,4 +1,5 @@
-﻿import { useParams, Link } from 'react-router-dom';
+﻿import type { ReactElement } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Eye, Tag, Clock } from 'lucide-react';
 import { useBlogPost } from '../services/queries';
 import { PageLoader } from '../components/ui/LoadingSpinner';
@@ -6,7 +7,7 @@ import { PageLoader } from '../components/ui/LoadingSpinner';
 function renderContent(content: string) {
   // Very simple markdown-like renderer
   const lines = content.split('\n');
-  const elements: JSX.Element[] = [];
+  const elements: ReactElement[] = [];
   let i = 0;
   let keyCounter = 0;
 

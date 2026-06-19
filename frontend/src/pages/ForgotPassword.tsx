@@ -1,4 +1,4 @@
-﻿import { useState, FormEvent } from 'react';
+﻿import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';

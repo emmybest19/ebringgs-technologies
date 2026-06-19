@@ -2,6 +2,12 @@ export type UserRole = 'admin' | 'teacher' | 'student' | 'client';
 
 export interface User {
   id: string;
+  /**
+   * The raw Mongo ObjectId string. Coexists with `id` because Mongoose returns
+   * both — `id` is the virtual getter, `_id` is the underlying field. Optional
+   * so consumers can fall back when only one is present (older serializers).
+   */
+  _id?: string;
   name: string;
   email: string;
   role: UserRole;

@@ -1,4 +1,4 @@
-﻿import { useState, FormEvent } from 'react';
+﻿import { useState, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, MessageSquare, MapPin, Clock, Send, Loader2, CheckCircle2 } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';

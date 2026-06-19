@@ -1,4 +1,4 @@
-﻿import { useState, FormEvent } from 'react';
+﻿import { useState, type FormEvent } from 'react';
 import { Plus, Edit2, Trash2, Eye, EyeOff, X, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { PageLoader } from '../../components/ui/LoadingSpinner';
