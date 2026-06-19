@@ -107,14 +107,20 @@ export default function Navbar() {
               </button>
 
               {dropdownOpen && (() => {
+                // Admins and teachers live on their own subdomains. Dropdown
+                // links shoot them off-origin so they hit their own portal
+                // (with its own localStorage auth). Students/clients stay
+                // here on the main web app.
+                const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+                const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
                 const dashboardPath =
-                  user?.role === 'admin' ? '/admin'
-                  : user?.role === 'teacher' ? '/teacher'
+                  user?.role === 'admin' ? adminUrl
+                  : user?.role === 'teacher' ? teacherUrl
                   : user?.role === 'client' ? '/client'
                   : '/dashboard';
                 const profilePath =
-                  user?.role === 'admin' ? '/admin/profile'
-                  : user?.role === 'teacher' ? '/teacher/profile'
+                  user?.role === 'admin' ? `${adminUrl}/profile`
+                  : user?.role === 'teacher' ? `${teacherUrl}/profile`
                   : user?.role === 'client' ? '/client/profile'
                   : '/dashboard/profile';
                 return (

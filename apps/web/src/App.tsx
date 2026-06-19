@@ -7,9 +7,7 @@ import Layout from "./components/layout/Layout";
 import WhatsAppButton from "./components/ui/WhatsAppButton";
 import ScrollToTopButton from "./components/ui/ScrollToTopButton";
 import SiteAssistantWidget from "./components/ui/SiteAssistantWidget";
-import AdminLayout from "./components/layout/AdminLayout";
 import ClientLayout from "./components/layout/ClientLayout";
-import TeacherLayout from "./components/layout/TeacherLayout";
 import StudentLayout from "./components/layout/StudentLayout";
 import { ProtectedRoute, useThemeInit } from "@ebringgs/auth";
 import { ScrollToTop } from "@ebringgs/ui";
@@ -31,6 +29,7 @@ import VerifyCertificate from "./pages/VerifyCertificate";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 
 // Auth pages
 import Login from "./pages/Login";
@@ -61,26 +60,7 @@ import StudentInstructorDetail from "./pages/student/InstructorDetail";
 import StudentServices from "./pages/student/Services";
 import StudentServiceDetail from "./pages/student/ServiceDetail";
 
-// Classroom
-import { Classroom } from "@ebringgs/classroom";
-
-// Admin pages
-import AdminOverview from "./pages/admin/AdminOverview";
-import AdminUsers from "./pages/admin/AdminUsers";
-import AdminBlogs from "./pages/admin/AdminBlogs";
-import AdminPayments from "./pages/admin/AdminPayments";
-import AdminServiceRequests from "./pages/admin/AdminServiceRequests";
-import AdminLiveSessions from "./pages/admin/AdminLiveSessions";
-import AdminAssignments from "./pages/admin/AdminAssignments";
-import AdminSettings from "./pages/admin/AdminSettings";
-import AdminReviews from "./pages/admin/AdminReviews";
-import { AdminProjectsList, AdminProjectDetail } from "./pages/admin/AdminProjects";
-import AdminCaseStudies from "./pages/admin/AdminCaseStudies";
-import AdminCohorts from "./pages/admin/AdminCohorts";
-import AdminPaymentPlans from "./pages/admin/AdminPaymentPlans";
-import CaseStudyDetail from "./pages/CaseStudyDetail";
-
-// Client pages
+// Client dashboard pages
 import ClientOverview from "./pages/client/ClientOverview";
 import { ProjectList, ProjectDetail } from "./pages/client/ClientProjects";
 import ClientPayments from "./pages/client/ClientPayments";
@@ -90,27 +70,21 @@ import ClientServiceDetail from "./pages/client/ClientServiceDetail";
 import ClientScheduleCall from "./pages/client/ClientScheduleCall";
 import ProjectBrief from "./pages/client/ProjectBrief";
 
-// Teacher pages
-import TeacherLogin from "./pages/teacher/TeacherLogin";
-import TeacherOverview from "./pages/teacher/TeacherOverview";
-import TeacherStudents from "./pages/teacher/TeacherStudents";
-import TeacherSessions from "./pages/teacher/TeacherSessions";
-import TeacherAssignments from "./pages/teacher/TeacherAssignments";
-import TeacherRecordings from "./pages/teacher/TeacherRecordings";
-import TeacherResources from "./pages/teacher/TeacherResources";
-
-// Admin login (separate from public login)
-import AdminLogin from "./pages/admin/AdminLogin";
+// Classroom — shared package, mounted here for students
+import { Classroom } from "@ebringgs/classroom";
 
 /**
  * Floating widgets (SiteAssistantWidget chat bubble + WhatsAppButton)
  * should only appear on public marketing pages — they're for prospects,
- * not for logged-in admins/teachers/students/clients who have role-specific
- * dashboards. Also hidden on full-screen flows (classroom, checkout,
- * payment confirmation) where the floating UI is in the way.
+ * not for logged-in students/clients who have role-specific dashboards.
+ * Also hidden on full-screen flows (classroom, checkout, payment confirmation)
+ * where the floating UI is in the way.
+ *
+ * Teachers and admins live on their own subdomains (teachers.ebringgs.com,
+ * admin.ebringgs.com) — no need to handle their prefixes here.
  */
 const PRIVATE_PREFIXES = [
-  '/admin', '/teacher', '/dashboard', '/client',
+  '/dashboard', '/client',
   '/classroom', '/checkout', '/payment', '/payments',
 ];
 
@@ -148,56 +122,10 @@ function App() {
         <Route path="/payment/failed" element={<PaymentFailed />} />
         <Route path="/payments/plan/:id" element={<PaymentPlanDetail />} />
 
-        {/* Classroom, full-screen, no nav */}
+        {/* Classroom, full-screen, no nav. Students join here; teachers join
+            on teachers.ebringgs.com/classroom/:roomId (same code, different
+            origin, separate auth — see @ebringgs/classroom). */}
         <Route path="/classroom/:roomId" element={<Classroom />} />
-
-        {/* Dedicated portal logins, standalone, no layout */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/teacher/login" element={<TeacherLogin />} />
-
-        {/* Admin, sidebar layout (gated to admin role) */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allow="admin" redirectTo="/admin/login">
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<AdminOverview />} />
-          <Route path="users" element={<AdminUsers />} />
-          <Route path="projects" element={<AdminProjectsList />} />
-          <Route path="projects/:id" element={<AdminProjectDetail />} />
-          <Route path="assignments" element={<AdminAssignments />} />
-          <Route path="cohorts" element={<AdminCohorts />} />
-          <Route path="live-sessions" element={<AdminLiveSessions />} />
-          <Route path="blogs" element={<AdminBlogs />} />
-          <Route path="payments" element={<AdminPayments />} />
-          <Route path="payment-plans" element={<AdminPaymentPlans />} />
-          <Route path="service-requests" element={<AdminServiceRequests />} />
-          <Route path="reviews" element={<AdminReviews />} />
-          <Route path="case-studies" element={<AdminCaseStudies />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="settings" element={<AdminSettings />} />
-        </Route>
-
-        {/* Teacher, sidebar layout (gated to teacher role) */}
-        <Route
-          path="/teacher"
-          element={
-            <ProtectedRoute allow="teacher" redirectTo="/teacher/login">
-              <TeacherLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<TeacherOverview />} />
-          <Route path="students" element={<TeacherStudents />} />
-          <Route path="sessions" element={<TeacherSessions />} />
-          <Route path="assignments" element={<TeacherAssignments />} />
-          <Route path="recordings" element={<TeacherRecordings />} />
-          <Route path="resources" element={<TeacherResources />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
 
         {/* Client, sidebar layout (gated to client role) */}
         <Route

@@ -17,9 +17,12 @@ import { useAuthStore } from '@ebringgs/auth';
 function Hero() {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  // Admin + teacher portals live on their own subdomains.
+  const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+  const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
   const dashboardPath =
-    user?.role === 'admin' ? '/admin'
-    : user?.role === 'teacher' ? '/teacher'
+    user?.role === 'admin' ? adminUrl
+    : user?.role === 'teacher' ? teacherUrl
     : user?.role === 'client' ? '/client'
     : '/dashboard';
   return (

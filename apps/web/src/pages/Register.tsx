@@ -355,8 +355,10 @@ export default function Register() {
                     role={role}
                     referralCode={referralCode.trim() || undefined}
                     onSuccess={(socialRole) => {
-                      if (socialRole === 'admin') navigate('/admin');
-                      else if (socialRole === 'teacher') navigate('/teacher');
+                      const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+                      const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
+                      if (socialRole === 'admin') window.location.href = adminUrl;
+                      else if (socialRole === 'teacher') window.location.href = teacherUrl;
                       else if (socialRole === 'client') navigate('/client');
                       else navigate('/dashboard');
                     }}

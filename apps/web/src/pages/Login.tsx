@@ -111,8 +111,13 @@ export default function Login() {
       await login(email, password);
       toast.success('Welcome back!');
       const role = useAuthStore.getState().user?.role;
-      if (role === 'admin') navigate('/admin');
-      else if (role === 'teacher') navigate('/teacher');
+      // Admins and teachers need to land on their own subdomain — they
+      // authenticate per-origin, so a navigate() here would just dump them
+      // on /admin or /teacher on this app, which no longer exists.
+      const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+      const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
+      if (role === 'admin') window.location.href = adminUrl;
+      else if (role === 'teacher') window.location.href = teacherUrl;
       else if (role === 'client') navigate('/client');
       else navigate('/dashboard');
     } catch (err: unknown) {
@@ -236,8 +241,10 @@ export default function Login() {
             <div className="mb-8">
               <SocialAuthButtons
                 onSuccess={(socialRole) => {
-                  if (socialRole === 'admin') navigate('/admin');
-                  else if (socialRole === 'teacher') navigate('/teacher');
+                  const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+                  const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
+                  if (socialRole === 'admin') window.location.href = adminUrl;
+                  else if (socialRole === 'teacher') window.location.href = teacherUrl;
                   else if (socialRole === 'client') navigate('/client');
                   else navigate('/dashboard');
                 }}

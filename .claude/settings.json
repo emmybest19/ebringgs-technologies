@@ -104,7 +104,10 @@
       "Bash(pnpm --filter teacher build)",
       "Bash(cp apps/web/src/services/queries/*.ts apps/admin/src/services/queries/ && \\\\ *)",
       "Bash(pnpm --filter admin typecheck)",
-      "Bash(pnpm --filter admin build)"
+      "Bash(pnpm --filter admin build)",
+      "Bash(grep -vE \"\\(comment|node_modules|//|\\\\\\\\*\\)\")",
+      "Bash(pnpm -r typecheck)",
+      "Bash(pnpm -r build)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",
