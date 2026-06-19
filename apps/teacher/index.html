@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logo-mark.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!--
+      Pre-React theme bootstrap. Same script lives in apps/web/index.html — the
+      theme-storage localStorage key is per-origin, so each subdomain remembers
+      its own preference independently. Default is dark; we strip the class if
+      the user has explicitly toggled to light on this subdomain.
+    -->
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('theme-storage');
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            var mode = parsed && parsed.state && parsed.state.mode;
+            if (mode === 'light') document.documentElement.classList.remove('dark');
+          }
+        } catch (e) { /* fall back to the html.dark default */ }
+      })();
+    </script>
+    <title>E-Bringgs · Teacher Portal</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

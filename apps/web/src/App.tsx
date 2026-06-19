@@ -62,7 +62,7 @@ import StudentServices from "./pages/student/Services";
 import StudentServiceDetail from "./pages/student/ServiceDetail";
 
 // Classroom
-import Classroom from "./pages/classroom/Classroom";
+import { Classroom } from "@ebringgs/classroom";
 
 // Admin pages
 import AdminOverview from "./pages/admin/AdminOverview";

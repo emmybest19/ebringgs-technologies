@@ -8,14 +8,16 @@ import {
 import { useAuthStore } from '@ebringgs/auth';
 import { Logo, PageTransition } from '@ebringgs/ui';
 
+// Routes are root-mounted on the teacher subdomain — no /teacher prefix here,
+// the subdomain itself is the namespace.
 const navItems = [
-  { to: '/teacher', label: 'Overview', icon: LayoutDashboard, end: true },
-  { to: '/teacher/students', label: 'My Students', icon: Users },
-  { to: '/teacher/sessions', label: 'My Sessions', icon: CalendarDays },
-  { to: '/teacher/assignments', label: 'Review Work', icon: ClipboardList },
-  { to: '/teacher/recordings', label: 'Recordings', icon: Video },
-  { to: '/teacher/resources', label: 'Resources', icon: BookOpen },
-  { to: '/teacher/profile', label: 'Profile', icon: UserIcon },
+  { to: '/', label: 'Overview', icon: LayoutDashboard, end: true },
+  { to: '/students', label: 'My Students', icon: Users },
+  { to: '/sessions', label: 'My Sessions', icon: CalendarDays },
+  { to: '/assignments', label: 'Review Work', icon: ClipboardList },
+  { to: '/recordings', label: 'Recordings', icon: Video },
+  { to: '/resources', label: 'Resources', icon: BookOpen },
+  { to: '/profile', label: 'Profile', icon: UserIcon },
 ];
 
 export default function TeacherLayout() {
@@ -115,7 +117,7 @@ export default function TeacherLayout() {
             </div>
           </div>
           <button
-            onClick={() => { logout(); navigate('/'); }}
+            onClick={() => { logout(); navigate('/login'); }}
             className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors"
           >
             <LogOut size={16} /> Sign out

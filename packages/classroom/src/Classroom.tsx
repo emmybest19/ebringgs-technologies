@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '@ebringgs/auth';
-import { useUploadRecording } from '../../services/queries';
+import { useUploadRecording } from './useUploadRecording';
 import AnnotationOverlay from './AnnotationOverlay';
 
 interface ChatMessage {
