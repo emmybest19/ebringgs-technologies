@@ -8,6 +8,7 @@ import {
 import PaymentScheduleCard from '../components/payments/PaymentScheduleCard';
 import NextPaymentBanner from '../components/payments/NextPaymentBanner';
 import { useAuthStore } from '@ebringgs/auth';
+import { useSEO } from '@ebringgs/ui';
 
 /**
  * The destination page for "View plan" CTAs and the 403 PAYMENT_REQUIRED
@@ -24,6 +25,7 @@ import { useAuthStore } from '@ebringgs/auth';
  */
 
 export default function PaymentPlanDetail() {
+  useSEO({ title: 'Payment plan', noIndex: true });
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();

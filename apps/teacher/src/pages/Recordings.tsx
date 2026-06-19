@@ -9,12 +9,14 @@ import {
   formatDuration,
   type Recording,
 } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' });
 }
 
 export default function TeacherRecordings() {
+  useSEO({ title: 'Recordings', siteName: 'E-Bringgs Teacher Portal' });
   const { data: recordings = [], isLoading, isError } = useTeacherRecordings();
   const deleteRec = useDeleteRecording();
   const [playing, setPlaying] = useState<Recording | null>(null);

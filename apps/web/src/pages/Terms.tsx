@@ -1,4 +1,4 @@
-import { useSEO } from '../hooks/useSEO';
+import { useSEO } from '@ebringgs/ui';
 
 const sections = [
   { title: '1. Acceptance of Terms', content: 'By accessing or using E-Bringgs Technologies ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Platform.' },

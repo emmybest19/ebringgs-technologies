@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Award, Download, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import api from '@ebringgs/api';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 
 /**
  * Certificate fetched from the backend by certificateId. All fields are the
@@ -30,6 +30,16 @@ export default function Certificate() {
   const [cert, setCert] = useState<CertificateData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+
+  useSEO({
+    title: cert ? `Certificate ${cert.certificateId}` : 'Certificate',
+    description: cert
+      ? `${cert.studentName} completed ${cert.program} at E-Bringgs Technologies on ${new Date(cert.completedAt).toLocaleDateString()}.`
+      : 'E-Bringgs Technologies certificate of completion.',
+    url: certificateId ? `https://ebringgs.com/certificate/${certificateId}` : undefined,
+    image: 'https://ebringgs.com/logo-full.jpg',
+    type: 'article',
+  });
 
   useEffect(() => {
     if (!certificateId) { setLoading(false); setNotFound(true); return; }

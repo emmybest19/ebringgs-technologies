@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '@ebringgs/api';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 
 export default function ForgotPassword() {
+  useSEO({ title: 'Forgot password', noIndex: true });
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);

@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import type { UserRole } from '@ebringgs/types';
-import { PageLoader } from '@ebringgs/ui';
+import { PageLoader, useSEO } from '@ebringgs/ui';
 import {
   useAdminUsers,
   useUpdateUserRole,
@@ -21,6 +21,7 @@ const roleColors: Record<UserRole, string> = {
 };
 
 export default function AdminUsers() {
+  useSEO({ title: 'Users', siteName: 'E-Bringgs Admin' });
   const { data: users = [], isLoading: loading } = useAdminUsers();
   const updateRole = useUpdateUserRole();
   const [search, setSearch] = useState('');

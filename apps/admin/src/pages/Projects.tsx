@@ -10,6 +10,7 @@ import {
   useAdminProjects, useAdminProject, useUpdateProject, useAddProjectUpdate,
   type ProjectUpdateType,
 } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
 
 const statusColor = (s: string) => {
   switch (s) {
@@ -31,6 +32,7 @@ const updateTypes: { id: ProjectUpdateType; label: string; icon: typeof Activity
 ];
 
 export function AdminProjectsList() {
+  useSEO({ title: 'Projects', siteName: 'E-Bringgs Admin' });
   const { data: projects = [], isLoading: loading } = useAdminProjects();
 
   return (
@@ -86,6 +88,7 @@ export function AdminProjectsList() {
 }
 
 export function AdminProjectDetail() {
+  useSEO({ title: 'Project', siteName: 'E-Bringgs Admin' });
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 

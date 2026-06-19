@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Mail, Clock, Tag, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
 import api from '@ebringgs/api';
-import { PageLoader, EmptyState } from '@ebringgs/ui';
+import { PageLoader, EmptyState, useSEO } from '@ebringgs/ui';
 
 interface Inquiry {
   _id: string;
@@ -23,6 +23,7 @@ const statusConfig = {
 type FilterStatus = 'all' | 'new' | 'contacted' | 'closed';
 
 export default function AdminServiceRequests() {
+  useSEO({ title: 'Service Requests', siteName: 'E-Bringgs Admin' });
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);

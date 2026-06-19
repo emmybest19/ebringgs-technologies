@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ClipboardList, CheckCircle2 } from 'lucide-react';
 import api from '@ebringgs/api';
+import { useSEO } from '@ebringgs/ui';
 
 interface Assignment {
   _id: string;
@@ -15,6 +16,7 @@ interface Assignment {
 }
 
 export default function TeacherAssignments() {
+  useSEO({ title: 'Assignments', siteName: 'E-Bringgs Teacher Portal' });
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
 

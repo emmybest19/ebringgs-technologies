@@ -1,5 +1,5 @@
 ﻿import { CreditCard, TrendingUp, DollarSign, CheckCircle2, XCircle } from 'lucide-react';
-import { PageLoader } from '@ebringgs/ui';
+import { PageLoader, useSEO } from '@ebringgs/ui';
 import { useAllTransactions } from '../services/queries';
 
 const statusConfig = {
@@ -16,6 +16,7 @@ function formatNGN(kobo: number) {
 }
 
 export default function AdminPayments() {
+  useSEO({ title: 'Payments', siteName: 'E-Bringgs Admin' });
   const { data: transactions = [], isLoading: loading } = useAllTransactions();
 
   const totalRevenueKobo = transactions

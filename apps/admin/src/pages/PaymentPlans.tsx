@@ -9,6 +9,7 @@ import {
   useAdminPaymentPlans, useExtendPaymentPlan, useMarkInstallmentPaid,
   type PaymentPlan, type PaymentPlanAdminFilter, type PaymentPlanStatus,
 } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
 
 /**
  * Admin view of every installment plan in the system. Admins can:
@@ -51,6 +52,7 @@ const STATUS_STYLES: Record<PaymentPlanStatus, { bg: string; text: string; icon:
 };
 
 export default function AdminPaymentPlans() {
+  useSEO({ title: 'Payment Plans', siteName: 'E-Bringgs Admin' });
   const [filter, setFilter] = useState<PaymentPlanAdminFilter>('');
   const { data: plans = [], isLoading } = useAdminPaymentPlans(filter);
   const [actionPlan, setActionPlan] = useState<{ plan: PaymentPlan; mode: 'extend' | 'mark-paid' } | null>(null);

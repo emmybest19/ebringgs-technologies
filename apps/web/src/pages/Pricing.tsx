@@ -5,6 +5,7 @@ import {
   Code2, Smartphone, Zap, Users, Building2,
   Briefcase, GraduationCap, BarChart3, BookOpen, Layers,
 } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type PricingTab = 'clients' | 'training';
@@ -711,6 +712,12 @@ export default function Pricing() {
   const [tab, setTab] = useState<PricingTab>('clients');
   const [activeTrainingCat, setActiveTrainingCat] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  useSEO({
+    title: 'Pricing',
+    description: 'Transparent pricing for client projects and student cohorts. Pay-as-you-grow plans for businesses; per-cohort and per-mentorship plans for learners.',
+    url: 'https://ebringgs.com/pricing',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
 
   return (
     <div className="bg-white dark:bg-slate-900">

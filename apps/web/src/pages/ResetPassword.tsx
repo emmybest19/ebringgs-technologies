@@ -3,9 +3,10 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Loader2, CheckCircle2, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '@ebringgs/api';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 
 export default function ResetPassword() {
+  useSEO({ title: 'Reset password', noIndex: true });
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token') || '';
   const navigate = useNavigate();

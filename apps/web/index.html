@@ -2,15 +2,60 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo-mark.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0d9488" media="(prefers-color-scheme: light)" />
+
+    <!-- Primary SEO -->
+    <title>E-Bringgs Technologies — Software training, cohorts & client projects</title>
+    <meta
+      name="description"
+      content="E-Bringgs Technologies builds learner-first software cohorts, custom web & mobile products, and live mentorship for students and businesses across Africa."
+    />
+    <meta
+      name="keywords"
+      content="E-Bringgs, software training, coding bootcamp Nigeria, web development cohort, UI/UX mentorship, software agency, online classroom, live cohort"
+    />
+    <meta name="author" content="E-Bringgs Technologies" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://ebringgs.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="E-Bringgs Technologies" />
+    <meta property="og:title" content="E-Bringgs Technologies" />
+    <meta
+      property="og:description"
+      content="Learn to ship real software with our live cohorts, or hire our team to build yours. Mentorship, projects, certificates — all in one place."
+    />
+    <meta property="og:url" content="https://ebringgs.com/" />
+    <meta property="og:image" content="https://ebringgs.com/logo-full.jpg" />
+    <meta property="og:image:alt" content="E-Bringgs Technologies" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="E-Bringgs Technologies" />
+    <meta
+      name="twitter:description"
+      content="Learn to ship real software with our live cohorts, or hire our team to build yours."
+    />
+    <meta name="twitter:image" content="https://ebringgs.com/logo-full.jpg" />
+
+    <!-- Icons + PWA -->
+    <link rel="icon" type="image/png" href="/logo-mark.png" />
+    <link rel="apple-touch-icon" href="/logo-mark.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
     <!--
       Pre-React theme bootstrap. Dark is the default; we strip the `dark` class
       only if the user previously toggled to light. Runs synchronously before
@@ -28,7 +73,18 @@
         } catch (e) { /* fall back to the html.dark default */ }
       })();
     </script>
-    <title>E-Bringgs Technologies</title>
+
+    <!-- Organization schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "E-Bringgs Technologies",
+        "url": "https://ebringgs.com",
+        "logo": "https://ebringgs.com/logo-mark.png",
+        "sameAs": []
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

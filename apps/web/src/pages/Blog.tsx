@@ -1,7 +1,7 @@
 ﻿import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Calendar, Eye, Tag, BookOpen } from 'lucide-react';
 import { useBlogs, type BlogListItem } from '../services/queries';
-import { PageLoader, EmptyState } from '@ebringgs/ui';
+import { PageLoader, EmptyState, useSEO } from '@ebringgs/ui';
 
 const allCategories = ['All', 'Engineering', 'Data Science', 'Career', 'Industry', 'Design'];
 
@@ -46,6 +46,12 @@ function PostCard({ post }: { post: BlogListItem }) {
 }
 
 export default function Blog() {
+  useSEO({
+    title: 'Blog',
+    description: 'Engineering deep dives, learner stories, data science breakdowns and career advice from the E-Bringgs team.',
+    url: 'https://ebringgs.com/blog',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') || '';
   const category = searchParams.get('category') || '';

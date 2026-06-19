@@ -5,7 +5,7 @@ import {
   Briefcase, Sparkles, Users, Code2,
 } from 'lucide-react';
 import { useCaseStudies, type CaseStudy } from '../services/queries';
-import { useSEO } from '../hooks/useSEO';
+import { useSEO } from '@ebringgs/ui';
 
 // `Portfolio` only shows student projects, we alias the shared CaseStudy
 // type to keep the page-local variable names ergonomic.

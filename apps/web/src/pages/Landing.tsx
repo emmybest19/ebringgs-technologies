@@ -12,6 +12,7 @@ import { useReviews, useCaseStudies } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import { useAuthStore } from '@ebringgs/auth';
+import { useSEO } from '@ebringgs/ui';
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -484,6 +485,13 @@ function FinalCTA() {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 export default function Landing() {
+  useSEO({
+    title: 'E-Bringgs Technologies',
+    description:
+      'Learn to ship real software with our live cohorts, or hire our team to build yours. Mentorship, projects, certificates — all in one place.',
+    url: 'https://ebringgs.com/',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
   return (
     <>
       <Hero />

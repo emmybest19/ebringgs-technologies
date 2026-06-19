@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, GraduationCap, Briefcase } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 import { capabilities } from '../data/capabilities';
 
 // One canonical surface for what E-Bringgs does. Each capability serves a
@@ -8,6 +9,12 @@ import { capabilities } from '../data/capabilities';
 // dual-track detail page expands on both.
 
 export default function Services() {
+  useSEO({
+    title: 'Services',
+    description: 'Every skill we teach is a skill we ship. Web, mobile, UI/UX, data — learn it with our mentors or hire our team to build it for you.',
+    url: 'https://ebringgs.com/services',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
   return (
     <div className="bg-white dark:bg-slate-900">
       {/* Hero header */}

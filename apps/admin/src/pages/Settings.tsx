@@ -5,6 +5,7 @@ import {
   CalendarDays, CreditCard, FileText, CheckCircle2, AlertCircle,
   ChevronRight, Zap,
 } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 
 interface SettingRow {
   label: string;
@@ -49,6 +50,7 @@ const quickLinks = [
 ];
 
 export default function AdminSettings() {
+  useSEO({ title: 'Settings', siteName: 'E-Bringgs Admin' });
   const [apiEnv] = useState({
     nodeEnv: import.meta.env.MODE || 'development',
     apiBase: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',

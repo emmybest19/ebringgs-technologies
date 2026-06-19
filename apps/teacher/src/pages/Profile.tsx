@@ -17,8 +17,10 @@ import {
 import toast from "react-hot-toast";
 import { useAuthStore } from "@ebringgs/auth";
 import { useUpdateProfile, useChangePassword } from "../services/queries";
+import { useSEO } from "@ebringgs/ui";
 
 export default function Profile() {
+  useSEO({ title: "Profile", siteName: "E-Bringgs Teacher Portal" });
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const fetchMe = useAuthStore((s) => s.fetchMe);

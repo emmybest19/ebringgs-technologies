@@ -6,6 +6,7 @@ import {
   useAdminReviews, useSetReviewApproval, useSetReviewFeatured, useAdminDeleteReview,
   type AdminReviewFilter,
 } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -14,6 +15,7 @@ const initials = (name: string) =>
   name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase();
 
 export default function AdminReviews() {
+  useSEO({ title: 'Reviews', siteName: 'E-Bringgs Admin' });
   const [filter, setFilter] = useState<AdminReviewFilter>('pending');
   const { data: reviews = [], isLoading: loading } = useAdminReviews(filter);
   const approveReview = useSetReviewApproval();

@@ -1,7 +1,9 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { XCircle, RefreshCw, MessageSquare } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 
 export default function PaymentFailed() {
+  useSEO({ title: 'Payment failed', noIndex: true });
   const [searchParams] = useSearchParams();
   const reason = searchParams.get('reason') || 'Your payment could not be processed.';
   const plan = searchParams.get('plan');

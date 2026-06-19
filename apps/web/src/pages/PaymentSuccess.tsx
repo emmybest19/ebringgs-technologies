@@ -4,8 +4,10 @@ import { CheckCircle2, ArrowRight, BookOpen, Loader2, XCircle, ClipboardList } f
 import { useAuthStore } from '@ebringgs/auth';
 import { useVerifyPayment, useMyPaymentPlan } from '../services/queries';
 import PaymentScheduleCard from '../components/payments/PaymentScheduleCard';
+import { useSEO } from '@ebringgs/ui';
 
 export default function PaymentSuccess() {
+  useSEO({ title: 'Payment successful', noIndex: true });
   const [searchParams] = useSearchParams();
   const reference = searchParams.get('reference') || searchParams.get('trxref');
   const { user, fetchMe } = useAuthStore();

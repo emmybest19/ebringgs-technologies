@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Don't crawl auth or payment flow
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /checkout
+Disallow: /payment/
+Disallow: /payments/
+Disallow: /dashboard
+Disallow: /client
+Disallow: /classroom
+
+Sitemap: https://ebringgs.com/sitemap.xml

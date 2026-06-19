@@ -2,15 +2,35 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo-mark.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0d9488" media="(prefers-color-scheme: light)" />
+
+    <!-- Admin console is fully private — block all crawlers + cross-site referrer leaks -->
+    <title>E-Bringgs · Admin Console</title>
+    <meta name="description" content="E-Bringgs internal admin console." />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Open Graph (limited, mostly for internal Slack/email previews) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="E-Bringgs Admin" />
+    <meta property="og:title" content="E-Bringgs · Admin Console" />
+
+    <!-- Icons + PWA -->
+    <link rel="icon" type="image/png" href="/logo-mark.png" />
+    <link rel="apple-touch-icon" href="/logo-mark.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
     <script>
       (function () {
         try {
@@ -23,7 +43,6 @@
         } catch (e) { /* fall back to the html.dark default */ }
       })();
     </script>
-    <title>E-Bringgs · Admin Console</title>
   </head>
   <body>
     <div id="root"></div>

@@ -5,7 +5,7 @@ import {
   Award, Code2, MessageSquare, FolderOpen, BarChart3, CheckCircle2,
   GraduationCap, Briefcase, Users,
 } from 'lucide-react';
-import { useSEO } from '../hooks/useSEO';
+import { useSEO } from '@ebringgs/ui';
 
 /* ─── Role tabs ─────────────────────────────────────────────────────────────── */
 

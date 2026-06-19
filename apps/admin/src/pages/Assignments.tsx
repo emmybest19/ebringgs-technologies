@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle2, Clock, FileText, ChevronDown, ChevronUp, Loader2, X } from 'lucide-react';
 import api from '@ebringgs/api';
-import { PageLoader } from '@ebringgs/ui';
+import { PageLoader, useSEO } from '@ebringgs/ui';
 
 interface Assignment {
   _id: string;
@@ -22,6 +22,7 @@ interface Assignment {
 const GRADES = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'Incomplete', 'Pass', 'Fail'];
 
 export default function AdminAssignments() {
+  useSEO({ title: 'Assignments', siteName: 'E-Bringgs Admin' });
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'submitted' | 'reviewed'>('all');

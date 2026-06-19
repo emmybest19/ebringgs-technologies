@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink, Github, Star, Filter, Loader2 } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 import { useCaseStudies, type CaseStudy } from '../services/queries';
 
 function formatNGN(kobo: number) {
@@ -8,6 +9,12 @@ function formatNGN(kobo: number) {
 }
 
 export default function SuccessStories() {
+  useSEO({
+    title: 'Success Stories',
+    description: 'Real client projects we shipped and real student work that landed jobs. Case studies, code, and outcomes.',
+    url: 'https://ebringgs.com/success-stories',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
   const { data: studies = [], isLoading: loading } = useCaseStudies();
   const [activeType, setActiveType] = useState<'all' | 'client_work' | 'student_project'>('all');
   const [activeCategory, setActiveCategory] = useState('All');

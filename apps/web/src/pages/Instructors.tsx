@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Users, BookOpen, Linkedin, Github, Globe, X } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 
 interface Instructor {
   id: string;
@@ -102,6 +103,12 @@ const instructors: Instructor[] = [
 ];
 
 export default function Instructors() {
+  useSEO({
+    title: 'Instructors',
+    description: 'Meet the engineers and designers who teach cohorts and ship client projects at E-Bringgs Technologies.',
+    url: 'https://ebringgs.com/instructors',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
   const [selected, setSelected] = useState<Instructor | null>(null);
 
   return (

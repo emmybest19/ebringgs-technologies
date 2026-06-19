@@ -2,11 +2,19 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, ArrowRight, CheckCircle2, GraduationCap, Briefcase,
 } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 import { capabilities, getCapability, type CapabilityTrack } from '../data/capabilities';
 
 export default function CapabilityDetail() {
   const { slug = '' } = useParams<{ slug: string }>();
   const capability = getCapability(slug);
+
+  useSEO({
+    title: capability?.title ?? 'Services',
+    description: capability?.intro,
+    url: `https://ebringgs.com/services/${slug}`,
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
 
   if (!capability) return <Navigate to="/" replace />;
 

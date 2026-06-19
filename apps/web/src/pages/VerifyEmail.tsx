@@ -3,9 +3,10 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react';
 import api from '@ebringgs/api';
 import { useAuthStore } from '@ebringgs/auth';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 
 export default function VerifyEmail() {
+  useSEO({ title: 'Verify email', noIndex: true });
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'no-token'>('loading');

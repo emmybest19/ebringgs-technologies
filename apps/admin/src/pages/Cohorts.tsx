@@ -8,6 +8,7 @@ import {
   useAdminCohorts, useCreateCohort, useUpdateCohort, useDeleteCohort,
   type Cohort, type CohortStatus,
 } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
 
 /**
  * The plan IDs available in [frontend/src/pages/Checkout.tsx](Checkout.tsx)'s
@@ -104,6 +105,7 @@ function statusStyle(status: CohortStatus) {
 }
 
 export default function AdminCohorts() {
+  useSEO({ title: 'Cohorts', siteName: 'E-Bringgs Admin' });
   const { data: cohorts = [], isLoading, isError } = useAdminCohorts();
   const deleteCohort = useDeleteCohort();
   const [editing, setEditing] = useState<FormState | null>(null);

@@ -1,7 +1,7 @@
 ﻿import { useState, type FormEvent } from 'react';
 import { Plus, Edit2, Trash2, Eye, EyeOff, X, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { PageLoader } from '@ebringgs/ui';
+import { PageLoader, useSEO } from '@ebringgs/ui';
 import {
   useBlogs, useCreateBlog, useUpdateBlog, useDeleteBlog,
   type BlogListItem,
@@ -120,6 +120,7 @@ function BlogForm({ post, onClose }: {
 }
 
 export default function AdminBlogs() {
+  useSEO({ title: 'Blogs', siteName: 'E-Bringgs Admin' });
   const { data, isLoading: loading } = useBlogs({ limit: 50 });
   const posts = data?.posts ?? [];
   const [showForm, setShowForm] = useState(false);

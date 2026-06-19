@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Users, ClipboardList, CalendarDays, Video, ArrowRight } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
+
+const SITE = 'E-Bringgs Teacher Portal';
 
 const stats = [
   { label: 'Active Students', value: '0', icon: Users, color: 'text-teal-600', bg: 'bg-teal-50 dark:bg-teal-950' },
@@ -15,6 +18,7 @@ const quickActions = [
 ];
 
 export default function TeacherOverview() {
+  useSEO({ title: 'Overview', siteName: SITE });
   return (
     <div className="space-y-6">
       <div>

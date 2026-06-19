@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import api from '@ebringgs/api';
 import { useCohorts, type Cohort } from '../services/queries';
-import { useSEO } from '../hooks/useSEO';
+import { useSEO } from '@ebringgs/ui';
 
 /* ─── Types ───────────────────────────────────────────────────────────── */
 

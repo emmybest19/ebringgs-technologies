@@ -5,6 +5,7 @@ import {
   useAdminCaseStudies, useCreateCaseStudy, useUpdateCaseStudy, useDeleteCaseStudy,
   type CaseStudy,
 } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
 
 const blank: Partial<CaseStudy> = {
   type: 'client_work',
@@ -18,6 +19,7 @@ const blank: Partial<CaseStudy> = {
 };
 
 export default function AdminCaseStudies() {
+  useSEO({ title: 'Case Studies', siteName: 'E-Bringgs Admin' });
   const { data: items = [], isLoading: loading, isError } = useAdminCaseStudies();
   const updateCaseStudy = useUpdateCaseStudy();
   const deleteCaseStudy = useDeleteCaseStudy();

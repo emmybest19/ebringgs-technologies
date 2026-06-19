@@ -4,6 +4,9 @@ import {
   ArrowRight, Activity, ClipboardList, GraduationCap,
 } from 'lucide-react';
 import { useAdminStats } from '../services/queries';
+import { useSEO } from '@ebringgs/ui';
+
+const SITE = 'E-Bringgs Admin';
 
 const FALLBACK = {
   totalUsers: 0, newUsersThisMonth: 0,
@@ -12,6 +15,7 @@ const FALLBACK = {
 };
 
 export default function AdminOverview() {
+  useSEO({ title: 'Overview', siteName: SITE });
   const { data: rawStats, isLoading: loading } = useAdminStats();
   // Backend doesn't return `totalEnrollments`; the stat card defaults it to 0.
   const stats = { ...FALLBACK, ...rawStats, totalEnrollments: 0 };

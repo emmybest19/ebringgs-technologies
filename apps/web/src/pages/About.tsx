@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Target, Eye, Heart, Users } from 'lucide-react';
-import { useSEO } from '../hooks/useSEO';
+import { useSEO } from '@ebringgs/ui';
 
 const ceo = {
   name: 'Kofi Mensah',

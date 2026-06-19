@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '@ebringgs/auth';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 import SocialAuthButtons from '../components/auth/SocialAuthButtons';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -236,6 +236,7 @@ function LeftPanel({ currentStep }: { currentStep: number }) {
 
 // ─── Main Register Page ─────────────────────────────────────────────────────
 export default function Register() {
+  useSEO({ title: 'Create account', description: 'Create your E-Bringgs account — join a cohort or hire our team.', noIndex: true });
   const [step, setStep] = useState(1);
   const [role, setRole] = useState<Role>('student');
   const [name, setName] = useState('');

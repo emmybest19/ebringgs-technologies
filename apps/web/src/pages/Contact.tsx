@@ -1,7 +1,7 @@
 ﻿import { useState, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, MessageSquare, MapPin, Clock, Send, Loader2, CheckCircle2 } from 'lucide-react';
-import { useSEO } from '../hooks/useSEO';
+import { useSEO } from '@ebringgs/ui';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'ebringgstechnologies@gmail.com', href: 'mailto:ebringgstechnologies@gmail.com' },

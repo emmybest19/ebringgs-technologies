@@ -1,4 +1,4 @@
-﻿import { useSEO } from '../hooks/useSEO';
+﻿import { useSEO } from '@ebringgs/ui';
 
 const sections = [
   { title: '1. Information We Collect', content: 'We collect information you provide directly (name, email, payment details), information collected automatically (IP address, browser type, pages visited, cookies), and information from third-party services (Paystack for payment processing).' },

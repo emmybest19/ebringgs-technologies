@@ -9,7 +9,7 @@ import { useAuthStore } from '@ebringgs/auth';
 import { useReviews } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 import SocialAuthButtons from '../components/auth/SocialAuthButtons';
 
 // ─── Floating Icons (same as Register for consistency) ──────────────────────
@@ -97,6 +97,7 @@ function LeftPanel() {
 
 // ─── Main Login Page ────────────────────────────────────────────────────────
 export default function Login() {
+  useSEO({ title: 'Sign in', description: 'Sign in to your E-Bringgs account.', noIndex: true });
   const location = useLocation();
   const prefilledEmail = (location.state as { email?: string } | null)?.email ?? '';
   const [email, setEmail] = useState(prefilledEmail);

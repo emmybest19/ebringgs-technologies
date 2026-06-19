@@ -2,7 +2,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Eye, Tag, Clock } from 'lucide-react';
 import { useBlogPost } from '../services/queries';
-import { PageLoader } from '@ebringgs/ui';
+import { PageLoader, useSEO } from '@ebringgs/ui';
 
 function renderContent(content: string) {
   // Very simple markdown-like renderer
@@ -63,6 +63,14 @@ function renderContent(content: string) {
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading: loading } = useBlogPost(slug);
+
+  useSEO({
+    title: post?.title ?? 'Blog',
+    description: post?.excerpt,
+    url: post ? `https://ebringgs.com/blog/${post.slug}` : undefined,
+    image: 'https://ebringgs.com/logo-full.jpg',
+    type: 'article',
+  });
 
   if (loading) return <PageLoader />;
   if (!post) return <div className="py-24 text-center text-gray-500 dark:text-slate-400">Post not found.</div>;

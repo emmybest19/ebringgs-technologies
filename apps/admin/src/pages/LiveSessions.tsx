@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Video, X, Loader2, Calendar, Clock, ExternalLink } from 'lucide-react';
 import api from '@ebringgs/api';
-import { PageLoader } from '@ebringgs/ui';
+import { PageLoader, useSEO } from '@ebringgs/ui';
 
 interface LiveSession {
   _id: string;
@@ -53,6 +53,7 @@ function statusBadge(status: LiveSession['status']) {
 }
 
 export default function AdminLiveSessions() {
+  useSEO({ title: 'Live Sessions', siteName: 'E-Bringgs Admin' });
   const [sessions, setSessions] = useState<LiveSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);

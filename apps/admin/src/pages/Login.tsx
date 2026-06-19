@@ -3,8 +3,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ShieldCheck, Eye, EyeOff, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '@ebringgs/auth';
+import { useSEO } from '@ebringgs/ui';
 
 export default function AdminLogin() {
+  useSEO({ title: 'Admin Sign in', siteName: 'E-Bringgs Admin', noIndex: true });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

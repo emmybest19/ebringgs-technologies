@@ -6,7 +6,7 @@ import { useAuthStore } from '@ebringgs/auth';
 import api from '@ebringgs/api';
 import { useService, useInitializePayment } from '../services/queries';
 import InstallmentSelector, { type InstallmentChoice } from '../components/payments/InstallmentSelector';
-import { Logo } from '@ebringgs/ui';
+import { Logo, useSEO } from '@ebringgs/ui';
 
 const INSTALLMENT_PRICE_FLOOR_KOBO = 200_000 * 100; // ₦200,000 in kobo
 
@@ -81,6 +81,7 @@ interface CheckoutItem {
 }
 
 export default function Checkout() {
+  useSEO({ title: 'Checkout', noIndex: true });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();

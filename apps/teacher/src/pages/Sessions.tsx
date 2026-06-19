@@ -1,6 +1,8 @@
 import { CalendarDays } from 'lucide-react';
+import { useSEO } from '@ebringgs/ui';
 
 export default function TeacherSessions() {
+  useSEO({ title: 'Sessions', siteName: 'E-Bringgs Teacher Portal' });
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Sessions</h1>

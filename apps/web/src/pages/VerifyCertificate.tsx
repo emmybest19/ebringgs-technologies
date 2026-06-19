@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react';
 import { Award, Search, CheckCircle2, XCircle, Loader2, Shield } from 'lucide-react';
 import api from '@ebringgs/api';
+import { useSEO } from '@ebringgs/ui';
 
 interface CertResult {
   certificateId: string;
@@ -12,6 +13,12 @@ interface CertResult {
 }
 
 export default function VerifyCertificate() {
+  useSEO({
+    title: 'Verify Certificate',
+    description: 'Verify the authenticity of an E-Bringgs Technologies certificate of completion.',
+    url: 'https://ebringgs.com/verify-certificate',
+    image: 'https://ebringgs.com/logo-full.jpg',
+  });
   const [certId, setCertId] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'found' | 'not-found'>('idle');
   const [result, setResult] = useState<CertResult | null>(null);
