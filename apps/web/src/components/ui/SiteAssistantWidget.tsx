@@ -4,10 +4,6 @@ import { Bot, Send, X, Loader2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '@ebringgs/api';
 
-// Bot mascot served from /public — used in the launcher and header avatar.
-// Replace by overwriting apps/web/public/assistant-bot.svg.
-const BOT_AVATAR = '/assistant-bot.svg';
-
 // Public-site AI assistant. Distinct from the StudentLayout AITutorWidget,
 // that one helps cohort students with lessons (auth-gated /ai-tutor/*).
 // This one helps prospective visitors navigate the site, answers business
@@ -120,12 +116,7 @@ export default function SiteAssistantWidget() {
         <span className="ripple-wave ripple-wave--delay-1" aria-hidden="true" />
         <span className="ripple-wave ripple-wave--delay-2" aria-hidden="true" />
 
-        <img
-          src={BOT_AVATAR}
-          alt=""
-          aria-hidden="true"
-          className="w-11 h-11 rounded-full relative z-10 drop-shadow"
-        />
+        <Bot size={24} className="text-white relative z-10" />
         <span className="absolute right-full mr-3 px-3 py-1.5 bg-white dark:bg-slate-800 text-gray-900 dark:text-white text-sm font-medium rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
           Ask E-Bringgs anything
         </span>
@@ -154,8 +145,8 @@ export default function SiteAssistantWidget() {
               {/* Header */}
               <div className="flex items-center justify-between px-5 py-4 bg-linear-to-br from-teal-600 to-cyan-600 text-white">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
-                    <img src={BOT_AVATAR} alt="" aria-hidden="true" className="w-9 h-9 rounded-full" />
+                  <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
+                    <Bot size={18} />
                   </div>
                   <div>
                     <p className="font-bold">E-Bringgs Assistant</p>
@@ -178,7 +169,7 @@ export default function SiteAssistantWidget() {
               <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-4 bg-gray-50 dark:bg-slate-950">
                 {history.length === 0 && (
                   <div className="text-center py-6">
-                    <img src={BOT_AVATAR} alt="" aria-hidden="true" className="w-14 h-14 rounded-full mx-auto mb-3 shadow-md" />
+                    <Bot size={32} className="text-teal-500 mx-auto mb-3" />
                     <p className="font-semibold text-gray-900 dark:text-white mb-1">Hi! I help visitors find the right program or service.</p>
                     <p className="text-sm text-gray-500 dark:text-slate-400 mb-5">
                       Ask about cohorts, pricing, projects, schedules, anything.
