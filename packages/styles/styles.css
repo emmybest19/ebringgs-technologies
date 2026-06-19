@@ -95,3 +95,31 @@ body:is(.dark *) {
     --border-angle: 360deg;
   }
 }
+
+/* ─── Continuous wavy ripples for floating action buttons ──────────────────
+   Three concentric expanding rings, each delayed by a third of the cycle, so
+   the wave looks unbroken. Use on a `position: relative` element by adding
+   `<span class="ripple-wave" />` children (the .ripple-wave class draws the
+   ring; stack 2-3 of them with .ripple-wave--delay-1 / --delay-2 for the
+   stagger). Pointer events pass through so clicks still hit the button. */
+.ripple-wave {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  animation: ripple-wave 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.ripple-wave--delay-1 { animation-delay: 0.8s; }
+.ripple-wave--delay-2 { animation-delay: 1.6s; }
+
+@keyframes ripple-wave {
+  0%   { transform: scale(1);    opacity: 0.55; }
+  80%  { transform: scale(1.9);  opacity: 0; }
+  100% { transform: scale(1.9);  opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple-wave { animation: none; }
+}

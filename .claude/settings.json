@@ -107,7 +107,9 @@
       "Bash(pnpm --filter admin build)",
       "Bash(grep -vE \"\\(comment|node_modules|//|\\\\\\\\*\\)\")",
       "Bash(pnpm -r typecheck)",
-      "Bash(pnpm -r build)"
+      "Bash(pnpm -r build)",
+      "Bash(curl -sL \"https://api.dicebear.com/9.x/bottts/svg?seed=ebringgs&backgroundColor=0d9488&radius=50\" -o apps/web/public/assistant-bot.svg)",
+      "Bash(pnpm --filter @ebringgs/web typecheck)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",
