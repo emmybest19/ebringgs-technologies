@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import {
   useAdminCaseStudies, useCreateCaseStudy, useUpdateCaseStudy, useDeleteCaseStudy,
   type CaseStudy,
-} from '../../services/queries';
+} from '../services/queries';
 
 const blank: Partial<CaseStudy> = {
   type: 'client_work',

@@ -100,11 +100,16 @@
       "Bash(pnpm --filter web build)",
       "Bash(grep -r \"from '\\\\.\\\\./types'\\\\|from '\\\\.\\\\./\\\\.\\\\./types'\\\\|from '\\\\.\\\\./\\\\.\\\\./\\\\.\\\\./types'\\\\|from '\\\\.\\\\./types/index'\\\\|from '\\\\.\\\\./\\\\.\\\\./types/index'\\\\|from '\\\\.\\\\./\\\\.\\\\./\\\\.\\\\./types/index'\" apps/web/src --include=\"*.ts\" --include=\"*.tsx\" -l)",
       "Bash(rm -f .git/index.lock && \\\\ *)",
-      "Bash(pnpm --filter teacher typecheck)"
+      "Bash(pnpm --filter teacher typecheck)",
+      "Bash(pnpm --filter teacher build)",
+      "Bash(cp apps/web/src/services/queries/*.ts apps/admin/src/services/queries/ && \\\\ *)",
+      "Bash(pnpm --filter admin typecheck)",
+      "Bash(pnpm --filter admin build)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",
-      "C:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs\\.git"
+      "C:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs\\.git",
+      "C:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs\\apps\\web\\src\\services\\queries"
     ]
   }
 }

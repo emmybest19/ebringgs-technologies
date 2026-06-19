@@ -6,24 +6,25 @@ import {
   Menu, X,
 } from 'lucide-react';
 import { useAuthStore } from '@ebringgs/auth';
-import { useUnreadCounts } from '../../services/queries';
+import { useUnreadCounts } from '../services/queries';
 import { Logo, PageTransition } from '@ebringgs/ui';
 
+// Routes are root-mounted on the admin subdomain — no /admin prefix.
 const navItems = [
-  { to: '/admin', label: 'Overview', icon: LayoutDashboard, end: true, badgeKey: null },
-  { to: '/admin/users', label: 'Users', icon: Users, badgeKey: null },
-  { to: '/admin/projects', label: 'Projects', icon: FolderKanban, badgeKey: null },
-  { to: '/admin/assignments', label: 'Assignments', icon: ClipboardList, badgeKey: 'assignments' as const },
-  { to: '/admin/cohorts', label: 'Cohorts', icon: GraduationCap, badgeKey: null },
-  { to: '/admin/live-sessions', label: 'Live sessions', icon: CalendarDays, badgeKey: null },
-  { to: '/admin/blogs', label: 'Blog posts', icon: FileText, badgeKey: null },
-  { to: '/admin/payments', label: 'Payments', icon: CreditCard, badgeKey: null },
-  { to: '/admin/payment-plans', label: 'Payment plans', icon: Receipt, badgeKey: null },
-  { to: '/admin/service-requests', label: 'Service requests', icon: Inbox, badgeKey: 'serviceRequests' as const },
-  { to: '/admin/reviews', label: 'Reviews', icon: Star, badgeKey: 'reviews' as const },
-  { to: '/admin/case-studies', label: 'Case studies', icon: Sparkles, badgeKey: null },
-  { to: '/admin/profile', label: 'Profile', icon: UserIcon, badgeKey: null },
-  { to: '/admin/settings', label: 'Settings', icon: Settings, badgeKey: null },
+  { to: '/', label: 'Overview', icon: LayoutDashboard, end: true, badgeKey: null },
+  { to: '/users', label: 'Users', icon: Users, badgeKey: null },
+  { to: '/projects', label: 'Projects', icon: FolderKanban, badgeKey: null },
+  { to: '/assignments', label: 'Assignments', icon: ClipboardList, badgeKey: 'assignments' as const },
+  { to: '/cohorts', label: 'Cohorts', icon: GraduationCap, badgeKey: null },
+  { to: '/live-sessions', label: 'Live sessions', icon: CalendarDays, badgeKey: null },
+  { to: '/blogs', label: 'Blog posts', icon: FileText, badgeKey: null },
+  { to: '/payments', label: 'Payments', icon: CreditCard, badgeKey: null },
+  { to: '/payment-plans', label: 'Payment plans', icon: Receipt, badgeKey: null },
+  { to: '/service-requests', label: 'Service requests', icon: Inbox, badgeKey: 'serviceRequests' as const },
+  { to: '/reviews', label: 'Reviews', icon: Star, badgeKey: 'reviews' as const },
+  { to: '/case-studies', label: 'Case studies', icon: Sparkles, badgeKey: null },
+  { to: '/profile', label: 'Profile', icon: UserIcon, badgeKey: null },
+  { to: '/settings', label: 'Settings', icon: Settings, badgeKey: null },
 ];
 
 export default function AdminLayout() {

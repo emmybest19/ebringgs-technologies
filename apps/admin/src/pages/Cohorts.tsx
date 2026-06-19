@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import {
   useAdminCohorts, useCreateCohort, useUpdateCohort, useDeleteCohort,
   type Cohort, type CohortStatus,
-} from '../../services/queries';
+} from '../services/queries';
 
 /**
  * The plan IDs available in [frontend/src/pages/Checkout.tsx](Checkout.tsx)'s

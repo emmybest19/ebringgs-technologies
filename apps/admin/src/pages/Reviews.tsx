@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { CheckCircle2, XCircle, Star as StarIcon, Trash2, Shield } from 'lucide-react';
 import toast from 'react-hot-toast';
-import StarRating from '../../components/reviews/StarRating';
+import StarRating from '../components/reviews/StarRating';
 import {
   useAdminReviews, useSetReviewApproval, useSetReviewFeatured, useAdminDeleteReview,
   type AdminReviewFilter,
-} from '../../services/queries';
+} from '../services/queries';
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });

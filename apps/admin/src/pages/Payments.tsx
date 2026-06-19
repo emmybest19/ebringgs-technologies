@@ -1,6 +1,6 @@
 ﻿import { CreditCard, TrendingUp, DollarSign, CheckCircle2, XCircle } from 'lucide-react';
 import { PageLoader } from '@ebringgs/ui';
-import { useAllTransactions } from '../../services/queries';
+import { useAllTransactions } from '../services/queries';
 
 const statusConfig = {
   succeeded: { label: 'Succeeded', icon: CheckCircle2, color: 'text-green-600 bg-green-50' },

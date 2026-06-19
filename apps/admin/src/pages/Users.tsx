@@ -11,7 +11,7 @@ import {
   useUpdateUserRole,
   useCreateTeacher,
   type CreateTeacherInput,
-} from '../../services/queries';
+} from '../services/queries';
 
 const roleColors: Record<UserRole, string> = {
   admin: 'text-red-600 bg-red-50 dark:bg-red-950',

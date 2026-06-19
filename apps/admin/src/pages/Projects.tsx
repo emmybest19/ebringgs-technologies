@@ -5,11 +5,11 @@ import {
   Send, ExternalLink, Github, Save,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import ActivityTimeline from '../../components/projects/ActivityTimeline';
+import ActivityTimeline from '../components/projects/ActivityTimeline';
 import {
   useAdminProjects, useAdminProject, useUpdateProject, useAddProjectUpdate,
   type ProjectUpdateType,
-} from '../../services/queries';
+} from '../services/queries';
 
 const statusColor = (s: string) => {
   switch (s) {

@@ -11,7 +11,7 @@ export default function AdminLogin() {
   const { login, isLoading, logout } = useAuthStore();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const next = searchParams.get('next') || '/admin';
+  const next = searchParams.get('next') || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +119,7 @@ export default function AdminLogin() {
 
         <p className="text-center text-xs text-slate-500 mt-6">
           Not an admin?{' '}
-          <a href="/login" className="text-teal-400 hover:text-teal-300">Sign in here</a>
+          <a href="https://ebringgs.com/login" className="text-teal-400 hover:text-teal-300">Sign in here</a>
         </p>
       </div>
     </div>

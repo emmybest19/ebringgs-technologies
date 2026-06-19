@@ -3,7 +3,7 @@ import {
   Users, FileText, CreditCard, TrendingUp,
   ArrowRight, Activity, ClipboardList, GraduationCap,
 } from 'lucide-react';
-import { useAdminStats } from '../../services/queries';
+import { useAdminStats } from '../services/queries';
 
 const FALLBACK = {
   totalUsers: 0, newUsersThisMonth: 0,

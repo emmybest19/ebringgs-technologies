@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import {
   useAdminPaymentPlans, useExtendPaymentPlan, useMarkInstallmentPaid,
   type PaymentPlan, type PaymentPlanAdminFilter, type PaymentPlanStatus,
-} from '../../services/queries';
+} from '../services/queries';
 
 /**
  * Admin view of every installment plan in the system. Admins can:

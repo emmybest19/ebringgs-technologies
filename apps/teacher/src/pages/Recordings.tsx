@@ -8,7 +8,7 @@ import {
   formatBytes,
   formatDuration,
   type Recording,
-} from '../../services/queries';
+} from '../services/queries';
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString('en-NG', { dateStyle: 'medium', timeStyle: 'short' });

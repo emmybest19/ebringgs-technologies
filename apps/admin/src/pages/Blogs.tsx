@@ -5,7 +5,7 @@ import { PageLoader } from '@ebringgs/ui';
 import {
   useBlogs, useCreateBlog, useUpdateBlog, useDeleteBlog,
   type BlogListItem,
-} from '../../services/queries';
+} from '../services/queries';
 
 type BlogRow = BlogListItem;
 
