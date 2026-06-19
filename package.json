@@ -1,0 +1,23 @@
+{
+  "name": "e-bringgs",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.8.0",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:web\" \"pnpm dev:backend\"",
+    "dev:web": "pnpm --filter web dev",
+    "dev:teacher": "pnpm --filter teacher dev",
+    "dev:admin": "pnpm --filter admin dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "pnpm -r build",
+    "build:web": "pnpm --filter web build",
+    "build:teacher": "pnpm --filter teacher build",
+    "build:admin": "pnpm --filter admin build",
+    "build:backend": "npm --prefix backend run build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

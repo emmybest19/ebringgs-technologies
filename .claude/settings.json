@@ -89,7 +89,16 @@
       "Bash(curl -s \"http://localhost:5000/api/tutoring?grouped=true\")",
       "WebFetch(domain:support.udemy.com)",
       "WebFetch(domain:certifier.io)",
-      "Bash(npm --prefix frontend exec tsc -- -b --noEmit)"
+      "Bash(npm --prefix frontend exec tsc -- -b --noEmit)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(pnpm --version)",
+      "Bash(git mv *)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm --filter web typecheck)",
+      "Bash(pnpm --filter web build)",
+      "Bash(grep -r \"from '\\\\.\\\\./types'\\\\|from '\\\\.\\\\./\\\\.\\\\./types'\\\\|from '\\\\.\\\\./\\\\.\\\\./\\\\.\\\\./types'\\\\|from '\\\\.\\\\./types/index'\\\\|from '\\\\.\\\\./\\\\.\\\\./types/index'\\\\|from '\\\\.\\\\./\\\\.\\\\./\\\\.\\\\./types/index'\" apps/web/src --include=\"*.ts\" --include=\"*.tsx\" -l)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory"
