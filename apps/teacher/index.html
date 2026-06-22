@@ -2,29 +2,42 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#0d9488" media="(prefers-color-scheme: light)" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <!-- Teachers portal is private; keep it out of search indexes -->
     <title>E-Bringgs · Teacher Portal</title>
     <meta name="description" content="E-Bringgs Teacher Portal — manage cohorts, live classes, assignments and recordings." />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta name="googlebot" content="noindex, nofollow" />
 
     <!-- Open Graph (still nice for internal link previews) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="E-Bringgs Teacher Portal" />
     <meta property="og:title" content="E-Bringgs · Teacher Portal" />
+    <meta property="og:description" content="Internal teacher portal for E-Bringgs Technologies." />
     <meta property="og:image" content="https://ebringgs.com/logo-full.jpg" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Icons + PWA -->
     <link rel="icon" type="image/png" href="/logo-mark.png" />
+    <link rel="shortcut icon" type="image/png" href="/logo-mark.png" />
     <link rel="apple-touch-icon" href="/logo-mark.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="E-Bringgs Teacher" />
+    <meta name="application-name" content="E-Bringgs Teacher" />
+    <meta name="msapplication-TileColor" content="#0d9488" />
+    <meta name="msapplication-TileImage" content="/logo-mark.png" />
 
-    <!-- Fonts -->
+    <!-- Performance -->
+    <link rel="preconnect" href="https://ebringgs-backend.onrender.com" crossorigin />
+    <link rel="dns-prefetch" href="https://ebringgs-backend.onrender.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

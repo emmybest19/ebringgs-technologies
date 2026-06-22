@@ -6,4 +6,4 @@ export { default as LoadingSpinner, PageLoader } from './LoadingSpinner';
 export { default as EmptyState } from './EmptyState';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as PageTransition } from './PageTransition';
-export { useSEO } from './useSEO';
+export { useSEO, schema } from './useSEO';

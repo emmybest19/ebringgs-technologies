@@ -2,25 +2,20 @@
   "name": "E-Bringgs Admin Console",
   "short_name": "E-Bringgs Admin",
   "description": "Internal administration for E-Bringgs Technologies.",
-  "start_url": "/",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0f172a",
   "theme_color": "#0d9488",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "lang": "en",
+  "dir": "ltr",
+  "categories": ["business", "productivity"],
   "icons": [
-    {
-      "src": "/logo-mark.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/logo-mark.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/logo-mark.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/logo-mark.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/logo-mark.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

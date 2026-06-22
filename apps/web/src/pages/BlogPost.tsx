@@ -2,7 +2,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Eye, Tag, Clock } from 'lucide-react';
 import { useBlogPost } from '../services/queries';
-import { PageLoader, useSEO } from '@ebringgs/ui';
+import { PageLoader, useSEO, schema } from '@ebringgs/ui';
 
 function renderContent(content: string) {
   // Very simple markdown-like renderer
@@ -64,12 +64,42 @@ export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: post, isLoading: loading } = useBlogPost(slug);
 
+  const postUrl = post ? `https://ebringgs.com/blog/${post.slug}` : undefined;
   useSEO({
     title: post?.title ?? 'Blog',
     description: post?.excerpt,
-    url: post ? `https://ebringgs.com/blog/${post.slug}` : undefined,
+    keywords: post?.tags,
+    url: postUrl,
     image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: post?.title,
     type: 'article',
+    article: post
+      ? {
+          author: post.author.name,
+          publishedTime: post.publishedAt,
+          section: post.category,
+          tags: post.tags,
+        }
+      : undefined,
+    jsonLd: post && postUrl
+      ? [
+          schema.blogPosting({
+            headline: post.title,
+            description: post.excerpt,
+            image: 'https://ebringgs.com/logo-full.jpg',
+            url: postUrl,
+            datePublished: post.publishedAt,
+            authorName: post.author.name,
+            category: post.category,
+            keywords: post.tags,
+          }),
+          schema.breadcrumb([
+            { name: 'Home', url: 'https://ebringgs.com/' },
+            { name: 'Blog', url: 'https://ebringgs.com/blog' },
+            { name: post.title, url: postUrl },
+          ]),
+        ]
+      : undefined,
   });
 
   if (loading) return <PageLoader />;

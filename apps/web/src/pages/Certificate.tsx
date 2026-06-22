@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Award, Download, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import api from '@ebringgs/api';
-import { Logo, useSEO } from '@ebringgs/ui';
+import { Logo, useSEO, schema } from '@ebringgs/ui';
 
 /**
  * Certificate fetched from the backend by certificateId. All fields are the
@@ -31,14 +31,28 @@ export default function Certificate() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
+  const certUrl = certificateId ? `https://ebringgs.com/certificate/${certificateId}` : undefined;
   useSEO({
     title: cert ? `Certificate ${cert.certificateId}` : 'Certificate',
     description: cert
       ? `${cert.studentName} completed ${cert.program} at E-Bringgs Technologies on ${new Date(cert.completedAt).toLocaleDateString()}.`
       : 'E-Bringgs Technologies certificate of completion.',
-    url: certificateId ? `https://ebringgs.com/certificate/${certificateId}` : undefined,
+    url: certUrl,
     image: 'https://ebringgs.com/logo-full.jpg',
-    type: 'article',
+    imageAlt: cert ? `Certificate of completion for ${cert.studentName}` : undefined,
+    type: 'profile',
+    robotsExtras: ['max-image-preview:large'],
+    jsonLd: cert && certUrl
+      ? [
+          schema.credential({
+            name: `${cert.program} Certificate of Completion`,
+            recipientName: cert.studentName,
+            issuedOn: cert.completedAt,
+            credentialId: cert.certificateId,
+            url: certUrl,
+          }),
+        ]
+      : undefined,
   });
 
   useEffect(() => {

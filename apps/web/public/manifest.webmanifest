@@ -2,13 +2,17 @@
   "name": "E-Bringgs Technologies",
   "short_name": "E-Bringgs",
   "description": "Software cohorts, live mentorship and client projects.",
-  "start_url": "/",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0f172a",
   "theme_color": "#0d9488",
   "orientation": "portrait-primary",
   "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "business", "productivity"],
   "icons": [
     {
       "src": "/logo-mark.png",
@@ -20,7 +24,33 @@
       "src": "/logo-mark.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Pricing",
+      "short_name": "Pricing",
+      "description": "View training plans and project pricing",
+      "url": "/pricing"
+    },
+    {
+      "name": "Schedule",
+      "short_name": "Schedule",
+      "description": "Upcoming cohorts and live sessions",
+      "url": "/schedule"
+    },
+    {
+      "name": "Verify Certificate",
+      "short_name": "Verify",
+      "description": "Look up an E-Bringgs certificate",
+      "url": "/verify-certificate"
     }
   ]
 }

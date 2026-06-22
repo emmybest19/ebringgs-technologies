@@ -12,7 +12,7 @@ import { useReviews, useCaseStudies } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import { useAuthStore } from '@ebringgs/auth';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -489,8 +489,16 @@ export default function Landing() {
     title: 'E-Bringgs Technologies',
     description:
       'Learn to ship real software with our live cohorts, or hire our team to build yours. Mentorship, projects, certificates — all in one place.',
+    keywords: [
+      'software training', 'coding bootcamp', 'web development cohort',
+      'UI/UX mentorship', 'software agency Nigeria', 'live online classroom',
+      'learn to code', 'E-Bringgs Technologies',
+    ],
     url: 'https://ebringgs.com/',
     image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: 'E-Bringgs Technologies — software training & client projects',
+    robotsExtras: ['max-image-preview:large'],
+    jsonLd: [schema.website(), schema.organization()],
   });
   return (
     <>

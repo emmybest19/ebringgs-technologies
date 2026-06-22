@@ -15,9 +15,11 @@ interface CertResult {
 export default function VerifyCertificate() {
   useSEO({
     title: 'Verify Certificate',
-    description: 'Verify the authenticity of an E-Bringgs Technologies certificate of completion.',
+    description: 'Verify the authenticity of an E-Bringgs Technologies certificate of completion. Look up any certificate by its ID to see the recipient, program and issue date.',
+    keywords: ['certificate verification', 'verify credential', 'e-bringgs certificate'],
     url: 'https://ebringgs.com/verify-certificate',
     image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: 'Verify an E-Bringgs certificate',
   });
   const [certId, setCertId] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'found' | 'not-found'>('idle');

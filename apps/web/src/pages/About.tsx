@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Target, Eye, Heart, Users } from 'lucide-react';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 
 const ceo = {
   name: 'Kofi Mensah',
@@ -23,7 +23,21 @@ const values = [
 ];
 
 export default function About() {
-  useSEO({ title: 'About Us', description: 'Learn about E-Bringgs Technologies, our mission, values, and the team behind the platform.' });
+  useSEO({
+    title: 'About Us',
+    description: 'Learn about E-Bringgs Technologies, our mission, values, and the team behind the platform.',
+    keywords: ['about E-Bringgs', 'tech company Nigeria', 'software training Africa'],
+    url: 'https://ebringgs.com/about',
+    image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: 'About E-Bringgs Technologies',
+    jsonLd: [
+      schema.organization(),
+      schema.breadcrumb([
+        { name: 'Home', url: 'https://ebringgs.com/' },
+        { name: 'About', url: 'https://ebringgs.com/about' },
+      ]),
+    ],
+  });
 
   return (
     <div className="bg-white dark:bg-slate-900">

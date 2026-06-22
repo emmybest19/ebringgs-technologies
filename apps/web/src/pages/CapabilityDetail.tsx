@@ -2,18 +2,36 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, ArrowRight, CheckCircle2, GraduationCap, Briefcase,
 } from 'lucide-react';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 import { capabilities, getCapability, type CapabilityTrack } from '../data/capabilities';
 
 export default function CapabilityDetail() {
   const { slug = '' } = useParams<{ slug: string }>();
   const capability = getCapability(slug);
 
+  const capUrl = `https://ebringgs.com/services/${slug}`;
   useSEO({
     title: capability?.title ?? 'Services',
     description: capability?.intro,
-    url: `https://ebringgs.com/services/${slug}`,
+    keywords: capability?.techStack,
+    url: capUrl,
     image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: capability?.title,
+    jsonLd: capability
+      ? [
+          schema.service({
+            name: capability.title,
+            description: capability.intro,
+            url: capUrl,
+            serviceType: capability.title,
+          }),
+          schema.breadcrumb([
+            { name: 'Home', url: 'https://ebringgs.com/' },
+            { name: 'Services', url: 'https://ebringgs.com/services' },
+            { name: capability.title, url: capUrl },
+          ]),
+        ]
+      : undefined,
   });
 
   if (!capability) return <Navigate to="/" replace />;

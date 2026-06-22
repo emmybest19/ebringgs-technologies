@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Github, Loader2, Quote, ShoppingCart, Star, AlertCircle, GraduationCap, Briefcase } from 'lucide-react';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 import { useCaseStudy } from '../services/queries';
 
 function formatNGN(kobo: number) {
@@ -13,18 +13,38 @@ export default function CaseStudyDetail() {
   const { data: study, isLoading: loading, isError } = useCaseStudy(slug);
   const error = isError ? 'Could not load this case study.' : '';
 
-  useSEO({
-    title: study?.title ?? 'Case Study',
-    description: study?.summary,
-    url: study ? `https://ebringgs.com/success-stories/${study.slug}` : undefined,
-    image: 'https://ebringgs.com/logo-full.jpg',
-    type: 'article',
-  });
-
   // Honour the back-link to whichever index the visitor came from.
   const cameFromPortfolio = pathname.startsWith('/portfolio');
   const backTo = cameFromPortfolio ? '/portfolio' : '/success-stories';
   const backLabel = cameFromPortfolio ? 'All portfolio projects' : 'All success stories';
+
+  const studyUrl = study ? `https://ebringgs.com/success-stories/${study.slug}` : undefined;
+  const canonicalUrl = study
+    ? cameFromPortfolio
+      ? `https://ebringgs.com/portfolio/${study.slug}`
+      : studyUrl
+    : undefined;
+  useSEO({
+    title: study?.title ?? 'Case Study',
+    description: study?.summary,
+    keywords: study?.tags,
+    url: canonicalUrl,
+    image: study?.coverImage ?? 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: study?.title,
+    type: 'article',
+    jsonLd: study && studyUrl
+      ? [
+          schema.breadcrumb([
+            { name: 'Home', url: 'https://ebringgs.com/' },
+            {
+              name: cameFromPortfolio ? 'Portfolio' : 'Success Stories',
+              url: cameFromPortfolio ? 'https://ebringgs.com/portfolio' : 'https://ebringgs.com/success-stories',
+            },
+            { name: study.title, url: studyUrl },
+          ]),
+        ]
+      : undefined,
+  });
 
   if (loading) {
     return (

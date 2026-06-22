@@ -5,7 +5,7 @@ import {
   Code2, Smartphone, Zap, Users, Building2,
   Briefcase, GraduationCap, BarChart3, BookOpen, Layers,
 } from 'lucide-react';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type PricingTab = 'clients' | 'training';
@@ -715,8 +715,17 @@ export default function Pricing() {
   useSEO({
     title: 'Pricing',
     description: 'Transparent pricing for client projects and student cohorts. Pay-as-you-grow plans for businesses; per-cohort and per-mentorship plans for learners.',
+    keywords: ['pricing', 'cohort fees', 'software project pricing', 'training plans', 'Nigeria web development'],
     url: 'https://ebringgs.com/pricing',
     image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: 'E-Bringgs pricing — client projects and training plans',
+    jsonLd: [
+      schema.faqPage(faqs),
+      schema.breadcrumb([
+        { name: 'Home', url: 'https://ebringgs.com/' },
+        { name: 'Pricing', url: 'https://ebringgs.com/pricing' },
+      ]),
+    ],
   });
 
   return (

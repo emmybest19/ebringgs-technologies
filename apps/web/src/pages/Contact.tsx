@@ -1,7 +1,7 @@
 ﻿import { useState, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, MessageSquare, MapPin, Clock, Send, Loader2, CheckCircle2 } from 'lucide-react';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'ebringgstechnologies@gmail.com', href: 'mailto:ebringgstechnologies@gmail.com' },
@@ -11,7 +11,27 @@ const contactInfo = [
 ];
 
 export default function Contact() {
-  useSEO({ title: 'Contact Us', description: 'Get in touch with the E-Bringgs team. We respond within 1 business day.' });
+  useSEO({
+    title: 'Contact Us',
+    description: 'Get in touch with the E-Bringgs team. We respond within 1 business day.',
+    url: 'https://ebringgs.com/contact',
+    image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: 'Contact E-Bringgs Technologies',
+    jsonLd: [
+      schema.organization({
+        contactPoint: {
+          '@type': 'ContactPoint',
+          email: 'ebringgstechnologies@gmail.com',
+          contactType: 'customer support',
+          availableLanguage: ['English'],
+        },
+      }),
+      schema.breadcrumb([
+        { name: 'Home', url: 'https://ebringgs.com/' },
+        { name: 'Contact', url: 'https://ebringgs.com/contact' },
+      ]),
+    ],
+  });
 
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [sent, setSent] = useState(false);

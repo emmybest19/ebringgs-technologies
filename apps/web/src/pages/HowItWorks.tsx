@@ -5,7 +5,7 @@ import {
   Award, Code2, MessageSquare, FolderOpen, BarChart3, CheckCircle2,
   GraduationCap, Briefcase, Users,
 } from 'lucide-react';
-import { useSEO } from '@ebringgs/ui';
+import { useSEO, schema } from '@ebringgs/ui';
 
 /* ─── Role tabs ─────────────────────────────────────────────────────────────── */
 
@@ -165,6 +165,16 @@ export default function HowItWorks() {
   useSEO({
     title: 'How It Works',
     description: 'A step-by-step guide for students and clients to get started with E-Bringgs Technologies.',
+    keywords: ['how it works', 'enrollment', 'client onboarding', 'training process'],
+    url: 'https://ebringgs.com/how-it-works',
+    image: 'https://ebringgs.com/logo-full.jpg',
+    imageAlt: 'How E-Bringgs Technologies works',
+    jsonLd: [
+      schema.breadcrumb([
+        { name: 'Home', url: 'https://ebringgs.com/' },
+        { name: 'How It Works', url: 'https://ebringgs.com/how-it-works' },
+      ]),
+    ],
   });
 
   return (
