@@ -162,7 +162,7 @@ function Stats() {
   const stats = [
     { value: live?.studentsTrained ?? 500, suffix: '+', label: 'Students trained', icon: GraduationCap },
     { value: live?.projectsDelivered ?? 50, suffix: '+', label: 'Projects delivered', icon: Code2 },
-    { value: live?.commitsThisWeek ?? 0, suffix: '', label: 'Commits this week', icon: GitCommit },
+    // { value: live?.commitsThisWeek ?? 0, suffix: '', label: 'Commits this week', icon: GitCommit },
     { value: live?.projectsInFlight ?? 15, suffix: '', label: 'Projects in flight', icon: Users },
     { value: 95, suffix: '%', label: 'Completion rate', icon: Globe },
   ];
