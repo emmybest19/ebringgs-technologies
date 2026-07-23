@@ -563,9 +563,9 @@ function ClientCard({ plan }: { plan: ServicePlan }) {
           : 'bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-lg hover:border-teal-200 dark:hover:border-teal-800'
       }`}
     >
-      {plan.highlight && (
+      {/* {plan.highlight && (
         <div className="h-1 bg-linear-to-r from-amber-400 to-orange-400 rounded-t-2xl" />
-      )}
+      )} */}
 
       <div className="p-7 flex-1 flex flex-col">
         {/* Badge + Icon */}
@@ -573,11 +573,11 @@ function ClientCard({ plan }: { plan: ServicePlan }) {
           <div className={`inline-flex p-3 rounded-xl ${plan.highlight ? 'bg-white/15' : 'bg-teal-50 dark:bg-teal-950'}`}>
             <Icon size={22} className={plan.highlight ? 'text-white' : 'text-teal-600 dark:text-teal-400'} />
           </div>
-          {plan.badge && (
+          {/* {plan.badge && (
             <span className="px-3 py-1 bg-linear-to-r from-amber-400 to-orange-400 rounded-full text-xs font-bold text-white shadow-sm">
               {plan.badge}
             </span>
-          )}
+          )} */}
         </div>
 
         <h3 className={`text-lg font-bold mb-0.5 ${plan.highlight ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
@@ -643,20 +643,20 @@ function TrainingCard({ plan }: { plan: TrainingPlan }) {
           : 'bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow'
       }`}
     >
-      {plan.highlight && (
+      {/* {plan.highlight && (
         <div className="h-1 bg-linear-to-r from-gold-400 via-gold-500 to-gold-600 rounded-t-2xl" />
-      )}
+      )} */}
 
       <div className="p-7 flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className={`inline-flex p-2.5 rounded-xl ${plan.highlight ? 'bg-white/15' : plan.bg}`}>
             <Icon size={22} className={plan.highlight ? 'text-white' : plan.color} />
           </div>
-          {plan.highlight && (
+          {/* {plan.highlight && (
             <span className="px-3 py-1 bg-linear-to-r from-gold-400 to-gold-600 rounded-full text-[11px] font-bold text-white shadow-md shadow-gold-500/30 tracking-wide uppercase">
               Most popular
             </span>
-          )}
+          )} */}
         </div>
 
         <h3 className={`text-xl font-bold mb-1 ${plan.highlight ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
