@@ -10,7 +10,7 @@ import { useReviews } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import { Logo, useSEO } from '@ebringgs/ui';
-import SocialAuthButtons from '../components/auth/SocialAuthButtons';
+import SocialAuthButtons, { SOCIAL_AUTH_ENABLED } from '../components/auth/SocialAuthButtons';
 
 // ─── Floating Icons (same as Register for consistency) ──────────────────────
 const floatingIcons = [
@@ -56,8 +56,8 @@ function LeftPanel() {
       <div className="relative z-10 flex flex-col justify-center px-12 xl:px-16 py-16">
         {/* Logo */}
         <div className="mb-12">
-          <Link to="/" className="inline-block rounded-2xl bg-white p-3 shadow-lg">
-            <Logo variant="full" size={56} />
+          <Link to="/" className="inline-block">
+            <Logo variant="full" size={56} tone="dark" />
           </Link>
         </div>
 
@@ -231,26 +231,30 @@ export default function Login() {
               </button>
             </form>
 
-            {/* Divider */}
-            <div className="flex items-center gap-4 my-8">
-              <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
-              <span className="text-xs text-gray-400 dark:text-slate-500 font-medium">OR</span>
-              <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
-            </div>
+            {/* Social sign-in (with its divider) — hidden while
+                SOCIAL_AUTH_ENABLED is off so no orphan "OR" is left. */}
+            {SOCIAL_AUTH_ENABLED && (
+              <>
+                <div className="flex items-center gap-4 my-8">
+                  <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+                  <span className="text-xs text-gray-400 dark:text-slate-500 font-medium">OR</span>
+                  <div className="flex-1 h-px bg-gray-200 dark:bg-slate-700" />
+                </div>
 
-            {/* Social sign-in */}
-            <div className="mb-8">
-              <SocialAuthButtons
-                onSuccess={(socialRole) => {
-                  const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
-                  const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
-                  if (socialRole === 'admin') window.location.href = adminUrl;
-                  else if (socialRole === 'teacher') window.location.href = teacherUrl;
-                  else if (socialRole === 'client') navigate('/client');
-                  else navigate('/dashboard');
-                }}
-              />
-            </div>
+                <div className="mb-8">
+                  <SocialAuthButtons
+                    onSuccess={(socialRole) => {
+                      const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+                      const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
+                      if (socialRole === 'admin') window.location.href = adminUrl;
+                      else if (socialRole === 'teacher') window.location.href = teacherUrl;
+                      else if (socialRole === 'client') navigate('/client');
+                      else navigate('/dashboard');
+                    }}
+                  />
+                </div>
+              </>
+            )}
 
             {/* Quick info */}
             <div className="bg-gray-50 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl p-5">

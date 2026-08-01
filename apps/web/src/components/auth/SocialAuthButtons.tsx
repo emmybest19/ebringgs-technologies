@@ -4,6 +4,20 @@ import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
 import { useAuthStore } from '@ebringgs/auth';
 
+/**
+ * Master switch for Google / Apple sign-in.
+ *
+ * Turned off deliberately — setting the providers up (Google Cloud OAuth
+ * client, Apple Services ID + domain verification + return URLs) is a bigger
+ * job than we want right now. Everything below is kept intact and working; to
+ * bring it back, flip this to `true` and populate VITE_GOOGLE_CLIENT_ID /
+ * VITE_APPLE_CLIENT_ID / VITE_APPLE_REDIRECT_URI.
+ *
+ * Consumers (Login, Register) import this to hide their "OR" dividers too,
+ * so no orphaned separator is left behind.
+ */
+export const SOCIAL_AUTH_ENABLED = false;
+
 const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID as string | undefined;
 const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI as string | undefined;
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined;
@@ -34,9 +48,10 @@ export default function SocialAuthButtons({ onSuccess, role, referralCode }: Soc
   const [appleBusy, setAppleBusy] = useState(false);
   const appleReady = useRef(false);
 
-  // Lazy-load Apple's JS SDK only when configured.
+  // Lazy-load Apple's JS SDK only when configured. Also skipped while the
+  // feature is switched off so we don't pull Apple's script for nothing.
   useEffect(() => {
-    if (!APPLE_CLIENT_ID || appleReady.current) return;
+    if (!SOCIAL_AUTH_ENABLED || !APPLE_CLIENT_ID || appleReady.current) return;
     const init = () => {
       window.AppleID?.auth.init({
         clientId: APPLE_CLIENT_ID,
@@ -98,6 +113,10 @@ export default function SocialAuthButtons({ onSuccess, role, referralCode }: Soc
       setAppleBusy(false);
     }
   };
+
+  // Rendered after the hooks above so hook order stays stable if the flag
+  // is ever driven by state/env rather than a constant.
+  if (!SOCIAL_AUTH_ENABLED) return null;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

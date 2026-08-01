@@ -142,7 +142,7 @@ export default function Certificate() {
           <div className="flex flex-col items-center justify-center h-[calc(100%-12px)] px-16 py-8 text-center">
             {/* Logo / Brand */}
             <div className="mb-6">
-              <Logo variant="full" size={56} />
+              <Logo variant="full" size={56} tone="light" />
             </div>
 
             {/* Award icon */}

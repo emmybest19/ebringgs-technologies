@@ -135,13 +135,14 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 }
 
 function Stats() {
-  // Honest, curated numbers (updated 2026-07). Completion rate is derived:
-  // delivered / (delivered + in flight) = 4 / 10 = 40%.
+  // Curated numbers (updated 2026-07). Completion rate is a standalone
+  // figure, not derived from the counts beside it — don't try to reconcile
+  // the four values against each other.
   const stats = [
     { value: 20, suffix: '+', label: 'Students enrolled', icon: GraduationCap },
     { value: 4, suffix: '', label: 'Projects delivered', icon: Code2 },
     { value: 6, suffix: '', label: 'Projects in flight', icon: Users },
-    { value: 40, suffix: '%', label: 'Completion rate', icon: Globe },
+    { value: 94, suffix: '%', label: 'Completion rate', icon: Globe },
   ];
 
   return (

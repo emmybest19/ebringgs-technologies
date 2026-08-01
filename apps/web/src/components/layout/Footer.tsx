@@ -35,8 +35,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-4 rounded-xl bg-white p-3 inline-block">
-              <Logo variant="full" size={72} asLink />
+            <div className="mb-4">
+              <Logo variant="full" size={72} asLink tone="dark" className="drop-shadow-sm" />
             </div>
             <p className="text-sm leading-relaxed mb-6">
               Empowering individuals and organizations through technology, learning, and innovation.
