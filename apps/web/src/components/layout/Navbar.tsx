@@ -9,7 +9,6 @@ import { useThemeStore } from '@ebringgs/auth';
 const navLinks = [
   { label: 'Services', to: '/services' },
   { label: 'Pricing', to: '/pricing' },
-  { label: 'Portfolio', to: '/portfolio' },
   { label: 'About', to: '/about' },
   { label: 'How It Works', to: '/how-it-works' },
 ];

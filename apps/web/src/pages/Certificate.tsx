@@ -181,7 +181,7 @@ export default function Certificate() {
               </div>
               <div className="text-center">
                 {/* Founder signature — drop a transparent PNG at frontend/public/signature.png to replace */}
-                <img
+                <img loading="lazy"
                   src="/signature.png"
                   alt=""
                   className="h-12 mx-auto -mb-2 object-contain"

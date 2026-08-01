@@ -92,7 +92,7 @@ export default function CaseStudyDetail() {
           {/* Cover image */}
           {study.coverImage && (
             <div className="rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-800">
-              <img src={study.coverImage} alt={study.title} className="w-full h-auto object-cover" />
+              <img loading="lazy" src={study.coverImage} alt={study.title} className="w-full h-auto object-cover" />
             </div>
           )}
 
@@ -102,7 +102,7 @@ export default function CaseStudyDetail() {
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-teal-100 dark:bg-teal-900 overflow-hidden flex items-center justify-center text-teal-700 dark:text-teal-300 font-bold text-xl shrink-0">
                   {study.studentAvatar ? (
-                    <img src={study.studentAvatar} alt={study.studentName} className="w-full h-full object-cover" />
+                    <img loading="lazy" src={study.studentAvatar} alt={study.studentName} className="w-full h-full object-cover" />
                   ) : (
                     study.studentName.charAt(0).toUpperCase()
                   )}
@@ -161,7 +161,7 @@ export default function CaseStudyDetail() {
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Gallery</h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {study.gallery.map((img, i) => (
-                  <img key={i} src={img} alt={`${study.title} ${i + 1}`}
+                  <img loading="lazy" key={i} src={img} alt={`${study.title} ${i + 1}`}
                     className="rounded-xl border border-gray-100 dark:border-slate-800 w-full h-auto object-cover" />
                 ))}
               </div>
@@ -175,7 +175,7 @@ export default function CaseStudyDetail() {
               <p className="text-gray-800 dark:text-slate-200 italic leading-relaxed mb-4">"{study.testimonial.quote}"</p>
               <div className="flex items-center gap-3">
                 {study.testimonial.avatar && (
-                  <img src={study.testimonial.avatar} alt={study.testimonial.name} className="w-10 h-10 rounded-full object-cover" />
+                  <img loading="lazy" src={study.testimonial.avatar} alt={study.testimonial.name} className="w-10 h-10 rounded-full object-cover" />
                 )}
                 <div>
                   <p className="font-bold text-gray-900 dark:text-white text-sm">{study.testimonial.name}</p>

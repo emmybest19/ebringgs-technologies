@@ -80,7 +80,7 @@ export default function CapabilityDetail() {
 
             <div className="hidden lg:block">
               <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/20">
-                <img src={img} alt={title} className="w-full h-full object-cover" />
+                <img loading="lazy" src={img} alt={title} className="w-full h-full object-cover" />
               </div>
             </div>
           </div>

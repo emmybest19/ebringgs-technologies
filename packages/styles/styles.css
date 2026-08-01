@@ -123,3 +123,32 @@ body:is(.dark *) {
 @media (prefers-reduced-motion: reduce) {
   .ripple-wave { animation: none; }
 }
+
+/* ─── Scroll reveal ────────────────────────────────────────────────────────
+   Sections fade/slide in when they enter the viewport and fade back out when
+   they leave. Elements get .reveal-init from useScrollReveal(); .reveal-in is
+   toggled by an IntersectionObserver, which also stamps .reveal-above on
+   elements that exited past the top so they re-enter sliding downward.
+   Entry uses a long expo-style deceleration for a silky settle; exit is
+   shorter and gentler so scrolling away never feels laggy.
+   Motion-sensitive users see no movement. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-init {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    transition:
+      opacity 0.4s cubic-bezier(0.4, 0, 0.7, 1),
+      transform 0.4s cubic-bezier(0.4, 0, 0.7, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-init.reveal-above {
+    transform: translateY(-28px) scale(0.985);
+  }
+  .reveal-init.reveal-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}

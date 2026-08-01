@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Code2,
   CheckCircle2, Star, Zap, Shield, Users, GraduationCap, Globe, Mail, Loader2,
-  ExternalLink, Github, Sparkles, GitCommit,
+  ExternalLink, Github, Sparkles,
 } from 'lucide-react';
 import HeroCarousel from '../components/ui/HeroCarousel';
 import api from '@ebringgs/api';
@@ -135,42 +134,20 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
-interface PublicStats {
-  projectsInFlight: number;
-  projectsDelivered: number;
-  commitsThisWeek: number;
-  studentsTrained: number;
-  nairaDelivered: number;
-}
-
 function Stats() {
-  // Live counts from /api/public/stats — backend caches 5 min server-side.
-  // On any failure (offline, 500, slow network) we fall back to the same
-  // hardcoded numbers we used to show — the page never breaks.
-  const { data: live } = useQuery<PublicStats>({
-    queryKey: ['public-stats'],
-    queryFn: async () => {
-      const { data } = await api.get('/public/stats');
-      return data.data as PublicStats;
-    },
-    staleTime: 5 * 60 * 1000, // matches backend cache
-    retry: 0,
-  });
-
-  // Static fallbacks — also used as the visible value while loading so there's
-  // no jarring "0 → real number" flicker.
+  // Honest, curated numbers (updated 2026-07). Completion rate is derived:
+  // delivered / (delivered + in flight) = 4 / 10 = 40%.
   const stats = [
-    { value: live?.studentsTrained ?? 500, suffix: '+', label: 'Students trained', icon: GraduationCap },
-    { value: live?.projectsDelivered ?? 50, suffix: '+', label: 'Projects delivered', icon: Code2 },
-    // { value: live?.commitsThisWeek ?? 0, suffix: '', label: 'Commits this week', icon: GitCommit },
-    { value: live?.projectsInFlight ?? 15, suffix: '', label: 'Projects in flight', icon: Users },
-    { value: 95, suffix: '%', label: 'Completion rate', icon: Globe },
+    { value: 20, suffix: '+', label: 'Students enrolled', icon: GraduationCap },
+    { value: 4, suffix: '', label: 'Projects delivered', icon: Code2 },
+    { value: 6, suffix: '', label: 'Projects in flight', icon: Users },
+    { value: 40, suffix: '%', label: 'Completion rate', icon: Globe },
   ];
 
   return (
     <section className="bg-teal-600 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map(({ value, suffix, label, icon: Icon }) => (
             <div key={label} className="text-center">
               <Icon size={28} className="mx-auto mb-3 text-teal-200" />
@@ -232,7 +209,7 @@ function Learning() {
             ].map((program) => (
               <div key={program.label} className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden group">
                 <div className="h-28 overflow-hidden">
-                  <img src={program.img} alt={program.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img loading="lazy" src={program.img} alt={program.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div className="p-4">
                   <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-md bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 mb-2">{program.tag}</span>
@@ -301,7 +278,7 @@ function FeaturedStudentWork() {
               >
                 {p.coverImage && (
                   <div className="h-44 overflow-hidden">
-                    <img
+                    <img loading="lazy"
                       src={p.coverImage}
                       alt={p.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -319,7 +296,7 @@ function FeaturedStudentWork() {
                     <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 dark:border-slate-800">
                       <div className="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900 overflow-hidden flex items-center justify-center text-teal-700 dark:text-teal-300 font-semibold text-xs shrink-0">
                         {p.studentAvatar ? (
-                          <img src={p.studentAvatar} alt={p.studentName} className="w-full h-full object-cover" />
+                          <img loading="lazy" src={p.studentAvatar} alt={p.studentName} className="w-full h-full object-cover" />
                         ) : (
                           p.studentName.charAt(0).toUpperCase()
                         )}
@@ -354,7 +331,7 @@ function Testimonials() {
 
   return (
     <section className="relative py-24 text-white overflow-hidden">
-      <img src="/images/general/african-students.jpg" alt="Students" className="absolute inset-0 w-full h-full object-cover" />
+      <img loading="lazy" src="/images/general/african-students.jpg" alt="Students" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-linear-to-br from-slate-900/95 to-teal-950/90" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">

@@ -181,7 +181,7 @@ export default function HowItWorks() {
     <div className="bg-white dark:bg-slate-900">
       {/* Hero */}
       <section className="relative text-white py-24 px-4 overflow-hidden">
-        <img src="/images/general/african-students.jpg" alt="Getting started" className="absolute inset-0 w-full h-full object-cover" />
+        <img loading="lazy" src="/images/general/african-students.jpg" alt="Getting started" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
         <div className="relative max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">How It Works</h1>
@@ -229,7 +229,7 @@ export default function HowItWorks() {
                 {/* Image side */}
                 <div className={`${isEven ? 'md:order-2' : ''}`}>
                   <div className="relative rounded-2xl overflow-hidden shadow-xl group">
-                    <img
+                    <img loading="lazy"
                       src={step.image}
                       alt={step.title}
                       className="w-full h-64 md:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
@@ -326,7 +326,7 @@ export default function HowItWorks() {
 
       {/* CTA */}
       <section className="relative py-20 px-4 text-center text-white overflow-hidden">
-        <img src="/images/hero/team-collaboration.jpg" alt="Get started" className="absolute inset-0 w-full h-full object-cover" />
+        <img loading="lazy" src="/images/hero/team-collaboration.jpg" alt="Get started" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-br from-teal-700/90 to-emerald-800/90" />
         <div className="relative">
           <Users size={36} className="mx-auto mb-5 text-teal-200" />

@@ -137,7 +137,7 @@ function FeaturedCard({ s }: { s: CaseStudy }) {
     <Link to={`/success-stories/${s.slug}`} className="group block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
       {s.coverImage && (
         <div className="h-56 overflow-hidden relative">
-          <img src={s.coverImage} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img loading="lazy" src={s.coverImage} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           <div className="absolute top-3 left-3">
             <span className="text-xs font-semibold text-white bg-amber-500 px-2.5 py-1 rounded-full inline-flex items-center gap-1">
               <Star size={11} className="fill-white" /> Featured
@@ -163,7 +163,7 @@ function Card({ s }: { s: CaseStudy }) {
     <Link to={`/success-stories/${s.slug}`} className="group block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-teal-200 dark:hover:border-teal-800 transition-all overflow-hidden">
       {s.coverImage && (
         <div className="h-40 overflow-hidden">
-          <img src={s.coverImage} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img loading="lazy" src={s.coverImage} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
       )}
       <div className="p-5">

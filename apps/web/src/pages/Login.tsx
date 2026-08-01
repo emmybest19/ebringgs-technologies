@@ -22,9 +22,9 @@ const floatingIcons = [
 ];
 
 const stats = [
-  { value: '500+', label: 'Students enrolled' },
-  { value: '50+', label: 'Projects delivered' },
-  { value: '15+', label: 'Expert mentors' },
+  { value: '20+', label: 'Students enrolled' },
+  { value: '4', label: 'Projects delivered' },
+  { value: '6', label: 'Projects in flight' },
 ];
 
 // ─── Left Panel ─────────────────────────────────────────────────────────────

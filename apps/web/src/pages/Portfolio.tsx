@@ -316,7 +316,7 @@ function FeaturedProjectCard({ p }: { p: StudentProject }) {
     >
       {p.coverImage && (
         <div className="h-56 overflow-hidden relative">
-          <img
+          <img loading="lazy"
             src={p.coverImage}
             alt={p.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -365,7 +365,7 @@ function ProjectCard({ p }: { p: StudentProject }) {
     >
       {p.coverImage && (
         <div className="h-40 overflow-hidden">
-          <img
+          <img loading="lazy"
             src={p.coverImage}
             alt={p.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -405,7 +405,7 @@ function StudentBlock({ p, compact }: { p: StudentProject; compact?: boolean }) 
     <div className={`flex items-center gap-3 ${compact ? '' : 'p-3 bg-gray-50 dark:bg-slate-950 rounded-xl'}`}>
       <div className="w-9 h-9 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-700 dark:text-teal-300 font-semibold text-sm shrink-0 overflow-hidden">
         {p.studentAvatar ? (
-          <img src={p.studentAvatar} alt={p.studentName} className="w-full h-full object-cover" />
+          <img loading="lazy" src={p.studentAvatar} alt={p.studentName} className="w-full h-full object-cover" />
         ) : (
           p.studentName.charAt(0).toUpperCase()
         )}

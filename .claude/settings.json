@@ -152,7 +152,10 @@
       "Read(//c/Users/EBRY/Desktop/my-company/e-bringgs-mobile/lib/core/api/**)",
       "Bash(curl -sS -o /dev/null -w \"cold-start=%{time_total}s http=%{http_code}\\\\n\" -X GET \"https://ebringgs-backend.onrender.com/api/services\" --max-time 90)",
       "Bash(grep -nE \"dotenv|runApp|load\\\\\\(\" \"c:/Users/EBRY/Desktop/my-company/e-bringgs-mobile/lib/main.dart\" 2>&1)",
-      "Bash(grep -rnE \"cors|origin|allowedHeaders\" \"c:/Users/EBRY/Desktop/my-company/backend/src/app.ts\" 2>&1 | head -20)"
+      "Bash(grep -rnE \"cors|origin|allowedHeaders\" \"c:/Users/EBRY/Desktop/my-company/backend/src/app.ts\" 2>&1 | head -20)",
+      "Bash(python -c ' *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm exec *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",

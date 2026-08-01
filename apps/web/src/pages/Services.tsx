@@ -19,7 +19,7 @@ export default function Services() {
     <div className="bg-white dark:bg-slate-900">
       {/* Hero header */}
       <section className="relative text-white py-24 px-4 overflow-hidden">
-        <img src="/images/general/tech-team.jpg" alt="Tech team" className="absolute inset-0 w-full h-full object-cover" />
+        <img loading="lazy" src="/images/general/tech-team.jpg" alt="Tech team" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-xs font-medium mb-5">
@@ -52,7 +52,7 @@ export default function Services() {
               className="card-hover-border group flex flex-col rounded-2xl border border-gray-100 dark:border-slate-800 hover:border-teal-200 hover:shadow-xl transition-all duration-300 dark:bg-slate-800 overflow-hidden"
             >
               <div className="h-40 overflow-hidden">
-                <img src={img} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img loading="lazy" src={img} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
               <div className="p-6 flex flex-col flex-1">
                 <div className={`inline-flex p-3 rounded-xl ${bg} mb-4 self-start`}>

@@ -136,7 +136,7 @@ export default function Instructors() {
             <button key={inst.id} onClick={() => setSelected(inst)} className="text-left group">
               <div className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="h-52 overflow-hidden relative">
-                  <img src={inst.image} alt={inst.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img loading="lazy" src={inst.image} alt={inst.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="font-bold text-white text-lg">{inst.name}</p>
@@ -164,7 +164,7 @@ export default function Instructors() {
               <div className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm p-5 hover:shadow-lg transition-shadow h-full flex flex-col">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-14 h-14 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-bold shrink-0 overflow-hidden">
-                    <img src={inst.image} alt={inst.name} className="w-full h-full object-cover" />
+                    <img loading="lazy" src={inst.image} alt={inst.name} className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-gray-900 dark:text-white">{inst.name}</p>
@@ -199,7 +199,7 @@ export default function Instructors() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelected(null)}>
           <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="h-48 overflow-hidden rounded-t-2xl relative">
-              <img src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
+              <img loading="lazy" src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
               <button onClick={() => setSelected(null)} className="absolute top-4 right-4 p-2 bg-black/30 text-white rounded-full hover:bg-black/50">
                 <X size={16} />

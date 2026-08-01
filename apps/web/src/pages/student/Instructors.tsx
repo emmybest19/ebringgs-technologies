@@ -130,7 +130,7 @@ function InstructorCard({ t, featured }: { t: Teacher; featured?: boolean }) {
     >
       <div className="h-40 overflow-hidden relative bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950">
         {t.avatar ? (
-          <img src={t.avatar} alt={t.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img loading="lazy" src={t.avatar} alt={t.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-5xl font-bold text-teal-600 dark:text-teal-300">
             {t.name.charAt(0).toUpperCase()}

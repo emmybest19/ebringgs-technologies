@@ -294,7 +294,7 @@ export default function ServiceDetailContent({
                       className="group block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-teal-200 dark:hover:border-teal-800 transition-all overflow-hidden">
                       {ex.coverImage && (
                         <div className="h-32 overflow-hidden">
-                          <img src={ex.coverImage} alt={ex.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <img loading="lazy" src={ex.coverImage} alt={ex.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         </div>
                       )}
                       <div className="p-4">

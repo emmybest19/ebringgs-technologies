@@ -58,7 +58,7 @@ export default function HeroCarousel() {
               : 'opacity-0 scale-105'
           }`}
         >
-          <img
+          <img loading="lazy"
             src={slide.src}
             alt={slide.alt}
             className="w-full h-full object-cover rounded-2xl"

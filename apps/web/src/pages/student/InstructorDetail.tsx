@@ -71,7 +71,7 @@ export default function StudentInstructorDetail() {
           <div className="flex flex-col sm:flex-row sm:items-end gap-5 -mt-12">
             <div className="w-24 h-24 rounded-2xl border-4 border-white dark:border-slate-900 bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950 overflow-hidden shrink-0">
               {teacher.avatar ? (
-                <img src={teacher.avatar} alt={teacher.name} className="w-full h-full object-cover" />
+                <img loading="lazy" src={teacher.avatar} alt={teacher.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-3xl font-bold text-teal-600 dark:text-teal-300">
                   {teacher.name.charAt(0).toUpperCase()}
