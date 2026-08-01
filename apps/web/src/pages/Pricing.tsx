@@ -573,11 +573,11 @@ function ClientCard({ plan }: { plan: ServicePlan }) {
           <div className={`inline-flex p-3 rounded-xl ${plan.highlight ? 'bg-white/15' : 'bg-teal-50 dark:bg-teal-950'}`}>
             <Icon size={22} className={plan.highlight ? 'text-white' : 'text-teal-600 dark:text-teal-400'} />
           </div>
-          {/* {plan.badge && (
-            <span className="px-3 py-1 bg-linear-to-r from-amber-400 to-orange-400 rounded-full text-xs font-bold text-white shadow-sm">
+          {plan.badge && (
+            <span className="px-3 py-1 bg-linear-to-r from-amber-400 to-orange-400 rounded-full text-xs font-bold text-white shadow-sm absolute top-0 left-45 ">
               {plan.badge}
             </span>
-          )} */}
+          )}
         </div>
 
         <h3 className={`text-lg font-bold mb-0.5 ${plan.highlight ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
