@@ -1,13 +1,21 @@
 # E-Bringgs Technologies — Full Application Flow
 
+End-to-end walkthrough of how the system fits together: repositories, startup,
+auth, routing, features, data and real-time.
+
+> **Companion docs:** [ARCHITECTURE.md](ARCHITECTURE.md) for design rationale ·
+> [API.md](API.md) for endpoint-level detail · [Client-flow.md](Client-flow.md)
+> for the service purchase journey. Interactive OpenAPI docs are generated from
+> the route JSDoc and served at `/api/docs`.
+
 ## Table of Contents
 
 1. [Architecture Overview](#1-architecture-overview)
-2. [Project Structure](#2-project-structure)
+2. [Repository Structure](#2-repository-structure)
 3. [Startup Flow](#3-startup-flow)
 4. [Authentication Flow](#4-authentication-flow)
-5. [Frontend Routing & Page Map](#5-frontend-routing--page-map)
-6. [Backend API Reference](#6-backend-api-reference)
+5. [Routing & Page Map](#5-routing--page-map)
+6. [Backend API Surface](#6-backend-api-surface)
 7. [Feature Flows](#7-feature-flows)
 8. [Data Models](#8-data-models)
 9. [Real-Time (WebSocket)](#9-real-time-websocket)
@@ -19,654 +27,528 @@
 ## 1. Architecture Overview
 
 ```
+┌──────────────┬──────────────┬──────────────┬──────────────────────┐
+│  apps/web    │  apps/admin  │ apps/teacher │  e-bringgs-mobile    │
+│  public +    │  admin       │  teacher     │  Flutter · Riverpod  │
+│  student +   │  console     │  console     │  go_router · Dio     │
+│  client      │              │              │  flutter_webrtc      │
+└──────┬───────┴──────┬───────┴──────┬───────┴──────────┬───────────┘
+       │ REST         │              │                  │ REST + WS
+       ▼              ▼              ▼                  ▼
 ┌────────────────────────────────────────────────────────────────────┐
-│                          CLIENT (Browser)                          │
-│   React 18 + TypeScript + Vite + TailwindCSS v4 + Zustand          │
-│   Axios (HTTP) ─────────────────────── WebSocket (WebRTC signaling)│
-└─────────┬──────────────────────────────────────┬───────────────────┘
-          │ HTTP (REST API)                      │ ws://
-          ▼                                      ▼
-┌─────────────────────────────────────┐  ┌──────────────────────┐
-│       EXPRESS SERVER (:5000)        │  │  WebSocket Server    │
-│  Helmet ─ CORS ─ Rate Limit ─ JSON │  │  (ws on /ws path)    │
-│                                     │  │                      │
-│  ┌─────────────┐  ┌──────────────┐ │  │  WebRTC Signaling:   │
-│  │  Middleware  │  │  Controllers │ │  │  - join/leave room   │
-│  │  auth.mid   │──│  9 files     │ │  │  - offer/answer/ICE  │
-│  │  upload.mid │  │  (business   │ │  │  - chat messages     │
-│  │  error.mid  │  │   logic)     │ │  │  - mute-all / kick   │
-│  └─────────────┘  └──────┬───────┘ │  │  - attendance        │
-│                          │         │  └──────────────────────┘
-│                          ▼         │
-│                   ┌────────────┐   │
-│                   │  MongoDB   │   │
-│                   │  Mongoose  │   │
-│                   └────────────┘   │
-│                                     │
-│  External: Stripe API, Nodemailer   │
-└─────────────────────────────────────┘
+│              NODE HTTP SERVER — one process, one port              │
+│                                                                    │
+│  Express  /api/*                    ws  WebSocketServer  /ws       │
+│  helmet · cors · rate-limit · json   join / offer / answer / ICE    │
+│  24 route modules                    chat · mute-all · kick        │
+│  23 controllers                      attendance                    │
+│  19 Mongoose models                                                │
+└───────┬──────────────────────────────────────────────┬─────────────┘
+        │                                              │
+        ▼                                              ▼
+┌──────────────────┐        External: Paystack · Nodemailer (SMTP)
+│  MongoDB Atlas   │                  WhatsApp Cloud API · Gemini
+│ dev/staging/prod │                  Web Push (VAPID)
+└──────────────────┘
 ```
 
-**Tech Stack:**
-- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS v4 (CSS-first, no config file), Zustand (state), React Router v6, Axios
-- **Backend:** Node.js, Express, TypeScript, Mongoose (MongoDB), JWT (access + refresh), bcryptjs, Stripe, Helmet, express-rate-limit, multer, swagger-ui-express
-- **Real-time:** WebSocket (`ws` library) for WebRTC signaling
+**Tech stack**
+
+- **Web:** React 19, TypeScript, Vite 7, Tailwind CSS v4 (CSS-first — no
+  `tailwind.config.js`), Zustand 5 (auth + theme), TanStack Query 5 (server
+  state), React Router 7, axios
+- **API:** Node, Express 4, TypeScript, Mongoose 8, JWT access + refresh,
+  bcryptjs, Zod, Helmet, express-rate-limit, Multer, swagger-jsdoc,
+  Paystack over raw `https`
+- **Real-time:** `ws` for WebRTC signaling
+- **Mobile:** Flutter, Riverpod, go_router, Dio, flutter_webrtc
+- **Hosting:** Vercel (web) · Render (API) · MongoDB Atlas
 
 ---
 
-## 2. Project Structure
+## 2. Repository Structure
+
+Three repositories, deliberately separate.
 
 ```
-e-bringgs/
-├── package.json              # Root — runs both with `concurrently`
-├── CLAUDE.md                 # Project todo / roadmap
-│
-├── frontend/
-│   ├── src/
-│   │   ├── main.tsx          # Entry point → <App />
-│   │   ├── App.tsx           # All routes (BrowserRouter)
-│   │   ├── index.css         # @import "tailwindcss"
-│   │   ├── types/index.ts    # Shared TS interfaces
-│   │   ├── store/
-│   │   │   └── auth.store.ts # Zustand auth state (persist to localStorage)
-│   │   ├── services/
-│   │   │   └── api.ts        # Axios instance + interceptors (auto refresh)
-│   │   ├── hooks/
-│   │   │   └── useSEO.ts     # document.title + meta tags
-│   │   ├── components/
-│   │   │   ├── layout/
-│   │   │   │   ├── Layout.tsx      # Navbar + Footer wrapper
-│   │   │   │   ├── AdminLayout.tsx # Sidebar + Outlet for /admin/*
-│   │   │   │   ├── Navbar.tsx      # Top nav with auth dropdown
-│   │   │   │   └── Footer.tsx      # Site footer
-│   │   │   └── ui/
-│   │   │       ├── LoadingSpinner.tsx
-│   │   │       ├── EmptyState.tsx
-│   │   │       └── ErrorMessage.tsx
-│   │   └── pages/            # All page components (see Section 5)
-│   └── vite.config.ts        # @tailwindcss/vite plugin
-│
-└── backend/
-    ├── src/
-    │   ├── index.ts           # HTTP server + WebSocket setup
-    │   ├── app.ts             # Express app (middleware + route mounting)
-    │   ├── types.ts           # AuthRequest interface
-    │   ├── config/
-    │   │   ├── db.ts          # Mongoose connection
-    │   │   └── swagger.ts     # OpenAPI 3.0 spec
-    │   ├── middleware/
-    │   │   ├── auth.middleware.ts   # JWT verify (protect) + role check (authorize)
-    │   │   ├── error.middleware.ts  # AppError class + global error handler
-    │   │   └── upload.middleware.ts # Multer config (disk, 50MB, MIME allowlist)
-    │   ├── models/            # Mongoose schemas (see Section 8)
-    │   ├── controllers/       # Business logic (9 files, see Section 6)
-    │   ├── routes/            # Thin route declarations (middleware + controller)
-    │   ├── signaling/
-    │   │   └── server.ts      # WebSocket signaling logic
-    │   └── utils/
-    │       └── email.ts       # Nodemailer templates
-    └── uploads/               # File upload directory (local disk)
+e-bringgs/                        # pnpm workspace — the web tier
+├── apps/
+│   ├── web/       public site + student dashboard + client dashboard
+│   ├── admin/     admin console
+│   └── teacher/   teacher console
+├── packages/
+│   ├── api/       axios instance · refresh interceptor · QueryClient
+│   ├── auth/      Zustand auth store + theme store
+│   ├── classroom/ WebRTC classroom · annotation overlay · recording upload
+│   ├── styles/    Tailwind v4 CSS-first config · brand tokens · animations
+│   ├── types/     shared TypeScript contracts
+│   └── ui/        Logo · useSEO · PageTransition · primitives
+└── screenshots/   captures of the live deployment
+
+backend/                          # separate repo — deploys to Render
+└── src/
+    ├── index.ts        boots ONE http.Server hosting Express + WebSocketServer
+    ├── app.ts          middleware order (see §3)
+    ├── routes/         24 modules — verb + path + middleware chain
+    ├── controllers/    23 modules — business logic
+    ├── models/         19 Mongoose schemas
+    ├── middleware/     protect · authorize · errorHandler · validate
+    ├── services/       points · whatsapp · email · siteAssistant · aiTutor
+    ├── config/         db · swagger · services.catalog · tutoring.catalog
+    ├── signaling/      WebSocket classroom server
+    ├── jobs/           cron — session reminders, installment charging
+    ├── validators/     Zod schemas
+    └── scripts/        seedAdmin
+
+e-bringgs-mobile/                 # separate repo — Flutter
 ```
+
+**Why three web apps:** a visitor loading the marketing site should never
+download the admin console. Separate builds make that impossible by
+construction; separate subdomains keep an admin session out of the public
+origin.
 
 ---
 
 ## 3. Startup Flow
 
-### `npm run dev` (from project root)
+```bash
+# Web tier (pnpm workspace)
+pnpm dev            # web + backend together
+pnpm dev:admin      # admin console
+pnpm dev:teacher    # teacher console
 
-```
-concurrently runs:
-  ├── frontend: vite dev server → localhost:5173
-  └── backend:  ts-node/nodemon → localhost:5000
+# API (separate repo, npm)
+npm run dev         # NODE_ENV=development
+npm run dev:staging # NODE_ENV=staging
+npm run dev:prod    # NODE_ENV=production
 ```
 
-### Backend startup sequence:
+### Backend startup sequence
 
 ```
 index.ts
-  │
-  ├── dotenv.config()            # Load .env
-  ├── connectDB()                # Mongoose → MongoDB
-  │     └── mongoose.connect(MONGODB_URI)
-  ├── createServer(app)          # HTTP server wrapping Express
-  ├── new WebSocketServer(...)   # ws on /ws path
+  ├── dotenv.config()
+  ├── connectDB()                 # picks MONGO_URI_<ENV> by NODE_ENV
+  ├── createServer(app)           # HTTP server wrapping Express
+  ├── new WebSocketServer({ server, path: '/ws' })
   │     └── setupSignalingServer(wss)
-  └── httpServer.listen(5000)
+  ├── registerJobs()              # cron: session reminders, installments
+  └── httpServer.listen(PORT)
 ```
 
-### Express middleware stack (in order):
+### Express middleware order — load-bearing
 
 ```
 app.ts
-  │
-  1. helmet()                       # Security headers
-  2. cors({ origin, credentials })  # CORS for frontend
-  3. rateLimit(100 req / 15 min)    # Rate limiting on /api
-  4. /api/payments/webhook          # RAW body (before JSON parser)
-  5. express.json({ limit: 10mb })  # JSON body parser
-  6. express.urlencoded()           # Form body parser
-  7. morgan('dev')                  # Request logging
-  8. Route handlers                 # /api/auth, /api/users, etc.
-  9. /uploads (static)              # Serve uploaded files
-  10. /api/docs (Swagger UI)        # API documentation
-  11. 404 handler                   # Catch-all
-  12. errorHandler                  # Global error handler
+  1. helmet()                        security headers
+  2. cors({ origin: allowedOrigin })  apex + www variants, plus localhost
+  3. rateLimit(100 / 15 min)          scoped to /api
+  4. express.json()                   body parser
+  5. /api/* route modules             24 of them
+  6. /uploads (static)                Multer-saved files
+  7. /api/docs                        Swagger UI
+  8. 404 handler
+  9. errorHandler                     global, formats { status, message }
 ```
 
-### Frontend startup sequence:
-
-```
-main.tsx
-  └── createRoot(#root).render(<App />)
-        └── BrowserRouter → Routes → matched page component
-              └── Each page fetches from api.ts (Axios → localhost:5000/api)
-```
+> **Note on webhooks.** Paystack verifies its signature against
+> `JSON.stringify(req.body)`, so the webhook works *after* the JSON parser and
+> needs no raw-body handling. A future provider that signs the raw bytes would
+> have to be mounted **before** step 4.
 
 ---
 
 ## 4. Authentication Flow
 
+Four roles: `student` · `client` · `teacher` · `admin`.
+
 ### Registration
+
 ```
-User fills Register form
-  │
-  ├── POST /api/auth/register  { name, email, password, role }
-  │     ├── Zod validation
-  │     ├── Check email uniqueness
-  │     ├── User.create() — password auto-hashed by pre-save hook (bcrypt, 12 rounds)
-  │     ├── Generate emailVerificationToken → send verification email (Nodemailer)
-  │     ├── Sign JWT access token (15 min) + refresh token (7 days)
-  │     └── Return { user, accessToken, refreshToken }
-  │
-  └── Zustand store saves tokens to localStorage + state
-        └── User is now authenticated → redirected to /dashboard
+POST /api/auth/register  { name, email, password, role, referralCode? }
+  ├── Zod validation
+  ├── Email uniqueness check
+  ├── User.create()  — password hashed by pre-save hook (bcrypt, 12 rounds)
+  ├── Generate emailVerificationToken → send verification email
+  ├── Sign access (15m) + refresh (7d) tokens
+  └── { user, accessToken, refreshToken }
 ```
 
-### Login
+### Login and refresh
+
 ```
 POST /api/auth/login  { email, password }
-  ├── Find user by email (with +password select)
-  ├── bcrypt.compare(password, user.password)
-  ├── Sign access + refresh tokens
-  └── Return { user, accessToken, refreshToken }
-```
+  └── { user, accessToken, refreshToken }
 
-### Token Refresh (automatic)
-```
-Axios interceptor detects 401 response
+Interceptor sees 401
   ├── POST /api/auth/refresh  { refreshToken }
-  │     ├── Verify refresh token (jwt.verify)
-  │     ├── Sign new access token
-  │     └── Return { accessToken }
-  └── Retry original request with new token
-      └── If refresh fails → clear localStorage → redirect to /login
+  ├── Retry the original request with the new access token
+  └── Refresh itself fails → clear tokens → /login
 ```
 
-### Protected Routes (Backend)
-```
-protect middleware:
-  ├── Extract Bearer token from Authorization header
-  ├── jwt.verify(token, JWT_SECRET)
-  ├── Attach { userId, role } to req.user
-  └── next()
+**Token storage on web.** Tokens live in *two* places — the persisted Zustand
+state and raw `localStorage` keys — because the axios interceptor reads the raw
+keys directly during refresh. Removing either half breaks refresh.
 
-authorize('admin') middleware:
-  ├── Check req.user.role === 'admin'
-  └── 403 if not
-```
+**Role → destination.** Admin and teacher authenticate per-origin on their own
+subdomains, so login on the public app redirects them by full URL rather than
+client-side navigation.
 
-### Password Reset
-```
-POST /api/auth/forgot-password  { email }
-  ├── Generate reset token + expiry (1 hour)
-  ├── Save to user document
-  └── Send reset email with link: /reset-password?token=xxx
+### Middleware
 
-POST /api/auth/reset-password  { token, password }
-  ├── Find user by token + check expiry
-  ├── Set new password (auto-hashed by pre-save hook)
-  └── Clear reset token fields
+```
+protect              verify JWT → populate req.user { userId, role }
+authorize(...roles)  role gate, chains after protect
+requireStudentAccess / requireProjectAccess   feature + ownership gates
 ```
 
-### Email Verification
-```
-GET /api/auth/verify-email?token=xxx
-  ├── Find user by emailVerificationToken
-  ├── Set isEmailVerified = true
-  └── Clear token
-```
+Handlers reading `req.user` must be typed `AuthRequest`, not `Request` —
+`protect` is the only thing that populates it.
+
+### OAuth
+
+`POST /api/auth/oauth/google` and `/oauth/apple` exchange a provider ID token
+for a session. **Currently switched off** behind a single feature flag per
+client pending provider setup.
 
 ---
 
-## 5. Frontend Routing & Page Map
+## 5. Routing & Page Map
 
-### Standalone pages (no navbar/footer):
+### apps/web — standalone (no layout)
 
-| Route | Component | Description |
-|-------|-----------|-------------|
-| `/login` | `Login` | Email/password form |
-| `/register` | `Register` | Name, email, password, role selector |
-| `/forgot-password` | `ForgotPassword` | Email input → sends reset link |
-| `/reset-password` | `ResetPassword` | New password form (token from URL) |
-| `/verify-email` | `VerifyEmail` | Auto-verifies on load (token from URL) |
-| `/checkout` | `Checkout` | Stripe Elements payment form |
-| `/payment/success` | `PaymentSuccess` | Success confirmation |
-| `/payment/failed` | `PaymentFailed` | Failure message + retry |
-| `/classroom/:roomId` | `Classroom` | Full-screen WebRTC video room |
+| Route | Description |
+|---|---|
+| `/login` · `/register` | Split-panel auth; register is a 5-step wizard |
+| `/forgot-password` · `/reset-password` · `/verify-email` | Password + email flows |
+| `/checkout` | Paystack initialise → hosted checkout |
+| `/payment/success` · `/payment/failed` | Verify reference, settle |
+| `/payments/plan/:id` | Installment plan detail |
+| `/classroom/:roomId` | Full-screen WebRTC room |
 
-### Public layout (Navbar + Footer):
+### apps/web — public layout
 
-| Route | Component | Description |
-|-------|-----------|-------------|
-| `/` | `Landing` | Hero, services preview, CTA |
-| `/pricing` | `Pricing` | Plan cards + FAQ accordion |
-| `/services` | `Services` | Filterable service catalog + inquiry modal |
-| `/services/:id` | `ServiceDetail` | Single service detail |
-| `/courses` | `Courses` | Search, filter, paginated course grid |
-| `/courses/:slug` | `CourseDetail` | Modules accordion, enroll button |
-| `/blog` | `Blog` | Search, category pills, paginated posts |
-| `/blog/:slug` | `BlogPost` | Full markdown-rendered article |
-| `/about` | `About` | Company info |
-| `/contact` | `Contact` | Contact form |
-| `/terms` | `Terms` | Terms of service |
-| `/privacy` | `Privacy` | Privacy policy |
-| `/dashboard` | `Dashboard` | 5 tabs: Overview, My Courses, Resources, Schedule, Assignments |
-| `/profile` | `Profile` | Edit name/bio, change password, email verification status |
-| `/certificate/:courseId` | `Certificate` | Printable completion certificate |
+`/` · `/pricing` · `/services` · `/services/:slug` · `/blog` · `/blog/:slug` ·
+`/about` · `/how-it-works` · `/success-stories[/:slug]` · `/portfolio[/:slug]` ·
+`/schedule` · `/instructors` · `/contact` · `/terms` · `/privacy` ·
+`/verify-certificate` · `/certificate/:courseId`
 
-### Admin layout (dark sidebar):
+### apps/web — student dashboard (`/dashboard/*`)
 
-| Route | Component | Description |
-|-------|-----------|-------------|
-| `/admin` | `AdminOverview` | Stats cards (users, courses, revenue, etc.) from DB |
-| `/admin/users` | `AdminUsers` | User table, role assignment dropdown |
-| `/admin/courses` | `AdminCourses` | Course CRUD, links to modules + cohort |
-| `/admin/courses/:id/modules` | `AdminCourseModules` | Drag-drop modules & lessons editor |
-| `/admin/courses/:id/cohort` | `AdminCohort` | Enrolled students table, remove student |
-| `/admin/assignments` | `AdminAssignments` | Review submissions, give feedback + grade |
-| `/admin/live-sessions` | `AdminLiveSessions` | Schedule live classes, generate room links |
-| `/admin/blogs` | `AdminBlogs` | Blog post CRUD |
-| `/admin/payments` | `AdminPayments` | Transaction history table |
-| `/admin/service-requests` | `AdminServiceRequests` | Inquiries list with status management |
-| `/admin/settings` | `AdminSettings` | System config overview + .env checklist |
+`index` · `schedule` · `assignments` · `recordings` · `instructors[/:id]` ·
+`services[/:id]` · `leaderboard` · `reviews` · `profile`
+
+### apps/web — client dashboard (`/client/*`)
+
+`index` · `projects[/:projectId]` · `projects/:projectId/brief` · `payments` ·
+`services[/:id]` · `schedule-call` · `reviews` · `profile`
+
+### apps/admin
+
+Overview · Users · Cohorts · LiveSessions · Projects · Assignments · Payments ·
+PaymentPlans · Blogs · CaseStudies · Reviews · ServiceRequests · Settings ·
+Profile · Login
+
+### apps/teacher
+
+Overview · Sessions · Students · Assignments · Recordings · Resources ·
+Profile · Login
 
 ---
 
-## 6. Backend API Reference
+## 6. Backend API Surface
 
-### Auth (`/api/auth`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/register` | - | Create account (Zod validated) |
-| POST | `/login` | - | Get tokens |
-| POST | `/refresh` | - | Refresh access token |
-| POST | `/forgot-password` | - | Send reset email |
-| POST | `/reset-password` | - | Set new password |
-| GET | `/verify-email` | - | Verify email token |
-| GET | `/me` | JWT | Get current user profile |
+24 route modules mounted under `/api`. Full detail in **[API.md](API.md)**;
+this is the map.
 
-### Users (`/api/users`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/` | Admin | List all users |
-| PATCH | `/profile` | JWT | Update own name/bio/avatar |
-| PATCH | `/change-password` | JWT | Change own password |
-| PATCH | `/:id/role` | Admin | Assign role to user |
+| Mount | Purpose |
+|---|---|
+| `/auth` | register · login · refresh · OAuth · password reset · email verify |
+| `/users` | profile, password, teacher directory, admin role management |
+| `/tutoring` | cohort + mentorship catalog (server-authoritative) |
+| `/services` | productized service catalog + custom-quote inquiries |
+| `/cohorts` | intakes with capacity and derived status |
+| `/live-sessions` | individual classes within a cohort |
+| `/projects` | client projects, briefs, activity timeline |
+| `/assignments` | student submission and admin grading |
+| `/paystack` | initialize · verify · transactions · webhook |
+| `/payment-plans` | installment plans, extend, mark paid |
+| `/points` | balance and leaderboard |
+| `/vouchers` | gift vouchers |
+| `/certificates` | issue, revoke, **public verification** |
+| `/recordings` | class recording upload and listing |
+| `/reviews` | submit, moderate, feature |
+| `/blogs` · `/case-studies` | content |
+| `/ai-tutor` · `/site-assistant` | Gemini-backed assistants |
+| `/push` | Web Push subscriptions (VAPID) |
+| `/admin` | stats, inquiries, unread counts |
+| `/public` | aggregated stats, cached 5 min server-side |
+| `/upload` · `/newsletter` | file upload, mailing list |
 
-### Courses (`/api/courses`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/` | - | List published courses (search, filter, paginate) |
-| GET | `/:slug` | - | Get single course by slug |
-| POST | `/` | Admin | Create course |
-| PATCH | `/:id` | Admin | Update course |
-| DELETE | `/:id` | Admin | Delete course |
-| GET | `/:id/modules` | Admin | Get modules + lessons |
-| PUT | `/:id/modules` | Admin | Replace all modules |
-| POST | `/:id/enroll` | Student | Enroll in course |
-
-### Blog (`/api/blogs`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/` | - | List published posts (search, category, tag, paginate) |
-| GET | `/:slug` | - | Get post by slug (increments views) |
-| POST | `/` | Admin | Create post |
-| PATCH | `/:id` | Admin | Update post |
-| DELETE | `/:id` | Admin | Delete post |
-
-### Services (`/api/services`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/` | - | Get service catalog (in-memory array) |
-| POST | `/inquire` | - | Submit inquiry (saved to MongoDB) |
-| GET | `/:id` | - | Get single service |
-
-### Payments (`/api/payments`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/create-intent` | JWT | Create Stripe PaymentIntent |
-| GET | `/transactions` | JWT | Get user's transactions |
-| POST | `/webhook` | - | Stripe webhook (raw body, signature verified) |
-
-### Assignments (`/api/assignments`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/` | Student | Submit assignment (multipart with file) |
-| GET | `/my` | Student | Get own assignments |
-| GET | `/` | Admin | Get all assignments (filter by course/status) |
-| PATCH | `/:id/review` | Admin | Add feedback + grade |
-
-### Upload (`/api/upload`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/` | JWT | Upload single file → `/uploads/<filename>` |
-
-### Admin (`/api/admin`)
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/stats` | Admin | Dashboard stats (all counts + revenue aggregate) |
-| GET | `/inquiries` | Admin | List service inquiries |
-| PATCH | `/inquiries/:id/status` | Admin | Update inquiry status |
-| GET | `/cohorts` | Admin | List courses with enrollment counts |
-| GET | `/cohorts/:id/students` | Admin | Enrolled students for a course |
-| DELETE | `/cohorts/:id/students/:userId` | Admin | Remove student from cohort |
-
-### Other
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health` | Health check |
-| GET | `/api/docs` | Swagger UI |
-| GET | `/uploads/*` | Static file serving |
+**Response envelopes** are uniform — success is
+`{ status: 'success', data: {...} }`, failure is `{ status: 'error', message }`
+produced centrally by `next(new AppError(msg, code))`.
 
 ---
 
 ## 7. Feature Flows
 
-### Course Enrollment
+### Service purchase → project kickoff
+
 ```
-Student on CourseDetail page
-  │
-  ├── Click "Enroll" button
-  ├── POST /api/courses/:id/enroll  (JWT)
-  │     ├── Find course by ID
-  │     ├── Check not already enrolled (409 if so)
-  │     ├── Push userId to course.enrolledStudents[]
-  │     └── Save → 200 "Enrolled successfully"
-  │
-  └── Frontend redirects to /dashboard → "My Courses" tab shows new course
+/client/services → /client/services/:id → /checkout?type=service&id=:id
+  ├── POST /paystack/initialize
+  │     ├── Price resolved SERVER-SIDE from the catalog (never trusted from client)
+  │     ├── Discounts stack: points → voucher → referral credit, each capped
+  │     └── Optional 2x/3x installment plan created
+  ├── Paystack hosted checkout
+  ├── /payment/success → GET /paystack/verify/:reference
+  ├── Project auto-created, status: awaiting_brief, isPaid: true
+  ├── /client/projects/:id/brief — service-specific intake form
+  └── Submit → status: in_progress, admins notified (push + email)
 ```
 
-### Assignment Submission
-```
-Student on Dashboard → Assignments tab
-  │
-  ├── Click "New submission"
-  ├── Fill title, select course, description, attach file
-  ├── POST /api/assignments (multipart/form-data, JWT)
-  │     ├── multer processes file → /uploads/<filename>
-  │     ├── Assignment.create({ student, course, title, fileUrl, fileName })
-  │     └── 201 → assignment object
-  │
-  └── Assignment appears in list with status "submitted"
+Project creation is **idempotent**: `ensureProjectForServicePurchase()` looks up
+an existing project by payment reference first. It is called from both the
+verify endpoint and the webhook — whichever arrives first creates it.
 
-Admin reviews:
-  ├── PATCH /api/assignments/:id/review { feedback, grade }
-  │     └── Sets status: 'reviewed', reviewedBy, reviewedAt
-  └── Student sees feedback + grade in dashboard
+### Custom quote
+
+```
+Non-productized service → inquiry form
+  └── POST /services/inquire   (name + email auto-filled from the auth'd user)
+        └── ServiceInquiry created → admins notified → worked in /admin/service-requests
 ```
 
-### Stripe Payment
+### Cohort enrolment
+
 ```
-User on Pricing page → clicks "Get started"
-  │
-  ├── Redirected to /checkout with plan details in URL params
-  ├── POST /api/payments/create-intent { amount, currency, description }
-  │     └── stripe.paymentIntents.create() → clientSecret
-  │
-  ├── Frontend renders Stripe Elements <CardElement>
-  ├── User enters card → stripe.confirmCardPayment(clientSecret)
-  │     ├── Success → redirect to /payment/success
-  │     └── Failure → redirect to /payment/failed
-  │
-  └── Stripe sends webhook event:
-        POST /api/payments/webhook (raw body + signature verification)
-          ├── payment_intent.succeeded → Transaction status = 'succeeded'
-          └── payment_intent.payment_failed → Transaction status = 'failed'
+/pricing or /schedule → /checkout?type=plan&id=<trackId>
+  └── On success, student is enrolled; cohort capacity and derived status update
 ```
 
-### Service Inquiry
+### Assignment submission
+
 ```
-Visitor on Services page
-  │
-  ├── Click "Request Service" on a card
-  ├── Modal opens: name, email, message fields
-  ├── POST /api/services/inquire { name, email, serviceId, message }
-  │     ├── Validate required fields
-  │     ├── Match serviceId → serviceName from catalog
-  │     └── ServiceInquiry.create() → saved to MongoDB
-  │
-  └── Admin sees it in /admin/service-requests
-        ├── Status: new → contacted → closed
-        └── PATCH /api/admin/inquiries/:id/status
+POST /api/assignments (multipart, student)
+  ├── Multer stores the file → /uploads/<filename>
+  ├── Points awarded (idempotent on assignment id)
+  └── Admins notified
+
+PATCH /api/assignments/:id/review (admin)  { feedback, grade }
+  ├── status → 'reviewed'
+  ├── Points awarded if the grade is a pass
+  └── Student notified
 ```
 
-### Blog Reading
+### Live classroom
+
 ```
-Visitor on /blog
-  │
-  ├── Search bar, category pills, pagination
-  ├── GET /api/blogs?search=...&category=...&page=1&limit=6
-  │     └── Returns paginated posts (content excluded for list)
-  │
-  └── Click post → /blog/:slug
-        └── GET /api/blogs/:slug
-              ├── Increments views counter ($inc: { views: 1 })
-              └── Returns full post with content (rendered as markdown)
+Admin schedules a session in /admin/live-sessions → roomId generated
+Student opens /classroom/:roomId
+  ├── WebSocket connects to /ws
+  ├── { type: 'join', roomId, userId, name }
+  ├── Server replies 'room-participants', broadcasts 'user-joined'
+  ├── Chat, presence, mute-all, kick all live over the socket
+  └── Local camera/mic controls, screen share, teacher-side recording
 ```
 
-### Live Classroom (WebRTC)
-```
-Instructor creates session in /admin/live-sessions
-  └── Generates room link: /classroom/:roomId
-
-Student/Instructor opens /classroom/:roomId
-  │
-  ├── WebSocket connects to ws://localhost:5000/ws
-  ├── Sends: { type: 'join', roomId, userId, name, role }
-  │
-  ├── WebRTC flow:
-  │     ├── New user joins → server broadcasts 'user-joined' to room
-  │     ├── Existing peers send 'offer' → new peer returns 'answer'
-  │     ├── ICE candidates exchanged via 'ice-candidate' messages
-  │     └── Peer-to-peer video/audio streams established
-  │
-  ├── Features:
-  │     ├── Camera toggle (on/off)
-  │     ├── Microphone toggle (on/off)
-  │     ├── Screen sharing (replaces camera track)
-  │     ├── Chat messages (via WebSocket, not WebRTC)
-  │     ├── Instructor: "Mute all" → server sends mute to all peers
-  │     ├── Instructor: "Kick" user → server sends kick event
-  │     └── Attendance panel (shows who joined/left + timestamps)
-  │
-  └── On leave: sends { type: 'leave' } → server cleans up
-```
+> **Current limitation.** Signaling is complete and symmetrical across web and
+> mobile, but neither client constructs an `RTCPeerConnection` yet — so
+> **remote video does not flow**. Chat, presence and local media work.
 
 ---
 
 ## 8. Data Models
 
-### User
-```
-name            String (required)
-email           String (required, unique, lowercase)
-password        String (required, select: false, bcrypt hashed)
-role            Enum: 'admin' | 'student' | 'client' (default: 'student')
-avatar          String (URL)
-bio             String
-isEmailVerified Boolean (default: false)
-emailVerificationToken   String (select: false)
-passwordResetToken       String (select: false)
-passwordResetExpires     Date (select: false)
-createdAt, updatedAt     (timestamps: true)
+19 Mongoose models. Amounts are **kobo** (₦1 = 100 kobo).
+
+```mermaid
+erDiagram
+    User ||--o{ Project : "client owns"
+    User ||--o{ Assignment : submits
+    User ||--o{ Transaction : pays
+    User ||--o{ PaymentPlan : holds
+    User ||--o{ Certificate : earns
+    User ||--o{ Review : writes
+    User ||--o{ PointsTransaction : accrues
+    User }o--o{ Cohort : "enrolled in"
+    Project ||--o{ ProjectUpdate : "timeline of"
+    PaymentPlan ||--o{ Transaction : installments
+    Cohort ||--o{ Certificate : "issued for"
 ```
 
-### Course
-```
-title              String (required)
-slug               String (unique, auto-generated)
-description        String (required)
-thumbnail          String
-instructor         ObjectId → User
-category           String (required)
-price              Number (default: 0)
-isFree             Boolean (default: true)
-isPublished        Boolean (default: false)
-tags               [String]
-cohortStartDate    Date
-cohortEndDate      Date
-enrolledStudents   [ObjectId → User]
-modules            [{ title, description, order, lessons: [{ title, content, videoUrl, duration, order }] }]
-createdAt, updatedAt
-```
+**Full set:** User · Cohort · LiveSession · Project · ProjectUpdate ·
+Assignment · Transaction · PaymentPlan · PointsTransaction · Voucher ·
+Certificate · Recording · Review · Blog · CaseStudy · ServiceInquiry ·
+Newsletter · PushSubscription · Counter
 
-### Blog
-```
-title         String (required)
-slug          String (unique, auto-generated)
-content       String (required, markdown)
-excerpt       String
-author        ObjectId → User
-category      String
-tags          [String]
-isPublished   Boolean (default: false)
-publishedAt   Date
-views         Number (default: 0)
-createdAt, updatedAt
-```
+### Key schemas
 
-### Transaction
-```
-user                    ObjectId → User
-stripePaymentIntentId   String (unique)
-amount                  Number (required)
-currency                String (default: 'usd')
-status                  Enum: 'pending' | 'succeeded' | 'failed' (default: 'pending')
-type                    Enum: 'one_time' | 'subscription'
-description             String
-createdAt, updatedAt
-```
+**User** — `name · email · password (select:false, bcrypt 12) · role
+(admin|student|teacher|client) · avatar · bio · isEmailVerified · points ·
+referralCode · referredBy · referralCreditNaira · phone · whatsappOptIn`
 
-### Assignment
-```
-student       ObjectId → User (required)
-course        ObjectId → Course (required)
-title         String (required)
-description   String
-fileUrl       String
-fileName      String
-status        Enum: 'submitted' | 'reviewed' (default: 'submitted')
-feedback      String
-grade         String
-reviewedBy    ObjectId → User
-reviewedAt    Date
-submittedAt   Date (default: now)
-createdAt, updatedAt
-```
+**Cohort** — `title · slug · planId · startDate · endDate · capacity ·
+enrolledCount · isEnrollmentOpen · status`. A `deriveCohortStatus()` helper
+computes the *effective* status from dates and capacity; public controllers run
+it before responding and **clients never re-derive**.
 
-### ServiceInquiry
-```
-name          String (required)
-email         String (required)
-serviceId     String
-serviceName   String
-message       String (required)
-status        Enum: 'new' | 'contacted' | 'closed' (default: 'new')
-createdAt, updatedAt
-```
+**Project** — `client · serviceId · serviceName · title · description · status
+(awaiting_brief|pending|in_progress|review|completed|cancelled) · progress ·
+githubRepo · liveUrl · deliverables[] · timeline[] · totalCost (kobo) · isPaid ·
+paystackReference · brief · briefSubmittedAt`
+
+**Transaction** — `user · stripePaymentIntentId · amount (kobo) · currency ·
+status · type (one_time|subscription|installment) · paymentPlanId ·
+installmentNumber`
+
+> ⚠️ **Legacy field name.** `stripePaymentIntentId` stores the **Paystack
+> reference** since the provider migration. Renaming needs a migration across
+> live payment records, so the field is treated as opaque.
+
+There is **no `Course` model** — training content is modelled as `Cohort`
+(an intake) plus a server-side tutoring catalog of tracks.
 
 ---
 
 ## 9. Real-Time (WebSocket)
 
-**Path:** `ws://localhost:5000/ws`
+**Path:** `/ws` — same HTTP server and port as the REST API.
 
-### Message Types (Client → Server)
-```json
-{ "type": "join",          "roomId": "...", "userId": "...", "name": "...", "role": "instructor|student" }
-{ "type": "leave",         "roomId": "..." }
-{ "type": "offer",         "roomId": "...", "targetId": "...", "sdp": "..." }
-{ "type": "answer",        "roomId": "...", "targetId": "...", "sdp": "..." }
-{ "type": "ice-candidate", "roomId": "...", "targetId": "...", "candidate": "..." }
-{ "type": "chat",          "roomId": "...", "message": "..." }
-{ "type": "mute-all",      "roomId": "..." }
-{ "type": "kick",          "roomId": "...", "targetId": "..." }
-```
+### Client → server
 
-### Message Types (Server → Client)
 ```json
-{ "type": "user-joined",   "userId": "...", "name": "...", "role": "..." }
-{ "type": "user-left",     "userId": "..." }
-{ "type": "offer",         "fromId": "...", "sdp": "..." }
-{ "type": "answer",        "fromId": "...", "sdp": "..." }
-{ "type": "ice-candidate", "fromId": "...", "candidate": "..." }
-{ "type": "chat",          "fromId": "...", "name": "...", "message": "...", "timestamp": "..." }
+{ "type": "join",          "roomId": "...", "userId": "...", "name": "..." }
+{ "type": "offer",         "targetId": "...", "sdp": {...} }
+{ "type": "answer",        "targetId": "...", "sdp": {...} }
+{ "type": "ice-candidate", "targetId": "...", "candidate": {...} }
+{ "type": "chat",          "text": "..." }
 { "type": "mute-all" }
-{ "type": "kicked" }
-{ "type": "room-users",    "users": [...] }
+{ "type": "kick",          "targetId": "..." }
+{ "type": "attendance" }
 ```
+
+### Server → client
+
+```json
+{ "type": "room-participants", "participants": [{ "userId", "name" }] }
+{ "type": "user-joined",       "userId": "...", "name": "..." }
+{ "type": "user-left",         "userId": "...", "name": "..." }
+{ "type": "chat",              "fromId", "fromName", "text", "timestamp" }
+{ "type": "mute-all",          "fromId": "..." }
+{ "type": "kicked" }
+{ "type": "attendance-update", "participants": [...] }
+```
+
+SDP and ICE frames are relayed to `targetId` and stamped with `fromId` /
+`fromName`. Malformed frames are ignored rather than erroring the connection.
+
+**Consequence of in-memory state:** the participant map lives in-process, so the
+signaling server is single-instance. Horizontal scaling would need a Redis
+pub/sub backplane.
 
 ---
 
 ## 10. Security
 
 | Layer | Implementation |
-|-------|---------------|
-| **Auth** | JWT access tokens (15 min) + refresh tokens (7 days) |
-| **Passwords** | bcryptjs with 12 salt rounds |
-| **Headers** | Helmet (all secure headers) |
-| **CORS** | Origin restricted to CLIENT_URL env var |
-| **Rate Limiting** | 100 requests / 15 minutes per IP on /api |
-| **Input Validation** | Zod schemas on auth routes |
-| **File Upload** | MIME allowlist (images, PDF, MP4), 50MB max |
-| **Stripe Webhook** | Signature verification with STRIPE_WEBHOOK_SECRET |
-| **Tokens** | Access token in Authorization header, refresh in request body |
-| **Password Fields** | `select: false` in Mongoose — never sent to client |
+|---|---|
+| **Auth** | JWT access (15m) + refresh (7d), configurable via env |
+| **Passwords** | bcryptjs, 12 salt rounds, `select: false` on the field |
+| **Headers** | Helmet |
+| **CORS** | Allowlist of configured origins expanded to apex + `www`, plus localhost. Disallowed origins rejected with `false`, never a thrown error |
+| **Rate limiting** | 100 req / 15 min per IP on `/api`; 10 req / min on `/ai-tutor/ask` |
+| **Validation** | Zod schemas at the route boundary |
+| **File upload** | Multer MIME allowlist, size cap |
+| **Paystack webhook** | HMAC-SHA512 verified against `x-paystack-signature` |
+| **Pricing** | Resolved server-side from a catalog — client amounts not trusted |
+| **Concurrency** | Referral credit decremented via guarded `findOneAndUpdate` so parallel checkouts cannot double-spend |
+| **Ownership** | `requireProjectAccess` / `requireStudentAccess` gates beyond role checks |
 
 ---
 
 ## 11. Environment Variables
 
-### Backend `.env`
+### Backend
+
 ```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/ebringgs
+# Database — one cluster per environment, selected by NODE_ENV
+MONGO_URI=
+MONGO_URI_DEVELOPMENT=
+MONGO_URI_STAGING=
+MONGO_URI_PRODUCTION=
 
-# JWT
-JWT_SECRET=your-jwt-secret
-JWT_REFRESH_SECRET=your-refresh-secret
+# Auth
+JWT_SECRET=
+JWT_REFRESH_SECRET=
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
 
-# Stripe
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
+# Payments
+PAYSTACK_SECRET_KEY=
 
-# Email (Nodemailer)
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=ebringgstechnologies@gmail.com
-SMTP_PASS=your-gmail-app-password
-EMAIL_FROM=E-Bringgs <ebringgstechnologies@gmail.com>
+# AI assistants (site assistant + student AI tutor share this key)
+GEMINI_API_KEY=
+AI_TUTOR_DAILY_LIMIT=
 
-# App
+# Email
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASS=
+EMAIL_FROM=
+
+# Web Push
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=
+
+# WhatsApp Cloud API (optional — no-ops when unset)
+WHATSAPP_ACCESS_TOKEN=
+WHATSAPP_PHONE_NUMBER_ID=
+
+# OAuth (feature-flagged off)
+GOOGLE_CLIENT_ID=
+APPLE_CLIENT_ID=
+
+# Origins — each is CORS-allowed in both apex and www form
+CLIENT_URL=
+USER_URL=
+TEACHER_URL=
+ADMIN_URL=
+
+# Admin seed (npm run seed:admin)
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+ADMIN_NAME=
+
 PORT=5000
 NODE_ENV=development
-CLIENT_URL=http://localhost:5173
 ```
 
-### Frontend `.env`
+### Web apps (`apps/*/.env.local`)
+
 ```env
-VITE_API_URL=http://localhost:5000/api
-VITE_STRIPE_PUBLIC_KEY=pk_test_...
+VITE_API_URL=https://<api-host>/api
+VITE_WS_URL=wss://<api-host>/ws
+VITE_ADMIN_URL=
+VITE_TEACHER_URL=
+VITE_WHATSAPP_NUMBER=
+VITE_CALENDLY_URL=
+VITE_GOOGLE_CLIENT_ID=
+VITE_APPLE_CLIENT_ID=
+```
+
+### Mobile (`.env`)
+
+```env
+API_URL=https://<api-host>/api
+WS_URL=wss://<api-host>/ws
+WHATSAPP_NUMBER=
+GOOGLE_WEB_CLIENT_ID=
+PAYSTACK_PUBLIC_KEY=
 ```
 
 ---
@@ -674,19 +556,33 @@ VITE_STRIPE_PUBLIC_KEY=pk_test_...
 ## Quick Start
 
 ```bash
-# 1. Clone and install
+# Web tier
+pnpm install
+pnpm dev                 # web + backend
+pnpm typecheck           # all workspace packages
+pnpm lint
+
+# API
+cd ../backend
 npm install
-cd frontend && npm install
-cd ../backend && npm install
-
-# 2. Set up environment
-cp backend/.env.example backend/.env   # Edit with your values
-
-# 3. Run both (from project root)
+cp .env.example .env     # fill in the values above
 npm run dev
+npm run seed:admin       # create the first admin from ADMIN_* vars
 
-# Frontend: http://localhost:5173
-# Backend:  http://localhost:5000
-# API Docs: http://localhost:5000/api/docs
-# WebSocket: ws://localhost:5000/ws
+# Mobile
+cd ../e-bringgs-mobile
+flutter pub get
+flutter run
 ```
+
+| Service | Local URL |
+|---|---|
+| Web | http://localhost:5173 |
+| Admin | http://localhost:5174 |
+| Teacher | http://localhost:5175 |
+| API | http://localhost:5000 |
+| API docs | http://localhost:5000/api/docs |
+| WebSocket | ws://localhost:5000/ws |
+
+> **No test runner is configured** in any package. Correctness currently rests
+> on TypeScript, Zod validation at the route boundary, and manual verification.
