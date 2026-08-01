@@ -29,8 +29,8 @@ export default function About() {
   return (
     <div className="bg-white dark:bg-slate-900">
       {/* Hero */}
-      <section className="relative text-white py-28 px-4 overflow-hidden">
-        <img loading="lazy" src="/images/about/team-meeting.jpg" alt="Team meeting" className="absolute inset-0 w-full h-full object-cover" />
+      <section className="no-reveal relative text-white py-28 px-4 overflow-hidden">
+        <img src="/images/about/team-meeting.jpg" alt="Team meeting" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
         <div className="relative max-w-3xl mx-auto text-center">
           <h1 className="text-5xl font-extrabold mb-5">We're building Africa's premier tech platform</h1>
@@ -41,23 +41,23 @@ export default function About() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-24">
+      <section className="no-reveal reveal-clip max-w-6xl mx-auto px-4 sm:px-6 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div>
+          <div className="reveal-left">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our mission</h2>
             <p className="text-gray-500 dark:text-slate-400 text-lg leading-relaxed">
               To democratise access to technology education and high-quality software services, empowering individuals and organisations across Africa and beyond to compete at a global level.
             </p>
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-lg">
+          <div className="reveal-right rounded-2xl overflow-hidden shadow-lg">
             <img loading="lazy" src="/images/about/mission.jpg" alt="Our mission" className="w-full h-64 object-cover" />
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="rounded-2xl overflow-hidden shadow-lg order-2 md:order-1">
+          <div className="reveal-left rounded-2xl overflow-hidden shadow-lg order-2 md:order-1">
             <img loading="lazy" src="/images/about/office-space.jpg" alt="Our workspace" className="w-full h-64 object-cover" />
           </div>
-          <div className="order-1 md:order-2">
+          <div className="reveal-right order-1 md:order-2">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our vision</h2>
             <p className="text-gray-500 dark:text-slate-400 text-lg leading-relaxed">
               A world where geography is no barrier to a world-class tech career or a well-built digital product. We believe the next generation of great software will be built by diverse, globally distributed teams.

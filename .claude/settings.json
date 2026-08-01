@@ -155,7 +155,9 @@
       "Bash(grep -rnE \"cors|origin|allowedHeaders\" \"c:/Users/EBRY/Desktop/my-company/backend/src/app.ts\" 2>&1 | head -20)",
       "Bash(python -c ' *)",
       "Bash(pnpm typecheck *)",
-      "Bash(pnpm exec *)"
+      "Bash(pnpm exec *)",
+      "Bash(xargs grep -n 'absolute inset-0 w-full h-full object-cover')",
+      "Bash(python -)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",

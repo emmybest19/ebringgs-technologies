@@ -180,8 +180,8 @@ export default function HowItWorks() {
   return (
     <div className="bg-white dark:bg-slate-900">
       {/* Hero */}
-      <section className="relative text-white py-24 px-4 overflow-hidden">
-        <img loading="lazy" src="/images/general/african-students.jpg" alt="Getting started" className="absolute inset-0 w-full h-full object-cover" />
+      <section className="no-reveal relative text-white py-24 px-4 overflow-hidden">
+        <img src="/images/general/african-students.jpg" alt="Getting started" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
         <div className="relative max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">How It Works</h1>

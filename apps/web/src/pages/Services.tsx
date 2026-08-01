@@ -18,8 +18,8 @@ export default function Services() {
   return (
     <div className="bg-white dark:bg-slate-900">
       {/* Hero header */}
-      <section className="relative text-white py-24 px-4 overflow-hidden">
-        <img loading="lazy" src="/images/general/tech-team.jpg" alt="Tech team" className="absolute inset-0 w-full h-full object-cover" />
+      <section className="no-reveal relative text-white py-24 px-4 overflow-hidden">
+        <img src="/images/general/tech-team.jpg" alt="Tech team" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-xs font-medium mb-5">

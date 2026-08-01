@@ -38,7 +38,12 @@ export default function useScrollReveal(containerRef: RefObject<HTMLElement | nu
           } else if (!entry.isIntersecting) {
             el.classList.remove('reveal-in');
             // Exited past the top → re-enter by gliding down, not up.
-            el.classList.toggle('reveal-above', entry.boundingClientRect.top < 0);
+            // Horizontal halves keep their own axis, so skip them.
+            const horizontal =
+              el.classList.contains('reveal-left') || el.classList.contains('reveal-right');
+            if (!horizontal) {
+              el.classList.toggle('reveal-above', entry.boundingClientRect.top < 0);
+            }
           }
           // Partially visible but below the reveal threshold: keep current
           // state (this gap is what prevents edge flicker).
@@ -49,7 +54,12 @@ export default function useScrollReveal(containerRef: RefObject<HTMLElement | nu
 
     const tracked = new Set<Element>();
     const track = () => {
-      container.querySelectorAll('section, .reveal').forEach((el) => {
+      // `.no-reveal` opts a section out entirely (heroes and other
+      // above-the-fold content should render instantly, not fade).
+      // `.reveal-left` / `.reveal-right` are the halves of split
+      // text|image rows — they slide in from their own side.
+      const selector = 'section:not(.no-reveal), .reveal, .reveal-left, .reveal-right';
+      container.querySelectorAll(selector).forEach((el) => {
         if (tracked.has(el)) return;
         tracked.add(el);
         el.classList.add('reveal-init');

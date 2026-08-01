@@ -58,7 +58,8 @@ export default function HeroCarousel() {
               : 'opacity-0 scale-105'
           }`}
         >
-          <img loading="lazy"
+          {/* Hero imagery is above the fold — always load eagerly. */}
+          <img
             src={slide.src}
             alt={slide.alt}
             className="w-full h-full object-cover rounded-2xl"
