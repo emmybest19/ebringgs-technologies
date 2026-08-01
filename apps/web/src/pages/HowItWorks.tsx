@@ -217,7 +217,7 @@ export default function HowItWorks() {
       </section>
 
       {/* Steps */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
+      <section className="no-reveal reveal-clip max-w-5xl mx-auto px-4 sm:px-6 py-20">
         <div className="space-y-20">
           {steps.map((step, i) => {
             const isEven = i % 2 === 1;
@@ -226,8 +226,8 @@ export default function HowItWorks() {
                 key={step.number}
                 className={`grid md:grid-cols-2 gap-10 md:gap-14 items-center ${isEven ? 'md:direction-rtl' : ''}`}
               >
-                {/* Image side */}
-                <div className={`${isEven ? 'md:order-2' : ''}`}>
+                {/* Image side — slides in from whichever side it sits on */}
+                <div className={isEven ? 'reveal-right md:order-2' : 'reveal-left'}>
                   <div className="relative rounded-2xl overflow-hidden shadow-xl group">
                     <img loading="lazy"
                       src={step.image}
@@ -242,8 +242,8 @@ export default function HowItWorks() {
                   </div>
                 </div>
 
-                {/* Content side */}
-                <div className={`${isEven ? 'md:order-1' : ''}`}>
+                {/* Content side — mirrors the image side */}
+                <div className={isEven ? 'reveal-left md:order-1' : 'reveal-right'}>
                   <div className="inline-flex p-3 bg-teal-50 dark:bg-teal-950 rounded-xl mb-4">
                     <step.icon size={22} className="text-teal-600" />
                   </div>
