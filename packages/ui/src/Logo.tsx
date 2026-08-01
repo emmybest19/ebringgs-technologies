@@ -10,10 +10,6 @@ interface LogoProps {
   asLink?: boolean;
   /** Extra classes on the outer element. */
   className?: string;
-  /** Wrap the mark in a white rounded badge, useful on dark backgrounds so the
-   *  baked-in white background of the PNG reads as intentional. Only meaningful
-   *  for variant="mark". */
-  onDark?: boolean;
   /** Plain text wordmark next to the icon (only with variant="mark"). */
   withWordmark?: boolean;
   /** Color of the wordmark text. */
@@ -33,11 +29,12 @@ export default function Logo({
   size,
   asLink = false,
   className = '',
-  onDark = false,
   withWordmark = false,
   wordmarkClass = 'text-gray-900 dark:text-white',
 }: LogoProps) {
-  const src = variant === 'full' ? '/logo-full.jpg' : '/logo-mark.png';
+  // Both assets have transparent backgrounds (logo-full.png is the JPG with
+  // its white background keyed out), so they sit directly on any surface.
+  const src = variant === 'full' ? '/logo-full.png' : '/logo-mark.png';
   const height = size ?? (variant === 'full' ? 48 : 40);
 
   // Both source files are square 1:1 canvases with the brand sitting in the
@@ -51,21 +48,8 @@ export default function Logo({
   const boxAspect = variant === 'full' ? 1.7 : 1;
   const boxWidth = height * boxAspect;
 
-  // Light mode: mix-blend-mode: multiply makes the baked-in white background
-  // blend into the page surface, no visible white card.
-  // Dark mode: render an actual white "card" around the logo (padding +
-  // rounded corners + soft shadow + hairline ring) so the brand colors stay
-  // legible and the badge looks like an intentional design element.
-  const cardClass = onDark
-    ? 'rounded-xl bg-white p-2 shadow-md ring-1 ring-black/5'
-    : 'dark:rounded-xl dark:bg-white dark:p-2 dark:shadow-md dark:ring-1 dark:ring-black/5';
-
-  const imgClass = onDark
-    ? ''
-    : '[mix-blend-mode:multiply] dark:[mix-blend-mode:normal]';
-
   const img = (
-    <span className={`inline-flex items-center justify-center shrink-0 ${cardClass}`}>
+    <span className="inline-flex items-center justify-center shrink-0">
       <span
         className="overflow-hidden inline-flex items-center justify-center"
         style={{ height, width: boxWidth }}
@@ -74,7 +58,6 @@ export default function Logo({
           src={src}
           alt="E-Bringgs Technologies"
           style={{ height: height * cropScale, width: 'auto', maxWidth: 'none' }}
-          className={imgClass}
           draggable={false}
         />
       </span>

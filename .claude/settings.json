@@ -162,7 +162,8 @@
       "Bash(curl -sS -o /dev/null -D - \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" -H \"Origin: http://localhost:5173\" --max-time 60)",
       "Bash(curl -sS -o /dev/null -D - \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" -H \"Origin: https://ebringgs.com\" --max-time 60)",
       "Bash(curl -sS -o /dev/null -D - \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" -H \"Origin: https://www.ebringgs.com\" --max-time 60)",
-      "Read(//c/Users/EBRY/Desktop/my-company/backend/**)"
+      "Read(//c/Users/EBRY/Desktop/my-company/backend/**)",
+      "PowerShell($src = \"c:\\\\Users\\\\EBRY\\\\Desktop\\\\my-company\\\\e-bringgs\\\\apps\\\\web\\\\public\\\\logo-full.png\"; foreach \\($app in @\\(\"admin\",\"teacher\"\\)\\) { $dst = \"c:\\\\Users\\\\EBRY\\\\Desktop\\\\my-company\\\\e-bringgs\\\\apps\\\\$app\\\\public\\\\logo-full.png\"; Copy-Item $src $dst -Force; if \\(Test-Path $dst\\) { \"copied -> $app/public/logo-full.png\" } })"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",
