@@ -167,7 +167,6 @@ export default function StudentLeaderboard() {
             </div>
           </div>
 
-          {/* Gift voucher */}
           <GiftVoucherCard availablePoints={currentUserPoints} onPointsChange={fetchMe} />
 
           {/* Badges */}

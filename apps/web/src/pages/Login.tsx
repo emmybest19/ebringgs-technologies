@@ -41,7 +41,6 @@ function LeftPanel() {
       <div className="absolute top-20 right-10 w-64 h-64 bg-teal-500/15 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-20 left-10 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
 
-      {/* Floating icons */}
       {floatingIcons.map(({ Icon, delay, size, ...pos }, i) => (
         <div
           key={i}
@@ -82,7 +81,6 @@ function LeftPanel() {
           ))}
         </div>
 
-        {/* Reviews */}
         {reviews.length > 0 && (
           <div className="space-y-4 mt-auto">
             {reviews.map((r) => (
@@ -159,7 +157,6 @@ export default function Login() {
               </p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Email */}
               <div>

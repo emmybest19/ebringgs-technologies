@@ -156,7 +156,6 @@ export default function Instructors() {
           ))}
         </div>
 
-        {/* All instructors */}
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">All instructors</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {instructors.map(inst => (

@@ -55,7 +55,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
               <h4 className="text-white font-semibold text-sm mb-4">{section}</h4>

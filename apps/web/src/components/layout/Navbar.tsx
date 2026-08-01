@@ -32,7 +32,6 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-gray-100 dark:border-slate-800 shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Logo */}
         <Logo variant="full" size={60} asLink className="drop-shadow-sm" />
 
 

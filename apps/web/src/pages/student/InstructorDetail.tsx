@@ -121,7 +121,6 @@ export default function StudentInstructorDetail() {
             </div>
           )}
 
-          {/* Specialties */}
           {teacher.specialties && teacher.specialties.length > 0 && (
             <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
               <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3">Specialties</h2>

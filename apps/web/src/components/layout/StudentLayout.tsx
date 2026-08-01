@@ -88,7 +88,6 @@ export default function StudentLayout() {
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 overflow-y-hidden px-3 py-1 space-y-0.5 ">
           {navItems.map(({ to, label, icon: Icon, end }) => (
             <NavLink

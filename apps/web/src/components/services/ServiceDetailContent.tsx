@@ -203,7 +203,6 @@ export default function ServiceDetailContent({
       <section className={embedded ? '' : 'max-w-5xl mx-auto px-4 sm:px-6 py-16'}>
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           <div className="lg:col-span-2 space-y-10">
-            {/* Deliverables */}
             {service.deliverables && service.deliverables.length > 0 && (
               <div>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">What you'll get</h2>
@@ -218,7 +217,6 @@ export default function ServiceDetailContent({
               </div>
             )}
 
-            {/* Included / Not included */}
             {(service.whatsIncluded?.length || service.whatsNotIncluded?.length) ? (
               <div className="grid sm:grid-cols-2 gap-6">
                 {service.whatsIncluded && service.whatsIncluded.length > 0 && (
@@ -254,7 +252,6 @@ export default function ServiceDetailContent({
               </div>
             ) : null}
 
-            {/* Process */}
             {service.process && service.process.length > 0 && (
               <div>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">How we work</h2>
@@ -273,7 +270,6 @@ export default function ServiceDetailContent({
               </div>
             )}
 
-            {/* Refund policy */}
             {service.refundPolicy && (
               <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-xl p-5">
                 <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-2 flex items-center gap-2">
@@ -283,7 +279,6 @@ export default function ServiceDetailContent({
               </div>
             )}
 
-            {/* Past examples */}
             {pastExamples.length > 0 && (
               <div>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Past examples</h2>
@@ -310,7 +305,6 @@ export default function ServiceDetailContent({
               </div>
             )}
 
-            {/* FAQ */}
             {service.faq && service.faq.length > 0 && (
               <div>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">Common questions</h2>

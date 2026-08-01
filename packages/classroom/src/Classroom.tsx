@@ -541,7 +541,6 @@ export default function Classroom() {
           ))}
         </div>
 
-        {/* Chat panel */}
         {sidePanel === 'chat' && (
           <aside className="w-72 bg-slate-800 border-l border-slate-700 flex flex-col"
             aria-label="Chat panel">
@@ -582,7 +581,6 @@ export default function Classroom() {
           </aside>
         )}
 
-        {/* Participants panel */}
         {sidePanel === 'participants' && (
           <aside className="w-64 bg-slate-800 border-l border-slate-700 flex flex-col"
             aria-label="Participants panel">
@@ -631,7 +629,6 @@ export default function Classroom() {
           </aside>
         )}
 
-        {/* Attendance panel */}
         {sidePanel === 'attendance' && (
           <aside className="w-64 bg-slate-800 border-l border-slate-700 flex flex-col"
             aria-label="Attendance panel">

@@ -330,7 +330,6 @@ export function AdminProjectDetail() {
         )}
       </div>
 
-      {/* Activity timeline */}
       <ActivityTimeline projectId={project._id} />
     </div>
   );

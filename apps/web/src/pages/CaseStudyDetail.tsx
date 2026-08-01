@@ -89,7 +89,6 @@ export default function CaseStudyDetail() {
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 grid lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2 space-y-10">
-          {/* Cover image */}
           {study.coverImage && (
             <div className="rounded-2xl overflow-hidden border border-gray-100 dark:border-slate-800">
               <img loading="lazy" src={study.coverImage} alt={study.title} className="w-full h-auto object-cover" />
@@ -130,7 +129,6 @@ export default function CaseStudyDetail() {
             </div>
           )}
 
-          {/* Description */}
           {study.description && (
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">The story</h2>
@@ -140,7 +138,6 @@ export default function CaseStudyDetail() {
             </div>
           )}
 
-          {/* Results */}
           {study.results && study.results.length > 0 && (
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Results</h2>
@@ -155,7 +152,6 @@ export default function CaseStudyDetail() {
             </div>
           )}
 
-          {/* Gallery */}
           {study.gallery && study.gallery.length > 0 && (
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Gallery</h2>
@@ -168,7 +164,6 @@ export default function CaseStudyDetail() {
             </div>
           )}
 
-          {/* Testimonial */}
           {study.testimonial?.quote && (
             <div className="bg-teal-50 dark:bg-teal-950 rounded-2xl border border-teal-100 dark:border-teal-900 p-6">
               <Quote size={28} className="text-teal-500 mb-3" />
@@ -187,7 +182,6 @@ export default function CaseStudyDetail() {
             </div>
           )}
 
-          {/* Tech stack */}
           {study.techStack && study.techStack.length > 0 && (
             <div>
               <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3">Built with</h2>

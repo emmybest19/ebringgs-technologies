@@ -522,7 +522,6 @@ function CountdownHero({
               <CountdownCell value={countdown.seconds} label="Seconds" />
             </div>
 
-            {/* Spots remaining */}
             <SpotsRemainingBadge cohort={nextCohort} />
 
             <div className="flex flex-wrap justify-center gap-3 mt-8">

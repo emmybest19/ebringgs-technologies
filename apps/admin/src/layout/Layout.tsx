@@ -101,7 +101,6 @@ export default function AdminLayout() {
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
           {navItems.map(({ to, label, icon: Icon, end, badgeKey }) => {
             const count = badgeKey ? counts[badgeKey] : 0;

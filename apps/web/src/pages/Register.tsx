@@ -167,7 +167,6 @@ function LeftPanel({ currentStep }: { currentStep: number }) {
       <div className="absolute top-20 right-10 w-64 h-64 bg-teal-500/15 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-20 left-10 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
 
-      {/* Floating icons */}
       {floatingIcons.map(({ Icon, delay, size, ...pos }, i) => (
         <div
           key={i}
@@ -253,7 +252,6 @@ export default function Register() {
   const [searchParams] = useSearchParams();
   const [referralCode, setReferralCode] = useState(searchParams.get('ref') || '');
 
-  // Password strength
   const passwordStrength = (() => {
     if (password.length === 0) return 0;
     let score = 0;
@@ -337,7 +335,6 @@ export default function Register() {
         {/* Form area */}
         <div className="flex-1 flex items-center justify-center px-6 py-10">
           <div className="w-full max-w-md" onKeyDown={handleKeyDown}>
-            {/* Step indicator */}
             <StepIndicator currentStep={step} />
 
             {/* Step content */}

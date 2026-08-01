@@ -138,7 +138,6 @@ export default function TutoringDetailContent({
         </ul>
       </Section>
 
-      {/* Syllabus */}
       <Section icon={BookOpen} title="Syllabus">
         <div className="space-y-4">
           {track.syllabus.map((m, i) => (
@@ -218,7 +217,6 @@ export default function TutoringDetailContent({
         )}
       </div>
 
-      {/* FAQ */}
       {track.faq && track.faq.length > 0 && (
         <Section icon={BookOpen} title="FAQ">
           <div className="space-y-4">
