@@ -131,7 +131,7 @@ function TrackCard({ track }: { track: TutoringTrack }) {
       : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400';
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
+    <div className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
       <div className="flex items-start justify-between mb-3">
         <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center shrink-0">
           <Icon size={20} className="text-teal-600" />

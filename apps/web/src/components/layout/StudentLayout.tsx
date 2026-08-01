@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, CalendarDays, ClipboardList, Video, Trophy, Star,
@@ -8,6 +8,7 @@ import {
 import { useAuthStore } from '@ebringgs/auth';
 import AITutorWidget from '../ui/AITutorWidget';
 import { Logo, PageTransition } from '@ebringgs/ui';
+import useScrollReveal from '../../hooks/useScrollReveal';
 
 const navItems = [
   { to: '/dashboard', label: 'Overview', icon: LayoutDashboard, end: true },
@@ -26,6 +27,8 @@ export default function StudentLayout() {
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
   const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+  useScrollReveal(mainRef);
 
   // Mobile drawer state, auto-closes on route change.
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -128,7 +131,7 @@ export default function StudentLayout() {
 
       {/* Main */}
       <div className="flex-1 min-w-0 pt-14 lg:pt-0">
-        <main className="p-4 sm:p-6 lg:p-8">
+        <main ref={mainRef} className="p-4 sm:p-6 lg:p-8">
           <PageTransition>
             <Outlet />
           </PageTransition>

@@ -69,7 +69,7 @@ export default function Overview() {
       <ReferralCard />
 
       {/* Stats — icon-beside-text, matches the client overview pattern */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div className="reveal grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <StatCard
           icon={Calendar}
           iconColor="text-teal-600"
@@ -154,7 +154,7 @@ export default function Overview() {
             <p className="text-gray-500 dark:text-slate-400 text-sm">No assignments yet.</p>
           </div>
         ) : (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 dark:bg-slate-950 text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
                 <tr>

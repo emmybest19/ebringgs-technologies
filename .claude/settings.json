@@ -157,7 +157,12 @@
       "Bash(pnpm typecheck *)",
       "Bash(pnpm exec *)",
       "Bash(xargs grep -n 'absolute inset-0 w-full h-full object-cover')",
-      "Bash(python -)"
+      "Bash(python -)",
+      "Bash(curl -sS -w \"\\\\nHTTP: %{http_code} TIME: %{time_total}s\\\\n\" \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" --max-time 90)",
+      "Bash(curl -sS -o /dev/null -D - \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" -H \"Origin: http://localhost:5173\" --max-time 60)",
+      "Bash(curl -sS -o /dev/null -D - \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" -H \"Origin: https://ebringgs.com\" --max-time 60)",
+      "Bash(curl -sS -o /dev/null -D - \"https://ebringgs-backend.onrender.com/api/tutoring?grouped=true\" -H \"Origin: https://www.ebringgs.com\" --max-time 60)",
+      "Read(//c/Users/EBRY/Desktop/my-company/backend/**)"
     ],
     "additionalDirectories": [
       "c:\\Users\\EBRY\\.claude\\projects\\c--Users-EBRY-Desktop-my-company-e-bringgs\\memory",
@@ -183,7 +188,8 @@
       "c:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs-mobile\\lib\\features\\payments",
       "c:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs-mobile\\android\\app\\src\\main",
       "c:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs-mobile\\ios\\Runner",
-      "c:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs-mobile\\android\\app"
+      "c:\\Users\\EBRY\\Desktop\\my-company\\e-bringgs-mobile\\android\\app",
+      "c:\\Users\\EBRY\\Desktop\\my-company\\backend\\src"
     ]
   }
 }

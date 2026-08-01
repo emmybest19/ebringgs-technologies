@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FolderKanban, CreditCard, LogOut, User, Star, Sparkles,
@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '@ebringgs/auth';
 import { Logo, PageTransition } from '@ebringgs/ui';
+import useScrollReveal from '../../hooks/useScrollReveal';
 
 const calendlyConfigured = Boolean(import.meta.env.VITE_CALENDLY_URL);
 
@@ -25,6 +26,8 @@ export default function ClientLayout() {
   const { user, isAuthenticated, logout } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+  useScrollReveal(mainRef);
 
   // Mobile drawer state, auto-closes on route change.
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -129,7 +132,7 @@ export default function ClientLayout() {
 
       {/* Main */}
       <div className="flex-1 min-w-0 pt-14 lg:pt-0">
-        <main className="p-4 sm:p-6 lg:p-8">
+        <main ref={mainRef} className="p-4 sm:p-6 lg:p-8">
           <PageTransition>
             <Outlet />
           </PageTransition>

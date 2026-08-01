@@ -50,7 +50,7 @@ export default function ClientServices() {
                 {productized.map((s) => {
                   const Icon = iconMap[s.icon] || Code2;
                   return (
-                    <div key={s.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
+                    <div key={s.id} className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
                       <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">
                         <Icon size={20} className="text-teal-600" />
                       </div>
@@ -101,7 +101,7 @@ export default function ClientServices() {
                     <Link
                       key={s.id}
                       to={`/client/services/${s.id}`}
-                      className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors block"
+                      className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors block"
                     >
                       <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">
                         <Icon size={20} className="text-teal-600" />
@@ -121,7 +121,7 @@ export default function ClientServices() {
         </>
       )}
 
-      <div className="mt-8 bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
+      <div className="reveal mt-8 bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
         <MessageSquare size={28} />
         <div className="flex-1">
           <p className="font-bold">Don't see what you need?</p>
