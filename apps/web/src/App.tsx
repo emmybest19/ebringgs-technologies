@@ -74,26 +74,23 @@ import ProjectBrief from "./pages/client/ProjectBrief";
 import { Classroom } from "@ebringgs/classroom";
 
 /**
- * Floating widgets (SiteAssistantWidget chat bubble + WhatsAppButton)
- * should only appear on public marketing pages — they're for prospects,
- * not for logged-in students/clients who have role-specific dashboards.
- * Also hidden on full-screen flows (classroom, checkout, payment confirmation)
- * where the floating UI is in the way.
+ * Floating widgets (SiteAssistantWidget chat bubble + WhatsAppButton) appear
+ * on the landing page only.
  *
- * Teachers and admins live on their own subdomains (teachers.ebringgs.com,
- * admin.ebringgs.com) — no need to handle their prefixes here.
+ * They exist to catch a first-time visitor who has a question before they
+ * commit to anything. Once someone has navigated deeper — pricing, services,
+ * a blog post — they're already engaged and reading, and two floating bubbles
+ * over the content are a distraction rather than a help.
+ *
+ * An allowlist of one route rather than a blocklist of private prefixes: new
+ * pages then default to *not* carrying the widgets, which is the safer
+ * direction to be wrong in.
  */
-const PRIVATE_PREFIXES = [
-  '/dashboard', '/client',
-  '/classroom', '/checkout', '/payment', '/payments',
-];
+const WIDGET_ROUTES = ['/'];
 
-function PublicOnlyWidgets() {
+function LandingOnlyWidgets() {
   const { pathname } = useLocation();
-  const isPrivate = PRIVATE_PREFIXES.some(
-    (p) => pathname === p || pathname.startsWith(p + '/'),
-  );
-  if (isPrivate) return null;
+  if (!WIDGET_ROUTES.includes(pathname)) return null;
   return (
     <>
       <SiteAssistantWidget />
@@ -194,7 +191,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
-      <PublicOnlyWidgets />
+      <LandingOnlyWidgets />
       <ScrollToTopButton />
       <Toaster
         position="top-right"
