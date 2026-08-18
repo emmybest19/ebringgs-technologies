@@ -1,17 +1,49 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sun, Moon, Bell, BellOff } from 'lucide-react';
-import { Logo } from '@ebringgs/ui';
+import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sun, Moon, Bell, BellOff, ArrowRight } from 'lucide-react';
 import { usePushNotifications } from '../../hooks/usePushNotifications';
 import { useAuthStore } from '@ebringgs/auth';
 import { useThemeStore } from '@ebringgs/auth';
 
+/**
+ * Site header.
+ *
+ * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
+ * variants, matching the landing and auth pages. The light-mode treatment is
+ * still to be specified.
+ *
+ * The brand art is main.png, the full vertical lockup (mark over wordmark
+ * over TECHNOLOGIES over the tagline). It's rendered at 72px, which needs a
+ * 96px header — Layout's top padding is matched to that. At this size the
+ * mark and "e-bringgs" read clearly; the two lines beneath them do not.
+ */
+const BRAND_LOCKUP = '/ebrings/main.png';
+
 const navLinks = [
   { label: 'Services', to: '/services' },
-  { label: 'Pricing', to: '/pricing' },
   { label: 'About', to: '/about' },
+  { label: 'Pricing', to: '/pricing' },
   { label: 'How It Works', to: '/how-it-works' },
+  { label: 'Contact', to: '/contact' },
 ];
+
+// The source file is a square canvas with transparent padding around the
+// artwork, so it renders oversized inside a clipped box to sit flush.
+function BrandLockup({ height = 72 }: { height?: number }) {
+  return (
+    <span
+      className="inline-flex shrink-0 items-center justify-center overflow-hidden"
+      style={{ height, width: height * 1.1 }}
+    >
+      <img
+        src={BRAND_LOCKUP}
+        alt="E-Bringgs Technologies"
+        draggable={false}
+        style={{ height: height * 1.25, width: 'auto', maxWidth: 'none' }}
+      />
+    </span>
+  );
+}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,20 +62,21 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-gray-100 dark:border-slate-800 shadow-sm">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <Logo variant="full" size={60} asLink className="drop-shadow-sm" />
-
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-[#080c11]/90 backdrop-blur">
+      <nav className="mx-auto flex h-24 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link to="/" className="inline-flex items-center">
+          <BrandLockup />
+        </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-1">
+        <ul className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
             <li key={link.to}>
               <NavLink
                 to={link.to}
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? 'text-teal-600 bg-teal-50 dark:bg-teal-950' : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800'
+                  `rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
                   }`
                 }
               >
@@ -54,166 +87,154 @@ export default function Navbar() {
         </ul>
 
         {/* Auth actions + theme toggle */}
-        <div className="hidden md:flex items-center gap-2">
-          {/* Theme toggle */}
+        <div className="hidden items-center gap-2 md:flex">
           <button
             onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-2 transition-colors hover:bg-white/5"
             aria-label={`Theme: ${mode}`}
             title={`Theme: ${mode}. Click to switch.`}
           >
-            <ThemeIcon size={18} className="text-gray-600 dark:text-slate-400" />
+            <ThemeIcon size={18} className="text-slate-400" />
           </button>
 
           {isAuthenticated && user ? (
             <>
-            {/* Push notification bell */}
-            {permission !== 'unsupported' && (
-              <button
-                onClick={isSubscribed ? pushUnsubscribe : pushSubscribe}
-                disabled={pushLoading || permission === 'denied'}
-                className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
-                aria-label={isSubscribed ? 'Disable notifications' : 'Enable notifications'}
-                title={
-                  permission === 'denied'
-                    ? 'Notifications blocked, enable in browser settings'
-                    : isSubscribed
-                      ? 'Notifications enabled, click to disable'
-                      : 'Enable push notifications'
-                }
-              >
-                {isSubscribed ? (
-                  <Bell size={18} className="text-teal-600 dark:text-teal-400" />
-                ) : (
-                  <BellOff size={18} className="text-gray-400 dark:text-slate-500" />
-                )}
-                {isSubscribed && (
-                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-teal-500 rounded-full" />
-                )}
-              </button>
-            )}
-            <div className="relative">
-              <button
-                onClick={() => setDropdownOpen((v) => !v)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"
-              >
-                <div className="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-semibold text-sm">
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-slate-300">{user.name.split(' ')[0]}</span>
-                <ChevronDown size={14} className="text-gray-500 dark:text-slate-500" />
-              </button>
+              {permission !== 'unsupported' && (
+                <button
+                  onClick={isSubscribed ? pushUnsubscribe : pushSubscribe}
+                  disabled={pushLoading || permission === 'denied'}
+                  className="relative rounded-lg p-2 transition-colors hover:bg-white/5 disabled:opacity-50"
+                  aria-label={isSubscribed ? 'Disable notifications' : 'Enable notifications'}
+                  title={
+                    permission === 'denied'
+                      ? 'Notifications blocked, enable in browser settings'
+                      : isSubscribed
+                        ? 'Notifications enabled, click to disable'
+                        : 'Enable push notifications'
+                  }
+                >
+                  {isSubscribed
+                    ? <Bell size={18} className="text-cyan-400" />
+                    : <BellOff size={18} className="text-slate-500" />}
+                  {isSubscribed && <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-cyan-400" />}
+                </button>
+              )}
 
-              {dropdownOpen && (() => {
-                // Admins and teachers live on their own subdomains. Dropdown
-                // links shoot them off-origin so they hit their own portal
-                // (with its own localStorage auth). Students/clients stay
-                // here on the main web app.
-                const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
-                const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
-                const dashboardPath =
-                  user?.role === 'admin' ? adminUrl
-                  : user?.role === 'teacher' ? teacherUrl
-                  : user?.role === 'client' ? '/client'
-                  : '/dashboard';
-                const profilePath =
-                  user?.role === 'admin' ? `${adminUrl}/profile`
-                  : user?.role === 'teacher' ? `${teacherUrl}/profile`
-                  : user?.role === 'client' ? '/client/profile'
-                  : '/dashboard/profile';
-                return (
-                <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 py-1 z-50">
-                  <Link
-                    to={dashboardPath}
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    <LayoutDashboard size={16} /> Dashboard
-                  </Link>
-                  <Link
-                    to={profilePath}
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    <User size={16} /> Profile
-                  </Link>
-                  <hr className="my-1 border-gray-100 dark:border-slate-700" />
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950"
-                  >
-                    <LogOut size={16} /> Sign out
-                  </button>
-                </div>
-                );
-              })()}
-            </div>
+              <div className="relative">
+                <button
+                  onClick={() => setDropdownOpen((v) => !v)}
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-white/5"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan-400/10 text-sm font-semibold text-cyan-300">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
+                  <span className="text-sm font-medium text-slate-300">{user.name.split(' ')[0]}</span>
+                  <ChevronDown size={14} className="text-slate-500" />
+                </button>
+
+                {dropdownOpen && (() => {
+                  // Admins and teachers live on their own subdomains. These
+                  // links shoot them off-origin so they hit their own portal
+                  // (with its own localStorage auth). Students and clients
+                  // stay here on the main web app.
+                  const adminUrl = (import.meta.env.VITE_ADMIN_URL as string | undefined) || 'https://admin.ebringgs.com';
+                  const teacherUrl = (import.meta.env.VITE_TEACHER_URL as string | undefined) || 'https://teachers.ebringgs.com';
+                  const dashboardPath =
+                    user?.role === 'admin' ? adminUrl
+                    : user?.role === 'teacher' ? teacherUrl
+                    : user?.role === 'client' ? '/client'
+                    : '/dashboard';
+                  const profilePath =
+                    user?.role === 'admin' ? `${adminUrl}/profile`
+                    : user?.role === 'teacher' ? `${teacherUrl}/profile`
+                    : user?.role === 'client' ? '/client/profile'
+                    : '/dashboard/profile';
+                  return (
+                    <div className="absolute right-0 z-50 mt-2 w-52 rounded-xl border border-slate-800 bg-[#0e141c] py-1 shadow-lg">
+                      <Link
+                        to={dashboardPath}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        <LayoutDashboard size={16} /> Dashboard
+                      </Link>
+                      <Link
+                        to={profilePath}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        <User size={16} /> Profile
+                      </Link>
+                      <hr className="my-1 border-slate-800" />
+                      <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-red-500/10"
+                      >
+                        <LogOut size={16} /> Sign out
+                      </button>
+                    </div>
+                  );
+                })()}
+              </div>
             </>
           ) : (
             <>
-              <Link
-                to="/login"
-                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-              >
-                Sign in
+              <Link to="/login" className="px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white">
+                Sign In
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
               >
-                Get started
+                Get started <ArrowRight size={14} />
               </Link>
             </>
           )}
         </div>
 
-        {/* Mobile hamburger */}
-        <div className="flex md:hidden items-center gap-1">
+        {/* Mobile actions */}
+        <div className="flex items-center gap-1 md:hidden">
           <button
             onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-2 transition-colors hover:bg-white/5"
             aria-label={`Theme: ${mode}`}
           >
-            <ThemeIcon size={18} className="text-gray-600 dark:text-slate-400" />
+            <ThemeIcon size={18} className="text-slate-400" />
           </button>
           {isAuthenticated && permission !== 'unsupported' && (
             <button
               onClick={isSubscribed ? pushUnsubscribe : pushSubscribe}
               disabled={pushLoading || permission === 'denied'}
-              className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
+              className="relative rounded-lg p-2 transition-colors hover:bg-white/5 disabled:opacity-50"
               aria-label={isSubscribed ? 'Disable notifications' : 'Enable notifications'}
             >
-              {isSubscribed ? (
-                <Bell size={18} className="text-teal-600 dark:text-teal-400" />
-              ) : (
-                <BellOff size={18} className="text-gray-400 dark:text-slate-500" />
-              )}
-              {isSubscribed && (
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-teal-500 rounded-full" />
-              )}
+              {isSubscribed
+                ? <Bell size={18} className="text-cyan-400" />
+                : <BellOff size={18} className="text-slate-500" />}
+              {isSubscribed && <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-cyan-400" />}
             </button>
           )}
           <button
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-2 transition-colors hover:bg-white/5"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            {menuOpen ? <X size={22} className="text-gray-900 dark:text-white" /> : <Menu size={22} className="text-gray-900 dark:text-white" />}
+            {menuOpen ? <X size={22} className="text-white" /> : <Menu size={22} className="text-white" />}
           </button>
         </div>
       </nav>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-4">
+        <div className="border-t border-white/[0.06] bg-[#080c11] px-4 pb-4 md:hidden">
           <ul className="mt-2 space-y-1">
             {navLinks.map((link) => (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
                   className={({ isActive }) =>
-                    `block px-4 py-2 rounded-lg text-sm font-medium ${
-                      isActive ? 'text-teal-600 bg-teal-50 dark:bg-teal-950' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'
+                    `block rounded-lg px-4 py-2 text-sm font-medium ${
+                      isActive ? 'text-cyan-400' : 'text-slate-400 hover:bg-white/5 hover:text-white'
                     }`
                   }
                   onClick={() => setMenuOpen(false)}
@@ -227,14 +248,26 @@ export default function Navbar() {
             {isAuthenticated ? (
               <button
                 onClick={handleLogout}
-                className="w-full px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-50 dark:hover:bg-red-950"
+                className="w-full rounded-lg border border-red-500/30 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-500/10"
               >
                 Sign out
               </button>
             ) : (
               <>
-                <Link to="/login" className="block text-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-300 border border-gray-200 dark:border-slate-700 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800" onClick={() => setMenuOpen(false)}>Sign in</Link>
-                <Link to="/register" className="block text-center px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700" onClick={() => setMenuOpen(false)}>Get started</Link>
+                <Link
+                  to="/login"
+                  className="block rounded-lg border border-slate-700 px-4 py-2 text-center text-sm font-medium text-slate-300 hover:bg-white/5"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="block rounded-lg bg-cyan-400 px-4 py-2 text-center text-sm font-bold text-slate-950 hover:bg-cyan-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Get started
+                </Link>
               </>
             )}
           </div>

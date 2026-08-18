@@ -1,26 +1,30 @@
 import { Link } from 'react-router-dom';
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
-import { Logo } from '@ebringgs/ui';
+
+/**
+ * Site footer.
+ *
+ * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
+ * variants, matching the landing and auth pages.
+ *
+ * Uses main.png at 140px, where the full lockup's "TECHNOLOGIES" line and
+ * tagline are legible; the header renders the same art at half that and
+ * loses them.
+ */
+const BRAND_LOCKUP = '/ebrings/main.png';
 
 const footerLinks = {
-  Company: [
-    { label: 'About', to: '/about' },
-    { label: 'Blog', to: '/blog' },
-    { label: 'Careers', to: '/careers' },
-    { label: 'Contact', to: '/contact' },
+  Offerings: [
+    { label: 'Software Engineering', to: '/services/software-development' },
+    { label: 'Data & Analytics', to: '/services/data-analytics' },
+    { label: 'UX Research', to: '/services/ux-product-design' },
+    { label: 'Product Strategy', to: '/services' },
   ],
-  Services: [
-    { label: 'Software Development', to: '/services' },
-    { label: 'Data Analysis', to: '/services' },
-    { label: 'Research Support', to: '/services' },
-    { label: 'UX / Product', to: '/services' },
-  ],
-  Learning: [
-    { label: 'Training Programs', to: '/pricing' },
-    { label: 'Student Portfolio', to: '/portfolio' },
+  Resources: [
+    { label: 'Cohort Schedule', to: '/schedule' },
+    { label: 'Documentation', to: '/how-it-works' },
     { label: 'Success Stories', to: '/success-stories' },
-    { label: 'Student Portal', to: '/dashboard' },
-    { label: 'How It Works', to: '/how-it-works' },
+    { label: 'Careers', to: '/careers' },
   ],
   Legal: [
     { label: 'Privacy Policy', to: '/privacy' },
@@ -28,40 +32,47 @@ const footerLinks = {
   ],
 };
 
+function BrandLockup({ height = 140 }: { height?: number }) {
+  return (
+    <span
+      className="inline-flex shrink-0 items-center justify-center overflow-hidden"
+      style={{ height, width: height * 1.1 }}
+    >
+      <img
+        src={BRAND_LOCKUP}
+        alt="E-Bringgs Technologies"
+        draggable={false}
+        style={{ height: height * 1.25, width: 'auto', maxWidth: 'none' }}
+      />
+    </span>
+  );
+}
+
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+    <footer className="border-t border-white/[0.06] bg-[#060a0e] text-slate-400">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="mb-4">
-              <Logo variant="full" size={72} asLink tone="dark" className="drop-shadow-sm" />
-            </div>
-            <p className="text-sm leading-relaxed mb-6">
-              Empowering individuals and organizations through technology, learning, and innovation.
+            <Link to="/" className="inline-flex">
+              <BrandLockup />
+            </Link>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-500">
+              Transformative live learning, real-world cohort programs, and custom business
+              integrations designed to elevate engineering, design, and data teams.
             </p>
-            <div className="flex gap-3">
-              {[
-                { Icon: Twitter, href: '#' },
-                { Icon: Linkedin, href: '#' },
-                { Icon: Github, href: '#' },
-                { Icon: Mail, href: 'mailto:ebringgstechnologies@gmail.com' },
-              ].map(({ Icon, href }, i) => (
-                <a key={i} href={href} className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-teal-600 flex items-center justify-center transition-colors" target="_blank" rel="noopener noreferrer">
-                  <Icon size={16} />
-                </a>
-              ))}
-            </div>
           </div>
 
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
-              <h4 className="text-white font-semibold text-sm mb-4">{section}</h4>
+              <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                {section}
+              </h4>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link to={link.to} className="text-sm hover:text-white transition-colors">
+                    <Link to={link.to} className="text-sm text-slate-400 transition-colors hover:text-white">
                       {link.label}
                     </Link>
                   </li>
@@ -71,9 +82,29 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm">© {new Date().getFullYear()} E-Bringgs Technologies. All rights reserved.</p>
-          <p className="text-sm">Built with passion in Africa 🌍</p>
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
+          <p className="text-xs text-slate-600">
+            © {new Date().getFullYear()} ebringgs inc. All rights reserved. Made for elite operators worldwide.
+          </p>
+          <div className="flex gap-2">
+            {[
+              { Icon: Twitter, href: '#', label: 'Twitter' },
+              { Icon: Linkedin, href: '#', label: 'LinkedIn' },
+              { Icon: Github, href: '#', label: 'GitHub' },
+              { Icon: Mail, href: 'mailto:ebringgstechnologies@gmail.com', label: 'Email' },
+            ].map(({ Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-400 transition-colors hover:bg-cyan-400/10 hover:text-cyan-400"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon size={15} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

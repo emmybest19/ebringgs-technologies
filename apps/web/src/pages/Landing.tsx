@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Code2,
-  CheckCircle2, Star, Zap, Shield, Users, GraduationCap, Globe, Mail, Loader2,
-  ExternalLink, Github, Sparkles,
+  ArrowRight, Code2, Check, Star, Users, GraduationCap, TrendingUp, Loader2,
+  ExternalLink, Github, CheckCircle2,
 } from 'lucide-react';
 import HeroCarousel from '../components/ui/HeroCarousel';
 import api from '@ebringgs/api';
@@ -13,7 +12,39 @@ import type { ReviewCardData } from '../components/reviews/ReviewCard';
 import { useAuthStore } from '@ebringgs/auth';
 import { useSEO, schema } from '@ebringgs/ui';
 
+/**
+ * Landing page.
+ *
+ * DARK ONLY, deliberately — every colour is unconditional rather than a
+ * `dark:` variant, matching the sign-in and sign-up pages. The light-mode
+ * treatment is still to be specified.
+ */
+
+// Shared surface tokens, so the section banding stays consistent as this page
+// grows. `base` is the page floor; `raised` is a panel sitting on it.
+const SURFACE = {
+  base: 'bg-[#080c11]',
+  band: 'bg-[#0a1017]',
+  card: 'bg-[#0e141c]',
+};
+
+const cyanButton =
+  'inline-flex items-center justify-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 ' +
+  'text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300';
+const ghostButton =
+  'inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-[#0e141c] ' +
+  'px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-[#141b26]';
+
 // ─── Hero ────────────────────────────────────────────────────────────────────
+const heroPoints = [
+  'All classes taught live by world-class industry professionals',
+  'Rigorous cohort programs built around production-grade projects',
+  'Guaranteed 1-on-1 mentorship with engineering leads',
+  'Comprehensive career placement support & industry certificates',
+];
+
+const heroTrust = ['No credit card required', 'Free trial tier included', 'Dedicated 24/7 Slack support'];
+
 function Hero() {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -25,68 +56,58 @@ function Hero() {
     : user?.role === 'teacher' ? teacherUrl
     : user?.role === 'client' ? '/client'
     : '/dashboard';
+
   return (
-    <section className="no-reveal relative overflow-hidden bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%239C92AC%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+    <section className={`no-reveal relative overflow-hidden ${SURFACE.base} text-white`}>
+      <div className="absolute inset-0 bg-[radial-gradient(90%_60%_at_15%_20%,rgba(34,211,238,0.07),transparent_60%)]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left, Copy */}
+      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 text-sm font-medium mb-8">
-              <Zap size={14} className="fill-current" />
-              Technology · Learning · Innovation
-            </div>
+            <span className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-cyan-300">
+              Now enrolling for Q3 cohorts
+            </span>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-6">
-              Build. Learn.{' '}
-              <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
-                Grow.
-              </span>
+            <h1 className="mt-8 text-5xl font-extrabold leading-[1.08] tracking-tight md:text-6xl">
+              Build. Learn.
+              <br />
+              <span className="text-gold-400">Grow.</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-slate-300 leading-relaxed mb-10 max-w-2xl">
-              E-Bringgs Technologies delivers world-class software services, structured learning programs, and expert consulting, all in one platform.
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400">
+              Expert-led instruction meets direct 1-on-1 mentorship. We build deep, robust skills in
+              software engineering, UI/UX design, and data science designed to accelerate real-world
+              career trajectories.
             </p>
 
-            <div className="flex flex-wrap gap-4">
-              {isAuthenticated && user ? (
-                <Link
-                  to={dashboardPath}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-teal-600 hover:bg-teal-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 hover:-translate-y-0.5"
-                >
-                  Continue to dashboard <ArrowRight size={18} />
-                </Link>
-              ) : (
-                <Link
-                  to="/register"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-teal-600 hover:bg-teal-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 hover:-translate-y-0.5"
-                >
-                  Get started free <ArrowRight size={18} />
-                </Link>
-              )}
-              <Link
-                to="/pricing"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition-all duration-200 backdrop-blur"
-              >
-                View pricing
+            <ul className="mt-8 space-y-3">
+              {heroPoints.map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-400/10">
+                    <Check size={12} strokeWidth={3} className="text-cyan-400" />
+                  </span>
+                  <span className="text-sm text-slate-300">{point}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link to={isAuthenticated && user ? dashboardPath : '/register'} className={cyanButton}>
+                {isAuthenticated && user ? 'Continue to dashboard' : 'Get started free'} <ArrowRight size={16} />
               </Link>
+              <Link to="/pricing" className={ghostButton}>View pricing</Link>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-6 text-slate-400 text-sm">
-              {['No credit card required', 'Free tier available', '24/7 support'].map((text) => (
-                <div key={text} className="flex items-center gap-2">
-                  <CheckCircle2 size={15} className="text-green-400 shrink-0" />
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+              {heroTrust.map((text) => (
+                <span key={text} className="flex items-center gap-2 text-xs text-slate-500">
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-cyan-400" />
                   {text}
-                </div>
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Right, Image Carousel */}
           <div className="hidden lg:block">
             <HeroCarousel />
           </div>
@@ -137,25 +158,30 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 function Stats() {
   // Curated numbers (updated 2026-07). Completion rate is a standalone
   // figure, not derived from the counts beside it — don't try to reconcile
-  // the four values against each other.
-  const stats = [
-    { value: 20, suffix: '+', label: 'Students enrolled', icon: GraduationCap },
-    { value: 4, suffix: '', label: 'Projects delivered', icon: Code2 },
-    { value: 6, suffix: '', label: 'Projects in flight', icon: Users },
-    { value: 94, suffix: '%', label: 'Completion rate', icon: Globe },
+  // the four values against each other. `target` is null where the value is
+  // a label rather than a number, so the counter is skipped.
+  const stats: { target: number | null; display: string; suffix: string; label: string; icon: typeof Users }[] = [
+    { target: 20, display: '20+', suffix: '+', label: 'Students Enrolled', icon: Users },
+    { target: 4, display: '4', suffix: '', label: 'Projects Delivered', icon: Code2 },
+    { target: null, display: '1-on-1', suffix: '', label: 'Guaranteed Mentorship', icon: GraduationCap },
+    { target: 94, display: '94%', suffix: '%', label: 'Completion Rate', icon: TrendingUp },
   ];
 
   return (
-    <section className="bg-teal-600 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map(({ value, suffix, label, icon: Icon }) => (
-            <div key={label} className="text-center">
-              <Icon size={28} className="mx-auto mb-3 text-teal-200" />
-              <p className="text-4xl font-extrabold">
-                <AnimatedCounter target={value} suffix={suffix} />
-              </p>
-              <p className="text-teal-200 text-sm mt-1">{label}</p>
+    <section className={`${SURFACE.band} border-y border-white/[0.06]`}>
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+          {stats.map(({ target, display, suffix, label, icon: Icon }) => (
+            <div key={label} className="flex items-center gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
+                <Icon size={20} className="text-cyan-400" />
+              </span>
+              <span>
+                <span className="block text-2xl font-extrabold text-white">
+                  {target === null ? display : <AnimatedCounter target={target} suffix={suffix} />}
+                </span>
+                <span className="mt-0.5 block text-xs text-slate-500">{label}</span>
+              </span>
             </div>
           ))}
         </div>
@@ -164,62 +190,88 @@ function Stats() {
   );
 }
 
-// ─── Learning ────────────────────────────────────────────────────────────────
-function Learning() {
+// ─── Curriculum ──────────────────────────────────────────────────────────────
+const programs = [
+  {
+    label: 'Web Development',
+    tag: 'Frontend & Backend',
+    img: '/images/learning/students-laptop.jpg',
+    points: ['React, Next.js, and TypeScript', 'Advanced Node.js & Database Systems', 'CI/CD & DevOps basics'],
+  },
+  {
+    label: 'Mobile Development',
+    tag: 'iOS & Android',
+    img: '/images/hero/data-dashboard.jpg',
+    points: ['React Native architecture', 'Native Swift & Kotlin integration', 'App Store deployment pipelines'],
+  },
+  {
+    label: 'UI/UX Design',
+    tag: 'Product & Interface',
+    img: '/images/services/ux-design.jpg',
+    points: ['Advanced Figma & Prototyping', 'Design systems & component design', 'Heuristic product analysis'],
+  },
+  {
+    label: '1-on-1 Mentorship',
+    tag: 'Elite Coaching',
+    img: '/images/general/coding-screen.jpg',
+    points: ['Direct private Slack channels', 'Weekly milestone review', 'Career roadmap consulting'],
+  },
+];
+
+function Curriculum() {
   return (
-    <section className="no-reveal reveal-clip py-24 bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-teal-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="reveal-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-sm font-medium mb-6">
-              <GraduationCap size={14} /> Learning Programs
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Structured paths to launch your tech career
-            </h2>
-            <p className="text-gray-500 dark:text-slate-400 text-lg mb-8">
-              Join live instructor-led classes, cohort programs, and get 1-on-1 mentorship from seasoned professionals.
-            </p>
+    <section className={`${SURFACE.base} py-24`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-cyan-300">
+            Curriculum overview
+          </span>
+          <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            Structured paths to launch your tech career
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-slate-400">
+            Choose a discipline. Train live with elite builders. Build a verified portfolio that
+            outshines traditional university degrees.
+          </p>
+        </div>
 
-            <ul className="space-y-4 mb-8">
-              {[
-                'All classes taught live by expert instructors',
-                'Cohort programs with real-world projects',
-                '1-on-1 mentorship with industry experts',
-                'Career support and certificate of completion',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <CheckCircle2 size={20} className="text-teal-600 shrink-0 mt-0.5" />
-                  <span className="text-gray-600 dark:text-slate-400">{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-colors">
-              View programs <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          {/* Visual image grid */}
-          <div className="reveal-right grid grid-cols-2 gap-4">
-            {[
-              { label: 'Web Development', duration: '8-12 weeks', tag: 'Starter / Cohort', img: '/images/learning/students-laptop.jpg' },
-              { label: 'Mobile Development', duration: '8-12 weeks', tag: 'Cohort', img: '/images/hero/data-dashboard.jpg' },
-              { label: 'UI/UX Design', duration: '6-10 weeks', tag: 'Live classes', img: '/images/services/ux-design.jpg' },
-              { label: '1-on-1 Mentorship', duration: '10-12 weeks', tag: 'Mentorship', img: '/images/general/coding-screen.jpg' },
-            ].map((program) => (
-              <div key={program.label} className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden group">
-                <div className="h-28 overflow-hidden">
-                  <img loading="lazy" src={program.img} alt={program.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                </div>
-                <div className="p-4">
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-md bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 mb-2">{program.tag}</span>
-                  <p className="font-semibold text-gray-900 dark:text-white text-sm mb-1">{program.label}</p>
-                  <p className="text-xs text-gray-400 dark:text-slate-500">{program.duration}</p>
-                </div>
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {programs.map((program) => (
+            <article
+              key={program.label}
+              className={`group overflow-hidden rounded-2xl border border-slate-800 ${SURFACE.card} transition-colors hover:border-slate-700`}
+            >
+              <div className="relative h-32 overflow-hidden">
+                <img
+                  loading="lazy"
+                  src={program.img}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <span className="absolute left-3 top-3 rounded-md bg-slate-950/80 px-2 py-1 text-[10px] font-semibold text-cyan-300 backdrop-blur">
+                  {program.tag}
+                </span>
               </div>
-            ))}
-          </div>
+              <div className="p-5">
+                <h3 className="font-bold text-white">{program.label}</h3>
+                <ul className="mt-3 space-y-2">
+                  {program.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2 text-xs leading-relaxed text-slate-400">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-slate-600" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link to="/pricing" className={cyanButton}>
+            View program syllabus <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </section>
@@ -227,39 +279,34 @@ function Learning() {
 }
 
 // ─── Featured Student Work ───────────────────────────────────────────────────
-
 function FeaturedStudentWork() {
-  // Backend sorts case studies by `featured: -1, createdAt: -1` already, so
-  // a single top-3 fetch yields featured-first-then-recent automatically.
-  // (Previously this was a two-stage fetch, feature-filtered then fallback -
-  // unnecessary given the server-side sort.)
+  // Backend sorts case studies by `featured: -1, createdAt: -1` already, so a
+  // single top-3 fetch yields featured-first-then-recent automatically.
   const { data: projects = [], isLoading: loading } = useCaseStudies({
     type: 'student_project',
     limit: 3,
   });
 
-  // Hide the whole section if there's nothing to show, better than an
-  // awkward empty grid in front of a marketing page.
+  // Hide the whole section if there's nothing to show — better than an
+  // awkward empty grid in the middle of a marketing page.
   if (!loading && projects.length === 0) return null;
 
   return (
-    <section className="py-24 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+    <section className={`${SURFACE.band} border-y border-white/[0.06] py-24`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-sm font-medium mb-4">
-              <Sparkles size={14} className="fill-current" /> Featured student work
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+            <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
               What our students shipped
             </h2>
-            <p className="text-lg text-gray-500 dark:text-slate-400 max-w-2xl">
-              Real apps, built by real students during their cohort. Click through to see the build, the team, and where they are now.
+            <p className="mt-3 max-w-2xl text-sm text-slate-400">
+              Real apps, built by real students during their cohort. Click through to see the build,
+              the team, and where they are now.
             </p>
           </div>
           <Link
             to="/portfolio"
-            className="inline-flex items-center gap-2 px-5 py-2.5 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 hover:text-teal-600 transition-colors self-start md:self-auto"
+            className="inline-flex shrink-0 items-center gap-2 self-start text-sm font-medium text-cyan-400 hover:underline md:self-auto"
           >
             View full portfolio <ArrowRight size={16} />
           </Link>
@@ -267,48 +314,47 @@ function FeaturedStudentWork() {
 
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 size={24} className="animate-spin text-teal-600" />
+            <Loader2 size={24} className="animate-spin text-cyan-400" />
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((p) => (
               <Link
                 key={p._id}
                 to={`/success-stories/${p.slug}`}
-                className="group block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-xl hover:-translate-y-0.5 hover:border-teal-200 dark:hover:border-teal-800 transition-all overflow-hidden"
+                className={`group block overflow-hidden rounded-2xl border border-slate-800 ${SURFACE.card} transition-colors hover:border-slate-700`}
               >
                 {p.coverImage && (
                   <div className="h-44 overflow-hidden">
-                    <img loading="lazy"
+                    <img
+                      loading="lazy"
                       src={p.coverImage}
                       alt={p.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 )}
                 <div className="p-5">
-                  {p.category && (
-                    <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mb-1">{p.category}</p>
-                  )}
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-2 line-clamp-1">{p.title}</h3>
-                  <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-2 mb-4">{p.summary}</p>
+                  {p.category && <p className="mb-1 text-xs font-medium text-cyan-400">{p.category}</p>}
+                  <h3 className="mb-2 line-clamp-1 font-bold text-white">{p.title}</h3>
+                  <p className="mb-4 line-clamp-2 text-sm text-slate-400">{p.summary}</p>
 
                   {p.studentName && (
-                    <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100 dark:border-slate-800">
-                      <div className="w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900 overflow-hidden flex items-center justify-center text-teal-700 dark:text-teal-300 font-semibold text-xs shrink-0">
+                    <div className="flex items-center gap-2.5 border-t border-slate-800 pt-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-cyan-400/10 text-xs font-semibold text-cyan-300">
                         {p.studentAvatar ? (
-                          <img loading="lazy" src={p.studentAvatar} alt={p.studentName} className="w-full h-full object-cover" />
+                          <img loading="lazy" src={p.studentAvatar} alt={p.studentName} className="h-full w-full object-cover" />
                         ) : (
                           p.studentName.charAt(0).toUpperCase()
                         )}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-gray-900 dark:text-white truncate">{p.studentName}</p>
-                        <p className="text-[11px] text-gray-500 dark:text-slate-400 truncate">
+                        <p className="truncate text-xs font-semibold text-white">{p.studentName}</p>
+                        <p className="truncate text-[11px] text-slate-500">
                           {p.studentRole || p.cohortBatch || 'Student project'}
                         </p>
                       </div>
-                      <div className="flex gap-2 text-gray-300 dark:text-slate-600 shrink-0">
+                      <div className="flex shrink-0 gap-2 text-slate-600">
                         {p.liveUrl && <ExternalLink size={13} />}
                         {p.githubUrl && <Github size={13} />}
                       </div>
@@ -331,34 +377,40 @@ function Testimonials() {
   const stats = data?.stats ?? null;
 
   return (
-    <section className="relative py-24 text-white overflow-hidden">
-      <img loading="lazy" src="/images/general/african-students.jpg" alt="Students" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-linear-to-br from-slate-900/95 to-teal-950/90" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">What our students & clients say</h2>
+    <section className={`${SURFACE.base} py-24`}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            What our students &amp; clients say
+          </h2>
           {stats && stats.count > 0 ? (
-            <div className="inline-flex items-center gap-2 text-slate-300">
-              <Star size={18} className="fill-amber-400 text-amber-400" />
+            <div className="mt-3 inline-flex items-center gap-2 text-slate-400">
+              <Star size={16} className="fill-gold-400 text-gold-400" />
               <span className="font-bold text-white">{stats.average.toFixed(1)}</span>
               <span className="text-sm">based on {stats.count} review{stats.count === 1 ? '' : 's'}</span>
             </div>
           ) : (
-            <p className="text-slate-400 text-lg max-w-xl mx-auto">Real reviews from people who've worked with us.</p>
+            <p className="mt-3 text-sm text-slate-400">Transparent reviews from modern tech operators.</p>
           )}
         </div>
 
         {loading ? (
-          <div className="text-center text-slate-400 py-12">Loading reviews...</div>
+          <div className="flex items-center justify-center py-12">
+            <Loader2 size={24} className="animate-spin text-cyan-400" />
+          </div>
         ) : reviews.length === 0 ? (
-          <div className="text-center max-w-md mx-auto py-12 px-6 bg-white/5 backdrop-blur border border-white/10 rounded-2xl">
-            <p className="text-slate-300 mb-2">No reviews yet, be the first.</p>
-            <p className="text-sm text-slate-400">
-              Once students complete a program and clients finish a project, their reviews will appear here.
+          <div className={`mx-auto max-w-lg rounded-2xl border border-slate-800 ${SURFACE.card} px-8 py-12 text-center`}>
+            <span className="mx-auto mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-400/10">
+              <Star size={20} className="text-cyan-400" />
+            </span>
+            <p className="font-semibold text-white">No reviews yet, be the first.</p>
+            <p className="mt-3 text-xs leading-relaxed text-slate-500">
+              Once students complete a program and clients finish a custom technical integration,
+              verified transparent reviews will populate this terminal instantly.
             </p>
           </div>
         ) : (
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid gap-6 md:grid-cols-3">
             {reviews.map((r) => (
               <ReviewCard key={r._id} review={r} dark />
             ))}
@@ -391,43 +443,42 @@ function Newsletter() {
   };
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-slate-950">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 bg-teal-100 dark:bg-teal-900 rounded-2xl mb-6">
-          <Mail size={24} className="text-teal-600 dark:text-teal-400" />
-        </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">Stay in the loop</h2>
-        <p className="text-gray-500 dark:text-slate-400 mb-8 max-w-lg mx-auto">
-          Get updates on new cohort openings, free workshops, and tech career tips. No spam, unsubscribe anytime.
-        </p>
+    <section className={`${SURFACE.base} pb-24`}>
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className={`rounded-3xl border border-slate-800 ${SURFACE.card} px-6 py-14 text-center`}>
+          <h2 className="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+            Stay in the loop with modular education
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm text-slate-400">
+            Sign up for our newsletter to get resource drops, curriculum updates, and industry insights.
+          </p>
 
-        {status === 'success' ? (
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300 rounded-xl font-medium">
-            <CheckCircle2 size={18} /> {message}
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              className="flex-1 px-4 py-3 border border-gray-200 dark:border-slate-700 rounded-xl text-sm bg-white dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
-            />
-            <button
-              type="submit"
-              disabled={status === 'loading'}
-              className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 disabled:opacity-60 transition-colors flex items-center justify-center gap-2 shrink-0"
-            >
-              {status === 'loading' ? <Loader2 size={16} className="animate-spin" /> : null}
-              Subscribe
-            </button>
-          </form>
-        )}
-        {status === 'error' && (
-          <p className="text-sm text-red-500 mt-3">{message}</p>
-        )}
+          {status === 'success' ? (
+            <div className="mt-8 inline-flex items-center gap-2 rounded-xl bg-cyan-400/10 px-6 py-3 text-sm font-medium text-cyan-300">
+              <CheckCircle2 size={18} /> {message}
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
+              <input
+                type="email"
+                placeholder="Enter your professional email…"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="flex-1 rounded-xl border border-slate-800 bg-[#111823] px-4 py-3 text-sm text-white placeholder-slate-600 outline-none transition-colors focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10"
+              />
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="flex shrink-0 items-center justify-center gap-2 rounded-xl bg-cyan-400 px-6 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300 disabled:opacity-60"
+              >
+                {status === 'loading' && <Loader2 size={16} className="animate-spin" />}
+                Subscribe
+              </button>
+            </form>
+          )}
+          {status === 'error' && <p className="mt-3 text-sm text-red-400">{message}</p>}
+        </div>
       </div>
     </section>
   );
@@ -436,25 +487,14 @@ function Newsletter() {
 // ─── Final CTA ───────────────────────────────────────────────────────────────
 function FinalCTA() {
   return (
-    <section className="py-24 bg-white dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-linear-to-br from-teal-600 to-emerald-700 p-12 md:p-20 text-center text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]" />
-          <div className="relative">
-            <Shield size={40} className="mx-auto mb-6 text-teal-200" />
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Ready to get started?</h2>
-            <p className="text-teal-200 text-lg mb-10 max-w-xl mx-auto">
-              Join hundreds of students and clients who trust E-Bringgs to level up their skills and deliver results.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-teal-700 font-bold rounded-xl hover:bg-teal-50 transition-colors shadow-lg">
-                Create free account <ArrowRight size={18} />
-              </Link>
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-colors">
-                Talk to us
-              </Link>
-            </div>
-          </div>
+    <section className={`${SURFACE.base} pb-28`}>
+      <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+          Ready to get started?
+        </h2>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link to="/register" className={cyanButton}>Enroll in a program</Link>
+          <Link to="/contact" className={ghostButton}>Book a consultation call</Link>
         </div>
       </div>
     </section>
@@ -478,15 +518,16 @@ export default function Landing() {
     robotsExtras: ['max-image-preview:large'],
     jsonLd: [schema.website(), schema.organization()],
   });
+
   return (
-    <>
+    <div className={SURFACE.base}>
       <Hero />
       <Stats />
-      <Learning />
+      <Curriculum />
       <FeaturedStudentWork />
       <Testimonials />
       <Newsletter />
       <FinalCTA />
-    </>
+    </div>
   );
 }
