@@ -1,31 +1,64 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import {
-  Eye, EyeOff, Loader2, Mail, Lock, ArrowRight, CheckCircle2,
-  Code2, Smartphone, BarChart3, Globe, Zap,
-} from 'lucide-react';
+import { Eye, EyeOff, Loader2, Mail, Lock, ArrowRight, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '@ebringgs/auth';
 import { useReviews } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
 import type { ReviewCardData } from '../components/reviews/ReviewCard';
-import { Logo, useSEO } from '@ebringgs/ui';
+import { useSEO } from '@ebringgs/ui';
 import SocialAuthButtons, { SOCIAL_AUTH_ENABLED } from '../components/auth/SocialAuthButtons';
 
-// ─── Floating Icons (same as Register for consistency) ──────────────────────
-const floatingIcons = [
-  { Icon: Code2, top: '12%', left: '8%', delay: '0s', size: 20 },
-  { Icon: Smartphone, top: '25%', right: '12%', delay: '1.5s', size: 18 },
-  { Icon: BarChart3, bottom: '30%', left: '10%', delay: '3s', size: 22 },
-  { Icon: Globe, bottom: '15%', right: '8%', delay: '0.8s', size: 16 },
-  { Icon: Zap, top: '55%', left: '85%', delay: '2.2s', size: 14 },
+const stats = [
+  { value: '20+', label: 'Students Enrolled' },
+  { value: '4', label: 'Projects Delivered' },
+  { value: '6', label: 'Projects in Flight' },
 ];
 
-const stats = [
-  { value: '20+', label: 'Students enrolled' },
-  { value: '4', label: 'Projects delivered' },
-  { value: '6', label: 'Projects in flight' },
-];
+// ─── Brand art (new identity) ───────────────────────────────────────────────
+// Wired directly here rather than through <Logo>, because that shared
+// component still serves the old gold/teal art to the navbar, footer and the
+// admin + teacher apps — repointing it would roll the rebrand out everywhere
+// at once, which is outside this page's scope.
+//
+// Both source files carry transparent padding around the artwork, so each is
+// rendered oversized inside a clipped box to bring the brand flush to its
+// container's edges. The multipliers below are the measured ratio of artwork
+// to canvas in each file.
+const BRAND_LOCKUP = '/ebrings/main.png'; // 1:1  — mark stacked over the wordmark
+const BRAND_MARK = '/ebrings/short.png';  // 3:2  — mark alone
+
+function BrandLockup({ height }: { height: number }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center overflow-hidden shrink-0"
+      style={{ height, width: height * 1.1 }}
+    >
+      <img
+        src={BRAND_LOCKUP}
+        alt="E-Bringgs Technologies"
+        draggable={false}
+        style={{ height: height * 1.25, width: 'auto', maxWidth: 'none' }}
+      />
+    </span>
+  );
+}
+
+function BrandMark({ height }: { height: number }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center overflow-hidden shrink-0"
+      style={{ height, width: height }}
+    >
+      <img
+        src={BRAND_MARK}
+        alt="E-Bringgs"
+        draggable={false}
+        style={{ height: height * 1.14, width: 'auto', maxWidth: 'none' }}
+      />
+    </span>
+  );
+}
 
 // ─── Left Panel ─────────────────────────────────────────────────────────────
 function LeftPanel() {
@@ -33,61 +66,56 @@ function LeftPanel() {
   const reviews: ReviewCardData[] = (data?.reviews ?? []) as unknown as ReviewCardData[];
 
   return (
-    <div className="hidden lg:flex lg:w-1/2 relative bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%2314b8a6%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
+    <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-[#0a1210]">
+      {/* The panel is deliberately flat — no pattern, no orbs, no floating
+          icons. Two very low-opacity brand glows are the only ornament, just
+          enough to keep a full-height near-black field from reading as dead. */}
+      <div className="absolute inset-0 bg-[radial-gradient(110%_75%_at_18%_30%,rgba(34,211,238,0.10),transparent_62%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(85%_55%_at_85%_92%,rgba(13,148,136,0.08),transparent_60%)]" />
 
-      {/* Glowing orbs */}
-      <div className="absolute top-20 right-10 w-64 h-64 bg-teal-500/15 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 left-10 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      {/* Content. Logo pins to the top and the copyright to the bottom, with
+          the message block centred in whatever height is left over. */}
+      <div className="relative z-10 flex flex-col w-full px-12 xl:px-16 py-14">
+        <Link to="/" className="inline-flex shrink-0 self-start">
+          {/* The lockup stacks vertically, so it needs real height for the
+              wordmark and tagline to stay legible — a 50px logo slot would
+              render this one unreadable. */}
+          <BrandLockup height={128} />
+        </Link>
 
-      {floatingIcons.map(({ Icon, delay, size, ...pos }, i) => (
-        <div
-          key={i}
-          className="absolute text-teal-400/20 animate-[float_6s_ease-in-out_infinite]"
-          style={{ ...pos, animationDelay: delay } as React.CSSProperties}
-        >
-          <Icon size={size} />
-        </div>
-      ))}
+        <div className="flex-1 flex flex-col justify-center max-w-lg py-12">
+          <h2 className="text-4xl xl:text-5xl font-extrabold text-white leading-[1.12] tracking-tight mb-6">
+            Welcome back to E-Bringgs
+          </h2>
+          <p className="text-slate-400 text-base xl:text-lg leading-relaxed mb-14">
+            Your personalized learning dashboard, live courses, collaborative cohort
+            projects, and structured mentor guidelines are waiting. Pick up right
+            where you left off.
+          </p>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col justify-center px-12 xl:px-16 py-16">
-        {/* Logo */}
-        <div className="mb-12">
-          <Link to="/" className="inline-block">
-            <Logo variant="full" size={56} tone="dark" />
-          </Link>
-        </div>
-
-        {/* Main message */}
-        <h2 className="text-3xl xl:text-4xl font-extrabold text-white leading-tight mb-4">
-          Welcome back to{' '}
-          <span className="bg-linear-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
-            E-Bringgs
-          </span>
-        </h2>
-        <p className="text-slate-300 text-lg mb-10 leading-relaxed max-w-md">
-          Your dashboard, courses, projects, and community are waiting. Pick up right where you left off.
-        </p>
-
-        {/* Stats row */}
-        <div className="flex gap-8 mb-12">
-          {stats.map((s) => (
-            <div key={s.label}>
-              <p className="text-2xl font-extrabold text-white">{s.value}</p>
-              <p className="text-xs text-slate-400 mt-0.5">{s.label}</p>
-            </div>
-          ))}
-        </div>
-
-        {reviews.length > 0 && (
-          <div className="space-y-4 mt-auto">
-            {reviews.map((r) => (
-              <ReviewCard key={r._id} review={r} dark />
+          {/* Stats. Fixed three-column grid so the labels line up on a common
+              baseline regardless of how wide each number renders. */}
+          <div className="grid grid-cols-3 gap-6">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="text-3xl font-extrabold text-cyan-400">{s.value}</p>
+                <p className="text-xs text-slate-500 mt-1.5">{s.label}</p>
+              </div>
             ))}
           </div>
-        )}
+
+          {reviews.length > 0 && (
+            <div className="space-y-4 mt-14">
+              {reviews.map((r) => (
+                <ReviewCard key={r._id} review={r} dark />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <p className="text-xs text-slate-600 shrink-0">
+          © {new Date().getFullYear()} ebringgs inc. All rights reserved.
+        </p>
       </div>
     </div>
   );
@@ -135,9 +163,19 @@ export default function Login() {
       <div className="w-full lg:w-1/2 flex flex-col min-h-screen">
         {/* Mobile header */}
         <div className="lg:hidden flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900">
-          <Logo variant="mark" size={32} asLink withWordmark wordmarkClass="text-gray-900 dark:text-white" />
+          <Link to="/" className="flex items-center gap-2.5">
+            {/* Half the mark is white/silver, so on a light surface it needs a
+                dark plate under it or it simply disappears. In dark mode the
+                plate is dropped and the art sits on the panel directly. */}
+            <span className="inline-flex rounded-lg bg-slate-900 p-1.5 dark:bg-transparent dark:p-0">
+              <BrandMark height={26} />
+            </span>
+            <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-white">
+              e-bringgs
+            </span>
+          </Link>
 
-          <Link to="/register" className="text-sm text-teal-600 font-medium">Sign up</Link>
+          <Link to="/register" className="text-sm text-cyan-600 font-medium">Sign up</Link>
         </div>
 
         {/* Form area */}
@@ -146,12 +184,14 @@ export default function Login() {
             {/* Header */}
             <div className="mb-8">
               <div className="hidden lg:block mb-5">
-                <Logo variant="mark" size={48} />
+                <span className="inline-flex rounded-xl bg-slate-900 p-2.5 dark:bg-transparent dark:p-0">
+                  <BrandMark height={40} />
+                </span>
               </div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Sign in to your account</h1>
               <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">
                 Don't have an account?{' '}
-                <Link to="/register" className="text-teal-600 font-semibold hover:text-teal-800 dark:hover:text-teal-400 transition-colors">
+                <Link to="/register" className="text-cyan-600 font-semibold hover:text-cyan-800 dark:hover:text-cyan-400 transition-colors">
                   Sign up free
                 </Link>
               </p>
@@ -172,7 +212,7 @@ export default function Login() {
                     required
                     autoFocus
                     placeholder="you@example.com"
-                    className="w-full pl-11 pr-4 py-4 rounded-xl border-2 border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
+                    className="w-full pl-11 pr-4 py-4 rounded-xl border-2 border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all text-sm"
                   />
                 </div>
               </div>
@@ -183,7 +223,7 @@ export default function Login() {
                   <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
                   <Link
                     to="/forgot-password"
-                    className="text-xs text-teal-600 font-medium hover:text-teal-800 dark:hover:text-teal-400 transition-colors"
+                    className="text-xs text-cyan-600 font-medium hover:text-cyan-800 dark:hover:text-cyan-400 transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -198,7 +238,7 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     placeholder="••••••••"
-                    className="w-full pl-11 pr-12 py-4 rounded-xl border-2 border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 outline-none transition-all text-sm"
+                    className="w-full pl-11 pr-12 py-4 rounded-xl border-2 border-gray-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all text-sm"
                   />
                   <button
                     type="button"
@@ -217,7 +257,7 @@ export default function Login() {
                 className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   isLoading
                     ? 'bg-gray-200 dark:bg-slate-800 text-gray-400 dark:text-slate-500 cursor-not-allowed'
-                    : 'bg-teal-600 text-white hover:bg-teal-700 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 hover:-translate-y-0.5'
+                    : 'bg-cyan-600 text-white hover:bg-cyan-700 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5'
                 }`}
               >
                 {isLoading ? (
@@ -264,8 +304,8 @@ export default function Login() {
                   'Pan-African tech community',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2.5">
-                    <div className="w-5 h-5 rounded-full bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
-                      <CheckCircle2 size={12} className="text-teal-600 dark:text-teal-400" />
+                    <div className="w-5 h-5 rounded-full bg-cyan-50 dark:bg-cyan-950 flex items-center justify-center shrink-0">
+                      <CheckCircle2 size={12} className="text-cyan-600 dark:text-cyan-400" />
                     </div>
                     <span className="text-sm text-gray-600 dark:text-slate-400">{item}</span>
                   </li>
@@ -276,21 +316,12 @@ export default function Login() {
             {/* Footer links */}
             <p className="text-center text-xs text-gray-400 dark:text-slate-500 mt-8">
               By signing in you agree to our{' '}
-              <Link to="/terms" className="text-teal-600 hover:underline">Terms</Link>{' '}and{' '}
-              <Link to="/privacy" className="text-teal-600 hover:underline">Privacy Policy</Link>.
+              <Link to="/terms" className="text-cyan-600 hover:underline">Terms</Link>{' '}and{' '}
+              <Link to="/privacy" className="text-cyan-600 hover:underline">Privacy Policy</Link>.
             </p>
           </div>
         </div>
       </div>
-
-      {/* ── Global CSS for animations ───────────────────────────────── */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          33% { transform: translateY(-12px) rotate(3deg); }
-          66% { transform: translateY(6px) rotate(-2deg); }
-        }
-      `}</style>
     </div>
   );
 }
