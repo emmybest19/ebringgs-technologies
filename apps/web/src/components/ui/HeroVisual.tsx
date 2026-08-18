@@ -1,30 +1,57 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Animated hero visual: a rotating wireframe torus knot inside a dark panel.
+ * Animated hero visual: a slowly rotating node network wrapped on a sphere.
  *
- * Drawn on a 2D canvas with hand-rolled projection rather than three.js — the
+ * The form is chosen to mean something rather than to decorate — nodes joined
+ * to their nearest neighbours read as a cohort/network, which is the business.
+ * A handful of nodes pulse to suggest activity across it.
+ *
+ * Drawn on a 2D canvas with hand-rolled projection rather than three.js: the
  * bundle is already ~970KB and a 3D engine would add a six-figure byte count
- * to render one mesh. The whole thing is ~150 lines and takes the brand cyan
- * as a parameter, which is the point: unlike a stock photo, the accent colour
- * is ours by construction.
- *
- * Motion is skipped entirely under prefers-reduced-motion — a single static
- * frame is drawn instead, so the composition still reads.
+ * to render one object. Motion is skipped under prefers-reduced-motion, where
+ * a single static frame is drawn instead.
  */
 
-// Torus knot (p,q). Standard parametric curve; p=2,q=3 gives the familiar
-// trefoil-ish shape.
-const P = 2;
-const Q = 3;
-const SEGMENTS = 170; // steps along the curve
-const RING = 10;      // points around the tube
-const TUBE = 0.42;    // tube radius
-const SCALE = 62;     // world → px before perspective; leaves margin in the panel
+const NODES = 88;
+const NEIGHBOURS = 3;   // edges per node before de-duplication
+const RADIUS = 1;       // unit sphere in model space
+const SCALE = 152;      // world → px before perspective
+const PULSING = [4, 19, 33, 48, 61, 77]; // indices that breathe
 
-function curvePoint(u: number): [number, number, number] {
-  const r = Math.cos(Q * u) + 2;
-  return [r * Math.cos(P * u), r * Math.sin(P * u), -Math.sin(Q * u)];
+type Vec3 = [number, number, number];
+
+/** Fibonacci sphere — even point distribution without clustering at the poles. */
+function sphereNodes(n: number): Vec3[] {
+  const pts: Vec3[] = [];
+  const phi = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i / (n - 1)) * 2;
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const theta = phi * i;
+    pts.push([Math.cos(theta) * r * RADIUS, y * RADIUS, Math.sin(theta) * r * RADIUS]);
+  }
+  return pts;
+}
+
+/** Each node links to its k nearest neighbours; pairs de-duplicated. */
+function buildEdges(pts: Vec3[], k: number): [number, number][] {
+  const seen = new Set<string>();
+  const edges: [number, number][] = [];
+  for (let i = 0; i < pts.length; i++) {
+    const d = pts
+      .map((p, j) => ({ j, d: (p[0] - pts[i][0]) ** 2 + (p[1] - pts[i][1]) ** 2 + (p[2] - pts[i][2]) ** 2 }))
+      .filter((o) => o.j !== i)
+      .sort((a, b) => a.d - b.d)
+      .slice(0, k);
+    for (const { j } of d) {
+      const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      edges.push([i, j]);
+    }
+  }
+  return edges;
 }
 
 export default function HeroVisual() {
@@ -37,47 +64,12 @@ export default function HeroVisual() {
     if (!ctx) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Precompute the tube as a grid of points in model space. Frenet-ish
-    // frame: tangent from a finite difference, normal from the curve position,
-    // binormal from their cross product.
-    const grid: [number, number, number][][] = [];
-    for (let i = 0; i < SEGMENTS; i++) {
-      const u = (i / SEGMENTS) * Math.PI * 2;
-      const cur = curvePoint(u);
-      const nxt = curvePoint(u + 0.01);
-
-      const t: [number, number, number] = [nxt[0] - cur[0], nxt[1] - cur[1], nxt[2] - cur[2]];
-      const tl = Math.hypot(t[0], t[1], t[2]) || 1;
-      t[0] /= tl; t[1] /= tl; t[2] /= tl;
-
-      const nl = Math.hypot(cur[0], cur[1], cur[2]) || 1;
-      const n: [number, number, number] = [cur[0] / nl, cur[1] / nl, cur[2] / nl];
-
-      const b: [number, number, number] = [
-        t[1] * n[2] - t[2] * n[1],
-        t[2] * n[0] - t[0] * n[2],
-        t[0] * n[1] - t[1] * n[0],
-      ];
-      const bl = Math.hypot(b[0], b[1], b[2]) || 1;
-      b[0] /= bl; b[1] /= bl; b[2] /= bl;
-
-      const ring: [number, number, number][] = [];
-      for (let j = 0; j < RING; j++) {
-        const v = (j / RING) * Math.PI * 2;
-        const cv = Math.cos(v) * TUBE;
-        const sv = Math.sin(v) * TUBE;
-        ring.push([
-          cur[0] + cv * n[0] + sv * b[0],
-          cur[1] + cv * n[1] + sv * b[1],
-          cur[2] + cv * n[2] + sv * b[2],
-        ]);
-      }
-      grid.push(ring);
-    }
+    const nodes = sphereNodes(NODES);
+    const edges = buildEdges(nodes, NEIGHBOURS);
+    const pulseSet = new Set(PULSING);
 
     let raf = 0;
-    let angle = 0;
+    let t = 0;
     let w = 0;
     let h = 0;
 
@@ -97,51 +89,61 @@ export default function HeroVisual() {
       const cx = w / 2;
       const cy = h / 2;
 
-      const cosA = Math.cos(angle);
-      const sinA = Math.sin(angle);
-      const tilt = 0.55;
+      const cosA = Math.cos(t);
+      const sinA = Math.sin(t);
+      const tilt = 0.42;
       const cosT = Math.cos(tilt);
       const sinT = Math.sin(tilt);
 
-      // Project every point once per frame.
-      const proj: [number, number, number][][] = grid.map((ring) =>
-        ring.map(([x, y, z]) => {
-          // rotate around Y, then tilt around X
-          const rx = x * cosA + z * sinA;
-          const rz = -x * sinA + z * cosA;
-          const ry = y * cosT - rz * sinT;
-          const rz2 = y * sinT + rz * cosT;
-          const depth = 7 / (7 + rz2); // perspective divide
-          return [cx + rx * SCALE * depth, cy + ry * SCALE * depth, rz2];
-        }),
-      );
+      // Project every node once per frame: spin about Y, tilt about X.
+      const proj = nodes.map(([x, y, z]) => {
+        const rx = x * cosA + z * sinA;
+        const rz = -x * sinA + z * cosA;
+        const ry = y * cosT - rz * sinT;
+        const rz2 = y * sinT + rz * cosT;
+        const depth = 3.4 / (3.4 + rz2);
+        return { x: cx + rx * SCALE * depth, y: cy + ry * SCALE * depth, z: rz2, depth };
+      });
 
-      // Two passes so the far side reads dimmer than the near side — cheap
-      // depth cueing without per-line state changes.
-      for (const pass of [0, 1] as const) {
+      // Edges. Split into far/near passes so the sphere reads as a volume
+      // instead of a flat web — two stroke calls rather than one per line.
+      for (const near of [false, true]) {
         ctx.beginPath();
-        for (let i = 0; i < SEGMENTS; i++) {
+        for (const [i, j] of edges) {
           const a = proj[i];
-          const bRing = proj[(i + 1) % SEGMENTS];
-          for (let j = 0; j < RING; j++) {
-            const isNear = a[j][2] > 0;
-            if ((pass === 1) !== isNear) continue;
-            const j2 = (j + 1) % RING;
-            // along the tube
-            ctx.moveTo(a[j][0], a[j][1]);
-            ctx.lineTo(bRing[j][0], bRing[j][1]);
-            // around the tube
-            ctx.moveTo(a[j][0], a[j][1]);
-            ctx.lineTo(a[j2][0], a[j2][1]);
-          }
+          const b = proj[j];
+          if ((a.z + b.z) / 2 > 0 !== near) continue;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
         }
-        ctx.strokeStyle = pass === 1 ? 'rgba(34,211,238,0.85)' : 'rgba(34,211,238,0.22)';
-        ctx.lineWidth = pass === 1 ? 1 : 0.7;
+        ctx.strokeStyle = near ? 'rgba(34,211,238,0.58)' : 'rgba(34,211,238,0.16)';
+        ctx.lineWidth = near ? 1.1 : 0.7;
         ctx.stroke();
       }
 
+      // Nodes, drawn after the edges so they sit on top of the mesh.
+      proj.forEach((p, i) => {
+        const near = p.z > 0;
+        const pulse = pulseSet.has(i) ? 0.5 + 0.5 * Math.sin(t * 3 + i) : 0;
+        const r = (near ? 1.9 : 1.2) + pulse * 1.6;
+
+        if (pulse > 0.15 && near) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r + 3.5 * pulse, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(34,211,238,${0.16 * pulse})`;
+          ctx.fill();
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = near
+          ? `rgba(103,232,249,${0.75 + pulse * 0.25})`
+          : 'rgba(34,211,238,0.28)';
+        ctx.fill();
+      });
+
       if (!reduced) {
-        angle += 0.0035;
+        t += 0.0032;
         raf = requestAnimationFrame(draw);
       }
     };
@@ -158,26 +160,23 @@ export default function HeroVisual() {
 
   return (
     <div className="relative">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-800 bg-[#0b1119]">
-        {/* Starfield. Static, low-opacity, generated once from a fixed set so
-            it never reflows or flickers between renders. */}
-        <div className="pointer-events-none absolute inset-0">
-          {STARS.map((s, i) => (
-            <span
-              key={i}
-              className="absolute rounded-full bg-slate-400"
-              style={{ left: `${s[0]}%`, top: `${s[1]}%`, width: s[2], height: s[2], opacity: s[3] }}
-            />
-          ))}
-        </div>
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-800 bg-[#0a1017]">
+        {/* Soft glow seated behind the sphere, so it sits in the panel rather
+            than floating on a flat rectangle. */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_55%_at_50%_45%,rgba(34,211,238,0.09),transparent_70%)]" />
 
-        {/* Orbit ring behind the knot */}
-        <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
-          <ellipse
-            cx="50%" cy="50%" rx="36%" ry="13%"
-            fill="none" stroke="rgba(148,163,184,0.18)" strokeWidth="1"
-          />
-        </svg>
+        {/* Fine grid, fading out toward the edges. Gives the panel a sense of
+            plane without competing with the network. */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(148,163,184,1) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,1) 1px, transparent 1px)',
+            backgroundSize: '44px 44px',
+            maskImage: 'radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(70% 70% at 50% 50%, #000 40%, transparent 100%)',
+          }}
+        />
 
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 
@@ -188,12 +187,12 @@ export default function HeroVisual() {
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-400" />
           </span>
           <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-            Live · Q3 Cohort
+            Live
           </span>
         </div>
 
-        {/* Corner readout. Deliberately a real fact about the programmes
-            rather than invented system telemetry. */}
+        {/* Corner readout — a real fact about the programmes, not invented
+            system telemetry. */}
         <div className="absolute bottom-5 right-5 text-right">
           <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-600">Tracks</p>
           <p className="text-2xl font-extrabold leading-none text-white">05</p>
@@ -212,12 +211,3 @@ export default function HeroVisual() {
     </div>
   );
 }
-
-// [leftPct, topPct, sizePx, opacity]
-const STARS: [number, number, number, number][] = [
-  [8, 18, 2, 0.5], [17, 62, 1, 0.35], [24, 31, 1, 0.4], [31, 78, 2, 0.3],
-  [39, 12, 1, 0.45], [46, 88, 1, 0.3], [54, 22, 2, 0.35], [61, 55, 1, 0.4],
-  [68, 15, 1, 0.3], [73, 71, 2, 0.45], [81, 38, 1, 0.35], [88, 82, 1, 0.3],
-  [93, 27, 2, 0.4], [12, 44, 1, 0.3], [35, 52, 1, 0.25], [58, 68, 1, 0.3],
-  [77, 9, 1, 0.35], [96, 60, 1, 0.3], [4, 74, 1, 0.3], [50, 40, 1, 0.22],
-];
