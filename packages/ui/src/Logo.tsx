@@ -15,26 +15,29 @@ interface LogoProps {
   /** Color of the wordmark text. */
   wordmarkClass?: string;
   /**
-   * Which tone of the artwork to use. Only affects variant="full", whose
-   * "technologies" wordmark is near-black in the default art and slate-200 in
-   * the -dark art. variant="mark" is entirely gold/teal and legible anywhere.
-   *  - "auto"  (default) follow the theme: light art in light mode, dark art
-   *            in dark mode. Correct for surfaces that themselves theme.
-   *  - "dark"  always the dark art — for surfaces that are dark in both themes
-   *            (footer, sidebars, auth panels).
-   *  - "light" always the light art — for surfaces that are light in both
-   *            themes (the printable certificate).
+   * What kind of surface the logo is sitting on.
+   *  - "dark" (default) / "auto" — the artwork sits directly on the surface.
+   *  - "light" — the surface is light or printed, so the art goes on a dark
+   *    rounded plate. The mark is white and cyan; without the plate its light
+   *    half disappears entirely. The printable certificate is the one caller
+   *    that needs this.
    */
   tone?: 'auto' | 'light' | 'dark';
 }
 
 /**
  * E-Bringgs brand logo. Two variants:
- *  - "mark" → just the eb icon (for tight UI: navbar, sidebars)
- *  - "full" → eb icon + e-bringgs technologies + Build. Launch. Grow.
+ *  - "mark" → the hexagonal eb mark alone (navbars, sidebars, tight UI)
+ *  - "full" → the stacked lockup: mark over e-bringgs / TECHNOLOGIES / tagline
  *
- * Files live in /public so they're referenced by absolute URL, no import
- * needed and they don't go through the bundler.
+ * Both files live in each app's /public so they're referenced by absolute URL
+ * and skip the bundler. Every app that renders this component needs its own
+ * copy under public/ebrings/.
+ *
+ * The old art shipped in two tones because its "technologies" line was
+ * near-black and vanished on dark surfaces. The current art is white and cyan
+ * throughout, so there is a single file per variant and the tone prop now
+ * controls a backing plate instead of swapping files.
  */
 export default function Logo({
   variant = 'mark',
@@ -42,69 +45,58 @@ export default function Logo({
   asLink = false,
   className = '',
   withWordmark = false,
-  wordmarkClass = 'text-gray-900 dark:text-white',
+  wordmarkClass = 'text-white',
   tone = 'auto',
 }: LogoProps) {
-  // All assets have transparent backgrounds (the -full PNGs are the source JPG
-  // with its white background keyed out), so they sit directly on any surface.
-  //
-  // The "full" art contains a near-black "technologies" wordmark that
-  // disappears on dark surfaces, so it ships in two tones: the default and
-  // -dark, where that word is recoloured to slate-200. The "mark" art is all
-  // gold/teal and needs no such treatment.
-  const src = variant === 'full' ? '/logo-full.png' : '/logo-mark.png';
-  const darkSrc = variant === 'full' ? '/logo-full-dark.png' : '/logo-mark.png';
   const height = size ?? (variant === 'full' ? 48 : 40);
+  const onLight = tone === 'light';
 
-  // Both source files are square 1:1 canvases with the brand sitting in the
-  // middle surrounded by dead whitespace. We render the image larger than the
-  // visible box and clip the edges so the brand fills the container.
-  //   - "full" brand is roughly 1.6:1 (mark + wordmark + tagline) and fills
-  //     ~55% of the canvas height → scale 1.9x and use a wide box.
-  //   - "mark" brand is roughly square and fills ~70% of the canvas → scale
-  //     1.4x in a square box.
-  const cropScale = variant === 'full' ? 1.9 : 1.4;
-  const boxAspect = variant === 'full' ? 1.7 : 1;
-  const boxWidth = height * boxAspect;
-
-  const imgStyle = { height: height * cropScale, width: 'auto', maxWidth: 'none' } as const;
-  // Only "full" has two tones, and only "auto" needs both rendered so CSS can
-  // pick per theme. Pinned tones render a single image.
-  const swapsWithTheme = variant === 'full' && tone === 'auto';
-
-  const img = (
-    <span className="inline-flex items-center justify-center shrink-0">
+  // "mark" is a 3:2 canvas with the artwork centred in transparent padding —
+  // clip it to a square so it sits flush. "full" is a 1:1 canvas rendered
+  // uncropped: its tagline sits close enough to the edge that any clipping
+  // cuts the line off.
+  const art =
+    variant === 'mark' ? (
       <span
-        className="overflow-hidden inline-flex items-center justify-center"
-        style={{ height, width: boxWidth }}
+        className="inline-flex shrink-0 items-center justify-center overflow-hidden"
+        style={{ height, width: height }}
       >
         <img
-          src={tone === 'dark' ? darkSrc : src}
+          src="/ebrings/short.png"
           alt="E-Bringgs Technologies"
-          style={imgStyle}
-          className={swapsWithTheme ? 'dark:hidden' : undefined}
           draggable={false}
+          style={{ height: height * 1.14, width: 'auto', maxWidth: 'none' }}
         />
-        {swapsWithTheme && (
-          <img
-            src={darkSrc}
-            alt=""
-            aria-hidden="true"
-            style={imgStyle}
-            className="hidden dark:block"
-            draggable={false}
-          />
-        )}
       </span>
+    ) : (
+      <img
+        src="/ebrings/main.png"
+        alt="E-Bringgs Technologies"
+        draggable={false}
+        className="shrink-0 object-contain"
+        style={{ height, width: 'auto' }}
+      />
+    );
+
+  const plated = onLight ? (
+    <span
+      className="inline-flex items-center justify-center rounded-xl bg-slate-900"
+      style={{ padding: Math.round(height * 0.14) }}
+    >
+      {art}
     </span>
+  ) : (
+    art
   );
 
   const content = withWordmark && variant === 'mark' ? (
-    <div className="flex items-center gap-2">
-      {img}
-      <span className={`font-extrabold text-xl tracking-tight ${wordmarkClass}`}>e-bringgs</span>
-    </div>
-  ) : img;
+    <span className="flex items-center gap-2.5">
+      {plated}
+      <span className={`text-xl font-extrabold tracking-tight ${wordmarkClass}`}>e-bringgs</span>
+    </span>
+  ) : (
+    plated
+  );
 
   if (asLink) {
     return (
