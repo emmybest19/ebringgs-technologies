@@ -90,7 +90,7 @@ export default function About() {
 
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link
-              to="/instructors"
+              to="/about/team"
               className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
             >
               Meet the Team <ArrowRight size={16} />

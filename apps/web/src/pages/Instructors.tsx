@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Users, BookOpen, Linkedin, Github, Globe, X } from 'lucide-react';
+import { Star, Users, Linkedin, Github, Globe, X } from 'lucide-react';
 import { useSEO } from '@ebringgs/ui';
+
+/**
+ * Meet the Team, served at /about/team.
+ *
+ * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
+ * variants, matching the rest of the redesigned public pages.
+ *
+ * Two tiers: `featured` people render as wide leadership rows, everyone else
+ * flows into the mentors grid. Adding a person is a matter of appending to the
+ * array below; the split is derived, not hand-maintained.
+ */
 
 interface Instructor {
   id: string;
@@ -53,36 +64,35 @@ const instructors: Instructor[] = [
     avatar: 'YA',
     title: 'Senior Instructor, UI/UX Design',
     bio: 'Product designer who has led design at two YC-backed startups. Specialises in user research, design systems, and making complex products simple.',
-    specialties: ['Figma', 'User Research', 'Design Systems', 'Prototyping'],
+    specialties: ['Figma', 'Design Systems', 'User Research', 'Prototyping'],
     experience: '7 years',
     students: 120,
     rating: 4.9,
     image: '/images/team/data-lead.jpg',
-    social: { linkedin: '#', website: '#' },
-    featured: true,
+    social: { linkedin: '#' },
   },
   {
     id: '4',
     name: 'Chinonso Eze',
     avatar: 'CE',
     title: 'Instructor, Backend Engineering',
-    bio: 'Backend specialist focused on distributed systems and API design. Contributor to open-source projects. Loves breaking down complex architecture into digestible lessons.',
-    specialties: ['Python', 'Go', 'PostgreSQL', 'Microservices'],
-    experience: '6 years',
-    students: 90,
+    bio: 'Backend specialist focused on APIs, databases, and cloud infrastructure. Teaches the patterns that keep production systems standing.',
+    specialties: ['Node.js', 'PostgreSQL', 'Docker', 'AWS'],
+    experience: '9 years',
+    students: 110,
     rating: 4.7,
     image: '/images/team/backend-lead.jpg',
-    social: { github: '#' },
+    social: { linkedin: '#', github: '#' },
   },
   {
     id: '5',
     name: 'Ngozi Ibe',
     avatar: 'NI',
     title: 'Instructor, Data & Analytics',
-    bio: 'Data scientist with experience at consulting firms and NGOs. Teaches data analysis, visualisation, and machine learning fundamentals with practical, real-world datasets.',
-    specialties: ['Python', 'SQL', 'Tableau', 'Machine Learning'],
-    experience: '5 years',
-    students: 80,
+    bio: 'Data analyst turned educator. Works with messy real-world datasets and teaches students to turn them into decisions stakeholders act on.',
+    specialties: ['Python', 'SQL', 'Power BI', 'Pandas'],
+    experience: '6 years',
+    students: 95,
     rating: 4.8,
     image: '/images/about/team-meeting.jpg',
     social: { linkedin: '#' },
@@ -92,11 +102,11 @@ const instructors: Instructor[] = [
     name: 'Emeka Nwankwo',
     avatar: 'EN',
     title: 'Mentor, Career Development',
-    bio: 'Engineering manager who has hired 50+ developers across Africa. Runs our career coaching sessions, covering CVs, portfolios, interview prep, and salary negotiation.',
-    specialties: ['Career Coaching', 'Interview Prep', 'Portfolio Review', 'Salary Negotiation'],
-    experience: '12 years',
-    students: 300,
-    rating: 5.0,
+    bio: 'Connects graduates with hiring partners across the continent. Runs portfolio reviews, mock interviews, and salary negotiation clinics.',
+    specialties: ['Career Coaching', 'Portfolio Review', 'Interview Prep'],
+    experience: '5 years',
+    students: 180,
+    rating: 4.9,
     image: '/images/about/mission.jpg',
     social: { linkedin: '#' },
   },
@@ -104,142 +114,202 @@ const instructors: Instructor[] = [
 
 export default function Instructors() {
   useSEO({
-    title: 'Instructors',
-    description: 'Meet the engineers and designers who teach cohorts and ship client projects at E-Bringgs Technologies.',
-    url: 'https://ebringgs.com/instructors',
+    title: 'Meet the Team',
+    description: 'The instructors, mentors and specialists behind E-Bringgs cohorts and client projects.',
+    url: 'https://ebringgs.com/about/team',
     image: 'https://ebringgs.com/logo-full.jpg',
   });
+
   const [selected, setSelected] = useState<Instructor | null>(null);
+  const leadership = instructors.filter((i) => i.featured);
+  const mentors = instructors.filter((i) => !i.featured);
 
   return (
-    <div className="bg-white dark:bg-slate-900 min-h-screen">
-      {/* Hero */}
-      <section className="bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-500/20 text-teal-300 text-sm font-medium mb-6">
-            <Users size={14} /> Our Team
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Meet Our Instructors</h1>
-          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-            Industry professionals who don't just teach, they've built, shipped, and scaled real products. Learn from people who've been where you want to go.
+    <div className="bg-[#080c11]">
+      {/* ── Hero ──────────────────────────────────────────────────────── */}
+      <section className="no-reveal relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_5%,rgba(34,211,238,0.09),transparent_65%)]" />
+        <div className="relative mx-auto max-w-3xl px-4 pb-20 pt-16 text-center sm:px-6">
+          <span className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-cyan-300">
+            The architects of talent
+          </span>
+          <h1 className="mt-7 text-4xl font-extrabold leading-[1.1] tracking-tight text-white md:text-5xl">
+            Meet the team building Africa&rsquo;s elite tech pipeline
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400">
+            We are builders, educators, and architects of scale. Our leadership team has worked at
+            global tech giants and regional market leaders, coming together to empower the next
+            generation.
           </p>
         </div>
       </section>
 
-      {/* Featured instructors */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Featured instructors</h2>
-        <p className="text-gray-500 dark:text-slate-400 mb-8">Leading our core training tracks</p>
+      {/* ── Founding leadership ───────────────────────────────────────── */}
+      {leadership.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <h2 className="mb-8 text-2xl font-extrabold tracking-tight text-white">
+            Founding Leadership
+          </h2>
+          <div className="space-y-5">
+            {leadership.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setSelected(p)}
+                className="flex w-full items-center gap-8 rounded-2xl border border-slate-800 bg-[#0e141c] p-6 text-left transition-colors hover:border-slate-700 sm:p-8"
+              >
+                <img
+                  loading="lazy"
+                  src={p.image}
+                  alt=""
+                  aria-hidden="true"
+                  className="hidden h-32 w-32 shrink-0 rounded-full object-cover sm:block"
+                />
+                <span className="min-w-0">
+                  <span className="flex flex-wrap items-center gap-3">
+                    <span className="text-xl font-bold text-white">{p.name}</span>
+                    <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-cyan-300">
+                      Leadership
+                    </span>
+                  </span>
+                  <span className="mt-1 block text-sm font-semibold text-amber-400">{p.title}</span>
+                  <span className="mt-3 block text-sm leading-relaxed text-slate-400">{p.bio}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {instructors.filter(i => i.featured).map(inst => (
-            <button key={inst.id} onClick={() => setSelected(inst)} className="text-left group">
-              <div className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="h-52 overflow-hidden relative">
-                  <img loading="lazy" src={inst.image} alt={inst.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="font-bold text-white text-lg">{inst.name}</p>
-                    <p className="text-sm text-gray-200">{inst.title}</p>
-                  </div>
+      {/* ── Mentors ───────────────────────────────────────────────────── */}
+      {mentors.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+          <h2 className="mb-8 text-2xl font-extrabold tracking-tight text-white">
+            Mentors &amp; Support Specialists
+          </h2>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {mentors.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setSelected(p)}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0e141c] p-2 text-left transition-colors hover:border-slate-700"
+              >
+                <div className="overflow-hidden rounded-xl">
+                  <img
+                    loading="lazy"
+                    src={p.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <div className="p-5">
-                  <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 mb-3">
-                    <span className="flex items-center gap-1"><Star size={13} className="fill-gold-500 text-gold-500" /> {inst.rating}</span>
-                    <span className="flex items-center gap-1"><Users size={13} /> {inst.students} students</span>
-                    <span className="flex items-center gap-1"><BookOpen size={13} /> {inst.experience}</span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-slate-400 line-clamp-2">{inst.bio}</p>
+                <div className="p-4">
+                  <p className="text-sm font-bold text-white">{p.name}</p>
+                  <p className="mt-0.5 text-xs font-semibold text-cyan-400">{p.title}</p>
+                  <p className="mt-3 line-clamp-3 text-xs leading-relaxed text-slate-400">{p.bio}</p>
                 </div>
-              </div>
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">All instructors</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {instructors.map(inst => (
-            <button key={inst.id} onClick={() => setSelected(inst)} className="text-left">
-              <div className="card-hover-border bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm p-5 hover:shadow-lg transition-shadow h-full flex flex-col">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-bold shrink-0 overflow-hidden">
-                    <img loading="lazy" src={inst.image} alt={inst.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 dark:text-white">{inst.name}</p>
-                    <p className="text-xs text-teal-600 dark:text-teal-400">{inst.title}</p>
-                  </div>
-                </div>
-                <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-2 mb-4 flex-1">{inst.bio}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {inst.specialties.slice(0, 3).map(s => (
-                    <span key={s} className="px-2 py-0.5 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-300 text-xs rounded-md font-medium">{s}</span>
-                  ))}
-                </div>
-              </div>
-            </button>
-          ))}
+      {/* ── CTA ───────────────────────────────────────────────────────── */}
+      <section className="px-4 pb-28 sm:px-6">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-cyan-400/40 bg-[#0b1119] px-6 py-16 text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            Ready to learn from the best?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-slate-400">
+            Apply to join our upcoming cohort and work directly under veteran software engineers and
+            product managers.
+          </p>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/courses"
+              className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
+            >
+              Apply for Cohort
+            </Link>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-[#0e141c] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-[#141b26]"
+            >
+              Speak to an Advisor
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-linear-to-br from-teal-600 to-emerald-700 py-16">
-        <div className="max-w-3xl mx-auto px-4 text-center text-white">
-          <h2 className="text-3xl font-extrabold mb-4">Learn from the best</h2>
-          <p className="text-teal-200 text-lg mb-8">Join our next cohort and get direct access to our expert instructors.</p>
-          <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-teal-700 font-bold rounded-xl hover:bg-teal-50 transition-colors">
-            View programs <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
-
-      {/* Instructor detail modal */}
+      {/* ── Detail modal ──────────────────────────────────────────────── */}
+      {/* Not in the design, but it's the only place specialties, experience
+          and social links surface — dropping it would lose real content. */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelected(null)}>
-          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="h-48 overflow-hidden rounded-t-2xl relative">
-              <img loading="lazy" src={selected.image} alt={selected.name} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
-              <button onClick={() => setSelected(null)} className="absolute top-4 right-4 p-2 bg-black/30 text-white rounded-full hover:bg-black/50">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={() => setSelected(null)}
+          role="presentation"
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-slate-800 bg-[#0e141c]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative h-52">
+              <img loading="lazy" src={selected.image} alt="" aria-hidden="true" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#0e141c] via-transparent to-transparent" />
+              <button
+                type="button"
+                onClick={() => setSelected(null)}
+                aria-label="Close"
+                className="absolute right-4 top-4 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
+              >
                 <X size={16} />
               </button>
             </div>
-            <div className="p-8">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{selected.name}</h2>
-              <p className="text-sm text-teal-600 dark:text-teal-400 mb-4">{selected.title}</p>
 
-              <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 mb-4">
-                <span className="flex items-center gap-1"><Star size={13} className="fill-gold-500 text-gold-500" /> {selected.rating} rating</span>
-                <span className="flex items-center gap-1"><Users size={13} /> {selected.students} students</span>
+            <div className="p-6">
+              <h2 className="text-xl font-bold text-white">{selected.name}</h2>
+              <p className="mt-0.5 text-sm text-cyan-400">{selected.title}</p>
+
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-400">
+                <span className="flex items-center gap-1.5">
+                  <Star size={13} className="fill-gold-400 text-gold-400" /> {selected.rating} rating
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Users size={13} /> {selected.students} students
+                </span>
                 <span>{selected.experience} experience</span>
               </div>
 
-              <p className="text-gray-600 dark:text-slate-400 leading-relaxed mb-6">{selected.bio}</p>
+              <p className="mt-5 text-sm leading-relaxed text-slate-300">{selected.bio}</p>
 
-              <div className="mb-6">
-                <p className="text-xs text-gray-400 dark:text-slate-500 uppercase tracking-wider font-semibold mb-2">Specialties</p>
-                <div className="flex flex-wrap gap-2">
-                  {selected.specialties.map(s => (
-                    <span key={s} className="px-3 py-1 bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-sm rounded-lg font-medium">{s}</span>
-                  ))}
-                </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {selected.specialties.map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-1 text-xs font-medium text-cyan-300"
+                  >
+                    {s}
+                  </span>
+                ))}
               </div>
 
               {selected.social && (
-                <div className="flex gap-3 border-t border-gray-100 dark:border-slate-800 pt-4">
+                <div className="mt-6 flex gap-2 border-t border-slate-800 pt-5">
                   {selected.social.linkedin && (
-                    <a href={selected.social.linkedin} target="_blank" rel="noreferrer" className="p-2 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
-                      <Linkedin size={16} className="text-gray-600 dark:text-slate-400" />
+                    <a href={selected.social.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="rounded-lg bg-white/5 p-2 text-slate-400 transition-colors hover:bg-cyan-400/10 hover:text-cyan-400">
+                      <Linkedin size={16} />
                     </a>
                   )}
                   {selected.social.github && (
-                    <a href={selected.social.github} target="_blank" rel="noreferrer" className="p-2 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
-                      <Github size={16} className="text-gray-600 dark:text-slate-400" />
+                    <a href={selected.social.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="rounded-lg bg-white/5 p-2 text-slate-400 transition-colors hover:bg-cyan-400/10 hover:text-cyan-400">
+                      <Github size={16} />
                     </a>
                   )}
                   {selected.social.website && (
-                    <a href={selected.social.website} target="_blank" rel="noreferrer" className="p-2 bg-gray-100 dark:bg-slate-800 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
-                      <Globe size={16} className="text-gray-600 dark:text-slate-400" />
+                    <a href={selected.social.website} target="_blank" rel="noreferrer" aria-label="Website" className="rounded-lg bg-white/5 p-2 text-slate-400 transition-colors hover:bg-cyan-400/10 hover:text-cyan-400">
+                      <Globe size={16} />
                     </a>
                   )}
                 </div>

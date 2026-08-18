@@ -11,6 +11,7 @@ const labelMap: Record<string, string> = {
   portfolio: 'Portfolio',
   schedule: 'Schedule',
   instructors: 'Instructors',
+  team: 'Meet the Team',
   contact: 'Contact',
   terms: 'Terms',
   privacy: 'Privacy',

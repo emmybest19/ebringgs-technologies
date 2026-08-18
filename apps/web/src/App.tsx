@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -160,7 +160,9 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:slug" element={<CaseStudyDetail />} />
           <Route path="/schedule" element={<Schedule />} />
-          <Route path="/instructors" element={<Instructors />} />
+          <Route path="/about/team" element={<Instructors />} />
+          {/* Old public URL for the team page; kept so existing links resolve. */}
+          <Route path="/instructors" element={<Navigate to="/about/team" replace />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
