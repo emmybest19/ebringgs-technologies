@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, UserPlus, Search, CreditCard, BookOpen, Video,
-  Award, Code2, MessageSquare, FolderOpen, BarChart3, CheckCircle2,
-  GraduationCap, Briefcase, Users,
+  Award, Code2, MessageSquare, FolderOpen, BarChart3, Check,
+  GraduationCap, Briefcase, Plus, Minus,
 } from 'lucide-react';
 import { useSEO, schema } from '@ebringgs/ui';
+import { capabilities, getAccent } from '../data/capabilities';
 
 /* ─── Role tabs ─────────────────────────────────────────────────────────────── */
 
@@ -155,7 +156,33 @@ const faqs = [
   { q: 'How fast do you respond to service inquiries?', a: 'We aim to respond within 1-2 business days with a plan and quote.' },
 ];
 
-/* ─── Page ──────────────────────────────────────────────────────────────────── */
+/* --- Condensed flow strip ------------------------------------------------- */
+// Short labels for the "at a glance" rail. Kept per-role so the summary always
+// matches the six detailed steps above it.
+const glance: Record<Role, { label: string; blurb: string }[]> = {
+  student: [
+    { label: 'Signup', blurb: 'Create your free account' },
+    { label: 'Select', blurb: 'Pick the cohort that fits' },
+    { label: 'Enroll', blurb: 'Secure your place on the roster' },
+    { label: 'Onboard', blurb: 'Dashboard and schedule go live' },
+    { label: 'Attend', blurb: 'Join live weekly sessions' },
+    { label: 'Graduate', blurb: 'Earn a verifiable certificate' },
+  ],
+  client: [
+    { label: 'Signup', blurb: 'Create your account' },
+    { label: 'Explore', blurb: 'Review what we deliver' },
+    { label: 'Enquire', blurb: 'Send us the brief' },
+    { label: 'Kickoff', blurb: 'Meet your delivery squad' },
+    { label: 'Build', blurb: 'Weekly demos as we ship' },
+    { label: 'Handover', blurb: 'Code, docs and deployment' },
+  ],
+};
+
+/* --- Page ----------------------------------------------------------------- */
+/**
+ * DARK ONLY, deliberately - colours are unconditional rather than `dark:`
+ * variants, matching the rest of the redesigned public pages.
+ */
 
 export default function HowItWorks() {
   const [activeRole, setActiveRole] = useState<Role>('student');
@@ -178,94 +205,88 @@ export default function HowItWorks() {
   });
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="bg-[#080c11]">
       {/* Hero */}
-      <section className="no-reveal relative text-white py-24 px-4 overflow-hidden">
-        <img src="/images/general/african-students.jpg" alt="Getting started" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
-        <div className="relative max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">How It Works</h1>
-          <p className="text-slate-300 text-lg max-w-xl mx-auto">
-            Whether you're here to learn or to build, here's your step-by-step guide to getting the most out of E-Bringgs.
+      <section className="no-reveal relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(65%_55%_at_50%_0%,rgba(34,211,238,0.09),transparent_65%)]" />
+        <div className="relative mx-auto max-w-3xl px-4 pb-16 pt-16 text-center sm:px-6">
+          <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white md:text-5xl">
+            Step-by-step path to tech excellence
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-slate-400">
+            Whether you want to advance your career with elite live learning cohorts or seek to
+            deploy high-grade technical services, our process is optimized for guaranteed delivery.
           </p>
-        </div>
-      </section>
 
-      {/* Role selector */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 -mt-8 relative z-10">
-        <div className="grid grid-cols-2 gap-4">
-          {roles.map(({ key, label, icon: Icon, description }) => (
-            <button
-              key={key}
-              onClick={() => setActiveRole(key)}
-              className={`flex items-center gap-4 p-5 md:p-6 rounded-2xl border-2 text-left transition-all duration-200 ${
-                activeRole === key
-                  ? 'border-teal-500 bg-teal-50 dark:bg-teal-950 shadow-lg shadow-teal-500/10'
-                  : 'border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-teal-200 dark:hover:border-teal-800'
-              }`}
-            >
-              <div className={`p-3 rounded-xl shrink-0 ${activeRole === key ? 'bg-teal-500 text-white' : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400'}`}>
-                <Icon size={24} />
-              </div>
-              <div>
-                <p className={`font-bold text-lg ${activeRole === key ? 'text-teal-700 dark:text-teal-300' : 'text-gray-900 dark:text-white'}`}>{label}</p>
-                <p className="text-sm text-gray-500 dark:text-slate-400">{description}</p>
-              </div>
-            </button>
-          ))}
+          {/* Role switch - swaps the six steps and the glance rail below. */}
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            {roles.map(({ key, label, icon: Icon }) => {
+              const active = activeRole === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => { setActiveRole(key); setOpenFaq(null); }}
+                  aria-pressed={active}
+                  className={`inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold transition-colors ${
+                    active
+                      ? 'bg-cyan-400 text-slate-950 hover:bg-cyan-300'
+                      : 'border border-slate-700 bg-[#0e141c] text-white hover:border-slate-600 hover:bg-[#141b26]'
+                  }`}
+                >
+                  <Icon size={16} /> {label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Steps */}
-      <section className="no-reveal reveal-clip max-w-5xl mx-auto px-4 sm:px-6 py-20">
-        <div className="space-y-20">
+      <section className="reveal-clip mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+        <div className="space-y-16">
           {steps.map((step, i) => {
-            const isEven = i % 2 === 1;
+            const imageFirst = i % 2 === 0;
             return (
-              <div
-                key={step.number}
-                className={`grid md:grid-cols-2 gap-10 md:gap-14 items-center ${isEven ? 'md:direction-rtl' : ''}`}
-              >
-                {/* Image side — slides in from whichever side it sits on */}
-                <div className={isEven ? 'reveal-right md:order-2' : 'reveal-left'}>
-                  <div className="relative rounded-2xl overflow-hidden shadow-xl group">
-                    <img loading="lazy"
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-64 md:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <div className="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center font-extrabold text-lg shadow-lg">
-                        {step.number}
-                      </div>
-                    </div>
-                  </div>
+              <div key={`${activeRole}-${step.number}`} className="grid items-center gap-10 lg:grid-cols-2">
+                <div
+                  className={`overflow-hidden rounded-2xl border border-slate-800 bg-[#0e141c] p-2 ${
+                    imageFirst ? 'lg:order-1' : 'lg:order-2'
+                  }`}
+                >
+                  <img
+                    loading="lazy"
+                    src={step.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-64 w-full rounded-xl object-cover"
+                  />
                 </div>
 
-                {/* Content side — mirrors the image side */}
-                <div className={isEven ? 'reveal-left md:order-1' : 'reveal-right'}>
-                  <div className="inline-flex p-3 bg-teal-50 dark:bg-teal-950 rounded-xl mb-4">
-                    <step.icon size={22} className="text-teal-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{step.title}</h3>
-                  <p className="text-gray-500 dark:text-slate-400 leading-relaxed mb-5">{step.description}</p>
+                <div className={imageFirst ? 'lg:order-2' : 'lg:order-1'}>
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-cyan-400/30 bg-cyan-400/10 text-xs font-bold text-cyan-400">
+                    {step.number}
+                  </span>
+                  <h2 className="mt-5 text-2xl font-extrabold tracking-tight text-white">
+                    {step.title}
+                  </h2>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-400">{step.description}</p>
 
-                  {/* Tips */}
-                  <div className="space-y-2 mb-6">
+                  <ul className="mt-6 space-y-2.5">
                     {step.tips.map((tip) => (
-                      <div key={tip} className="flex items-start gap-2.5">
-                        <CheckCircle2 size={16} className="text-teal-500 shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-600 dark:text-slate-400">{tip}</span>
-                      </div>
+                      <li key={tip} className="flex items-start gap-2.5">
+                        <Check size={13} strokeWidth={3} className="mt-0.5 shrink-0 text-cyan-400" />
+                        <span className="text-xs leading-relaxed text-slate-300">{tip}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
 
                   {step.cta && (
                     <Link
                       to={step.cta.to}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors"
+                      className="mt-7 inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-[#0e141c] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:border-slate-600 hover:bg-[#141b26]"
                     >
-                      {step.cta.label} <ArrowRight size={16} />
+                      {step.cta.label} <ArrowRight size={13} />
                     </Link>
                   )}
                 </div>
@@ -275,71 +296,151 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      {/* At a glance, visual summary */}
-      <section className="bg-linear-to-br from-slate-50 to-teal-50 dark:from-slate-950 dark:to-teal-950 py-20 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-4">At a glance</h2>
-          <p className="text-gray-500 dark:text-slate-400 text-center max-w-xl mx-auto mb-14">Here's the full journey in one view.</p>
+      {/* Services strip */}
+      <section className="border-t border-white/[0.06] bg-[#0a1017] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+              Services that power your journey
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              From hands-on learning to high-grade delivery, our services are designed to support
+              students and organizations alike.
+            </p>
+          </div>
 
-          <div className="relative">
-            {/* Connector line */}
-            <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-linear-to-r from-teal-200 via-teal-400 to-teal-200 dark:from-teal-800 dark:via-teal-600 dark:to-teal-800" />
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {steps.map((step) => (
-                <div key={step.number} className="relative flex flex-col items-center text-center">
-                  <div className="relative z-10 w-16 h-16 rounded-full bg-teal-600 text-white flex items-center justify-center shadow-lg mb-4">
-                    <step.icon size={24} />
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {capabilities.map(({ slug, icon: Icon, title, tagline, img }) => {
+              const accent = getAccent(slug);
+              return (
+                <Link
+                  key={slug}
+                  to={`/services/${slug}`}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0e141c] p-2 transition-colors hover:border-slate-700"
+                >
+                  <div className="overflow-hidden rounded-xl">
+                    <img
+                      loading="lazy"
+                      src={img}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-32 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
                   </div>
-                  <p className="font-semibold text-gray-900 dark:text-white text-sm">{step.title}</p>
-                </div>
-              ))}
-            </div>
+                  <div className="flex flex-1 flex-col p-4">
+                    <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border ${accent.tile}`}>
+                      <Icon size={16} />
+                    </span>
+                    <h3 className="mt-4 text-sm font-bold text-white">{title}</h3>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-400">{tagline}</p>
+                    <span className={`mt-auto inline-flex items-center gap-1.5 pt-5 text-xs font-semibold ${accent.text}`}>
+                      Learn more
+                      <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 text-sm font-medium text-cyan-400 transition-colors hover:underline"
+            >
+              Explore all services <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-4">Common questions</h2>
-        <p className="text-gray-500 dark:text-slate-400 text-center mb-12">Still unsure? These should help.</p>
+      {/* Process at a glance */}
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+              The process at a glance
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              A frictionless flow designed to take you from zero to landing high-impact tech work.
+            </p>
+          </div>
 
-        <div className="space-y-4">
-          {faqs.map(({ q, a }, i) => (
-            <div key={q} className="bg-gray-50 dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden">
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex items-center justify-between cursor-pointer px-6 py-5 text-left text-gray-900 dark:text-white font-medium"
-              >
-                {q}
-                <span className={`ml-4 text-teal-500 text-xl font-bold transition-transform duration-200 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
-              </button>
-              {openFaq === i && (
-                <div className="px-6 pb-5 text-gray-500 dark:text-slate-400 text-sm leading-relaxed">
-                  {a}
+          <ol className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
+            {glance[activeRole].map(({ label, blurb }, i) => (
+              <li key={label}>
+                <span className="text-[11px] font-bold text-cyan-400">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="mt-2 block h-px w-full bg-slate-800" />
+                <span className="mt-4 block text-sm font-bold text-white">{label}</span>
+                <span className="mt-1 block text-xs leading-relaxed text-slate-500">{blurb}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="border-t border-white/[0.06] bg-[#0a1017] py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <div className="mb-12 text-center">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-4 text-sm text-slate-400">
+              Got queries? Find direct answers about our programs, teaching structure, and career
+              pathways.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, i) => {
+              const open = openFaq === i;
+              return (
+                <div key={faq.q} className="overflow-hidden rounded-xl border border-slate-800 bg-[#0e141c]">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(open ? null : i)}
+                    aria-expanded={open}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  >
+                    <span className="text-sm font-bold text-white">{faq.q}</span>
+                    <span className="shrink-0 text-cyan-400">
+                      {open ? <Minus size={16} /> : <Plus size={16} />}
+                    </span>
+                  </button>
+                  {open && (
+                    <p className="px-5 pb-5 text-xs leading-relaxed text-slate-400">{faq.a}</p>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="relative py-20 px-4 text-center text-white overflow-hidden">
-        <img loading="lazy" src="/images/hero/team-collaboration.jpg" alt="Get started" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-linear-to-br from-teal-700/90 to-emerald-800/90" />
-        <div className="relative">
-          <Users size={36} className="mx-auto mb-5 text-teal-200" />
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Ready to get started?</h2>
-          <p className="text-teal-200 text-lg mb-8 max-w-xl mx-auto">
-            Join hundreds of students and clients already using E-Bringgs to learn, build, and grow.
+      <section className="px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-slate-800 bg-[#0e141c] px-6 py-14 text-center">
+          <h2 className="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+            Ready to build, learn, and grow?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-sm text-slate-400">
+            Join ebringgs today and level up your skills alongside an elite tech community.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/register" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-teal-700 font-bold rounded-xl hover:bg-teal-50 transition-colors shadow-lg">
-              Create free account <ArrowRight size={18} />
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
+            >
+              Enroll in a program
             </Link>
-            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-colors">
-              Talk to us
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-white/5"
+            >
+              Talk to our team
             </Link>
           </div>
         </div>
