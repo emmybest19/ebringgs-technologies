@@ -48,7 +48,7 @@ export default function Services() {
             Students enroll in cohorts
           </Link>
           <Link
-            to="/contact"
+            to="/services/client"
             className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-white/5"
           >
             Clients book custom projects
@@ -103,7 +103,7 @@ export default function Services() {
             <GraduationCap size={16} /> Browse cohorts to enroll in
           </Link>
           <Link
-            to="/contact"
+            to="/services/client"
             className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-[#0e141c] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-[#141b26]"
           >
             <Briefcase size={16} /> Book us for a project

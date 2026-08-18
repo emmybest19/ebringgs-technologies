@@ -26,6 +26,7 @@ import Portfolio from "./pages/Portfolio";
 import Schedule from "./pages/Schedule";
 import Instructors from "./pages/Instructors";
 import Values from "./pages/Values";
+import PublicClientServices from "./pages/ClientServices";
 import VerifyCertificate from "./pages/VerifyCertificate";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
@@ -151,6 +152,9 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/services" element={<Services />} />
+          {/* Static segment declared before the dynamic one; router ranks
+              static higher, but keeping them adjacent makes that explicit. */}
+          <Route path="/services/client" element={<PublicClientServices />} />
           <Route path="/services/:slug" element={<CapabilityDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />

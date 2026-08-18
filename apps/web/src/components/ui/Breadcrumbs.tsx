@@ -13,6 +13,7 @@ const labelMap: Record<string, string> = {
   instructors: 'Instructors',
   team: 'Meet the Team',
   values: 'Our Values',
+  client: 'Client Services',
   contact: 'Contact',
   terms: 'Terms',
   privacy: 'Privacy',
