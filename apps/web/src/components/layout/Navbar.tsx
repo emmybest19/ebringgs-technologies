@@ -70,8 +70,10 @@ export default function Navbar() {
               <NavLink
                 to={link.to}
                 className={({ isActive }) =>
-                  `rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
+                  `relative rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'text-cyan-400 after:absolute after:inset-x-4 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-cyan-400'
+                      : 'text-slate-400 hover:text-white'
                   }`
                 }
               >

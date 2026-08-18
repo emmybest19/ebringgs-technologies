@@ -1,12 +1,29 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, GraduationCap, Briefcase } from 'lucide-react';
+import { ArrowRight, GraduationCap, Briefcase } from 'lucide-react';
 import { useSEO } from '@ebringgs/ui';
 import { capabilities } from '../data/capabilities';
 
-// One canonical surface for what E-Bringgs does. Each capability serves a
-// dual audience: students who want to LEARN the skill and clients who want
-// us to DELIVER it. Cards click through to `/services/:slug` where the
-// dual-track detail page expands on both.
+/**
+ * One canonical surface for what E-Bringgs does. Each capability serves a dual
+ * audience: students who want to LEARN the skill, and clients who want us to
+ * DELIVER it. Cards click through to `/services/:slug`, where the dual-track
+ * detail page expands on both.
+ *
+ * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
+ * variants, matching the landing and auth pages.
+ */
+
+// Per-capability accent, dark-surface variants. Kept local rather than pushed
+// into `capabilities` because that data still drives the light-themed detail
+// page; changing it there would repaint a page we haven't redesigned yet.
+// Full literal class strings — Tailwind can't see interpolated names.
+const ACCENT: Record<string, { text: string; tile: string }> = {
+  'software-development': { text: 'text-cyan-400', tile: 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400' },
+  'data-analytics': { text: 'text-blue-400', tile: 'bg-blue-400/10 border-blue-400/30 text-blue-400' },
+  'research-support': { text: 'text-amber-400', tile: 'bg-amber-400/10 border-amber-400/30 text-amber-400' },
+  'ux-product-design': { text: 'text-purple-400', tile: 'bg-purple-400/10 border-purple-400/30 text-purple-400' },
+};
+const FALLBACK = { text: 'text-cyan-400', tile: 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400' };
 
 export default function Services() {
   useSEO({
@@ -15,83 +32,115 @@ export default function Services() {
     url: 'https://ebringgs.com/services',
     image: 'https://ebringgs.com/logo-full.jpg',
   });
-  return (
-    <div className="bg-white dark:bg-slate-900">
-      {/* Hero header */}
-      <section className="no-reveal relative text-white py-24 px-4 overflow-hidden">
-        <img src="/images/general/tech-team.jpg" alt="Tech team" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 to-teal-950/85" />
-        <div className="relative max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-xs font-medium mb-5">
-            <Sparkles size={14} /> Learn it. Or hire us to build it.
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Services built around your goals</h1>
-          <p className="text-slate-200 text-lg">
-            Every skill we teach is a skill we ship. Students enroll to learn it, clients hire us to build it, and graduates often work alongside our team on real projects.
-          </p>
 
-          {/* Dual-audience chips */}
-          <div className="flex flex-wrap justify-center gap-3 mt-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-white text-xs font-medium">
-              <GraduationCap size={13} /> Students enroll
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-white text-xs font-medium">
-              <Briefcase size={13} /> Clients book projects
-            </span>
-          </div>
+  return (
+    <div className="bg-[#080c11]">
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="no-reveal mx-auto max-w-7xl px-4 pb-16 pt-14 sm:px-6 lg:px-8">
+        <span className="inline-flex items-center rounded-full border border-cyan-400/25 bg-cyan-400/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-cyan-300">
+          Modular support built for you
+        </span>
+
+        <h1 className="mt-7 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight text-white md:text-5xl">
+          Services built around your goals
+        </h1>
+
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400">
+          From individual educational pathways to end-to-end organizational product
+          integrations, we provide the specific, expert technical backing you need.
+        </p>
+
+        {/* The two audiences, as real routes rather than decorative chips —
+            they look like buttons, so they behave like buttons. */}
+        <div className="mt-9 flex flex-wrap gap-3">
+          <Link
+            to="/courses"
+            className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
+          >
+            Students enroll in cohorts
+          </Link>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-white/5"
+          >
+            Clients book custom projects
+          </Link>
         </div>
       </section>
 
-      {/* Capability grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {capabilities.map(({ slug, icon: Icon, title, tagline, color, bg, img }) => (
-            <Link
-              key={slug}
-              to={`/services/${slug}`}
-              className="card-hover-border group flex flex-col rounded-2xl border border-gray-100 dark:border-slate-800 hover:border-teal-200 hover:shadow-xl transition-all duration-300 dark:bg-slate-800 overflow-hidden"
-            >
-              <div className="h-40 overflow-hidden">
-                <img loading="lazy" src={img} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <div className={`inline-flex p-3 rounded-xl ${bg} mb-4 self-start`}>
-                  <Icon size={24} className={color} />
+      {/* ── Capability grid ──────────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {capabilities.map(({ slug, icon: Icon, title, tagline, img }) => {
+            const accent = ACCENT[slug] ?? FALLBACK;
+            return (
+              <Link
+                key={slug}
+                to={`/services/${slug}`}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0e141c] p-2 transition-colors hover:border-slate-700"
+              >
+                <div className="overflow-hidden rounded-xl">
+                  <img
+                    loading="lazy"
+                    src={img}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">{title}</h3>
-                <p className="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">{tagline}</p>
 
-                <span className={`inline-flex items-center gap-1 mt-auto pt-6 text-sm font-medium ${color}`}>
-                  Learn more <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                </span>
-              </div>
-            </Link>
-          ))}
+                <div className="flex flex-1 flex-col p-4">
+                  <span className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border ${accent.tile}`}>
+                    <Icon size={18} />
+                  </span>
+
+                  <h2 className="mt-5 text-lg font-bold text-white">{title}</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{tagline}</p>
+
+                  <span className={`mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold ${accent.text}`}>
+                    Learn more
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="text-center mt-14 flex flex-wrap justify-center gap-3">
-          <Link to="/courses" className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 hover:-translate-y-0.5 transition-all">
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to="/courses"
+            className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
+          >
             <GraduationCap size={16} /> Browse cohorts to enroll in
           </Link>
-          <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 dark:border-slate-700 rounded-xl text-sm font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 hover:text-teal-600 transition-colors">
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-[#0e141c] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-[#141b26]"
+          >
             <Briefcase size={16} /> Book us for a project
           </Link>
-          <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-teal-600 transition-colors">
+          <Link
+            to="/pricing"
+            className="inline-flex items-center gap-2 px-4 py-3.5 text-sm font-medium text-slate-400 transition-colors hover:text-white"
+          >
             See pricing <ArrowRight size={14} />
           </Link>
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="bg-gray-50 dark:bg-slate-950 py-20 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">Not seeing what you need?</h2>
-          <p className="text-gray-500 dark:text-slate-400 mb-8">
+      {/* ── Bottom CTA ───────────────────────────────────────────────── */}
+      <section className="border-t border-white/[0.06] bg-[#0d1520] py-24">
+        <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            Not seeing what you need?
+          </h2>
+          <p className="mt-4 text-sm text-slate-400">
             Let's talk. We'll help you figure out the right approach for your goals.
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-colors"
+            className="mt-9 inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-7 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
           >
             Talk to us <ArrowRight size={16} />
           </Link>
