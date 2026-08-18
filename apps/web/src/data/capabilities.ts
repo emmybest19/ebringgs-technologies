@@ -43,6 +43,56 @@ export interface Capability {
   client: CapabilityTrack;
 }
 
+/**
+ * Dark-surface accent per capability, shared by the services index and the
+ * per-capability detail page so the colour a card introduces is the colour
+ * that page continues in.
+ *
+ * The `color`/`bg` fields on Capability above are the light-theme pair and are
+ * still used by anything not yet redesigned — these are deliberately separate
+ * rather than a replacement. Full literal class strings, because Tailwind
+ * cannot see interpolated class names.
+ */
+export interface DarkAccent {
+  /** Text colour for links, kickers and the icon glyph. */
+  text: string;
+  /** Icon tile: translucent fill + border + glyph colour. */
+  tile: string;
+  /** rgba for the hero's radial glow, used in an inline style. */
+  glow: string;
+}
+
+export const darkAccents: Record<string, DarkAccent> = {
+  'software-development': {
+    text: 'text-cyan-400',
+    tile: 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400',
+    glow: 'rgba(34,211,238,0.12)',
+  },
+  'data-analytics': {
+    text: 'text-blue-400',
+    tile: 'bg-blue-400/10 border-blue-400/30 text-blue-400',
+    glow: 'rgba(96,165,250,0.12)',
+  },
+  'research-support': {
+    text: 'text-amber-400',
+    tile: 'bg-amber-400/10 border-amber-400/30 text-amber-400',
+    glow: 'rgba(251,191,36,0.12)',
+  },
+  'ux-product-design': {
+    text: 'text-purple-400',
+    tile: 'bg-purple-400/10 border-purple-400/30 text-purple-400',
+    glow: 'rgba(192,132,252,0.12)',
+  },
+};
+
+export const fallbackAccent: DarkAccent = {
+  text: 'text-cyan-400',
+  tile: 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400',
+  glow: 'rgba(34,211,238,0.12)',
+};
+
+export const getAccent = (slug: string): DarkAccent => darkAccents[slug] ?? fallbackAccent;
+
 export const capabilities: Capability[] = [
   {
     slug: 'software-development',

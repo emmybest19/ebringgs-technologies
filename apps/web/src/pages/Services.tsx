@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, GraduationCap, Briefcase } from 'lucide-react';
 import { useSEO } from '@ebringgs/ui';
-import { capabilities } from '../data/capabilities';
+import { capabilities, getAccent } from '../data/capabilities';
 
 /**
  * One canonical surface for what E-Bringgs does. Each capability serves a dual
@@ -12,18 +12,6 @@ import { capabilities } from '../data/capabilities';
  * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
  * variants, matching the landing and auth pages.
  */
-
-// Per-capability accent, dark-surface variants. Kept local rather than pushed
-// into `capabilities` because that data still drives the light-themed detail
-// page; changing it there would repaint a page we haven't redesigned yet.
-// Full literal class strings — Tailwind can't see interpolated names.
-const ACCENT: Record<string, { text: string; tile: string }> = {
-  'software-development': { text: 'text-cyan-400', tile: 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400' },
-  'data-analytics': { text: 'text-blue-400', tile: 'bg-blue-400/10 border-blue-400/30 text-blue-400' },
-  'research-support': { text: 'text-amber-400', tile: 'bg-amber-400/10 border-amber-400/30 text-amber-400' },
-  'ux-product-design': { text: 'text-purple-400', tile: 'bg-purple-400/10 border-purple-400/30 text-purple-400' },
-};
-const FALLBACK = { text: 'text-cyan-400', tile: 'bg-cyan-400/10 border-cyan-400/30 text-cyan-400' };
 
 export default function Services() {
   useSEO({
@@ -72,7 +60,7 @@ export default function Services() {
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {capabilities.map(({ slug, icon: Icon, title, tagline, img }) => {
-            const accent = ACCENT[slug] ?? FALLBACK;
+            const accent = getAccent(slug);
             return (
               <Link
                 key={slug}

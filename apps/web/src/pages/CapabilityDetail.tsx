@@ -1,9 +1,19 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
-import {
-  ArrowLeft, ArrowRight, CheckCircle2, GraduationCap, Briefcase,
-} from 'lucide-react';
+import { ArrowRight, Check, GraduationCap, Briefcase } from 'lucide-react';
 import { useSEO, schema } from '@ebringgs/ui';
-import { capabilities, getCapability, type CapabilityTrack } from '../data/capabilities';
+import {
+  capabilities, getCapability, getAccent,
+  type CapabilityTrack, type DarkAccent,
+} from '../data/capabilities';
+
+/**
+ * Per-capability detail page. Continues the accent the services index
+ * introduced for this capability, so the colour on the card you clicked is
+ * the colour of the page you land on.
+ *
+ * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
+ * variants, matching the services index and the landing page.
+ */
 
 export default function CapabilityDetail() {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -36,42 +46,43 @@ export default function CapabilityDetail() {
 
   if (!capability) return <Navigate to="/" replace />;
 
-  const { title, intro, icon: Icon, heroGradient, img, techStack, student, client } = capability;
-
-  // "Other capabilities" cross-sell at the bottom
+  const { title, intro, icon: Icon, img, techStack, student, client } = capability;
+  const accent = getAccent(slug);
   const others = capabilities.filter((c) => c.slug !== slug);
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="bg-[#080c11]">
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className={`relative overflow-hidden bg-linear-to-br ${heroGradient} text-white`}>
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23fff%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-white/80 hover:text-white text-sm mb-8 transition-colors"
-          >
-            <ArrowLeft size={16} /> Back to home
-          </Link>
+      <section className="no-reveal relative overflow-hidden">
+        {/* Glow tinted to this capability's accent — the page's only nod to
+            the old gradient hero. */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: `radial-gradient(80% 60% at 12% 20%, ${accent.glow}, transparent 62%)` }}
+        />
 
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="relative mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-xs font-medium mb-5">
-                <Icon size={14} /> What we do
-              </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-5">{title}</h1>
-              <p className="text-white/85 text-lg leading-relaxed max-w-xl">{intro}</p>
+              <span className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${accent.tile}`}>
+                <Icon size={20} />
+              </span>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <h1 className="mt-7 text-4xl font-extrabold leading-[1.1] tracking-tight text-white md:text-5xl">
+                {title}
+              </h1>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400">{intro}</p>
+
+              <div className="mt-9 flex flex-wrap gap-3">
                 <a
                   href="#students"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-gray-900 text-sm font-semibold hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300"
                 >
                   <GraduationCap size={16} /> I want to learn it
                 </a>
                 <a
                   href="#clients"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/15 backdrop-blur text-white text-sm font-semibold hover:bg-white/25 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-white/5"
                 >
                   <Briefcase size={16} /> I want it built for me
                 </a>
@@ -79,70 +90,74 @@ export default function CapabilityDetail() {
             </div>
 
             <div className="hidden lg:block">
-              <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/20">
-                <img loading="lazy" src={img} alt={title} className="w-full h-full object-cover" />
+              <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#0e141c] p-2">
+                <img
+                  loading="lazy"
+                  src={img}
+                  alt=""
+                  aria-hidden="true"
+                  className="aspect-4/3 w-full rounded-xl object-cover"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Two-track section ─────────────────────────────────────────── */}
-      <section className="py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
-              Two ways to engage with us
-            </h2>
-            <p className="text-gray-500 dark:text-slate-400 max-w-2xl mx-auto">
-              Pick the path that fits where you are right now.
-            </p>
-          </div>
+      {/* ── Two tracks ────────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            Two ways to engage with us
+          </h2>
+          <p className="mt-4 text-sm text-slate-400">Pick the path that fits where you are right now.</p>
+        </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            <TrackCard
-              id="students"
-              track={student}
-              accent="teal"
-              audienceIcon={<GraduationCap size={22} />}
-              audience="Students"
-              techStack={techStack}
-            />
-            <TrackCard
-              id="clients"
-              track={client}
-              accent="slate"
-              audienceIcon={<Briefcase size={22} />}
-              audience="Clients"
-            />
-          </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <TrackCard
+            id="students"
+            track={student}
+            accent={accent}
+            highlight
+            audienceIcon={<GraduationCap size={15} />}
+            audience="Students"
+            techStack={techStack}
+          />
+          <TrackCard
+            id="clients"
+            track={client}
+            accent={accent}
+            audienceIcon={<Briefcase size={15} />}
+            audience="Clients"
+          />
         </div>
       </section>
 
-      {/* ── Cross-sell other capabilities ─────────────────────────────── */}
-      <section className="py-16 bg-gray-50 dark:bg-slate-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+      {/* ── Cross-sell ────────────────────────────────────────────────── */}
+      <section className="border-t border-white/[0.06] bg-[#0d1520] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-10 text-center text-2xl font-extrabold tracking-tight text-white">
             Explore what else we do
-          </h3>
-          <div className="grid sm:grid-cols-3 gap-5">
+          </h2>
+          <div className="grid gap-5 sm:grid-cols-3">
             {others.map((c) => {
               const OtherIcon = c.icon;
+              const otherAccent = getAccent(c.slug);
               return (
                 <Link
                   key={c.slug}
                   to={`/services/${c.slug}`}
-                  className="group flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 hover:border-teal-300 hover:shadow-md transition-all"
+                  className="group flex items-start gap-4 rounded-2xl border border-slate-800 bg-[#0e141c] p-5 transition-colors hover:border-slate-700"
                 >
-                  <div className={`p-2.5 rounded-xl ${c.bg} ${c.color} shrink-0`}>
-                    <OtherIcon size={20} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-teal-600 transition-colors">
-                      {c.title}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 line-clamp-2">{c.tagline}</p>
-                  </div>
+                  <span className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${otherAccent.tile}`}>
+                    <OtherIcon size={18} />
+                  </span>
+                  <span>
+                    <span className="block text-sm font-bold text-white">{c.title}</span>
+                    <span className="mt-1 block line-clamp-2 text-xs leading-relaxed text-slate-400">
+                      {c.tagline}
+                    </span>
+                  </span>
                 </Link>
               );
             })}
@@ -156,62 +171,55 @@ export default function CapabilityDetail() {
 interface TrackCardProps {
   id: string;
   track: CapabilityTrack;
-  accent: 'teal' | 'slate';
+  accent: DarkAccent;
+  /** The student track carries the capability's accent; the client track
+   *  stays neutral so the two are visually distinguishable at a glance. */
+  highlight?: boolean;
   audienceIcon: React.ReactNode;
   audience: string;
-  /** Tech the student will learn. Only rendered when present (student card only). */
+  /** Only rendered when present, i.e. the student card. */
   techStack?: string[];
 }
 
-function TrackCard({ id, track, accent, audienceIcon, audience, techStack }: TrackCardProps) {
-  const styles = accent === 'teal'
-    ? {
-        border: 'border-teal-200 dark:border-teal-900',
-        chip: 'bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300',
-        cta: 'bg-teal-600 hover:bg-teal-700 text-white shadow-lg shadow-teal-500/25',
-        checkmark: 'text-teal-600',
-      }
-    : {
-        border: 'border-gray-200 dark:border-slate-700',
-        chip: 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300',
-        cta: 'bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 text-white shadow-lg shadow-gray-500/25',
-        checkmark: 'text-gray-700 dark:text-slate-300',
-      };
+function TrackCard({ id, track, accent, highlight, audienceIcon, audience, techStack }: TrackCardProps) {
+  const chip = highlight
+    ? `${accent.tile} border`
+    : 'border border-slate-700 bg-slate-800/60 text-slate-300';
+  const tick = highlight ? accent.text : 'text-slate-500';
 
   return (
     <div
       id={id}
-      className={`scroll-mt-24 rounded-3xl border-2 ${styles.border} bg-white dark:bg-slate-900 p-8 lg:p-10 flex flex-col`}
+      className="flex scroll-mt-28 flex-col rounded-2xl border border-slate-800 bg-[#0e141c] p-8 lg:p-10"
     >
-      <div className={`inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full text-xs font-medium ${styles.chip} mb-5`}>
+      <span className={`inline-flex items-center gap-2 self-start rounded-full px-3 py-1.5 text-xs font-semibold ${chip}`}>
         {audienceIcon} {audience}
-      </div>
-      <p className="text-xs font-semibold tracking-wide uppercase text-gray-400 dark:text-slate-500 mb-2">
+      </span>
+
+      <p className="mt-6 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
         {track.kicker}
       </p>
-      <h3 className="text-2xl font-bold text-gray-900 dark:text-white leading-snug mb-6">
-        {track.promise}
-      </h3>
+      <h3 className="mt-2 text-xl font-bold leading-snug text-white">{track.promise}</h3>
 
-      <ul className="space-y-3 mb-6 flex-1">
+      <ul className="mt-7 flex-1 space-y-3">
         {track.bullets.map((b) => (
           <li key={b} className="flex items-start gap-3">
-            <CheckCircle2 size={18} className={`shrink-0 mt-0.5 ${styles.checkmark}`} />
-            <span className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed">{b}</span>
+            <Check size={15} strokeWidth={3} className={`mt-0.5 shrink-0 ${tick}`} />
+            <span className="text-sm leading-relaxed text-slate-300">{b}</span>
           </li>
         ))}
       </ul>
 
       {techStack && techStack.length > 0 && (
-        <div className="mb-8 pt-6 border-t border-gray-100 dark:border-slate-800">
-          <p className="text-[11px] font-semibold tracking-wider uppercase text-gray-400 dark:text-slate-500 mb-3">
+        <div className="mt-8 border-t border-slate-800 pt-6">
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
             Tech you'll learn
           </p>
           <div className="flex flex-wrap gap-2">
             {techStack.map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 rounded-md bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 text-xs font-medium border border-teal-100 dark:border-teal-900"
+                className={`rounded-md border px-2.5 py-1 text-xs font-medium ${accent.tile}`}
               >
                 {t}
               </span>
@@ -222,13 +230,17 @@ function TrackCard({ id, track, accent, audienceIcon, audience, techStack }: Tra
 
       <Link
         to={track.ctaHref}
-        className={`inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-semibold transition-all hover:-translate-y-0.5 ${styles.cta}`}
+        className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-bold transition-colors ${
+          highlight
+            ? 'bg-cyan-400 text-slate-950 hover:bg-cyan-300'
+            : 'border border-slate-700 text-white hover:border-slate-600 hover:bg-white/5'
+        }`}
       >
         {track.ctaLabel} <ArrowRight size={16} />
       </Link>
       <Link
         to="/pricing"
-        className="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-medium text-gray-500 dark:text-slate-400 hover:text-teal-600 transition-colors"
+        className="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-medium text-slate-500 transition-colors hover:text-white"
       >
         See pricing details <ArrowRight size={12} />
       </Link>
