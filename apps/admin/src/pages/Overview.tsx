@@ -24,7 +24,7 @@ export default function AdminOverview() {
     {
       label: 'Total users', value: stats.totalUsers,
       sub: `+${stats.newUsersThisMonth} this month`,
-      icon: Users, color: 'text-teal-600', bg: 'bg-teal-50 dark:bg-teal-950', link: '/admin/users',
+      icon: Users, color: 'text-cyan-600', bg: 'bg-cyan-50 dark:bg-cyan-950', link: '/admin/users',
     },
     {
       label: 'Live Sessions', value: stats.totalEnrollments || 0,
@@ -59,7 +59,7 @@ export default function AdminOverview() {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {statCards.map(({ label, value, sub, icon: Icon, color, bg, link }) => (
           <Link key={label} to={link}
-            className="group bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-100 dark:hover:border-teal-800 hover:shadow-md transition-all">
+            className="group bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-cyan-100 dark:hover:border-cyan-800 hover:shadow-md transition-all">
             <div className={`inline-flex p-2.5 rounded-xl ${bg} mb-3`}>
               <Icon size={20} className={color} />
             </div>
@@ -71,7 +71,7 @@ export default function AdminOverview() {
                 <p className="text-xs text-gray-500 dark:text-slate-400">{label}</p>
                 <p className="text-xs text-gray-400 dark:text-slate-500 mt-0.5">{sub}</p>
               </div>
-              <ArrowRight size={14} className="text-gray-300 dark:text-slate-600 group-hover:text-teal-500 transition-colors shrink-0" />
+              <ArrowRight size={14} className="text-gray-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors shrink-0" />
             </div>
           </Link>
         ))}
@@ -79,18 +79,18 @@ export default function AdminOverview() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Recent activity */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-5">
-            <Activity size={18} className="text-teal-600" />
+            <Activity size={18} className="text-cyan-600" />
             <h2 className="font-bold text-gray-900 dark:text-white">Recent activity</h2>
           </div>
           <p className="text-sm text-gray-400 dark:text-slate-500">Activity feed will appear here once the platform is live.</p>
         </div>
 
         {/* Quick actions */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-5">
-            <TrendingUp size={18} className="text-teal-600" />
+            <TrendingUp size={18} className="text-cyan-600" />
             <h2 className="font-bold text-gray-900 dark:text-white">Quick actions</h2>
           </div>
           <div className="space-y-2">
@@ -98,7 +98,7 @@ export default function AdminOverview() {
               { label: 'Schedule a live session', to: '/admin/live-sessions', icon: GraduationCap, color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950' },
               { label: 'Review pending assignments', to: '/admin/assignments', icon: ClipboardList, color: 'text-rose-600 bg-rose-50 dark:bg-rose-950' },
               { label: 'Write a blog post', to: '/admin/blogs', icon: FileText, color: 'text-amber-600 bg-amber-50 dark:bg-amber-950' },
-              { label: 'Manage users & roles', to: '/admin/users', icon: Users, color: 'text-teal-600 bg-teal-50 dark:bg-teal-950' },
+              { label: 'Manage users & roles', to: '/admin/users', icon: Users, color: 'text-cyan-600 bg-cyan-50 dark:bg-cyan-950' },
               { label: 'View payment history', to: '/admin/payments', icon: CreditCard, color: 'text-purple-600 bg-purple-50 dark:bg-purple-950' },
             ].map(({ label, to, icon: Icon, color }) => (
               <Link key={to} to={to}
@@ -106,10 +106,10 @@ export default function AdminOverview() {
                 <div className={`p-2 rounded-lg ${color}`}>
                   <Icon size={16} />
                 </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-slate-300 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors flex-1">
+                <span className="text-sm font-medium text-gray-700 dark:text-slate-300 group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors flex-1">
                   {label}
                 </span>
-                <ArrowRight size={14} className="text-gray-300 dark:text-slate-600 group-hover:text-teal-500 transition-colors" />
+                <ArrowRight size={14} className="text-gray-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors" />
               </Link>
             ))}
           </div>

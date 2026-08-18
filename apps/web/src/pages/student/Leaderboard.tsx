@@ -21,7 +21,7 @@ const badgeColors: Record<string, string> = {
   'Fast Learner': 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300',
   'Team Player': 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300',
   'Creative Thinker': 'bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-300',
-  'Consistent': 'bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300',
+  'Consistent': 'bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300',
   'Rising Star': 'bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300',
 };
 
@@ -50,7 +50,7 @@ export default function StudentLeaderboard() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main leaderboard */}
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="lg:col-span-2 bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Trophy size={18} className="text-amber-500" />
@@ -83,7 +83,7 @@ export default function StudentLeaderboard() {
                     const medalColors = ['text-slate-400', 'text-amber-500', 'text-amber-700'];
                     return (
                       <div key={s.id} className="flex flex-col items-center">
-                        <div className={`${sizes[i]} rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-bold ${textSizes[i]} mb-2 ring-2 ${s.rank === 1 ? 'ring-amber-400' : 'ring-gray-200 dark:ring-slate-700'}`}>
+                        <div className={`${sizes[i]} rounded-full bg-cyan-100 dark:bg-cyan-900 flex items-center justify-center text-cyan-600 dark:text-cyan-300 font-bold ${textSizes[i]} mb-2 ring-2 ${s.rank === 1 ? 'ring-amber-400' : 'ring-gray-200 dark:ring-slate-700'}`}>
                           {s.initials}
                         </div>
                         <Medal size={16} className={`${medalColors[i]} mb-1`} />
@@ -101,16 +101,16 @@ export default function StudentLeaderboard() {
 
               <ul className="divide-y divide-gray-50 dark:divide-slate-800">
                 {leaderboard.map((s) => (
-                  <li key={s.id} className={`flex items-center gap-4 px-6 py-4 ${s.name === currentUserName ? 'bg-teal-50 dark:bg-teal-950' : 'hover:bg-gray-50 dark:hover:bg-slate-800'} transition-colors`}>
+                  <li key={s.id} className={`flex items-center gap-4 px-6 py-4 ${s.name === currentUserName ? 'bg-cyan-50 dark:bg-cyan-950' : 'hover:bg-gray-50 dark:hover:bg-slate-800'} transition-colors`}>
                     <span className={`w-8 text-center font-bold text-sm ${s.rank <= 3 ? 'text-amber-500' : 'text-gray-400 dark:text-slate-500'}`}>
                       #{s.rank}
                     </span>
-                    <div className="w-9 h-9 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-bold text-xs shrink-0">
+                    <div className="w-9 h-9 rounded-full bg-cyan-100 dark:bg-cyan-900 flex items-center justify-center text-cyan-600 dark:text-cyan-300 font-bold text-xs shrink-0">
                       {s.initials}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {s.name} {s.name === currentUserName && <span className="text-xs text-teal-600 dark:text-teal-400">(you)</span>}
+                        {s.name} {s.name === currentUserName && <span className="text-xs text-cyan-600 dark:text-cyan-400">(you)</span>}
                       </p>
                     </div>
                     <div className="text-right shrink-0">
@@ -127,7 +127,7 @@ export default function StudentLeaderboard() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Redeem your points */}
-          <div className="bg-linear-to-br from-emerald-600 to-teal-700 rounded-2xl shadow-sm p-5 text-white">
+          <div className="bg-linear-to-br from-emerald-600 to-cyan-700 rounded-2xl shadow-sm p-5 text-white">
             <div className="flex items-center gap-2 mb-2">
               <Gift size={18} />
               <h3 className="font-bold">Redeem your points</h3>
@@ -145,7 +145,7 @@ export default function StudentLeaderboard() {
           </div>
 
           {/* How to earn points */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
             <h3 className="font-bold text-gray-900 dark:text-white mb-4">How to earn points</h3>
             <div className="space-y-3 text-sm">
               {[
@@ -159,7 +159,7 @@ export default function StudentLeaderboard() {
                 <div key={r.action} className="flex items-center justify-between">
                   <span className="text-gray-600 dark:text-slate-400">{r.action}</span>
                   <div className="text-right">
-                    <span className="font-semibold text-teal-600 dark:text-teal-400 text-xs">+{r.pts} pts</span>
+                    <span className="font-semibold text-cyan-600 dark:text-cyan-400 text-xs">+{r.pts} pts</span>
                     <p className="text-[10px] text-gray-400 dark:text-slate-500">{formatNaira(r.pts)}</p>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ export default function StudentLeaderboard() {
           <GiftVoucherCard availablePoints={currentUserPoints} onPointsChange={fetchMe} />
 
           {/* Badges */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
             <h3 className="font-bold text-gray-900 dark:text-white mb-4">Available badges</h3>
             <div className="flex flex-wrap gap-2">
               {Object.entries(badgeColors).map(([badge, color]) => (

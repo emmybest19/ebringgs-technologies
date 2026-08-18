@@ -70,7 +70,7 @@ export default function AdminReviews() {
             onClick={() => setFilter(t.id as AdminReviewFilter)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               filter === t.id
-                ? 'bg-white dark:bg-slate-900 text-gray-900 dark:text-white shadow-sm'
+                ? 'bg-white dark:bg-[#0e141c] text-gray-900 dark:text-white shadow-sm'
                 : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300'
             }`}
           >
@@ -82,7 +82,7 @@ export default function AdminReviews() {
       {loading ? (
         <div className="p-12 text-center text-gray-400">Loading reviews...</div>
       ) : reviews.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <StarIcon size={40} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="font-medium text-gray-500 dark:text-slate-400">
             No {filter === 'all' ? '' : filter} reviews
@@ -96,10 +96,10 @@ export default function AdminReviews() {
           </div>
           <div className="space-y-3">
             {reviews.map((r) => (
-              <div key={r._id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+              <div key={r._id} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
                 <div className="flex items-start gap-4">
                   {/* Avatar */}
-                  <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-cyan-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
                     {initials(r.user.name)}
                   </div>
 

@@ -16,7 +16,7 @@ interface Inquiry {
 
 const statusConfig = {
   new:       { label: 'New',       icon: Clock,        color: 'text-amber-600 bg-amber-50' },
-  contacted: { label: 'Contacted', icon: CheckCircle2, color: 'text-teal-600 bg-teal-50' },
+  contacted: { label: 'Contacted', icon: CheckCircle2, color: 'text-cyan-600 bg-cyan-50' },
   closed:    { label: 'Closed',    icon: XCircle,      color: 'text-gray-500 bg-gray-100' },
 };
 
@@ -87,7 +87,7 @@ export default function AdminServiceRequests() {
         {filters.map(f => (
           <button key={f.id} onClick={() => setFilter(f.id)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              filter === f.id ? 'bg-white dark:bg-slate-900 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300'
+              filter === f.id ? 'bg-white dark:bg-[#0e141c] text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300'
             }`}>
             {f.label}
           </button>
@@ -105,14 +105,14 @@ export default function AdminServiceRequests() {
             const isUpdating = updatingId === inq._id;
 
             return (
-              <div key={inq._id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+              <div key={inq._id} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
                 {/* Header row */}
                 <div
                   className="flex items-center justify-between p-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"
                   onClick={() => setExpanded(isExpanded ? null : inq._id)}
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-700 dark:text-teal-300 font-bold text-sm shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-900 flex items-center justify-center text-cyan-700 dark:text-cyan-300 font-bold text-sm shrink-0">
                       {inq.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
@@ -139,15 +139,15 @@ export default function AdminServiceRequests() {
                 {/* Expanded detail */}
                 {isExpanded && (
                   <div className="px-5 pb-5 border-t border-gray-50 dark:border-slate-800 pt-4">
-                    <p className="text-sm text-gray-600 dark:text-slate-400 bg-gray-50 dark:bg-slate-950 rounded-xl p-4 mb-4 leading-relaxed">{inq.message}</p>
+                    <p className="text-sm text-gray-600 dark:text-slate-400 bg-gray-50 dark:bg-[#080c11] rounded-xl p-4 mb-4 leading-relaxed">{inq.message}</p>
                     <div className="flex flex-wrap gap-2">
                       <a href={`mailto:${inq.email}?subject=Re: Your E-Bringgs inquiry`}
-                        className="flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors">
+                        className="flex items-center gap-1.5 px-4 py-2 bg-cyan-600 text-white text-sm font-medium rounded-lg hover:bg-cyan-700 transition-colors">
                         <Mail size={14} /> Reply via email
                       </a>
                       {inq.status !== 'contacted' && (
                         <button disabled={isUpdating} onClick={() => updateStatus(inq._id, 'contacted')}
-                          className="px-4 py-2 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300 text-sm font-medium rounded-lg hover:bg-teal-50 dark:hover:bg-teal-950 disabled:opacity-50 transition-colors">
+                          className="px-4 py-2 border border-cyan-200 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 text-sm font-medium rounded-lg hover:bg-cyan-50 dark:hover:bg-cyan-950 disabled:opacity-50 transition-colors">
                           {isUpdating ? 'Saving…' : 'Mark as contacted'}
                         </button>
                       )}

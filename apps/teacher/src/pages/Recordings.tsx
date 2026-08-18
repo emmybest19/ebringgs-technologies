@@ -40,14 +40,14 @@ export default function TeacherRecordings() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : isError ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <p className="text-gray-500 dark:text-slate-400">Couldn't load your recordings.</p>
         </div>
       ) : recordings.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <Video size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="font-medium text-gray-500 dark:text-slate-400">No recordings yet</p>
           <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
@@ -55,9 +55,9 @@ export default function TeacherRecordings() {
           </p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 dark:bg-slate-950 text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
+            <thead className="bg-gray-50 dark:bg-[#080c11] text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
               <tr>
                 <th className="px-5 py-3 text-left">Title</th>
                 <th className="px-5 py-3 text-left hidden md:table-cell">Recorded</th>
@@ -77,7 +77,7 @@ export default function TeacherRecordings() {
                     <div className="flex items-center gap-1.5 justify-end">
                       <button
                         onClick={() => setPlaying(rec)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950 transition-colors"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950 transition-colors"
                       >
                         <Play size={12} /> Play
                       </button>

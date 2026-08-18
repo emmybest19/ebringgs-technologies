@@ -22,14 +22,14 @@ export default function StudentSchedule() {
       {loading ? (
         <div className="p-12 text-center text-gray-400 dark:text-slate-500">Loading sessions...</div>
       ) : sessions.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <Calendar size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="text-gray-500 dark:text-slate-400">No upcoming sessions scheduled.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {sessions.map((s) => (
-            <div key={s._id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
+            <div key={s._id} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
               <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center shrink-0">
                 <Video size={18} className="text-blue-600" />
               </div>
@@ -42,7 +42,7 @@ export default function StudentSchedule() {
                 </div>
               </div>
               <a href={s.meetingUrl || `/classroom/${s.roomId}`}
-                className="flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors shrink-0">
+                className="flex items-center gap-1.5 px-4 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-xl hover:bg-cyan-700 transition-colors shrink-0">
                 Join
               </a>
             </div>

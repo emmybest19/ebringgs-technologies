@@ -15,9 +15,9 @@ interface SettingRow {
 
 function SettingsSection({ title, icon: Icon, rows }: { title: string; icon: React.ElementType; rows: SettingRow[] }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
       <div className="flex items-center gap-2.5 px-6 py-4 border-b border-gray-100 dark:border-slate-800">
-        <Icon size={18} className="text-teal-600" />
+        <Icon size={18} className="text-cyan-600" />
         <h2 className="font-bold text-gray-900 dark:text-white">{title}</h2>
       </div>
       <div className="divide-y divide-gray-50 dark:divide-slate-800">
@@ -43,7 +43,7 @@ function SettingsSection({ title, icon: Icon, rows }: { title: string; icon: Rea
 }
 
 const quickLinks = [
-  { label: 'Manage users & roles', to: '/admin/users', icon: Users, color: 'text-teal-600 bg-teal-50' },
+  { label: 'Manage users & roles', to: '/admin/users', icon: Users, color: 'text-cyan-600 bg-cyan-50' },
   { label: 'Live sessions', to: '/admin/live-sessions', icon: CalendarDays, color: 'text-emerald-600 bg-emerald-50' },
   { label: 'Payment overview', to: '/admin/payments', icon: CreditCard, color: 'text-purple-600 bg-purple-50' },
   { label: 'Service requests', to: '/admin/service-requests', icon: FileText, color: 'text-amber-600 bg-amber-50' },
@@ -92,18 +92,18 @@ export default function AdminSettings() {
     <div>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-          <Settings size={22} className="text-teal-600" /> Settings
+          <Settings size={22} className="text-cyan-600" /> Settings
         </h1>
         <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">Platform configuration and system status overview</p>
       </div>
 
       <div className="grid gap-5">
         {/* Status badge */}
-        <div className="flex items-center gap-3 bg-teal-50 dark:bg-teal-950 border border-teal-100 dark:border-teal-800 rounded-2xl px-5 py-3.5">
-          <Zap size={18} className="text-teal-600" />
+        <div className="flex items-center gap-3 bg-cyan-50 dark:bg-cyan-950 border border-cyan-100 dark:border-cyan-800 rounded-2xl px-5 py-3.5">
+          <Zap size={18} className="text-cyan-600" />
           <div className="flex-1">
-            <p className="text-sm font-semibold text-teal-800 dark:text-teal-200">System operational</p>
-            <p className="text-xs text-teal-600 dark:text-teal-400">All core services running. Configuration is read from environment variables.</p>
+            <p className="text-sm font-semibold text-cyan-800 dark:text-cyan-200">System operational</p>
+            <p className="text-xs text-cyan-600 dark:text-cyan-400">All core services running. Configuration is read from environment variables.</p>
           </div>
           <span className="px-2.5 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-400 text-xs font-semibold rounded-full">Online</span>
         </div>
@@ -116,7 +116,7 @@ export default function AdminSettings() {
         </div>
 
         {/* Quick links */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
           <h2 className="font-bold text-gray-900 dark:text-white mb-4">Quick navigation</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {quickLinks.map(({ label, to, icon: Icon, color }) => (
@@ -125,10 +125,10 @@ export default function AdminSettings() {
                 <div className={`p-2 rounded-lg ${color} shrink-0`}>
                   <Icon size={16} />
                 </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-slate-300 group-hover:text-teal-700 dark:group-hover:text-teal-300 transition-colors flex-1">
+                <span className="text-sm font-medium text-gray-700 dark:text-slate-300 group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors flex-1">
                   {label}
                 </span>
-                <ChevronRight size={14} className="text-gray-300 dark:text-slate-600 group-hover:text-teal-500 transition-colors" />
+                <ChevronRight size={14} className="text-gray-300 dark:text-slate-600 group-hover:text-cyan-500 transition-colors" />
               </Link>
             ))}
           </div>

@@ -33,7 +33,7 @@ export default function StudentInstructorDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function StudentInstructorDetail() {
           className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white mb-6 transition-colors">
           <ArrowLeft size={15} /> Back to instructors
         </Link>
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
           <AlertCircle size={32} className="text-red-500 mx-auto mb-3" />
           <p className="text-gray-700 dark:text-slate-300">{error || 'Instructor not found.'}</p>
         </div>
@@ -65,15 +65,15 @@ export default function StudentInstructorDetail() {
       </Link>
 
       {/* Hero card */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden mb-6">
-        <div className="h-32 bg-linear-to-br from-teal-600 via-cyan-600 to-emerald-600" />
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden mb-6">
+        <div className="h-32 bg-linear-to-br from-cyan-600 via-cyan-600 to-emerald-600" />
         <div className="px-8 pb-8">
           <div className="flex flex-col sm:flex-row sm:items-end gap-5 -mt-12">
-            <div className="w-24 h-24 rounded-2xl border-4 border-white dark:border-slate-900 bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950 overflow-hidden shrink-0">
+            <div className="w-24 h-24 rounded-2xl border-4 border-white dark:border-slate-900 bg-linear-to-br from-cyan-100 to-cyan-100 dark:from-cyan-950 dark:to-cyan-950 overflow-hidden shrink-0">
               {teacher.avatar ? (
                 <img loading="lazy" src={teacher.avatar} alt={teacher.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-3xl font-bold text-teal-600 dark:text-teal-300">
+                <div className="w-full h-full flex items-center justify-center text-3xl font-bold text-cyan-600 dark:text-cyan-300">
                   {teacher.name.charAt(0).toUpperCase()}
                 </div>
               )}
@@ -88,7 +88,7 @@ export default function StudentInstructorDetail() {
                 )}
               </div>
               {teacher.title && (
-                <p className="text-sm text-teal-600 dark:text-teal-400 mt-1">{teacher.title}</p>
+                <p className="text-sm text-cyan-600 dark:text-cyan-400 mt-1">{teacher.title}</p>
               )}
               <div className="flex flex-wrap gap-4 mt-3 text-xs text-gray-500 dark:text-slate-400">
                 {teacher.experience && (
@@ -109,25 +109,25 @@ export default function StudentInstructorDetail() {
         <div className="lg:col-span-2 space-y-6">
           {/* About */}
           {teacher.bio ? (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
+            <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
               <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3">About</h2>
               <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed whitespace-pre-wrap">
                 {teacher.bio}
               </p>
             </div>
           ) : (
-            <div className="bg-gray-50 dark:bg-slate-950 rounded-2xl border border-gray-100 dark:border-slate-800 p-6 text-center">
+            <div className="bg-gray-50 dark:bg-[#080c11] rounded-2xl border border-gray-100 dark:border-slate-800 p-6 text-center">
               <p className="text-sm text-gray-500 dark:text-slate-400">This instructor hasn't added a bio yet.</p>
             </div>
           )}
 
           {teacher.specialties && teacher.specialties.length > 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
+            <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-6">
               <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3">Specialties</h2>
               <div className="flex flex-wrap gap-2">
                 {teacher.specialties.map((s) => (
                   <span key={s}
-                    className="px-3 py-1.5 bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-sm font-medium rounded-lg border border-teal-100 dark:border-teal-900">
+                    className="px-3 py-1.5 bg-cyan-50 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 text-sm font-medium rounded-lg border border-cyan-100 dark:border-cyan-900">
                     {s}
                   </span>
                 ))}
@@ -139,39 +139,39 @@ export default function StudentInstructorDetail() {
         {/* Sidebar, contact / links */}
         <aside className="space-y-4">
           {teacher.social && (teacher.social.linkedin || teacher.social.github || teacher.social.website) && (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+            <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
               <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">Connect</p>
               <div className="space-y-2">
                 {teacher.social.linkedin && (
                   <a href={teacher.social.linkedin} target="_blank" rel="noreferrer"
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-teal-300 dark:hover:border-teal-700 transition-colors text-sm text-gray-700 dark:text-slate-300">
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors text-sm text-gray-700 dark:text-slate-300">
                     <Linkedin size={15} className="text-blue-600" /> LinkedIn
                   </a>
                 )}
                 {teacher.social.github && (
                   <a href={teacher.social.github} target="_blank" rel="noreferrer"
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-teal-300 dark:hover:border-teal-700 transition-colors text-sm text-gray-700 dark:text-slate-300">
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors text-sm text-gray-700 dark:text-slate-300">
                     <Github size={15} className="text-gray-700 dark:text-slate-300" /> GitHub
                   </a>
                 )}
                 {teacher.social.website && (
                   <a href={teacher.social.website} target="_blank" rel="noreferrer"
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-teal-300 dark:hover:border-teal-700 transition-colors text-sm text-gray-700 dark:text-slate-300">
-                    <Globe size={15} className="text-teal-600" /> Website
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors text-sm text-gray-700 dark:text-slate-300">
+                    <Globe size={15} className="text-cyan-600" /> Website
                   </a>
                 )}
               </div>
             </div>
           )}
 
-          <div className="bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-5 text-white">
+          <div className="bg-linear-to-br from-cyan-600 to-emerald-700 rounded-2xl shadow-sm p-5 text-white">
             <Mail size={20} className="mb-3" />
             <p className="font-bold mb-1">Have a question?</p>
-            <p className="text-teal-100 text-sm mb-4">
+            <p className="text-cyan-100 text-sm mb-4">
               Reach out to the team to be connected with {teacher.name.split(' ')[0]}.
             </p>
             <Link to="/contact"
-              className="block w-full text-center px-4 py-2.5 bg-white text-teal-700 font-semibold text-sm rounded-xl hover:bg-teal-50 transition-colors">
+              className="block w-full text-center px-4 py-2.5 bg-white text-cyan-700 font-semibold text-sm rounded-xl hover:bg-cyan-50 transition-colors">
               Contact us
             </Link>
           </div>

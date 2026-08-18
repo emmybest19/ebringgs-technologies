@@ -36,13 +36,13 @@ export default function StudentServices() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : isError ? (
         // Distinct from "no data" — fetch actually failed (usually the
         // backend is down or unreachable). Give the user a retry instead
         // of a misleading "no programs" message.
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-red-200 dark:border-red-900 shadow-sm p-10 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-red-200 dark:border-red-900 shadow-sm p-10 text-center">
           <AlertCircle size={36} className="text-red-500 mx-auto mb-3" />
           <p className="text-gray-700 dark:text-slate-200 font-semibold mb-1">Couldn't load tutoring programs</p>
           <p className="text-gray-500 dark:text-slate-400 text-sm mb-4">
@@ -52,14 +52,14 @@ export default function StudentServices() {
             type="button"
             onClick={() => refetch()}
             disabled={isFetching}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors"
           >
             <RefreshCw size={14} className={isFetching ? 'animate-spin' : ''} />
             {isFetching ? 'Retrying…' : 'Try again'}
           </button>
         </div>
       ) : groups.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <GraduationCap size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="text-gray-500 dark:text-slate-400">No tutoring programs available right now.</p>
         </div>
@@ -105,7 +105,7 @@ function CategorySection({ category, tracks }: { category: string; tracks: Tutor
       <div className="space-y-6">
         {bySubTrack.map(({ sub, items }) => (
           <div key={sub}>
-            <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-400 uppercase tracking-wide mb-3">
+            <h3 className="text-sm font-semibold text-cyan-700 dark:text-cyan-400 uppercase tracking-wide mb-3">
               {sub}
             </h3>
             <div className="grid sm:grid-cols-2 gap-5">
@@ -127,14 +127,14 @@ function TrackCard({ track }: { track: TutoringTrack }) {
   const tierLabel = track.tier === 'cohort' ? 'Cohort' : '1-on-1 Mentorship';
   const tierClass =
     track.tier === 'cohort'
-      ? 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-400'
+      ? 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-400'
       : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400';
 
   return (
-    <div className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
+    <div className="reveal bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors flex flex-col">
       <div className="flex items-start justify-between mb-3">
-        <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center shrink-0">
-          <Icon size={20} className="text-teal-600" />
+        <div className="w-11 h-11 bg-cyan-50 dark:bg-cyan-950 rounded-xl flex items-center justify-center shrink-0">
+          <Icon size={20} className="text-cyan-600" />
         </div>
         <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold ${tierClass}`}>
           <TierIcon size={11} />
@@ -148,11 +148,11 @@ function TrackCard({ track }: { track: TutoringTrack }) {
       </p>
 
       <div className="grid grid-cols-2 gap-2 text-xs mb-4">
-        <div className="px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800">
+        <div className="px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-[#080c11] border border-gray-100 dark:border-slate-800">
           <p className="text-[10px] text-gray-400 dark:text-slate-500 uppercase tracking-wide">Duration</p>
           <p className="font-semibold text-gray-700 dark:text-slate-300">{track.durationLabel}</p>
         </div>
-        <div className="px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800">
+        <div className="px-2.5 py-1.5 rounded-lg bg-gray-50 dark:bg-[#080c11] border border-gray-100 dark:border-slate-800">
           <p className="text-[10px] text-gray-400 dark:text-slate-500 uppercase tracking-wide">Per week</p>
           <p className="font-semibold text-gray-700 dark:text-slate-300 line-clamp-1">{track.weeklyCommitment}</p>
         </div>
@@ -162,7 +162,7 @@ function TrackCard({ track }: { track: TutoringTrack }) {
         <p className="text-xl font-extrabold text-gray-900 dark:text-white">
           {formatNGN(track.priceNgn)}
           {track.installmentEligible && (
-            <span className="ml-2 text-[10px] font-semibold text-teal-700 dark:text-teal-400 uppercase tracking-wider">
+            <span className="ml-2 text-[10px] font-semibold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider">
               Installments OK
             </span>
           )}
@@ -172,13 +172,13 @@ function TrackCard({ track }: { track: TutoringTrack }) {
       <div className="flex flex-col gap-2">
         <Link
           to={`/dashboard/services/${track.id}`}
-          className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
+          className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors"
         >
           View details
         </Link>
         <button
           onClick={() => navigate(`/checkout?type=plan&id=${track.id}`)}
-          className="w-full py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center gap-2"
+          className="w-full py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 transition-colors flex items-center justify-center gap-2"
         >
           <ShoppingCart size={14} /> Enrol now
         </button>

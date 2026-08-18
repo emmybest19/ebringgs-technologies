@@ -92,7 +92,7 @@ export default function AdminAssignments() {
             <button key={f} onClick={() => setFilter(f)}
               aria-current={filter === f ? 'true' : undefined}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
-                filter === f ? 'bg-white dark:bg-slate-900 text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300'
+                filter === f ? 'bg-white dark:bg-[#0e141c] text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300'
               }`}>
               {f === 'submitted' ? 'Pending' : f.charAt(0).toUpperCase() + f.slice(1)}
             </button>
@@ -103,14 +103,14 @@ export default function AdminAssignments() {
       {loading ? <PageLoader /> : (
         <div className="space-y-3">
           {visible.length === 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+            <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
               <FileText size={36} className="text-gray-200 dark:text-slate-600 mx-auto mb-3" />
               <p className="text-gray-500 dark:text-slate-400">No assignments {filter !== 'all' ? `with status "${filter}"` : 'yet'}.</p>
             </div>
           )}
 
           {visible.map(a => (
-            <div key={a._id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+            <div key={a._id} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
               {/* Row */}
               <div className="flex items-center gap-4 px-5 py-4">
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
@@ -133,7 +133,7 @@ export default function AdminAssignments() {
                       {a.status === 'reviewed' ? 'Reviewed' : 'Pending'}
                     </span>
                     {a.grade && (
-                      <span className="text-xs font-bold bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-400 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-bold bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-400 px-2 py-0.5 rounded-full">
                         {a.grade}
                       </span>
                     )}
@@ -147,7 +147,7 @@ export default function AdminAssignments() {
                 <div className="flex items-center gap-2 shrink-0">
                   {a.status === 'submitted' && (
                     <button onClick={() => openReview(a)}
-                      className="px-3 py-1.5 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 transition-colors">
+                      className="px-3 py-1.5 bg-cyan-600 text-white text-xs font-semibold rounded-lg hover:bg-cyan-700 transition-colors">
                       Review
                     </button>
                   )}
@@ -175,7 +175,7 @@ export default function AdminAssignments() {
                     <div>
                       <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-1">Submitted file</p>
                       <a href={a.fileUrl} target="_blank" rel="noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-teal-600 hover:underline">
+                        className="inline-flex items-center gap-2 text-sm text-cyan-600 hover:underline">
                         <FileText size={14} /> {a.fileName || 'Download file'}
                       </a>
                     </div>
@@ -190,7 +190,7 @@ export default function AdminAssignments() {
                       </div>
                       <p className="text-sm text-gray-700 dark:text-slate-300">{a.feedback || '-'}</p>
                       <button onClick={() => openReview(a)}
-                        className="text-xs text-teal-600 hover:underline mt-1">
+                        className="text-xs text-cyan-600 hover:underline mt-1">
                         Edit feedback
                       </button>
                     </div>
@@ -198,7 +198,7 @@ export default function AdminAssignments() {
 
                   {/* Review form */}
                   {reviewing === a._id && (
-                    <div className="space-y-3 p-4 bg-teal-50 dark:bg-teal-950 rounded-xl border border-teal-100 dark:border-teal-800">
+                    <div className="space-y-3 p-4 bg-cyan-50 dark:bg-cyan-950 rounded-xl border border-cyan-100 dark:border-cyan-800">
                       <div className="flex items-center justify-between">
                         <p className="text-sm font-semibold text-gray-900 dark:text-white">Write feedback</p>
                         <button onClick={() => setReviewing(null)} aria-label="Close review form"
@@ -216,7 +216,7 @@ export default function AdminAssignments() {
                           onChange={e => setFeedback(e.target.value)}
                           rows={3}
                           placeholder="Write your feedback for the student…"
-                          className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm text-gray-900 dark:text-white outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 resize-none"
+                          className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] text-sm text-gray-900 dark:text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 resize-none"
                         />
                       </div>
                       <div className="flex items-center gap-3">
@@ -228,13 +228,13 @@ export default function AdminAssignments() {
                             id={`grade-${a._id}`}
                             value={grade}
                             onChange={e => setGrade(e.target.value)}
-                            className="px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-sm text-gray-900 dark:text-white outline-none focus:border-teal-500 bg-white dark:bg-slate-900">
+                            className="px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-sm text-gray-900 dark:text-white outline-none focus:border-cyan-500 bg-white dark:bg-[#0e141c]">
                             <option value="">No grade</option>
                             {GRADES.map(g => <option key={g}>{g}</option>)}
                           </select>
                         </div>
                         <button onClick={() => submitReview(a._id)} disabled={saving}
-                          className="flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors mt-4">
+                          className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-colors mt-4">
                           {saving && <Loader2 size={14} className="animate-spin" />}
                           Submit review
                         </button>

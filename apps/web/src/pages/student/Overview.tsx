@@ -44,7 +44,7 @@ export default function Overview() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -72,8 +72,8 @@ export default function Overview() {
       <div className="reveal grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <StatCard
           icon={Calendar}
-          iconColor="text-teal-600"
-          iconBg="bg-teal-50 dark:bg-teal-950"
+          iconColor="text-cyan-600"
+          iconBg="bg-cyan-50 dark:bg-cyan-950"
           value={sessions.length}
           label="Upcoming sessions"
         />
@@ -97,15 +97,15 @@ export default function Overview() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Upcoming sessions</h2>
-          <Link to="/dashboard/schedule" className="text-sm text-teal-600 hover:text-teal-800 font-medium">
+          <Link to="/dashboard/schedule" className="text-sm text-cyan-600 hover:text-cyan-800 font-medium">
             View all
           </Link>
         </div>
         {sessions.length === 0 ? (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
             <Calendar size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
             <p className="text-gray-500 dark:text-slate-400 text-sm">No upcoming sessions.</p>
-            <Link to="/pricing" className="inline-block mt-3 text-sm text-teal-600 hover:underline font-medium">
+            <Link to="/pricing" className="inline-block mt-3 text-sm text-cyan-600 hover:underline font-medium">
               Browse programs
             </Link>
           </div>
@@ -114,10 +114,10 @@ export default function Overview() {
             {sessions.slice(0, 5).map((s) => (
               <div
                 key={s._id}
-                className="flex items-center gap-4 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-4 hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
+                className="flex items-center gap-4 bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-4 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors"
               >
-                <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
-                  <Video size={18} className="text-teal-600" />
+                <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-950 flex items-center justify-center shrink-0">
+                  <Video size={18} className="text-cyan-600" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-gray-900 dark:text-white text-sm line-clamp-1">{s.title}</p>
@@ -127,7 +127,7 @@ export default function Overview() {
                 </div>
                 <a
                   href={s.meetingUrl || `/classroom/${s.roomId}`}
-                  className="shrink-0 px-3 py-1.5 bg-teal-700 text-white text-xs font-semibold rounded-lg hover:bg-teal-800 transition-colors"
+                  className="shrink-0 px-3 py-1.5 bg-cyan-700 text-white text-xs font-semibold rounded-lg hover:bg-cyan-800 transition-colors"
                 >
                   Join
                 </a>
@@ -144,19 +144,19 @@ export default function Overview() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Recent assignments</h2>
-          <Link to="/dashboard/assignments" className="text-sm text-teal-600 hover:text-teal-800 font-medium">
+          <Link to="/dashboard/assignments" className="text-sm text-cyan-600 hover:text-cyan-800 font-medium">
             View all
           </Link>
         </div>
         {assignments.length === 0 ? (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
             <ClipboardList size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
             <p className="text-gray-500 dark:text-slate-400 text-sm">No assignments yet.</p>
           </div>
         ) : (
-          <div className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="reveal bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 dark:bg-slate-950 text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
+              <thead className="bg-gray-50 dark:bg-[#080c11] text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
                 <tr>
                   <th className="px-5 py-3 text-left">Title</th>
                   <th className="px-5 py-3 text-left">Status</th>
@@ -196,7 +196,7 @@ function StatCard({
   label: string;
 }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
+    <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
       <div className={`w-11 h-11 ${iconBg} rounded-xl flex items-center justify-center`}>
         <Icon size={20} className={iconColor} />
       </div>
@@ -264,29 +264,29 @@ function ReferralCard() {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 p-5 mb-6">
+    <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-200 dark:border-slate-800 p-5 mb-6">
       {/* Header row — icon, title, right-aligned reward pill */}
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
-            <Gift size={13} className="text-teal-700 dark:text-teal-400" />
+          <div className="w-7 h-7 rounded-md bg-cyan-50 dark:bg-cyan-950 flex items-center justify-center shrink-0">
+            <Gift size={13} className="text-cyan-700 dark:text-cyan-400" />
           </div>
           <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Refer &amp; earn</h2>
         </div>
-        <span className="text-[10px] uppercase tracking-wider font-bold text-teal-700 dark:text-teal-400 tabular-nums">
+        <span className="text-[10px] uppercase tracking-wider font-bold text-cyan-700 dark:text-cyan-400 tabular-nums">
           50 pts / friend
         </span>
       </div>
       <p className="text-xs text-gray-500 dark:text-slate-400 ml-9 mb-4">
         Every friend who enrols earns you{' '}
-        <span className="font-semibold text-teal-700 dark:text-teal-400">50 points</span>{' '}
-        (worth <span className="font-semibold text-teal-700 dark:text-teal-400">₦5,000</span>{' '}
+        <span className="font-semibold text-cyan-700 dark:text-cyan-400">50 points</span>{' '}
+        (worth <span className="font-semibold text-cyan-700 dark:text-cyan-400">₦5,000</span>{' '}
         off your next purchase).
       </p>
 
       <div className="grid md:grid-cols-[1fr_auto] gap-3 items-stretch">
         {/* The code itself — stamp-style, prominent */}
-        <div className="px-3 py-3 rounded-lg bg-gray-50 dark:bg-slate-950 border border-dashed border-gray-300 dark:border-slate-700 text-center">
+        <div className="px-3 py-3 rounded-lg bg-gray-50 dark:bg-[#080c11] border border-dashed border-gray-300 dark:border-slate-700 text-center">
           <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-slate-500 font-semibold mb-0.5">
             Your code
           </p>
@@ -300,7 +300,7 @@ function ReferralCard() {
           <button
             type="button"
             onClick={() => copyTo(referralCode, 'Code')}
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 dark:hover:border-teal-700 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-700 dark:text-slate-300 hover:border-cyan-300 dark:hover:border-cyan-700 hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors"
           >
             {copied ? <Check size={13} /> : <Copy size={13} />}
             Code
@@ -308,7 +308,7 @@ function ReferralCard() {
           <button
             type="button"
             onClick={() => copyTo(referralLink, 'Link')}
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-700 dark:text-slate-300 hover:border-teal-300 dark:hover:border-teal-700 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 dark:border-slate-700 text-xs font-medium text-gray-700 dark:text-slate-300 hover:border-cyan-300 dark:hover:border-cyan-700 hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors"
           >
             <Link2 size={13} />
             Link
@@ -317,7 +317,7 @@ function ReferralCard() {
             href={whatsappShareUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-700 hover:bg-cyan-800 text-white text-xs font-semibold transition-colors"
           >
             <MessageCircle size={13} />
             Share
@@ -396,15 +396,15 @@ function CohortCountdown() {
   });
 
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 p-5 sm:p-6 mb-6">
+    <div className="relative overflow-hidden bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-200 dark:border-slate-800 p-5 sm:p-6 mb-6">
       {/* Subtle teal corner accent — keeps the "quiet brand" feel */}
-      <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-teal-500/5 dark:bg-teal-400/5 blur-3xl pointer-events-none" />
+      <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-cyan-500/5 dark:bg-cyan-400/5 blur-3xl pointer-events-none" />
 
       <div className="relative flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-7 h-7 rounded-md bg-teal-50 dark:bg-teal-950 flex items-center justify-center shrink-0">
-              <Rocket size={13} className="text-teal-700 dark:text-teal-400" />
+            <div className="w-7 h-7 rounded-md bg-cyan-50 dark:bg-cyan-950 flex items-center justify-center shrink-0">
+              <Rocket size={13} className="text-cyan-700 dark:text-cyan-400" />
             </div>
             <h2 className="text-sm font-semibold text-gray-900 dark:text-white">
               {inProgress ? 'Your cohort is live' : 'Your cohort starts in'}
@@ -436,7 +436,7 @@ function CohortCountdown() {
           <div className="shrink-0">
             <Link
               to="/dashboard/schedule"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cyan-700 hover:bg-cyan-800 text-white text-xs font-semibold transition-colors"
             >
               Open schedule <ArrowRight size={12} />
             </Link>
@@ -489,7 +489,7 @@ function CertificatesSection() {
           <Link
             key={c._id}
             to={`/certificate/${c.certificateId}`}
-            className={`flex items-center gap-4 bg-white dark:bg-slate-900 rounded-2xl border shadow-sm p-4 transition-colors ${
+            className={`flex items-center gap-4 bg-white dark:bg-[#0e141c] rounded-2xl border shadow-sm p-4 transition-colors ${
               c.isValid
                 ? 'border-gray-100 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700'
                 : 'border-red-100 dark:border-red-900 opacity-60'
@@ -522,7 +522,7 @@ function CertificatesSection() {
 function TimePart({ value, label }: { value: number; label: string }) {
   return (
     <div className="text-center">
-      <div className="px-2 sm:px-3 py-2 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-800">
+      <div className="px-2 sm:px-3 py-2 rounded-lg bg-gray-50 dark:bg-[#080c11] border border-gray-200 dark:border-slate-800">
         <p className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-gray-900 dark:text-white leading-none">
           {String(value).padStart(2, '0')}
         </p>

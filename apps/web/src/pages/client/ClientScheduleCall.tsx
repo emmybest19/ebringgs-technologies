@@ -10,7 +10,7 @@ const reasonsToBook = [
     icon: Sparkles,
     title: 'Scope your project together',
     body: 'Walk through what you want to build and we will help you pick the right tier or scope a custom engagement.',
-    accent: 'from-teal-500/20 to-emerald-500/20',
+    accent: 'from-cyan-500/20 to-emerald-500/20',
   },
   {
     icon: Zap,
@@ -45,9 +45,9 @@ export default function ClientScheduleCall() {
   return (
     <div className="space-y-10">
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white p-8 sm:p-12">
+      <section className="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-900 via-cyan-950 to-cyan-950 text-white p-8 sm:p-12">
         {/* Decorative glow blobs */}
-        <div className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-16 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl" />
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.06]"
@@ -57,13 +57,13 @@ export default function ClientScheduleCall() {
           }}
         />
         <div className="relative max-w-3xl">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-teal-300 bg-teal-500/10 border border-teal-400/20 rounded-full px-3 py-1.5 mb-5">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-300 bg-cyan-500/10 border border-cyan-400/20 rounded-full px-3 py-1.5 mb-5">
             <Calendar size={13} /> Book a Call
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
             Pick a time that works for you.
             <br />
-            <span className="bg-linear-to-r from-teal-300 to-cyan-300 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-cyan-300 to-cyan-300 bg-clip-text text-transparent">
               We'll handle the rest.
             </span>
           </h1>
@@ -79,8 +79,8 @@ export default function ClientScheduleCall() {
                 key={label}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-3 flex items-center gap-2.5"
               >
-                <div className="w-8 h-8 rounded-lg bg-teal-500/20 flex items-center justify-center shrink-0">
-                  <Icon size={15} className="text-teal-300" />
+                <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center shrink-0">
+                  <Icon size={15} className="text-cyan-300" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
@@ -99,14 +99,14 @@ export default function ClientScheduleCall() {
         {reasonsToBook.map(({ icon: Icon, title, body, accent }) => (
           <div
             key={title}
-            className="group relative bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-6 shadow-sm hover:shadow-md hover:border-teal-200 dark:hover:border-teal-800 transition-all overflow-hidden"
+            className="group relative bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 p-6 shadow-sm hover:shadow-md hover:border-cyan-200 dark:hover:border-cyan-800 transition-all overflow-hidden"
           >
             <div
               className={`absolute -top-12 -right-12 w-32 h-32 bg-linear-to-br ${accent} rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-opacity`}
             />
             <div className="relative">
-              <div className="w-11 h-11 rounded-xl bg-teal-50 dark:bg-teal-950 flex items-center justify-center mb-4">
-                <Icon size={20} className="text-teal-600 dark:text-teal-400" />
+              <div className="w-11 h-11 rounded-xl bg-cyan-50 dark:bg-cyan-950 flex items-center justify-center mb-4">
+                <Icon size={20} className="text-cyan-600 dark:text-cyan-400" />
               </div>
               <p className="font-bold text-gray-900 dark:text-white mb-1.5">{title}</p>
               <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed">{body}</p>
@@ -139,9 +139,9 @@ export default function ClientScheduleCall() {
       </section>
 
       {/* ── Aftercare strip ─────────────────────────────────────────────── */}
-      <section className="rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-900 flex items-center justify-center shrink-0">
-          <MessageSquare size={22} className="text-teal-700 dark:text-teal-300" />
+      <section className="rounded-2xl border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-[#0e141c] p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-900 flex items-center justify-center shrink-0">
+          <MessageSquare size={22} className="text-cyan-700 dark:text-cyan-300" />
         </div>
         <div className="flex-1">
           <p className="font-semibold text-gray-900 dark:text-white">Prefer to message first?</p>

@@ -30,7 +30,7 @@ export default function ClientOverview() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -53,16 +53,16 @@ export default function ClientOverview() {
       {calendlyConfigured && (
         <Link
           to="/client/schedule-call"
-          className="group relative block overflow-hidden rounded-2xl bg-linear-to-br from-slate-900 via-teal-950 to-cyan-950 text-white p-6 mb-6 shadow-lg hover:shadow-2xl hover:shadow-teal-500/20 transition-all"
+          className="group relative block overflow-hidden rounded-2xl bg-linear-to-br from-slate-900 via-cyan-950 to-cyan-950 text-white p-6 mb-6 shadow-lg hover:shadow-2xl hover:shadow-cyan-500/20 transition-all"
         >
-          <div className="pointer-events-none absolute -top-12 -right-12 w-48 h-48 bg-teal-500/20 rounded-full blur-3xl group-hover:bg-teal-400/30 transition-colors" />
+          <div className="pointer-events-none absolute -top-12 -right-12 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl group-hover:bg-cyan-400/30 transition-colors" />
           <div className="pointer-events-none absolute -bottom-16 -left-16 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl" />
           <div className="relative flex items-center gap-5">
             <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-sm items-center justify-center shrink-0">
-              <Calendar size={24} className="text-teal-300" />
+              <Calendar size={24} className="text-cyan-300" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-teal-300 font-bold mb-1">
+              <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-cyan-300 font-bold mb-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" /> Book a Call
               </div>
               <p className="font-bold text-base sm:text-lg leading-tight">
@@ -72,7 +72,7 @@ export default function ClientOverview() {
                 20-minute call · video or audio · zero commitment
               </p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-white text-teal-700 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
+            <div className="w-10 h-10 rounded-full bg-white text-cyan-700 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
               <ArrowRight size={18} />
             </div>
           </div>
@@ -81,16 +81,16 @@ export default function ClientOverview() {
 
       {/* Stats */}
       <div className="reveal grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
-          <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center">
-            <FolderKanban size={20} className="text-teal-600" />
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
+          <div className="w-11 h-11 bg-cyan-50 dark:bg-cyan-950 rounded-xl flex items-center justify-center">
+            <FolderKanban size={20} className="text-cyan-600" />
           </div>
           <div>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{activeProjects.length}</p>
             <p className="text-xs text-gray-500 dark:text-slate-400">Active projects</p>
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
           <div className="w-11 h-11 bg-green-50 dark:bg-green-950 rounded-xl flex items-center justify-center">
             <CheckCircle2 size={20} className="text-green-600" />
           </div>
@@ -99,7 +99,7 @@ export default function ClientOverview() {
             <p className="text-xs text-gray-500 dark:text-slate-400">Completed</p>
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-center gap-4">
           <div className="w-11 h-11 bg-purple-50 dark:bg-purple-950 rounded-xl flex items-center justify-center">
             <CreditCard size={20} className="text-purple-600" />
           </div>
@@ -114,15 +114,15 @@ export default function ClientOverview() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Active Projects</h2>
-          <Link to="/client/projects" className="text-sm text-teal-600 hover:text-teal-800 font-medium">
+          <Link to="/client/projects" className="text-sm text-cyan-600 hover:text-cyan-800 font-medium">
             View all
           </Link>
         </div>
         {activeProjects.length === 0 ? (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
             <FolderKanban size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
             <p className="text-gray-500 dark:text-slate-400 text-sm">No active projects yet.</p>
-            <Link to="/client/services" className="inline-block mt-3 text-sm text-teal-600 hover:underline font-medium">
+            <Link to="/client/services" className="inline-block mt-3 text-sm text-cyan-600 hover:underline font-medium">
               Browse our services
             </Link>
           </div>
@@ -130,7 +130,7 @@ export default function ClientOverview() {
           <div className="space-y-3">
             {activeProjects.slice(0, 5).map(p => (
               <Link key={p._id} to={`/client/projects/${p._id}`}
-                className="block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-4 hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
+                className="block bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-4 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <p className="font-semibold text-gray-900 dark:text-white text-sm">{p.title}</p>
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${statusColor(p.status)}`}>
@@ -140,7 +140,7 @@ export default function ClientOverview() {
                 <p className="text-xs text-gray-400 dark:text-slate-500 mb-2">{p.serviceName}</p>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${p.progress}%` }} />
+                    <div className="h-full bg-cyan-500 rounded-full transition-all" style={{ width: `${p.progress}%` }} />
                   </div>
                   <span className="text-xs font-medium text-gray-500 dark:text-slate-400">{p.progress}%</span>
                 </div>
@@ -154,19 +154,19 @@ export default function ClientOverview() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Recent Payments</h2>
-          <Link to="/client/payments" className="text-sm text-teal-600 hover:text-teal-800 font-medium">
+          <Link to="/client/payments" className="text-sm text-cyan-600 hover:text-cyan-800 font-medium">
             View all
           </Link>
         </div>
         {transactions.length === 0 ? (
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
             <CreditCard size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
             <p className="text-gray-500 dark:text-slate-400 text-sm">No payments yet.</p>
           </div>
         ) : (
-          <div className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="reveal bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 dark:bg-slate-950 text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
+              <thead className="bg-gray-50 dark:bg-[#080c11] text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide">
                 <tr>
                   <th className="px-5 py-3 text-left">Description</th>
                   <th className="px-5 py-3 text-left">Amount</th>
@@ -244,7 +244,7 @@ function ReferralCard() {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-linear-to-br from-emerald-50 via-white to-teal-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-teal-950/40 p-5 mb-6">
+    <div className="relative overflow-hidden rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-linear-to-br from-emerald-50 via-white to-cyan-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-cyan-950/40 p-5 mb-6">
       <div className="pointer-events-none absolute -top-12 -right-12 w-40 h-40 bg-emerald-400/10 rounded-full blur-3xl" />
       <div className="relative flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
@@ -266,7 +266,7 @@ function ReferralCard() {
         </div>
 
         <div className="flex items-stretch gap-2 shrink-0">
-          <div className="px-3 py-2 rounded-lg bg-white dark:bg-slate-950 border border-gray-200 dark:border-slate-700 font-mono text-sm font-bold text-gray-900 dark:text-white tracking-wider flex items-center">
+          <div className="px-3 py-2 rounded-lg bg-white dark:bg-[#080c11] border border-gray-200 dark:border-slate-700 font-mono text-sm font-bold text-gray-900 dark:text-white tracking-wider flex items-center">
             {user.referralCode}
           </div>
           <button

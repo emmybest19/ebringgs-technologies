@@ -38,7 +38,7 @@ function ProjectList() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -55,7 +55,7 @@ function ProjectList() {
             <button key={f} onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
                 filter === f
-                  ? 'bg-white dark:bg-slate-900 text-gray-900 dark:text-white shadow-sm'
+                  ? 'bg-white dark:bg-[#0e141c] text-gray-900 dark:text-white shadow-sm'
                   : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300'
               }`}>
               {f}
@@ -65,12 +65,12 @@ function ProjectList() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <FolderKanban size={40} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="text-gray-500 dark:text-slate-400">
             {filter !== 'all' ? `No ${filter} projects.` : 'No projects yet.'}
           </p>
-          <Link to="/services" className="inline-block mt-3 text-sm text-teal-600 hover:underline font-medium">
+          <Link to="/services" className="inline-block mt-3 text-sm text-cyan-600 hover:underline font-medium">
             Browse our services
           </Link>
         </div>
@@ -78,7 +78,7 @@ function ProjectList() {
         <div className="space-y-3">
           {filtered.map(p => (
             <Link key={p._id} to={`/client/projects/${p._id}`}
-              className="block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
+              className="block bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors">
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <p className="font-semibold text-gray-900 dark:text-white">{p.title}</p>
@@ -102,7 +102,7 @@ function ProjectList() {
                 <>
                   <div className="flex items-center gap-3">
                     <div className="flex-1 h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${p.progress}%` }} />
+                      <div className="h-full bg-cyan-500 rounded-full transition-all" style={{ width: `${p.progress}%` }} />
                     </div>
                     <span className="text-xs font-medium text-gray-500 dark:text-slate-400 w-10 text-right">{p.progress}%</span>
                   </div>
@@ -142,7 +142,7 @@ function ProjectDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -188,33 +188,33 @@ function ProjectDetail() {
       )}
 
       {/* Progress */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
         <div className="flex items-center justify-between mb-2">
           <p className="text-sm font-semibold text-gray-900 dark:text-white">Progress</p>
-          <p className="text-sm font-bold text-teal-600">{project.progress}%</p>
+          <p className="text-sm font-bold text-cyan-600">{project.progress}%</p>
         </div>
         <div className="h-3 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-          <div className="h-full bg-linear-to-r from-teal-500 to-cyan-500 rounded-full transition-all" style={{ width: `${project.progress}%` }} />
+          <div className="h-full bg-linear-to-r from-cyan-500 to-cyan-500 rounded-full transition-all" style={{ width: `${project.progress}%` }} />
         </div>
       </div>
 
       {/* Info grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 p-3">
+        <div className="bg-white dark:bg-[#0e141c] rounded-xl border border-gray-100 dark:border-slate-800 p-3">
           <p className="text-xs text-gray-500 dark:text-slate-400">Started</p>
           <p className="text-sm font-semibold text-gray-900 dark:text-white mt-0.5">{formatDate(project.startDate)}</p>
         </div>
-        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 p-3">
+        <div className="bg-white dark:bg-[#0e141c] rounded-xl border border-gray-100 dark:border-slate-800 p-3">
           <p className="text-xs text-gray-500 dark:text-slate-400">Due</p>
           <p className="text-sm font-semibold text-gray-900 dark:text-white mt-0.5">{formatDate(project.estimatedEndDate)}</p>
         </div>
-        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 p-3">
+        <div className="bg-white dark:bg-[#0e141c] rounded-xl border border-gray-100 dark:border-slate-800 p-3">
           <p className="text-xs text-gray-500 dark:text-slate-400">Cost</p>
           <p className="text-sm font-semibold text-gray-900 dark:text-white mt-0.5">
             {new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(project.totalCost / 100)}
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 p-3">
+        <div className="bg-white dark:bg-[#0e141c] rounded-xl border border-gray-100 dark:border-slate-800 p-3">
           <p className="text-xs text-gray-500 dark:text-slate-400">Payment</p>
           <p className={`text-sm font-semibold mt-0.5 ${project.isPaid ? 'text-green-600' : 'text-amber-600'}`}>
             {project.isPaid ? 'Paid' : 'Unpaid'}
@@ -223,7 +223,7 @@ function ProjectDetail() {
       </div>
 
       {project.description && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-2">Description</p>
           <p className="text-sm text-gray-700 dark:text-slate-300 whitespace-pre-wrap">{project.description}</p>
         </div>
@@ -231,18 +231,18 @@ function ProjectDetail() {
 
       {/* Links */}
       {(project.githubRepo || project.liveUrl) && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Links</p>
           <div className="flex flex-wrap gap-3">
             {project.githubRepo && (
               <a href={project.githubRepo} target="_blank" rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-700 text-sm text-gray-700 dark:text-slate-300 hover:border-teal-400 hover:text-teal-600 transition-colors">
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-700 text-sm text-gray-700 dark:text-slate-300 hover:border-cyan-400 hover:text-cyan-600 transition-colors">
                 <Github size={16} /> GitHub Repository
               </a>
             )}
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-700 text-sm text-gray-700 dark:text-slate-300 hover:border-teal-400 hover:text-teal-600 transition-colors">
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-700 text-sm text-gray-700 dark:text-slate-300 hover:border-cyan-400 hover:text-cyan-600 transition-colors">
                 <ExternalLink size={16} /> Live Website
               </a>
             )}
@@ -251,7 +251,7 @@ function ProjectDetail() {
       )}
 
       {project.timeline && project.timeline.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Timeline</p>
           <div className="space-y-3">
             {project.timeline.map((t, i) => (
@@ -274,13 +274,13 @@ function ProjectDetail() {
       )}
 
       {project.deliverables.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Deliverables</p>
           <div className="space-y-2">
             {project.deliverables.map((d, i) => (
               <a key={i} href={d.url} target="_blank" rel="noreferrer"
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
-                <FileDown size={16} className="text-teal-500 shrink-0" />
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-100 dark:border-slate-800 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors">
+                <FileDown size={16} className="text-cyan-500 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{d.name}</p>
                   <p className="text-xs text-gray-400 dark:text-slate-500">{formatDate(d.uploadedAt)}</p>

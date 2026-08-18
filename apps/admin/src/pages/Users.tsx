@@ -16,7 +16,7 @@ import {
 const roleColors: Record<UserRole, string> = {
   admin: 'text-red-600 bg-red-50 dark:bg-red-950',
   teacher: 'text-blue-600 bg-blue-50 dark:bg-blue-950',
-  student: 'text-teal-600 bg-teal-50 dark:bg-teal-950',
+  student: 'text-cyan-600 bg-cyan-50 dark:bg-cyan-950',
   client: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950',
 };
 
@@ -54,7 +54,7 @@ export default function AdminUsers() {
         </div>
         <button
           onClick={() => setShowCreateTeacher(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm"
         >
           <Plus size={16} /> Add Teacher
         </button>
@@ -65,11 +65,11 @@ export default function AdminUsers() {
         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
         <input value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Search by name or email..."
-          className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+          className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
       </div>
 
       {loading ? <PageLoader /> : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
           <table className="w-full min-w-180">
             <thead>
@@ -85,7 +85,7 @@ export default function AdminUsers() {
                 <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-teal-100 dark:bg-teal-900 flex items-center justify-center text-teal-600 dark:text-teal-300 font-bold text-sm shrink-0">
+                      <div className="w-9 h-9 rounded-full bg-cyan-100 dark:bg-cyan-900 flex items-center justify-center text-cyan-600 dark:text-cyan-300 font-bold text-sm shrink-0">
                         {user.name.charAt(0)}
                       </div>
                       <span className="font-medium text-gray-900 dark:text-white text-sm">{user.name}</span>
@@ -103,7 +103,7 @@ export default function AdminUsers() {
                         value={user.role}
                         disabled={updatingId === user.id}
                         onChange={e => changeRole(user.id, e.target.value as UserRole)}
-                        className="appearance-none pl-3 pr-8 py-1.5 border border-gray-200 dark:border-slate-700 rounded-lg text-xs font-medium text-gray-700 dark:text-white focus:border-teal-500 outline-none cursor-pointer bg-white dark:bg-slate-800 disabled:opacity-50"
+                        className="appearance-none pl-3 pr-8 py-1.5 border border-gray-200 dark:border-slate-700 rounded-lg text-xs font-medium text-gray-700 dark:text-white focus:border-cyan-500 outline-none cursor-pointer bg-white dark:bg-slate-800 disabled:opacity-50"
                       >
                         <option value="student">Student</option>
                         <option value="client">Client</option>
@@ -201,14 +201,14 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
+        className="bg-white dark:bg-[#0e141c] rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950 flex items-center justify-center">
-              <GraduationCap size={18} className="text-teal-600 dark:text-teal-400" />
+            <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-950 flex items-center justify-center">
+              <GraduationCap size={18} className="text-cyan-600 dark:text-cyan-400" />
             </div>
             <div>
               <h2 className="text-base font-bold text-gray-900 dark:text-white">Add a teacher</h2>
@@ -238,11 +238,11 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
             </div>
 
             <div className="space-y-3">
-              <div className="px-3 py-2.5 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700">
+              <div className="px-3 py-2.5 rounded-lg bg-gray-50 dark:bg-[#080c11] border border-gray-200 dark:border-slate-700">
                 <p className="text-[10px] uppercase tracking-wide text-gray-400 dark:text-slate-500 font-semibold">Email</p>
                 <p className="font-mono text-sm text-gray-900 dark:text-white break-all">{createdCreds.email}</p>
               </div>
-              <div className="px-3 py-2.5 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700">
+              <div className="px-3 py-2.5 rounded-lg bg-gray-50 dark:bg-[#080c11] border border-gray-200 dark:border-slate-700">
                 <p className="text-[10px] uppercase tracking-wide text-gray-400 dark:text-slate-500 font-semibold">Password</p>
                 <p className="font-mono text-sm text-gray-900 dark:text-white break-all">{createdCreds.password}</p>
               </div>
@@ -251,14 +251,14 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
             <div className="mt-5 grid grid-cols-2 gap-2">
               <button
                 onClick={copyCreds}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 text-sm font-semibold text-gray-700 dark:text-slate-200 hover:border-teal-300 dark:hover:border-teal-700 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 text-sm font-semibold text-gray-700 dark:text-slate-200 hover:border-cyan-300 dark:hover:border-cyan-700 hover:text-cyan-700 dark:hover:text-cyan-400 transition-colors"
               >
                 {copied === 'creds' ? <Check size={14} /> : <Copy size={14} />}
                 Copy all
               </button>
               <button
                 onClick={onClose}
-                className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold transition-colors"
+                className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold transition-colors"
               >
                 Done
               </button>
@@ -280,7 +280,7 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
                 onChange={(e) => setName(e.target.value)}
                 required
                 placeholder="e.g. Ada Lovelace"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-sm text-gray-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#080c11] text-sm text-gray-900 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none"
               />
             </div>
 
@@ -293,7 +293,7 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
                 required
                 placeholder="ada@e-bringgs.ng"
                 autoComplete="off"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-sm text-gray-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#080c11] text-sm text-gray-900 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none"
               />
             </div>
 
@@ -303,7 +303,7 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
                 <button
                   type="button"
                   onClick={generatePassword}
-                  className="text-[11px] font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300"
+                  className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300"
                 >
                   Generate strong password
                 </button>
@@ -317,7 +317,7 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
                   minLength={8}
                   placeholder="At least 8 characters"
                   autoComplete="new-password"
-                  className="w-full pl-3.5 pr-11 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-sm text-gray-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none font-mono"
+                  className="w-full pl-3.5 pr-11 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#080c11] text-sm text-gray-900 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none font-mono"
                 />
                 <button
                   type="button"
@@ -341,7 +341,7 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Senior Frontend Engineer"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 text-sm text-gray-900 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#080c11] text-sm text-gray-900 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none"
               />
             </div>
 
@@ -356,7 +356,7 @@ function CreateTeacherModal({ onClose }: { onClose: () => void }) {
               <button
                 type="submit"
                 disabled={create.isPending}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-teal-600 hover:bg-teal-700 disabled:bg-slate-400 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-400 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
               >
                 {create.isPending ? <><Loader2 size={14} className="animate-spin" /> Creating...</> : 'Create teacher'}
               </button>

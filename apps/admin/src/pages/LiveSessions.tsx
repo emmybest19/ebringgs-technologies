@@ -168,7 +168,7 @@ export default function AdminLiveSessions() {
           </p>
         </div>
         <button onClick={openCreate} aria-label="Schedule new session"
-          className="flex items-center gap-2 px-4 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 bg-cyan-600 text-white text-sm font-semibold rounded-xl hover:bg-cyan-700 transition-colors">
           <Plus size={16} /> Schedule session
         </button>
       </div>
@@ -212,7 +212,7 @@ export default function AdminLiveSessions() {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
           role="dialog" aria-modal="true" aria-labelledby="session-modal-title">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800">
               <h2 id="session-modal-title" className="text-lg font-bold text-gray-900 dark:text-white">
                 {editing ? 'Edit session' : 'Schedule new session'}
@@ -236,7 +236,7 @@ export default function AdminLiveSessions() {
                 </label>
                 <input id="s-title" value={form.title} onChange={e => set('title', e.target.value)} required
                   placeholder="e.g. React Hooks Deep Dive"
-                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
               </div>
 
               <div>
@@ -245,7 +245,7 @@ export default function AdminLiveSessions() {
                 </label>
                 <input id="s-course" value={form.courseTitle} onChange={e => set('courseTitle', e.target.value)}
                   placeholder="e.g. Frontend Development Bootcamp"
-                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
               </div>
 
               <div>
@@ -254,7 +254,7 @@ export default function AdminLiveSessions() {
                 </label>
                 <input id="s-instructor" value={form.instructor} onChange={e => set('instructor', e.target.value)}
                   placeholder="Instructor name"
-                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -264,7 +264,7 @@ export default function AdminLiveSessions() {
                   </label>
                   <input id="s-datetime" type="datetime-local" value={form.scheduledAt}
                     onChange={e => set('scheduledAt', e.target.value)} required
-                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1.5" htmlFor="s-duration">
@@ -272,7 +272,7 @@ export default function AdminLiveSessions() {
                   </label>
                   <input id="s-duration" type="number" min="15" step="15" value={form.durationMinutes}
                     onChange={e => set('durationMinutes', e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+                    className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
                 </div>
               </div>
 
@@ -283,7 +283,7 @@ export default function AdminLiveSessions() {
                 <div className="flex gap-2">
                   <input id="s-room" value={form.roomId} onChange={e => set('roomId', e.target.value)}
                     placeholder="Auto-generated"
-                    className="flex-1 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white font-mono" />
+                    className="flex-1 px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white font-mono" />
                   <button type="button" onClick={() => set('roomId', generateRoomId())}
                     className="px-3 py-2.5 text-xs bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-lg text-gray-600 dark:text-slate-400 transition-colors">
                     Generate
@@ -297,7 +297,7 @@ export default function AdminLiveSessions() {
                 </label>
                 <input id="s-url" type="url" value={form.meetingUrl} onChange={e => set('meetingUrl', e.target.value)}
                   placeholder="https://meet.google.com/..."
-                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
+                  className="w-full px-3 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white" />
               </div>
 
               <div className="flex justify-end gap-3 pt-2">
@@ -306,7 +306,7 @@ export default function AdminLiveSessions() {
                   Cancel
                 </button>
                 <button type="submit" disabled={saving}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-colors">
+                  className="flex items-center gap-2 px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-60 text-white text-sm font-semibold rounded-xl transition-colors">
                   {saving && <Loader2 size={16} className="animate-spin" />}
                   {editing ? 'Save changes' : 'Schedule'}
                 </button>
@@ -330,7 +330,7 @@ function SessionCard({
   const joinUrl = session.meetingUrl || `/classroom/${session.roomId}`;
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-start gap-4">
+    <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 flex items-start gap-4">
       {/* Icon */}
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
         session.status === 'live' ? 'bg-red-100 dark:bg-red-900' : isUpcoming ? 'bg-blue-100 dark:bg-blue-900' : 'bg-gray-100 dark:bg-slate-800'
@@ -372,12 +372,12 @@ function SessionCard({
         {isUpcoming && (
           <a href={joinUrl} target="_blank" rel="noreferrer"
             aria-label="Join session"
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 transition-colors">
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-600 text-white text-xs font-semibold rounded-lg hover:bg-cyan-700 transition-colors">
             <ExternalLink size={12} /> Join
           </a>
         )}
         <button onClick={() => onEdit(session)} aria-label="Edit session"
-          className="p-1.5 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-950 text-gray-400 dark:text-slate-500 hover:text-teal-600 transition-colors">
+          className="p-1.5 rounded-lg hover:bg-cyan-50 dark:hover:bg-cyan-950 text-gray-400 dark:text-slate-500 hover:text-cyan-600 transition-colors">
           <Edit2 size={16} />
         </button>
         <button onClick={() => onDelete(session._id)} aria-label="Delete session"

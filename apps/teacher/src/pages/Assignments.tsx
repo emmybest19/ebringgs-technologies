@@ -34,14 +34,14 @@ export default function TeacherAssignments() {
       {loading ? (
         <div className="p-12 text-center text-gray-400">Loading...</div>
       ) : assignments.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <ClipboardList size={40} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="font-medium text-gray-500 dark:text-slate-400">No assignments to review</p>
         </div>
       ) : (
         <div className="space-y-3">
           {assignments.map((a) => (
-            <div key={a._id} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+            <div key={a._id} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
               <div className="flex items-start gap-3">
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
                   a.status === 'reviewed' ? 'bg-green-50 dark:bg-green-950' : 'bg-amber-50 dark:bg-amber-950'

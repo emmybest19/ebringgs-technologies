@@ -111,7 +111,7 @@ export default function ProjectBrief() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -119,10 +119,10 @@ export default function ProjectBrief() {
   if (loadError || !project) {
     return (
       <div className="max-w-xl">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-10 text-center">
           <AlertCircle size={32} className="text-red-500 mx-auto mb-3" />
           <p className="text-gray-700 dark:text-slate-300 mb-6">{loadError || 'Project not found.'}</p>
-          <Link to="/client/projects" className="text-teal-600 font-medium hover:underline">
+          <Link to="/client/projects" className="text-cyan-600 font-medium hover:underline">
             Back to projects
           </Link>
         </div>
@@ -138,8 +138,8 @@ export default function ProjectBrief() {
       </button>
 
       <div className="flex items-center gap-3 mb-2">
-        <div className="inline-flex p-2.5 bg-teal-50 dark:bg-teal-950 rounded-xl">
-          <ClipboardList size={20} className="text-teal-600" />
+        <div className="inline-flex p-2.5 bg-cyan-50 dark:bg-cyan-950 rounded-xl">
+          <ClipboardList size={20} className="text-cyan-600" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Project brief</h1>
@@ -152,13 +152,13 @@ export default function ProjectBrief() {
       </p>
 
       {fields.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8 text-center">
           <CheckCircle2 size={32} className="text-green-500 mx-auto mb-3" />
           <p className="text-gray-700 dark:text-slate-300 mb-6">No additional info needed for this service. Submit to kick off.</p>
           <button
             onClick={handleSubmit}
             disabled={submitting}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 disabled:opacity-60 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 text-white font-semibold rounded-xl hover:bg-cyan-700 disabled:opacity-60 transition-colors"
           >
             {submitting ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
             Submit and kick off
@@ -169,14 +169,14 @@ export default function ProjectBrief() {
           {fields.map((field) => {
             const value = values[field.name];
             const error = errors[field.name];
-            const baseInput = `w-full px-4 py-2.5 rounded-lg border bg-white dark:bg-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-teal-500/20 outline-none transition-colors ${
+            const baseInput = `w-full px-4 py-2.5 rounded-lg border bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:ring-2 focus:ring-cyan-500/20 outline-none transition-colors ${
               error
                 ? 'border-red-300 dark:border-red-800 focus:border-red-500'
-                : 'border-gray-200 dark:border-slate-700 focus:border-teal-500'
+                : 'border-gray-200 dark:border-slate-700 focus:border-cyan-500'
             }`;
 
             return (
-              <div key={field.name} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+              <div key={field.name} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
                 <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-1">
                   {field.label}
                   {field.required && <span className="text-red-500 ml-1">*</span>}
@@ -212,14 +212,14 @@ export default function ProjectBrief() {
                         <label key={opt}
                           className={`flex items-center gap-2 px-3 py-2.5 rounded-lg border cursor-pointer transition-colors ${
                             checked
-                              ? 'bg-teal-50 dark:bg-teal-950 border-teal-300 dark:border-teal-700'
-                              : 'border-gray-200 dark:border-slate-700 hover:border-teal-200 dark:hover:border-teal-800'
+                              ? 'bg-cyan-50 dark:bg-cyan-950 border-cyan-300 dark:border-cyan-700'
+                              : 'border-gray-200 dark:border-slate-700 hover:border-cyan-200 dark:hover:border-cyan-800'
                           }`}>
                           <input
                             type="checkbox"
                             checked={checked}
                             onChange={() => toggleCheckbox(field.name, opt)}
-                            className="w-4 h-4 accent-teal-600"
+                            className="w-4 h-4 accent-cyan-600"
                           />
                           <span className="text-sm text-gray-700 dark:text-slate-300">{opt}</span>
                         </label>
@@ -245,7 +245,7 @@ export default function ProjectBrief() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 disabled:opacity-60 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 text-white font-semibold rounded-xl hover:bg-cyan-700 disabled:opacity-60 transition-colors"
             >
               {submitting ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               {submitting ? 'Submitting…' : 'Submit brief and kick off'}

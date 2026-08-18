@@ -34,10 +34,10 @@ export default function AdminPayments() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { label: 'Total revenue', value: formatNGN(totalRevenueKobo), icon: DollarSign, color: 'text-emerald-600 bg-emerald-50' },
-          { label: 'Transactions', value: transactions.length, icon: CreditCard, color: 'text-teal-600 bg-teal-50' },
+          { label: 'Transactions', value: transactions.length, icon: CreditCard, color: 'text-cyan-600 bg-cyan-50' },
           { label: 'Succeeded', value: transactions.filter(t => t.status === 'succeeded').length, icon: CheckCircle2, color: 'text-green-600 bg-green-50' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
+          <div key={label} className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5">
             <div className={`inline-flex p-2.5 rounded-xl ${color} mb-3`}>
               <Icon size={20} />
             </div>
@@ -48,11 +48,11 @@ export default function AdminPayments() {
       </div>
 
       {loading ? <PageLoader /> : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
           <table className="w-full min-w-180">
             <thead>
-              <tr className="border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950">
+              <tr className="border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-[#080c11]">
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">User</th>
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">Description</th>
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">Amount</th>

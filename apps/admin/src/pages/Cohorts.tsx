@@ -165,7 +165,7 @@ export default function AdminCohorts() {
         </div>
         <button
           onClick={openCreate}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-cyan-600 text-white text-sm font-semibold rounded-xl hover:bg-cyan-700 transition-colors"
         >
           <Plus size={16} /> New cohort intake
         </button>
@@ -173,10 +173,10 @@ export default function AdminCohorts() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : cohorts.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <Calendar size={36} className="mx-auto text-gray-300 dark:text-slate-700 mb-3" />
           <p className="text-gray-700 dark:text-slate-300 font-semibold mb-1">No cohorts scheduled yet</p>
           <p className="text-sm text-gray-500 dark:text-slate-400 mb-5">
@@ -184,7 +184,7 @@ export default function AdminCohorts() {
           </p>
           <button
             onClick={openCreate}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 transition-colors"
           >
             <Plus size={14} /> Create your first cohort
           </button>
@@ -238,11 +238,11 @@ function CohortTable({
       <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">
         {title}
       </h2>
-      <div className={`bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden ${dim ? 'opacity-80' : ''}`}>
+      <div className={`bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden ${dim ? 'opacity-80' : ''}`}>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
             <thead>
-              <tr className="bg-gray-50 dark:bg-slate-950 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
+              <tr className="bg-gray-50 dark:bg-[#080c11] text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
                 <th className="px-5 py-3">Intake</th>
                 <th className="px-5 py-3">Starts</th>
                 <th className="px-5 py-3">Enrolled</th>
@@ -284,7 +284,7 @@ function CohortTable({
                           </div>
                           <div className="h-1.5 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
                             <div
-                              className={`h-full rounded-full transition-all ${pct >= 100 ? 'bg-amber-500' : 'bg-teal-500'}`}
+                              className={`h-full rounded-full transition-all ${pct >= 100 ? 'bg-amber-500' : 'bg-cyan-500'}`}
                               style={{ width: `${pct}%` }}
                             />
                           </div>
@@ -310,7 +310,7 @@ function CohortTable({
                       <div className="inline-flex items-center gap-1">
                         <button
                           onClick={() => onEdit(c)}
-                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-500 hover:text-teal-600"
+                          className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-500 hover:text-cyan-600"
                           aria-label="Edit cohort"
                         >
                           <Pencil size={15} />
@@ -415,7 +415,7 @@ function CohortEditor({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-3xl my-8 max-h-[92vh] flex flex-col">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl shadow-2xl w-full max-w-3xl my-8 max-h-[92vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">
             {state._id ? 'Edit cohort intake' : 'New cohort intake'}
@@ -573,7 +573,7 @@ function CohortEditor({
                   type="checkbox"
                   checked={state.isEnrollmentOpen}
                   onChange={(e) => set('isEnrollmentOpen', e.target.checked)}
-                  className="w-4 h-4 accent-teal-600"
+                  className="w-4 h-4 accent-cyan-600"
                 />
                 <span className="text-sm text-gray-700 dark:text-slate-300 inline-flex items-center gap-1.5">
                   {state.isEnrollmentOpen ? <Eye size={14} /> : <EyeOff size={14} />}
@@ -594,7 +594,7 @@ function CohortEditor({
           <button
             onClick={handleSave}
             disabled={saving}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-60 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 disabled:opacity-60 transition-colors"
           >
             {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
             {saving ? 'Saving…' : 'Save cohort'}

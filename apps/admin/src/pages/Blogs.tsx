@@ -51,7 +51,7 @@ function BlogForm({ post, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-slate-800">
           <h3 className="font-bold text-gray-900 dark:text-white text-lg">{post ? 'Edit post' : 'New blog post'}</h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-400 dark:text-slate-500"><X size={18} /></button>
@@ -62,7 +62,7 @@ function BlogForm({ post, onClose }: {
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Title</label>
             <input value={title} onChange={e => setTitle(e.target.value)} required placeholder="Post title"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm" />
             {title && <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">Slug: <span className="font-mono">{slug}</span></p>}
           </div>
 
@@ -70,14 +70,14 @@ function BlogForm({ post, onClose }: {
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Category</label>
               <select value={category} onChange={e => setCategory(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 outline-none text-sm">
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-cyan-500 outline-none text-sm">
                 {categories.map(c => <option key={c}>{c}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Tags (comma-separated)</label>
               <input value={tags} onChange={e => setTags(e.target.value)} placeholder="React, TypeScript, ..."
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm" />
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm" />
             </div>
           </div>
 
@@ -85,19 +85,19 @@ function BlogForm({ post, onClose }: {
             <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Excerpt (max 300 chars)</label>
             <textarea value={excerpt} onChange={e => setExcerpt(e.target.value)} required rows={2} maxLength={300}
               placeholder="Short summary shown in listings..."
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm resize-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm resize-none" />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Content (Markdown)</label>
             <textarea value={content} onChange={e => setContent(e.target.value)} required rows={12}
               placeholder="Write your post in Markdown..."
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm resize-none font-mono" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm resize-none font-mono" />
           </div>
 
           <div className="flex items-center gap-3">
             <label className="relative inline-flex items-center gap-3 cursor-pointer">
-              <div className={`w-10 h-6 rounded-full transition-colors ${isPublished ? 'bg-teal-600' : 'bg-gray-200 dark:bg-slate-700'}`}
+              <div className={`w-10 h-6 rounded-full transition-colors ${isPublished ? 'bg-cyan-600' : 'bg-gray-200 dark:bg-slate-700'}`}
                 onClick={() => setIsPublished(v => !v)}>
                 <div className={`w-4 h-4 rounded-full bg-white shadow absolute top-1 transition-transform ${isPublished ? 'translate-x-5' : 'translate-x-1'}`} />
               </div>
@@ -108,7 +108,7 @@ function BlogForm({ post, onClose }: {
           <div className="flex justify-end gap-3 pt-2">
             <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 border border-gray-200 dark:border-slate-700 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800">Cancel</button>
             <button type="submit" disabled={loading}
-              className="flex items-center gap-2 px-5 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-60">
+              className="flex items-center gap-2 px-5 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 disabled:opacity-60">
               {loading && <Loader2 size={15} className="animate-spin" />}
               {post ? 'Save changes' : 'Publish post'}
             </button>
@@ -151,17 +151,17 @@ export default function AdminBlogs() {
           <p className="text-gray-500 dark:text-slate-400 text-sm mt-1">{posts.length} posts total</p>
         </div>
         <button onClick={() => { setEditing(null); setShowForm(true); }}
-          className="flex items-center gap-2 px-4 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 bg-cyan-600 text-white text-sm font-semibold rounded-xl hover:bg-cyan-700 transition-colors">
           <Plus size={16} /> New post
         </button>
       </div>
 
       {loading ? <PageLoader /> : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
           <table className="w-full min-w-180">
             <thead>
-              <tr className="border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-950">
+              <tr className="border-b border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-[#080c11]">
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">Title</th>
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">Category</th>
                 <th className="text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide px-6 py-3">Status</th>
@@ -192,7 +192,7 @@ export default function AdminBlogs() {
                         {post.isPublished ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
                       <button onClick={() => { setEditing(post); setShowForm(true); }}
-                        className="p-1.5 rounded-lg hover:bg-teal-50 dark:hover:bg-teal-950 text-gray-400 dark:text-slate-500 hover:text-teal-600 transition-colors">
+                        className="p-1.5 rounded-lg hover:bg-cyan-50 dark:hover:bg-cyan-950 text-gray-400 dark:text-slate-500 hover:text-cyan-600 transition-colors">
                         <Edit2 size={16} />
                       </button>
                       <button onClick={() => deletePost(post._id)}

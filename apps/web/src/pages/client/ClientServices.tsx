@@ -32,10 +32,10 @@ export default function ClientServices() {
 
       {loading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : services.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <Sparkles className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="text-gray-500 dark:text-slate-400">No services available right now.</p>
         </div>
@@ -50,11 +50,11 @@ export default function ClientServices() {
                 {productized.map((s) => {
                   const Icon = iconMap[s.icon] || Code2;
                   return (
-                    <div key={s.id} className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors flex flex-col">
-                      <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">
-                        <Icon size={20} className="text-teal-600" />
+                    <div key={s.id} className="reveal bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors flex flex-col">
+                      <div className="w-11 h-11 bg-cyan-50 dark:bg-cyan-950 rounded-xl flex items-center justify-center mb-3">
+                        <Icon size={20} className="text-cyan-600" />
                       </div>
-                      <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mb-1">{s.category}</p>
+                      <p className="text-xs font-medium text-cyan-600 dark:text-cyan-400 mb-1">{s.category}</p>
                       <h3 className="font-bold text-gray-900 dark:text-white text-base mb-2">{s.title}</h3>
                       <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3 flex-1">{s.description}</p>
 
@@ -71,13 +71,13 @@ export default function ClientServices() {
                       <div className="flex flex-col gap-2">
                         <Link
                           to={`/client/services/${s.id}`}
-                          className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
+                          className="text-center w-full py-2 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors"
                         >
                           View details
                         </Link>
                         <button
                           onClick={() => navigate(`/checkout?type=service&id=${s.id}`)}
-                          className="w-full py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center gap-2"
+                          className="w-full py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 transition-colors flex items-center justify-center gap-2"
                         >
                           <ShoppingCart size={14} /> Purchase
                         </button>
@@ -101,15 +101,15 @@ export default function ClientServices() {
                     <Link
                       key={s.id}
                       to={`/client/services/${s.id}`}
-                      className="reveal bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors block"
+                      className="reveal bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors block"
                     >
-                      <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3">
-                        <Icon size={20} className="text-teal-600" />
+                      <div className="w-11 h-11 bg-cyan-50 dark:bg-cyan-950 rounded-xl flex items-center justify-center mb-3">
+                        <Icon size={20} className="text-cyan-600" />
                       </div>
-                      <p className="text-xs font-medium text-teal-600 dark:text-teal-400 mb-1">{s.category}</p>
+                      <p className="text-xs font-medium text-cyan-600 dark:text-cyan-400 mb-1">{s.category}</p>
                       <h3 className="font-bold text-gray-900 dark:text-white text-base mb-2">{s.title}</h3>
                       <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">{s.description}</p>
-                      <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-teal-600 hover:text-teal-800">
+                      <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-cyan-600 hover:text-cyan-800">
                         Request a quote <ArrowRight size={14} />
                       </span>
                     </Link>
@@ -121,15 +121,15 @@ export default function ClientServices() {
         </>
       )}
 
-      <div className="reveal mt-8 bg-linear-to-br from-teal-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
+      <div className="reveal mt-8 bg-linear-to-br from-cyan-600 to-emerald-700 rounded-2xl shadow-sm p-6 text-white flex items-center gap-4">
         <MessageSquare size={28} />
         <div className="flex-1">
           <p className="font-bold">Don't see what you need?</p>
-          <p className="text-teal-100 text-sm">Talk to us directly and we'll work something out.</p>
+          <p className="text-cyan-100 text-sm">Talk to us directly and we'll work something out.</p>
         </div>
         <Link
           to="/contact"
-          className="px-5 py-2.5 bg-white text-teal-700 font-semibold text-sm rounded-xl hover:bg-teal-50 transition-colors shrink-0"
+          className="px-5 py-2.5 bg-white text-cyan-700 font-semibold text-sm rounded-xl hover:bg-cyan-50 transition-colors shrink-0"
         >
           Contact us
         </Link>

@@ -27,14 +27,14 @@ export default function StudentRecordings() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : isError ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <p className="text-gray-500 dark:text-slate-400">Couldn't load recordings.</p>
         </div>
       ) : recordings.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <Video size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="font-medium text-gray-500 dark:text-slate-400">No recordings available</p>
           <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
@@ -47,10 +47,10 @@ export default function StudentRecordings() {
             <button
               key={rec._id}
               onClick={() => setPlaying(rec)}
-              className="text-left bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-teal-300 dark:hover:border-teal-700 transition-colors group"
+              className="text-left bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors group"
             >
-              <div className="w-11 h-11 bg-teal-50 dark:bg-teal-950 rounded-xl flex items-center justify-center mb-3 group-hover:bg-teal-600 transition-colors">
-                <Play size={18} className="text-teal-600 group-hover:text-white transition-colors fill-current" />
+              <div className="w-11 h-11 bg-cyan-50 dark:bg-cyan-950 rounded-xl flex items-center justify-center mb-3 group-hover:bg-cyan-600 transition-colors">
+                <Play size={18} className="text-cyan-600 group-hover:text-white transition-colors fill-current" />
               </div>
               <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-1 line-clamp-2">{rec.title}</h3>
               <p className="text-xs text-gray-500 dark:text-slate-400 mb-2">

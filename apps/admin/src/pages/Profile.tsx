@@ -123,15 +123,15 @@ export default function Profile() {
 
         <div className="grid gap-6">
           {/* Profile card */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
             <div className="flex items-center gap-5 mb-8">
-              <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white text-3xl font-bold">
+              <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-cyan-500 to-cyan-600 flex items-center justify-center text-white text-3xl font-bold">
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <div>
                 <h2 className="font-bold text-gray-900 dark:text-white text-xl">{user.name}</h2>
                 <p className="text-gray-500 dark:text-slate-400 text-sm">{user.email}</p>
-                <span className="inline-block mt-1 px-2.5 py-0.5 bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300 text-xs font-semibold rounded-full capitalize">
+                <span className="inline-block mt-1 px-2.5 py-0.5 bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300 text-xs font-semibold rounded-full capitalize">
                   {user.role}
                 </span>
               </div>
@@ -146,7 +146,7 @@ export default function Profile() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -174,7 +174,7 @@ export default function Profile() {
                   rows={4}
                   maxLength={500}
                   placeholder="Tell us a bit about yourself..."
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm resize-none dark:bg-slate-800 dark:text-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm resize-none dark:bg-slate-800 dark:text-white"
                 />
                 <p className="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right">
                   {bio.length}/500
@@ -190,7 +190,7 @@ export default function Profile() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="08012345678 or +234..."
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm dark:bg-slate-800 dark:text-white"
                 />
                 <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
                   Used for WhatsApp updates on your projects, classes, and payments.
@@ -222,7 +222,7 @@ export default function Profile() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 disabled:opacity-60 transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 text-white font-semibold rounded-xl hover:bg-cyan-700 disabled:opacity-60 transition-colors text-sm"
               >
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />
@@ -235,9 +235,9 @@ export default function Profile() {
           </div>
 
           {/* Account & Security */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
+          <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
             <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-              <Shield size={18} className="text-teal-600" /> Account &
+              <Shield size={18} className="text-cyan-600" /> Account &
               Security
             </h3>
 
@@ -255,7 +255,7 @@ export default function Profile() {
                   </div>
                   <button
                     onClick={() => setShowPwForm((v) => !v)}
-                    className="text-sm text-teal-600 hover:text-teal-800 font-medium flex items-center gap-1"
+                    className="text-sm text-cyan-600 hover:text-cyan-800 font-medium flex items-center gap-1"
                   >
                     {showPwForm ? (
                       <>
@@ -271,7 +271,7 @@ export default function Profile() {
                 {showPwForm && (
                   <form
                     onSubmit={handlePasswordChange}
-                    className="mt-4 space-y-3 bg-gray-50 dark:bg-slate-950 rounded-xl p-4 border border-gray-100 dark:border-slate-800"
+                    className="mt-4 space-y-3 bg-gray-50 dark:bg-[#080c11] rounded-xl p-4 border border-gray-100 dark:border-slate-800"
                   >
                     <div className="relative">
                       <label className="block text-xs font-medium text-gray-600 dark:text-slate-400 mb-1">
@@ -283,7 +283,7 @@ export default function Profile() {
                         onChange={(e) => setCurrentPw(e.target.value)}
                         required
                         placeholder="Enter current password"
-                        className="w-full px-3 py-2 pr-10 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white dark:bg-slate-800 dark:text-white"
+                        className="w-full px-3 py-2 pr-10 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-slate-800 dark:text-white"
                       />
                       <button
                         type="button"
@@ -308,7 +308,7 @@ export default function Profile() {
                         onChange={(e) => setNewPw(e.target.value)}
                         required
                         placeholder="Min 8 characters"
-                        className="w-full px-3 py-2 pr-10 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white dark:bg-slate-800 dark:text-white"
+                        className="w-full px-3 py-2 pr-10 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-slate-800 dark:text-white"
                       />
                       <button
                         type="button"
@@ -348,7 +348,7 @@ export default function Profile() {
                         onChange={(e) => setConfirmPw(e.target.value)}
                         required
                         placeholder="Repeat new password"
-                        className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white dark:bg-slate-800 dark:text-white ${
+                        className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white dark:bg-slate-800 dark:text-white ${
                           confirmPw && confirmPw !== newPw
                             ? "border-red-300"
                             : "border-gray-200 dark:border-slate-700"
@@ -364,7 +364,7 @@ export default function Profile() {
                     <button
                       type="submit"
                       disabled={pwLoading}
-                      className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-60 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 disabled:opacity-60 transition-colors"
                     >
                       {pwLoading ? (
                         <Loader2 size={14} className="animate-spin" />

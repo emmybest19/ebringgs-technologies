@@ -33,9 +33,9 @@ export default function TeacherLayout() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen flex bg-gray-50 dark:bg-slate-950">
+    <div className="min-h-screen flex bg-[#080c11]">
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4">
+      <div className="lg:hidden fixed top-0 inset-x-0 z-30 h-14 bg-[#0e141c] border-b border-slate-800 flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
           <Logo variant="mark" size={32} />
           <span className="font-bold text-white text-sm">Teacher</span>
@@ -61,7 +61,7 @@ export default function TeacherLayout() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-64 shrink-0 bg-slate-900 flex flex-col
+          fixed inset-y-0 left-0 z-50 w-64 shrink-0 bg-[#0e141c] flex flex-col
           transition-transform duration-200
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:z-auto
@@ -93,8 +93,8 @@ export default function TeacherLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-teal-600 text-white'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-cyan-600 text-white'
+                    : 'text-slate-400 hover:text-white hover:bg-[#141b26]'
                 }`
               }
             >
@@ -107,7 +107,7 @@ export default function TeacherLayout() {
         {/* User */}
         <div className="px-3 py-4 border-t border-slate-800">
           <div className="flex items-center gap-3 px-3 py-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-bold text-sm">
               {user.name.charAt(0)}
             </div>
             <div className="flex-1 min-w-0">
@@ -117,7 +117,7 @@ export default function TeacherLayout() {
           </div>
           <button
             onClick={() => { logout(); navigate('/login'); }}
-            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-red-400 hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-red-400 hover:bg-[#141b26] transition-colors"
           >
             <LogOut size={16} /> Sign out
           </button>

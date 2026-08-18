@@ -44,7 +44,7 @@ const STATUS_OPTIONS: { value: PaymentPlanAdminFilter; label: string }[] = [
 ];
 
 const STATUS_STYLES: Record<PaymentPlanStatus, { bg: string; text: string; icon: typeof Clock }> = {
-  active:    { bg: 'bg-teal-100 dark:bg-teal-900',       text: 'text-teal-700 dark:text-teal-300',     icon: Clock },
+  active:    { bg: 'bg-cyan-100 dark:bg-cyan-900',       text: 'text-cyan-700 dark:text-cyan-300',     icon: Clock },
   overdue:   { bg: 'bg-amber-100 dark:bg-amber-900',     text: 'text-amber-700 dark:text-amber-300',   icon: AlertCircle },
   suspended: { bg: 'bg-red-100 dark:bg-red-900',         text: 'text-red-700 dark:text-red-300',       icon: ShieldAlert },
   completed: { bg: 'bg-green-100 dark:bg-green-900',     text: 'text-green-700 dark:text-green-300',   icon: CheckCircle2 },
@@ -74,7 +74,7 @@ export default function AdminPaymentPlans() {
               onClick={() => setFilter(opt.value)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
                 filter === opt.value
-                  ? 'bg-white dark:bg-slate-900 text-gray-900 dark:text-white shadow-sm'
+                  ? 'bg-white dark:bg-[#0e141c] text-gray-900 dark:text-white shadow-sm'
                   : 'text-gray-500 dark:text-slate-400 hover:text-gray-700'
               }`}
             >
@@ -86,19 +86,19 @@ export default function AdminPaymentPlans() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : plans.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <CreditCard size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="text-gray-500 dark:text-slate-400">No payment plans{filter && ` in '${filter}' status`}.</p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px]">
               <thead>
-                <tr className="bg-gray-50 dark:bg-slate-950 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
+                <tr className="bg-gray-50 dark:bg-[#080c11] text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
                   <th className="px-5 py-3">Plan / user</th>
                   <th className="px-5 py-3">Progress</th>
                   <th className="px-5 py-3">Next due</th>
@@ -140,7 +140,7 @@ export default function AdminPaymentPlans() {
                                 status === 'completed' ? 'bg-green-500'
                                 : status === 'suspended' ? 'bg-red-500'
                                 : status === 'overdue' ? 'bg-amber-500'
-                                : 'bg-teal-500'
+                                : 'bg-cyan-500'
                               }`}
                               style={{ width: `${pct}%` }}
                             />
@@ -186,7 +186,7 @@ export default function AdminPaymentPlans() {
                           )}
                           <Link
                             to={`/payments/plan/${plan._id}`}
-                            className="text-xs text-teal-600 hover:text-teal-800 font-medium ml-2"
+                            className="text-xs text-cyan-600 hover:text-cyan-800 font-medium ml-2"
                           >
                             View
                           </Link>
@@ -251,7 +251,7 @@ function ActionModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md p-6">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl shadow-2xl w-full max-w-md p-6">
         <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1">
           {mode === 'extend' ? 'Extend due date' : 'Mark installment as paid'}
         </h3>

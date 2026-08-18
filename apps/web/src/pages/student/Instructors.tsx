@@ -45,7 +45,7 @@ export default function StudentInstructors() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function StudentInstructors() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by name or skill…"
-            className="w-full pl-9 pr-3 py-2 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none"
+            className="w-full pl-9 pr-3 py-2 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none"
           />
         </div>
       </div>
@@ -126,13 +126,13 @@ function InstructorCard({ t, featured }: { t: Teacher; featured?: boolean }) {
   return (
     <Link
       to={`/dashboard/instructors/${t._id}`}
-      className="group bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:border-teal-300 dark:hover:border-teal-700 hover:shadow-md transition-all overflow-hidden flex flex-col"
+      className="group bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:border-cyan-300 dark:hover:border-cyan-700 hover:shadow-md transition-all overflow-hidden flex flex-col"
     >
-      <div className="h-40 overflow-hidden relative bg-linear-to-br from-teal-100 to-cyan-100 dark:from-teal-950 dark:to-cyan-950">
+      <div className="h-40 overflow-hidden relative bg-linear-to-br from-cyan-100 to-cyan-100 dark:from-cyan-950 dark:to-cyan-950">
         {t.avatar ? (
           <img loading="lazy" src={t.avatar} alt={t.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl font-bold text-teal-600 dark:text-teal-300">
+          <div className="w-full h-full flex items-center justify-center text-5xl font-bold text-cyan-600 dark:text-cyan-300">
             {t.name.charAt(0).toUpperCase()}
           </div>
         )}
@@ -146,7 +146,7 @@ function InstructorCard({ t, featured }: { t: Teacher; featured?: boolean }) {
       </div>
       <div className="p-5 flex-1 flex flex-col">
         <p className="font-bold text-gray-900 dark:text-white">{t.name}</p>
-        {t.title && <p className="text-xs text-teal-600 dark:text-teal-400 mt-0.5">{t.title}</p>}
+        {t.title && <p className="text-xs text-cyan-600 dark:text-cyan-400 mt-0.5">{t.title}</p>}
         {t.bio && <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-2 mt-3 flex-1">{t.bio}</p>}
         {t.specialties && t.specialties.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-4">
@@ -160,7 +160,7 @@ function InstructorCard({ t, featured }: { t: Teacher; featured?: boolean }) {
             )}
           </div>
         )}
-        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-teal-600 group-hover:text-teal-800">
+        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-cyan-600 group-hover:text-cyan-800">
           View profile <ArrowRight size={14} />
         </span>
       </div>

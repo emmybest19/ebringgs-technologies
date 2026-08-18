@@ -61,29 +61,29 @@ export default function AdminCaseStudies() {
           </p>
         </div>
         <button onClick={() => setEditing({ ...blank })}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors">
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-cyan-600 text-white text-sm font-semibold rounded-xl hover:bg-cyan-700 transition-colors">
           <Plus size={16} /> New case study
         </button>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : items.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <p className="text-gray-500 dark:text-slate-400 mb-4">No case studies yet.</p>
           <button onClick={() => setEditing({ ...blank })}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 transition-colors">
+            className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 transition-colors">
             <Plus size={14} /> Create your first one
           </button>
         </div>
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
           <table className="w-full min-w-[760px]">
             <thead>
-              <tr className="bg-gray-50 dark:bg-slate-950 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
+              <tr className="bg-gray-50 dark:bg-[#080c11] text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">
                 <th className="px-5 py-3">Title</th>
                 <th className="px-5 py-3">Type</th>
                 <th className="px-5 py-3">Category</th>
@@ -118,7 +118,7 @@ export default function AdminCaseStudies() {
                   <td className="px-5 py-3 text-right">
                     <div className="inline-flex items-center gap-2">
                       <button onClick={() => setEditing(s)}
-                        className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-500 hover:text-teal-600">
+                        className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-500 hover:text-cyan-600">
                         <Pencil size={15} />
                       </button>
                       <button onClick={() => handleDelete(s._id)}
@@ -198,7 +198,7 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-3xl my-8 relative max-h-[92vh] flex flex-col">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl shadow-2xl w-full max-w-3xl my-8 relative max-h-[92vh] flex flex-col">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-slate-800">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">
             {form._id ? 'Edit case study' : 'New case study'}
@@ -211,60 +211,60 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
         <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-6 space-y-5">
           {/* Type */}
           <div className="grid grid-cols-2 gap-3">
-            <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer ${form.type === 'client_work' ? 'border-teal-500 bg-teal-50 dark:bg-teal-950' : 'border-gray-200 dark:border-slate-700'}`}>
-              <input type="radio" checked={form.type === 'client_work'} onChange={() => set('type', 'client_work')} className="accent-teal-600" />
+            <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer ${form.type === 'client_work' ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950' : 'border-gray-200 dark:border-slate-700'}`}>
+              <input type="radio" checked={form.type === 'client_work'} onChange={() => set('type', 'client_work')} className="accent-cyan-600" />
               <span className="text-sm font-medium text-gray-900 dark:text-white">Client work</span>
             </label>
-            <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer ${form.type === 'student_project' ? 'border-teal-500 bg-teal-50 dark:bg-teal-950' : 'border-gray-200 dark:border-slate-700'}`}>
-              <input type="radio" checked={form.type === 'student_project'} onChange={() => set('type', 'student_project')} className="accent-teal-600" />
+            <label className={`flex items-center gap-2 px-4 py-3 rounded-xl border cursor-pointer ${form.type === 'student_project' ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-950' : 'border-gray-200 dark:border-slate-700'}`}>
+              <input type="radio" checked={form.type === 'student_project'} onChange={() => set('type', 'student_project')} className="accent-cyan-600" />
               <span className="text-sm font-medium text-gray-900 dark:text-white">Student project</span>
             </label>
           </div>
 
           <Field label="Title *">
             <input value={form.title || ''} onChange={(e) => set('title', e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
           </Field>
 
           <Field label="Slug (auto-generated if blank)">
             <input value={form.slug || ''} onChange={(e) => set('slug', e.target.value)}
               placeholder="leave blank to auto-generate from title"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm font-mono focus:border-teal-500 outline-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm font-mono focus:border-cyan-500 outline-none" />
           </Field>
 
           <Field label="Summary * (1-2 sentences shown on cards)">
             <textarea value={form.summary || ''} onChange={(e) => set('summary', e.target.value)} rows={2}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none resize-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none resize-none" />
           </Field>
 
           <Field label="Full description (markdown supported, plain text fine)">
             <textarea value={form.description || ''} onChange={(e) => set('description', e.target.value)} rows={6}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none resize-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none resize-none" />
           </Field>
 
           <Field label="Cover image URL">
             <input value={form.coverImage || ''} onChange={(e) => set('coverImage', e.target.value)}
               placeholder="https://… or /images/…"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
           </Field>
 
           <div className="grid sm:grid-cols-2 gap-4">
             <Field label="Category">
               <input value={form.category || ''} onChange={(e) => set('category', e.target.value)}
                 placeholder="Web Development"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
             </Field>
             <Field label="Tags (comma-separated)">
               <input value={form.tagsText || ''} onChange={(e) => set('tagsText', e.target.value)}
                 placeholder="react, mobile, mvp"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
             </Field>
           </div>
 
           <Field label="Tech stack (comma-separated)">
             <input value={form.techStackText || ''} onChange={(e) => set('techStackText', e.target.value)}
               placeholder="React, Node.js, MongoDB"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
           </Field>
 
           {/* Client work fields */}
@@ -275,25 +275,25 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
                 <Field label="Service ID (matches catalog id)">
                   <input value={form.serviceId || ''} onChange={(e) => set('serviceId', e.target.value)}
                     placeholder="e.g. 1, 11, 13"
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
                 <Field label="Client name (optional)">
                   <input value={form.clientName || ''} onChange={(e) => set('clientName', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
                 <Field label="Delivery days">
                   <input type="number" min="1" value={form.deliveryDays ?? ''} onChange={(e) => set('deliveryDays', Number(e.target.value) || undefined)}
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
                 <Field label="Investment (kobo, e.g. 25000000 = ₦250,000)">
                   <input type="number" min="0" value={form.priceKobo ?? ''} onChange={(e) => set('priceKobo', Number(e.target.value) || undefined)}
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
               </div>
               <Field label="Results (one per line)">
                 <textarea value={form.resultsText || ''} onChange={(e) => set('resultsText', e.target.value)} rows={3}
                   placeholder="3x conversion lift&#10;Launched in 14 days&#10;Featured on Product Hunt"
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none resize-none" />
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none resize-none" />
               </Field>
             </div>
           )}
@@ -305,29 +305,29 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="Student name">
                   <input value={form.studentName || ''} onChange={(e) => set('studentName', e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
                 <Field label="Cohort batch">
                   <input value={form.cohortBatch || ''} onChange={(e) => set('cohortBatch', e.target.value)}
                     placeholder="Web Dev, Batch 3"
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
                 <Field label="Current role">
                   <input value={form.studentRole || ''} onChange={(e) => set('studentRole', e.target.value)}
                     placeholder="Software Engineer at FinTech Co."
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
                 <Field label="Student avatar URL">
                   <input value={form.studentAvatar || ''} onChange={(e) => set('studentAvatar', e.target.value)}
                     placeholder="https://… or /images/students/…"
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
                 </Field>
               </div>
               <Field label="Short bio (shown on portfolio detail page, max 600 chars)">
                 <textarea value={form.studentBio || ''} onChange={(e) => set('studentBio', e.target.value)} rows={3}
                   maxLength={600}
                   placeholder="A sentence or two about the student, where they came from, what they built, where they ended up."
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none resize-none" />
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none resize-none" />
               </Field>
             </div>
           )}
@@ -335,11 +335,11 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
           <div className="grid sm:grid-cols-2 gap-4">
             <Field label="Live URL">
               <input value={form.liveUrl || ''} onChange={(e) => set('liveUrl', e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
             </Field>
             <Field label="GitHub URL">
               <input value={form.githubUrl || ''} onChange={(e) => set('githubUrl', e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
             </Field>
           </div>
 
@@ -350,18 +350,18 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
               <textarea value={form.testimonial?.quote || ''}
                 onChange={(e) => set('testimonial', { ...(form.testimonial || { quote: '', name: '' }), quote: e.target.value })}
                 rows={3}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none resize-none" />
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none resize-none" />
             </Field>
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Name">
                 <input value={form.testimonial?.name || ''}
                   onChange={(e) => set('testimonial', { ...(form.testimonial || { quote: '', name: '' }), name: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
               </Field>
               <Field label="Title">
                 <input value={form.testimonial?.title || ''}
                   onChange={(e) => set('testimonial', { ...(form.testimonial || { quote: '', name: '' }), title: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
               </Field>
             </div>
           </div>
@@ -369,16 +369,16 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
           {/* Flags */}
           <div className="flex flex-wrap gap-5 border-t border-gray-100 dark:border-slate-800 pt-5">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked={!!form.featured} onChange={(e) => set('featured', e.target.checked)} className="w-4 h-4 accent-teal-600" />
+              <input type="checkbox" checked={!!form.featured} onChange={(e) => set('featured', e.target.checked)} className="w-4 h-4 accent-cyan-600" />
               <span className="text-sm text-gray-700 dark:text-slate-300">Featured</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked={form.published !== false} onChange={(e) => set('published', e.target.checked)} className="w-4 h-4 accent-teal-600" />
+              <input type="checkbox" checked={form.published !== false} onChange={(e) => set('published', e.target.checked)} className="w-4 h-4 accent-cyan-600" />
               <span className="text-sm text-gray-700 dark:text-slate-300">Published</span>
             </label>
             <Field label="Sort order">
               <input type="number" value={form.order ?? 0} onChange={(e) => set('order', Number(e.target.value) || 0)}
-                className="w-24 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 dark:text-white text-sm focus:border-teal-500 outline-none" />
+                className="w-24 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-[#0e141c] dark:text-white text-sm focus:border-cyan-500 outline-none" />
             </Field>
           </div>
         </form>
@@ -388,7 +388,7 @@ function CaseStudyEditor({ study, onClose, onSaved }: { study: Partial<CaseStudy
             Cancel
           </button>
           <button onClick={handleSave} disabled={saving}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-teal-600 text-white text-sm font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-60 transition-colors">
+            className="inline-flex items-center gap-2 px-5 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg hover:bg-cyan-700 disabled:opacity-60 transition-colors">
             {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
             {saving ? 'Saving…' : 'Save'}
           </button>

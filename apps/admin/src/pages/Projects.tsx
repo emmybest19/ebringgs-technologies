@@ -46,10 +46,10 @@ export function AdminProjectsList() {
 
       {loading ? (
         <div className="flex items-center justify-center min-h-[40vh]">
-          <Loader2 size={28} className="animate-spin text-teal-600" />
+          <Loader2 size={28} className="animate-spin text-cyan-600" />
         </div>
       ) : projects.length === 0 ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
+        <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-12 text-center">
           <FolderKanban size={36} className="text-gray-200 dark:text-slate-700 mx-auto mb-3" />
           <p className="text-gray-500 dark:text-slate-400">No client projects yet.</p>
         </div>
@@ -61,7 +61,7 @@ export function AdminProjectsList() {
               <Link
                 key={p._id}
                 to={`/admin/projects/${p._id}`}
-                className="block bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-4 hover:border-teal-300 dark:hover:border-teal-700 transition-colors"
+                className="block bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-4 hover:border-cyan-300 dark:hover:border-cyan-700 transition-colors"
               >
                 <div className="flex items-center justify-between mb-2">
                   <p className="font-semibold text-gray-900 dark:text-white text-sm">{p.title}</p>
@@ -74,7 +74,7 @@ export function AdminProjectsList() {
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${p.progress}%` }} />
+                    <div className="h-full bg-cyan-500 rounded-full transition-all" style={{ width: `${p.progress}%` }} />
                   </div>
                   <span className="text-xs font-medium text-gray-500 dark:text-slate-400">{p.progress}%</span>
                 </div>
@@ -163,7 +163,7 @@ export function AdminProjectDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[40vh]">
-        <Loader2 size={28} className="animate-spin text-teal-600" />
+        <Loader2 size={28} className="animate-spin text-cyan-600" />
       </div>
     );
   }
@@ -172,7 +172,7 @@ export function AdminProjectDetail() {
     return (
       <div className="text-center py-12">
         <p className="text-gray-500">Project not found.</p>
-        <button onClick={() => navigate('/admin/projects')} className="mt-4 text-sm text-teal-600 hover:underline">
+        <button onClick={() => navigate('/admin/projects')} className="mt-4 text-sm text-cyan-600 hover:underline">
           ← Back to projects
         </button>
       </div>
@@ -202,7 +202,7 @@ export function AdminProjectDetail() {
       </div>
 
       {/* Project links editor */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
         <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Project links</p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div>
@@ -231,20 +231,20 @@ export function AdminProjectDetail() {
         <button
           onClick={handleSaveLinks}
           disabled={savingLinks}
-          className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-60"
+          className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white text-xs font-semibold rounded-lg hover:bg-cyan-700 disabled:opacity-60"
         >
           {savingLinks ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />} Save links
         </button>
       </div>
 
       {/* Add update */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
+      <div className="bg-white dark:bg-[#0e141c] rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-5 mb-4">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide">Post an update</p>
           {!showForm && (
             <button
               onClick={() => setShowForm(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-600 text-white text-xs font-semibold rounded-lg hover:bg-cyan-700"
             >
               <Plus size={13} /> New update
             </button>
@@ -262,7 +262,7 @@ export function AdminProjectDetail() {
                     onClick={() => setType(t.id)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                       type === t.id
-                        ? 'bg-teal-600 text-white'
+                        ? 'bg-cyan-600 text-white'
                         : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700'
                     }`}
                   >
@@ -320,7 +320,7 @@ export function AdminProjectDetail() {
               <button
                 type="submit"
                 disabled={submitting || !title.trim()}
-                className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-xs font-semibold rounded-lg hover:bg-teal-700 disabled:opacity-60"
+                className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white text-xs font-semibold rounded-lg hover:bg-cyan-700 disabled:opacity-60"
               >
                 {submitting ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
                 Post update
