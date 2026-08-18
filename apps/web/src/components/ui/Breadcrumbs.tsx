@@ -12,6 +12,7 @@ const labelMap: Record<string, string> = {
   schedule: 'Schedule',
   instructors: 'Instructors',
   team: 'Meet the Team',
+  values: 'Our Values',
   contact: 'Contact',
   terms: 'Terms',
   privacy: 'Privacy',

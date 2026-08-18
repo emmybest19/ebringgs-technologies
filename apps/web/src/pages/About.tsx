@@ -95,12 +95,12 @@ export default function About() {
             >
               Meet the Team <ArrowRight size={16} />
             </Link>
-            <a
-              href="#values"
+            <Link
+              to="/about/values"
               className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-[#0e141c] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:border-slate-600 hover:bg-[#141b26]"
             >
               Our Values
-            </a>
+            </Link>
           </div>
         </div>
       </section>

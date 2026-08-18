@@ -25,6 +25,7 @@ import SuccessStories from "./pages/SuccessStories";
 import Portfolio from "./pages/Portfolio";
 import Schedule from "./pages/Schedule";
 import Instructors from "./pages/Instructors";
+import Values from "./pages/Values";
 import VerifyCertificate from "./pages/VerifyCertificate";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
@@ -161,6 +162,7 @@ function App() {
           <Route path="/portfolio/:slug" element={<CaseStudyDetail />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/about/team" element={<Instructors />} />
+          <Route path="/about/values" element={<Values />} />
           {/* Old public URL for the team page; kept so existing links resolve. */}
           <Route path="/instructors" element={<Navigate to="/about/team" replace />} />
           <Route path="/contact" element={<Contact />} />
