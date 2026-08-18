@@ -26,25 +26,27 @@ const footerLinks = {
     { label: 'Success Stories', to: '/success-stories' },
     { label: 'Careers', to: '/careers' },
   ],
+  // HIPAA Compliance and SLA Agreements have no pages of their own yet, so
+  // both point at Terms for now. Repoint them when the real pages exist.
   Legal: [
     { label: 'Privacy Policy', to: '/privacy' },
     { label: 'Terms of Service', to: '/terms' },
+    { label: 'HIPAA Compliance', to: '/terms' },
+    { label: 'SLA Agreements', to: '/terms' },
   ],
 };
 
-function BrandLockup({ height = 140 }: { height?: number }) {
+// Uncropped — see the same note in Navbar. Clipping the canvas cut the
+// tagline off the bottom of the lockup.
+function BrandLockup({ height = 170 }: { height?: number }) {
   return (
-    <span
-      className="inline-flex shrink-0 items-center justify-center overflow-hidden"
-      style={{ height, width: height * 1.1 }}
-    >
-      <img
-        src={BRAND_LOCKUP}
-        alt="E-Bringgs Technologies"
-        draggable={false}
-        style={{ height: height * 1.25, width: 'auto', maxWidth: 'none' }}
-      />
-    </span>
+    <img
+      src={BRAND_LOCKUP}
+      alt="E-Bringgs Technologies"
+      draggable={false}
+      className="shrink-0 object-contain"
+      style={{ height, width: 'auto' }}
+    />
   );
 }
 

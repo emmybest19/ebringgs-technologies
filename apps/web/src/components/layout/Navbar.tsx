@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Sun, Moon, Bell, BellOff, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown, LogOut, User, LayoutDashboard, Bell, BellOff, ArrowRight } from 'lucide-react';
 import { usePushNotifications } from '../../hooks/usePushNotifications';
 import { useAuthStore } from '@ebringgs/auth';
-import { useThemeStore } from '@ebringgs/auth';
 
 /**
  * Site header.
@@ -27,21 +26,19 @@ const navLinks = [
   { label: 'Contact', to: '/contact' },
 ];
 
-// The source file is a square canvas with transparent padding around the
-// artwork, so it renders oversized inside a clipped box to sit flush.
-function BrandLockup({ height = 72 }: { height?: number }) {
+// Rendered uncropped. An earlier version clipped the canvas to tighten the
+// padding, which cut the "Build. Launch. Grow." tagline off the bottom — the
+// artwork sits too close to the edge for that to be safe. The transparent
+// margin costs a few pixels; losing a line of the logo doesn't.
+function BrandLockup({ height = 84 }: { height?: number }) {
   return (
-    <span
-      className="inline-flex shrink-0 items-center justify-center overflow-hidden"
-      style={{ height, width: height * 1.1 }}
-    >
-      <img
-        src={BRAND_LOCKUP}
-        alt="E-Bringgs Technologies"
-        draggable={false}
-        style={{ height: height * 1.25, width: 'auto', maxWidth: 'none' }}
-      />
-    </span>
+    <img
+      src={BRAND_LOCKUP}
+      alt="E-Bringgs Technologies"
+      draggable={false}
+      className="shrink-0 object-contain"
+      style={{ height, width: 'auto' }}
+    />
   );
 }
 
@@ -49,10 +46,8 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { mode, setMode } = useThemeStore();
   const navigate = useNavigate();
 
-  const ThemeIcon = mode === 'dark' ? Sun : Moon;
   const { permission, isSubscribed, isLoading: pushLoading, subscribe: pushSubscribe, unsubscribe: pushUnsubscribe } = usePushNotifications();
 
   const handleLogout = () => {
@@ -88,15 +83,6 @@ export default function Navbar() {
 
         {/* Auth actions + theme toggle */}
         <div className="hidden items-center gap-2 md:flex">
-          <button
-            onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
-            className="rounded-lg p-2 transition-colors hover:bg-white/5"
-            aria-label={`Theme: ${mode}`}
-            title={`Theme: ${mode}. Click to switch.`}
-          >
-            <ThemeIcon size={18} className="text-slate-400" />
-          </button>
-
           {isAuthenticated && user ? (
             <>
               {permission !== 'unsupported' && (
@@ -194,13 +180,6 @@ export default function Navbar() {
 
         {/* Mobile actions */}
         <div className="flex items-center gap-1 md:hidden">
-          <button
-            onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
-            className="rounded-lg p-2 transition-colors hover:bg-white/5"
-            aria-label={`Theme: ${mode}`}
-          >
-            <ThemeIcon size={18} className="text-slate-400" />
-          </button>
           {isAuthenticated && permission !== 'unsupported' && (
             <button
               onClick={isSubscribed ? pushUnsubscribe : pushSubscribe}

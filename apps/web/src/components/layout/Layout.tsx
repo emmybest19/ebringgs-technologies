@@ -11,7 +11,9 @@ export default function Layout() {
   useScrollReveal(mainRef);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-slate-900">
+    // Page floor matches the dark surface the redesigned pages paint, so
+    // nothing shows through beneath a short page.
+    <div className="min-h-screen flex flex-col bg-[#080c11]">
       <Navbar />
       {/* pt matches the fixed header's h-24 — the full vertical brand lockup
           needs 96px of header, where the old horizontal one needed 80px. */}
