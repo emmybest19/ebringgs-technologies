@@ -1,14 +1,57 @@
-﻿import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
-import { Mail, MessageSquare, MapPin, Clock, Send, Loader2, CheckCircle2 } from 'lucide-react';
+import { Mail, MessageSquare, Globe, Clock, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { useSEO, schema } from '@ebringgs/ui';
 
-const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'ebringgstechnologies@gmail.com', href: 'mailto:ebringgstechnologies@gmail.com' },
-  { icon: MessageSquare, label: 'WhatsApp / Chat', value: 'Start a conversation', href: '#' },
-  { icon: MapPin, label: 'Location', value: 'Remote-first. Based in West Africa.', href: null },
-  { icon: Clock, label: 'Response time', value: 'Within 1 business day', href: null },
+/**
+ * Contact page.
+ *
+ * DARK ONLY, deliberately — colours are unconditional rather than `dark:`
+ * variants, matching the rest of the redesigned public pages.
+ *
+ * The form posts through EmailJS from the browser; there is no backend
+ * endpoint behind it.
+ */
+
+const EMAIL = 'ebringgstechnologies@gmail.com';
+const WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
+
+const channels = [
+  {
+    icon: Mail,
+    label: 'Send an email',
+    value: EMAIL,
+    note: 'Direct general, cohort support & partnership inquiries.',
+    href: `mailto:${EMAIL}`,
+  },
+  {
+    icon: MessageSquare,
+    label: 'Message us on WhatsApp',
+    value: 'Start a conversation',
+    note: 'Quickest route for cohort questions during working hours.',
+    href: WHATSAPP ? `https://wa.me/${WHATSAPP.replace(/[^0-9]/g, '')}` : undefined,
+  },
+  {
+    icon: Globe,
+    label: 'Our headquarters',
+    value: 'Built with passion in Africa',
+    note: 'Remote-first, serving developers and tech operators worldwide.',
+    href: undefined,
+  },
 ];
+
+const topics = [
+  'Enroll in a cohort program',
+  'Enterprise service enquiry',
+  'Partnership or collaboration',
+  'Technical support',
+  'Billing question',
+  'Other',
+];
+
+const inputClass =
+  'w-full rounded-xl border border-slate-800 bg-[#111823] px-4 py-3 text-sm text-white ' +
+  'placeholder-slate-600 outline-none transition-colors focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10';
 
 export default function Contact() {
   useSEO({
@@ -21,7 +64,7 @@ export default function Contact() {
       schema.organization({
         contactPoint: {
           '@type': 'ContactPoint',
-          email: 'ebringgstechnologies@gmail.com',
+          email: EMAIL,
           contactType: 'customer support',
           availableLanguage: ['English'],
         },
@@ -39,7 +82,7 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -61,104 +104,181 @@ export default function Contact() {
       );
       setSent(true);
     } catch {
-      setError('Failed to send message. Please try emailing us directly at ebringgstechnologies@gmail.com');
+      setError(`Failed to send message. Please try emailing us directly at ${EMAIL}`);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 min-h-screen">
-      {/* Header */}
-      <section className="bg-linear-to-br from-slate-900 to-teal-950 text-white py-20 px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Get in touch</h1>
-        <p className="text-slate-300 text-lg max-w-xl mx-auto">Have a question, project idea, or just want to say hello? We'd love to hear from you.</p>
+    <div className="bg-[#080c11]">
+      {/* ── Hero ──────────────────────────────────────────────────────── */}
+      <section className="no-reveal relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_0%,rgba(34,211,238,0.09),transparent_65%)]" />
+        <div className="relative mx-auto max-w-3xl px-4 pb-16 pt-14 text-center sm:px-6">
+          <span className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-cyan-300">
+            Connect with us
+          </span>
+          <h1 className="mt-7 text-4xl font-extrabold leading-[1.1] tracking-tight text-white md:text-5xl">
+            Let&rsquo;s build something great together
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-slate-400">
+            Have questions about our live cohorts, enterprise service models, or partnership
+            inquiries? Drop us a line and our team will get back to you within one business day.
+          </p>
+        </div>
       </section>
 
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16 grid md:grid-cols-2 gap-12">
-        {/* Info */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Contact information</h2>
-          <div className="space-y-5 mb-10">
-            {contactInfo.map(({ icon: Icon, label, value, href }) => (
-              <div key={label} className="flex items-start gap-4">
-                <div className="p-2.5 bg-teal-50 dark:bg-teal-950 rounded-xl shrink-0">
-                  <Icon size={20} className="text-teal-600" />
+      {/* ── Channels + form ───────────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-4 pb-28 sm:px-6">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+          {/* Left column */}
+          <div className="space-y-5">
+            {channels.map(({ icon: Icon, label, value, note, href }) => {
+              const inner = (
+                <>
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400/10 text-cyan-400">
+                    <Icon size={18} />
+                  </span>
+                  <span className="mt-5 block text-[10px] font-semibold uppercase tracking-wider text-cyan-400">
+                    {label}
+                  </span>
+                  <span className="mt-1.5 block break-words text-lg font-bold text-white">{value}</span>
+                  <span className="mt-1.5 block text-xs leading-relaxed text-slate-400">{note}</span>
+                </>
+              );
+
+              return href ? (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel={href.startsWith('http') ? 'noreferrer' : undefined}
+                  className="block rounded-2xl border border-slate-800 bg-[#0e141c] p-6 transition-colors hover:border-slate-700"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div key={label} className="rounded-2xl border border-slate-800 bg-[#0e141c] p-6">
+                  {inner}
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-0.5">{label}</p>
-                  {href ? (
-                    <a href={href} className="text-gray-700 dark:text-slate-300 font-medium hover:text-teal-600 transition-colors text-sm">{value}</a>
-                  ) : (
-                    <p className="text-gray-700 dark:text-slate-300 text-sm">{value}</p>
-                  )}
-                </div>
+              );
+            })}
+
+            <div className="flex items-start gap-4 rounded-2xl border border-slate-800 bg-[#0e141c] p-6">
+              <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400/10 text-cyan-400">
+                <Clock size={16} />
+              </span>
+              <div>
+                <p className="text-sm font-bold text-white">Availability note</p>
+                <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
+                  Our support mentors and project architects operate across GMT and EST timezones to
+                  ensure constant deployment coverage.
+                </p>
               </div>
-            ))}
-          </div>
-
-          <div className="bg-teal-50 dark:bg-teal-950 rounded-2xl p-6 border border-teal-100 dark:border-teal-800">
-            <h3 className="font-bold text-gray-900 dark:text-white mb-2">For consulting engagements</h3>
-            <p className="text-gray-500 dark:text-slate-400 text-sm leading-relaxed">
-              For larger projects, partnerships or enterprise inquiries, please email us directly at{' '}
-              <a href="mailto:ebringgstechnologies@gmail.com" className="text-teal-600 font-medium">ebringgstechnologies@gmail.com</a>{' '}
-              with a brief description of your needs.
-            </p>
-          </div>
-        </div>
-
-        {/* Form */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm p-8">
-          {sent ? (
-            <div className="text-center py-10">
-              <div className="inline-flex p-4 bg-green-50 dark:bg-green-950 rounded-2xl mb-4"><CheckCircle2 size={36} className="text-green-500" /></div>
-              <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-2">Message sent!</h3>
-              <p className="text-gray-500 dark:text-slate-400 text-sm">Thanks for reaching out. We'll reply within 1 business day.</p>
             </div>
-          ) : (
-            <>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-5">Send us a message</h2>
-              {error && <div className="mb-4 p-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400">{error}</div>}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Name</label>
-                    <input name="name" value={form.name} onChange={handleChange} required placeholder="Your name"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Email</label>
-                    <input name="email" type="email" value={form.email} onChange={handleChange} required placeholder="you@example.com"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Subject</label>
-                  <select name="subject" value={form.subject} onChange={handleChange} required
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 outline-none text-sm bg-white">
-                    <option value="">Select a topic...</option>
-                    <option>Service inquiry</option>
-                    <option>Course / learning question</option>
-                    <option>Partnership or collaboration</option>
-                    <option>Technical support</option>
-                    <option>Billing question</option>
-                    <option>Other</option>
+
+            <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#0e141c] p-2">
+              <div className="relative overflow-hidden rounded-xl">
+                <img
+                  loading="lazy"
+                  src="/images/general/coding-screen.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-48 w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-[#080c11]/55" />
+              </div>
+            </div>
+          </div>
+
+          {/* Right column — form */}
+          <div className="rounded-2xl border border-slate-800 bg-[#0e141c] p-7 sm:p-9">
+            <h2 className="text-xl font-extrabold tracking-tight text-white">Send a message</h2>
+            <p className="mt-2 text-sm text-slate-400">
+              Tell us about yourself and what you&rsquo;re looking to build.
+            </p>
+
+            {sent ? (
+              <div className="mt-8 rounded-xl border border-cyan-400/30 bg-cyan-400/10 p-6 text-center">
+                <CheckCircle2 size={22} className="mx-auto text-cyan-400" />
+                <p className="mt-3 text-sm font-bold text-white">Message sent</p>
+                <p className="mt-1.5 text-xs text-slate-400">
+                  Thanks for reaching out — we&rsquo;ll reply within one business day.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                <label className="block">
+                  <span className="mb-2 block text-sm text-slate-300">Full name</span>
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Jane Doe"
+                    className={inputClass}
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm text-slate-300">Professional email address</span>
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="jane@company.com"
+                    className={inputClass}
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm text-slate-300">How can we help?</span>
+                  <select
+                    name="subject"
+                    value={form.subject}
+                    onChange={handleChange}
+                    required
+                    className={inputClass}
+                  >
+                    <option value="">Select a topic…</option>
+                    {topics.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
                   </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Message</label>
-                  <textarea name="message" value={form.message} onChange={handleChange} required rows={5}
-                    placeholder="Tell us what's on your mind..."
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none text-sm resize-none" />
-                </div>
-                <button type="submit" disabled={loading}
-                  className="w-full py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 disabled:opacity-60 flex items-center justify-center gap-2 transition-colors">
-                  {loading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
-                  Send message
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm text-slate-300">Your message</span>
+                  <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    placeholder="Briefly describe your objectives, experience level, or project specifications…"
+                    className={`${inputClass} resize-y`}
+                  />
+                </label>
+
+                {error && <p className="text-xs text-red-400">{error}</p>}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-slate-600"
+                >
+                  {loading ? (
+                    <><Loader2 size={16} className="animate-spin" /> Sending…</>
+                  ) : (
+                    <>Send message <ArrowRight size={16} /></>
+                  )}
                 </button>
               </form>
-            </>
-          )}
+            )}
+          </div>
         </div>
       </section>
     </div>
