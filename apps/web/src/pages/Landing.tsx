@@ -4,7 +4,7 @@ import {
   ArrowRight, Code2, Check, Star, Users, GraduationCap, TrendingUp, Loader2,
   ExternalLink, Github, CheckCircle2,
 } from 'lucide-react';
-import HeroCarousel from '../components/ui/HeroCarousel';
+import HeroVisual from '../components/ui/HeroVisual';
 import api from '@ebringgs/api';
 import { useReviews, useCaseStudies } from '../services/queries';
 import ReviewCard from '../components/reviews/ReviewCard';
@@ -109,7 +109,7 @@ function Hero() {
           </div>
 
           <div className="hidden lg:block">
-            <HeroCarousel />
+            <HeroVisual />
           </div>
         </div>
       </div>
